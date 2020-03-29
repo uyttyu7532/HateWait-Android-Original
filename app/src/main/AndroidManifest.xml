@@ -14,13 +14,13 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
-                android:name=".AddNewStore"
+                android:name=".StoreInfo"
                 android:label="@string/title_activity_add_new_store"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".menu_customer">
+        <activity android:name=".CustomerMenu">
         </activity>
-        <activity android:name=".menu_store">
+        <activity android:name=".StoreMenu">
         </activity>
         <activity android:name=".MainActivity">
             <intent-filter>

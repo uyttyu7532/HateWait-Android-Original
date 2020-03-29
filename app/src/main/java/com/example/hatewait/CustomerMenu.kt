@@ -3,13 +3,13 @@ package com.example.hatewait
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_menu_store.*
+import kotlinx.android.synthetic.main.store_menu.*
 
-class menu_customer : AppCompatActivity() {
+class CustomerMenu : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_menu_customer)
+        setContentView(R.layout.customer_menu)
 
         val ListMenu_customer= resources.getStringArray(R.array.menu_customer)
 

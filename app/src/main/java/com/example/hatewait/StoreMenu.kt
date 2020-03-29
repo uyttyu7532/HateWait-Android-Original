@@ -2,17 +2,16 @@ package com.example.hatewait
 
 import android.os.Bundle
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_menu_store.*
+import kotlinx.android.synthetic.main.store_menu.*
 import org.jetbrains.anko.startActivity
 
-class menu_store : AppCompatActivity() {
+class StoreMenu : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_menu_store)
+        setContentView(R.layout.store_menu)
 
        idView.text=intent.getStringExtra("id").toString()
 
@@ -24,15 +23,14 @@ class menu_store : AppCompatActivity() {
         listView.setOnItemClickListener { adapterView, view, position, I ->
             idView.text = ListMenu_store[position]
 
-            if(position==0){
-//                Toast.makeText(this,"첫번째 클릭",Toast.LENGTH_SHORT).show()
-                startActivity<AddNewStore>(
-                    "menu_name" to ListMenu_store[0].toString()
+            if((position==0) or (position==1)){
+                startActivity<StoreInfo>(
+                    "menu_name" to ListMenu_store[position].toString()
                 )
             }
-            if(position==1){
-                Toast.makeText(this,"두번째 클릭",Toast.LENGTH_SHORT).show()
-            }
+//            if(position==1){
+//                Toast.makeText(this,"두번째 클릭",Toast.LENGTH_SHORT).show()
+//            }
         }
     }
 }

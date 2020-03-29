@@ -18,13 +18,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         button_store.setOnClickListener{
-            startActivity<menu_store>(
+            startActivity<StoreMenu>(
                 "id" to idView.text.toString()
             )
         }
 
         button_customer.setOnClickListener{
-            startActivity<menu_customer>()
+            startActivity<CustomerMenu>()
         }
 
 

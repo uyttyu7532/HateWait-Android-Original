@@ -5,6 +5,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_menu_store.*
+import org.jetbrains.anko.startActivity
 
 class menu_store : AppCompatActivity() {
 
@@ -22,8 +23,12 @@ class menu_store : AppCompatActivity() {
 
         listView.setOnItemClickListener { adapterView, view, position, I ->
             idView.text = ListMenu_store[position]
+
             if(position==0){
-                Toast.makeText(this,"첫번째 클릭",Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this,"첫번째 클릭",Toast.LENGTH_SHORT).show()
+                startActivity<AddNewStore>(
+                    "menu_name" to ListMenu_store[0].toString()
+                )
             }
             if(position==1){
                 Toast.makeText(this,"두번째 클릭",Toast.LENGTH_SHORT).show()

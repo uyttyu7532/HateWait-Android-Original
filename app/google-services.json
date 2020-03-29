@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "53074801851",
+    "firebase_url": "https://hatewait2020.firebaseio.com",
+    "project_id": "hatewait2020",
+    "storage_bucket": "hatewait2020.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:53074801851:android:9178fb40b48761045de59e",
+        "android_client_info": {
+          "package_name": "com.example.hatewait"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "53074801851-g9hr9p7hs3h4ik5bb1u1ms6ar8khp9hc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHKQcPm_Ar6bX85v-HSng0qjUoVa8jwgI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "53074801851-g9hr9p7hs3h4ik5bb1u1ms6ar8khp9hc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

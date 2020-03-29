@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">HateWait</string>
+    <string-array name="menu_store">
+        <item>신규가게 등록하기</item>
+        <item>가게 정보 수정하기</item>
+        <item>대기 현황 확인하기</item>
+        <item>현장 대기 받기(태블릿)</item>
+    </string-array>
+    <string-array name="menu_customer">
+        <item>대기중인 가게 확인하기</item>
+        <item>다른가게 줄 확인하기</item>
+    </string-array>
+    <string name="title_activity_add_new_store">AddNewStore</string>
+</resources>

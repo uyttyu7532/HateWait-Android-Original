@@ -11,4 +11,8 @@
         <item>다른가게 줄 확인하기</item>
     </string-array>
     <string name="title_activity_add_new_store">AddNewStore</string>
+
+    <string name="title_activity_join">JoinActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

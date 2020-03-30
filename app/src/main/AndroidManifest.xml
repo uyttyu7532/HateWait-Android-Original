@@ -14,6 +14,12 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
+                android:name=".JoinActivity"
+                android:configChanges="orientation|keyboardHidden|screenSize"
+                android:label="@string/title_activity_join"
+                android:theme="@style/FullscreenTheme">
+        </activity>
+        <activity
                 android:name=".StoreInfo"
                 android:label="@string/title_activity_add_new_store"
                 android:theme="@style/AppTheme.NoActionBar">

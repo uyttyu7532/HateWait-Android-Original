@@ -28,9 +28,11 @@ class StoreMenu : AppCompatActivity() {
                     "menu_name" to ListMenu_store[position].toString()
                 )
             }
-//            if(position==1){
-//                Toast.makeText(this,"두번째 클릭",Toast.LENGTH_SHORT).show()
-//            }
+            if(position==3){
+               startActivity<JoinActivity>(
+
+               )
+            }
         }
     }
 }

@@ -13,6 +13,8 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+        <activity android:name=".store_menu">
+        </activity>
         <activity
                 android:name=".JoinActivity"
                 android:configChanges="orientation|keyboardHidden|screenSize"

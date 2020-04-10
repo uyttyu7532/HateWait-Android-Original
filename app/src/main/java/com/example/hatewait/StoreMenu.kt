@@ -3,7 +3,7 @@ package com.example.hatewait
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.store_menu.*
+import kotlinx.android.synthetic.main.store_menu_list.*
 import org.jetbrains.anko.startActivity
 
 class StoreMenu : AppCompatActivity() {
@@ -11,7 +11,7 @@ class StoreMenu : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.store_menu)
+        setContentView(R.layout.store_menu_list)
 
        idView.text=intent.getStringExtra("id").toString()
 

@@ -3,7 +3,7 @@ package com.example.hatewait
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.store_menu.*
+import kotlinx.android.synthetic.main.store_menu_list.*
 
 class CustomerMenu : AppCompatActivity() {
 

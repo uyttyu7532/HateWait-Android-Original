@@ -1,25 +1,312 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".StoreMenu">
+        tools:context=".MainActivity"
+        android:visibility="visible"
+        android:background="@color/bgColor"
+>
 
-    <TextView
-            android:text="TextView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content" app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" android:id="@+id/idView"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" app:layout_constraintHorizontal_bias="0.0"
-            android:layout_marginStart="8dp"/>
-    <ListView
-            android:layout_width="0dp"
-            android:layout_height="0dp" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" android:id="@+id/listView"
-            app:layout_constraintHorizontal_bias="0.0" app:layout_constraintVertical_bias="1.0"
-            app:layout_constraintTop_toBottomOf="@+id/idView"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/greeting"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginBottom="20dp">
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="건대족발 회원님 환영합니다."
+                android:id="@+id/greetStoreText"
+        />
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="30명 대기중"
+                android:id="@+id/waitingnumText"
+
+        />
+    </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:cardCornerRadius="20dp"
+            android:layout_centerHorizontal="true"
+            app:cardBackgroundColor="@color/cardview_light_background"
+            app:cardElevation="2dp"
+            android:clickable="true"
+            android:layout_above="@+id/nextCard"
+            android:layout_below="@id/greeting"
+            android:layout_marginStart="50dp" android:layout_marginEnd="50dp"
+    >
+        <TextView
+                android:text="다음 순서 호출"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView6"
+                android:layout_gravity="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/common_google_signin_btn_text_dark_focused"/>
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_above="@+id/grid"
+            app:cardElevation="2dp"
+            app:cardCornerRadius="10dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
+            android:layout_marginBottom="20dp"
+            android:id="@+id/nextCard">
+        <TextView
+                android:text="다음 순서: "
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/nextText"
+                android:singleLine="true"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:layout_gravity="bottom"
+                android:layout_margin="5dp"
+
+        />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.gridlayout.widget.GridLayout
+            android:id="@+id/grid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:rowCount="2"
+            app:columnCount="2"
+            app:useDefaultMargins="true"
+            android:layout_centerInParent="true"
+            android:layout_alignParentBottom="true"
+            android:paddingBottom="10dp"
+            android:layout_marginBottom="10dp">
+
+        <androidx.cardview.widget.CardView
+                android:layout_margin="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                app:layout_gravity="center"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="2dp"
+                android:clickable="true" android:id="@+id/checkWaiting">
+
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    app:layout_gravity="center"
+            >
+
+                <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        app:cardCornerRadius="0dp"
+                        android:layout_marginBottom="2dp"
+                        app:cardElevation="2dp"
+                        app:cardBackgroundColor="@color/colorPrimary"
+                        android:layout_height="wrap_content">
+
+                    <TextView
+
+                            android:text="대기 현황 확인"
+                            android:ems="9"
+                            android:textColor="#ffffff"
+                            android:layout_width="wrap_content"
+                            android:layout_height="45dp"
+                            android:id="@+id/textView"
+
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            android:gravity="center"/>
+
+                </androidx.cardview.widget.CardView>
+
+
+                <ImageButton
+                        android:layout_width="70dp"
+                        android:layout_height="60dp"
+                        app:srcCompat="@drawable/test"
+                        android:id="@+id/imageButton"
+                        android:scaleType="centerInside"
+                        android:background="@drawable/test"
+                        android:clickable="true"
+                        android:layout_margin="25dp"/>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+                android:layout_margin="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                app:layout_gravity="center"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="2dp"
+                android:clickable="true">
+
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    app:layout_gravity="center"
+                    android:clickable="true"
+            >
+
+                <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        app:cardElevation="2dp"
+                        app:cardBackgroundColor="@color/colorPrimary"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="0dp">
+
+                    <TextView
+                            android:text="태블릿 버전"
+                            android:layout_width="match_parent"
+                            android:layout_height="45dp"
+                            android:id="@+id/textView2"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            android:textColor="#ffffff"
+                            android:gravity="center" android:ems="9"/>
+                </androidx.cardview.widget.CardView>
+
+
+                <ImageButton
+                        android:layout_width="70dp"
+                        android:layout_height="60dp"
+                        android:id="@+id/imageButton2"
+                        android:scaleType="centerInside"
+                        android:background="@drawable/touchipad"
+                        android:clickable="true" android:layout_margin="25dp"/>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+                android:layout_margin="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                app:layout_gravity="center"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="2dp"
+                android:clickable="true" android:id="@+id/newStoreinfo">
+
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    app:layout_gravity="center"
+                    android:clickable="true"
+            >
+
+                <androidx.cardview.widget.CardView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        app:cardBackgroundColor="@color/colorPrimary"
+                        app:cardElevation="2dp"
+                        android:layout_marginBottom="2dp"
+                        app:cardCornerRadius="0dp"
+                >
+
+                    <TextView
+                            android:text="가게 신규 등록"
+                            android:layout_width="wrap_content"
+                            android:layout_height="45dp"
+                            android:id="@+id/textView3"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            android:ems="9"
+                            android:gravity="center"
+                            android:textColor="#ffffff"
+
+                    />
+                </androidx.cardview.widget.CardView>
+
+                <ImageButton
+                        android:layout_width="70dp"
+                        android:layout_height="60dp"
+                        android:id="@+id/imageButton3"
+                        android:scaleType="centerInside"
+                        android:background="@drawable/open"
+                        android:clickable="true"
+                        android:layout_margin="25dp"
+                />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+                android:layout_margin="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                app:layout_gravity="center"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="2dp"
+                android:clickable="true" android:id="@+id/editStoreInfo">
+
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    app:layout_gravity="center"
+                    android:clickable="true"
+            >
+
+                <androidx.cardview.widget.CardView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        app:cardBackgroundColor="@color/colorPrimary"
+                        app:cardCornerRadius="0dp"
+                >
+
+                    <TextView
+                            android:text="가게 정보 수정"
+                            android:layout_width="wrap_content"
+                            android:layout_height="45dp"
+                            android:id="@+id/textView4"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            android:ems="9"
+                            android:gravity="center"
+                            android:textColor="#ffffff"/>
+
+                </androidx.cardview.widget.CardView>
+
+                <ImageButton
+                        android:layout_width="70dp"
+                        android:layout_height="60dp"
+                        app:srcCompat="@null"
+                        android:id="@+id/imageButton4"
+                        android:scaleType="centerInside"
+                        android:background="@drawable/shop"
+                        android:clickable="true"
+                        android:layout_margin="25dp"/>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.gridlayout.widget.GridLayout>
+
+</RelativeLayout>

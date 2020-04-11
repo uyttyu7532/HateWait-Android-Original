@@ -21,7 +21,8 @@
             android:id="@+id/button_customer"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.875" tools:layout_editor_absoluteY="226dp"/>
+            app:layout_constraintHorizontal_bias="0.875"
+            android:layout_marginBottom="18dp" app:layout_constraintBottom_toTopOf="@+id/login"/>
     <TextView
             android:text="예린"
             android:layout_width="wrap_content"

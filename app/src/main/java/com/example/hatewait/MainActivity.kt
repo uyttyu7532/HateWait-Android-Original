@@ -29,10 +29,17 @@ class MainActivity : AppCompatActivity() {
             "waitingnum" to waitingnum
             )
         }
-//
-//        button_customer.setOnClickListener{
-//            startActivity<CustomerMenu>()
-//        }
+
+
+        var customername = "조예린"
+
+        button_customer.setOnClickListener{
+            startActivity<customer_menu>(
+                "customername" to customername
+            )
+        }
+
+
 
 
 

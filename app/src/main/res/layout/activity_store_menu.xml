@@ -140,7 +140,6 @@
                 <ImageButton
                         android:layout_width="70dp"
                         android:layout_height="60dp"
-                        app:srcCompat="@drawable/test"
                         android:id="@+id/imageButton"
                         android:scaleType="centerInside"
                         android:background="@drawable/test"
@@ -263,7 +262,8 @@
                 app:layout_gravity="center"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="2dp"
-                android:clickable="true" android:id="@+id/editStoreInfo">
+                android:clickable="true"
+                android:id="@+id/editStoreInfo">
 
             <LinearLayout
                     android:orientation="vertical"

@@ -7,8 +7,6 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity">
 
-
-
     <ImageView
             android:id="@+id/main_logo"
             android:layout_width="wrap_content"
@@ -30,7 +28,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="35dp"
             android:layout_marginEnd="24dp"
             android:hint="이름을 입력해주세요"
             android:selectAllOnFocus="true"
@@ -75,7 +73,7 @@
             android:id="@+id/register_customer_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="30dp"
             android:text="등록하기"
             android:enabled="false"
             app:layout_constraintEnd_toEndOf="parent"

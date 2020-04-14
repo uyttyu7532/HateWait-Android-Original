@@ -6,13 +6,16 @@
     <uses-permission android:name="android.permission.VIBRATE "/>
     <uses-permission android:name="android.permission.WAKE_LOCK "/>
 
+
+<!--  android:theme="@style/AppTheme << 기본 스타일 (앱 타이틀 바 적용)  -->
+<!--  android:theme="@style/AppTheme.NoActionBar << 앱 타이틀바 삭제.  -->
     <application
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme.NoActionBar">
         <activity android:name=".customer_menu">
         </activity>
         <activity android:name=".store_menu">

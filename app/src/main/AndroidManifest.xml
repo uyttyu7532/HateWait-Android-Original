@@ -20,22 +20,19 @@
         </activity>
         <activity android:name=".store_menu">
         </activity>
+<!---->
         <activity android:name=".LoginRegisterViewPagerActivity">
+        </activity>
+<!--        -->
+        <activity android:name=".Register_Check">
+        </activity>
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".Register_Check">
-        </activity>
-<!--        <activity android:name=".MainActivity">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN"/>-->
-
-<!--                <category android:name="android.intent.category.LAUNCHER"/>-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
 
         <service android:name=".MyFirebaseMessagingService">
             <intent-filter>

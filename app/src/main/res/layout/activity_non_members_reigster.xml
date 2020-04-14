@@ -8,17 +8,6 @@
         tools:context=".MainActivity">
 
 
-    <!--    -->
-    <Button
-            android:id="@+id/button_customer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:text="등록하기"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.500"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/password" />
 
     <ImageView
             android:id="@+id/main_logo"
@@ -52,20 +41,18 @@
 
 <!--    constraintBaseLine (글씨 크기 서로 다를 때 맞춤 좋음)-->
     <EditText
-            android:id="@+id/password"
+            android:id="@+id/user_phone_number"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="24dp"
 
             android:hint="전화번호를 입력해주세요"
             android:imeActionLabel="imeActionLabel"
             android:imeOptions="actionDone"
             android:inputType="phone"
             android:selectAllOnFocus="true"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/user_name"
+            app:layout_constraintEnd_toEndOf="@id/user_name"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintTop_toBottomOf="@id/user_name" />
 
@@ -79,8 +66,21 @@
             android:layout_marginBottom="64dp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/password"
+            app:layout_constraintEnd_toEndOf="@+id/user_phone_number"
             app:layout_constraintHorizontal_bias="0.500"
-            app:layout_constraintStart_toStartOf="@+id/password"
+            app:layout_constraintStart_toStartOf="@+id/user_phone_number"
             app:layout_constraintVertical_bias="0.272" />
+    <!--    -->
+    <Button
+            android:id="@+id/register_customer_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="등록하기"
+            android:enabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.500"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/user_phone_number" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

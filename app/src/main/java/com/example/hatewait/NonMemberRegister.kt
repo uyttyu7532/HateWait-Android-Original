@@ -1,16 +1,67 @@
 package com.example.hatewait
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import kotlinx.android.synthetic.main.activity_non_members_reigster.*
 import java.util.zip.Inflater
 
 class NonMemberRegister : Fragment() {
 
 // non_member 페이지를 열어줌
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View ? {
+
+
         return inflater.inflate(R.layout.activity_non_members_reigster, container, false)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        var user_name_not_empty : Boolean = false
+        var user_phone_number_not_empty : Boolean = false
+
+        user_name.addTextChangedListener(object : TextWatcher {
+            //            text에 변화가 있을 때마다
+            override fun afterTextChanged(p: Editable?) {
+                val str = p.toString()
+//    공백이 아닐 때 활성화시킴.
+                user_name_not_empty = str.isNotEmpty()
+                if(user_name_not_empty and user_phone_number_not_empty) register_customer_button.isEnabled = true
+                else register_customer_button.isEnabled = false
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+        })
+
+        user_phone_number.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                val str = s.toString()
+                user_phone_number_not_empty = str.isNotEmpty()
+                if(user_name_not_empty and user_phone_number_not_empty) register_customer_button.isEnabled = true
+                else register_customer_button.isEnabled = false
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+        })
+        register_customer_button.setOnClickListener{
+//            둘다 입력되어있으면 code flow는 첫줄에서 반환됨.
+            if(user_name_not_empty and user_phone_number_not_empty) {Toast.makeText(context, "등록되었습니다!", Toast.LENGTH_SHORT).show()}
+            else if(user_phone_number_not_empty) Toast.makeText(context, "이름를 입력해주세요!", Toast.LENGTH_SHORT).show()
+            else if(user_name_not_empty) Toast.makeText(context, "전화번호를 입력해주세요!", Toast.LENGTH_SHORT).show()
+//            else문에 도달할 일은 없음 (둘다 empty 인 경우 버튼 상태가 disabled 이기 때문에)
+            else {}
+        }
+        super.onActivityCreated(savedInstanceState)
     }
 /*
 //   fragment 안에서 옵션 선택을 가능하게함.

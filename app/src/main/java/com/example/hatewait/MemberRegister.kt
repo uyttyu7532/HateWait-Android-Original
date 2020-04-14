@@ -1,9 +1,12 @@
 package com.example.hatewait
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import kotlinx.android.synthetic.main.activity_members_register.*
 
 class MemberRegister : Fragment() {
 
@@ -15,6 +18,26 @@ class MemberRegister : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View ? {
         return inflater.inflate(R.layout.activity_members_register, container, false)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        user_id_form.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                val str = s.toString()
+                register_customer_button.isEnabled = str.isNotEmpty()
+            }
+            override fun beforeTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+            override fun onTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+        })
+
+        register_customer_button.setOnClickListener {
+//            등록이 끝났다면 지워줌!
+            Toast.makeText(context, "등록되었어요!", Toast.LENGTH_SHORT).show()
+            user_id_form.text.clear()
+        }
+        super.onActivityCreated(savedInstanceState)
     }
 
 }

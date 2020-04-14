@@ -35,10 +35,8 @@ class LoginRegisterViewPagerActivity : AppCompatActivity() {
                     view_pager.currentItem = tab!!.position
                 }
                 override fun onTabReselected(tab: TabLayout.Tab?) {
-
                 }
                 override fun onTabUnselected(tab: TabLayout.Tab?) {
-
                 }
             })
 

@@ -14,26 +14,41 @@
             app:layout_constraintTop_toTopOf="parent">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/card_constraint_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <ImageView
-                    android:id="@+id/imageView"
+                    android:id="@+id/main_logo"
                     android:layout_width="250dp"
                     android:layout_height="100dp"
                     android:layout_marginTop="10dp"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-
                     app:srcCompat="@drawable/main_logo" />
-
             <TextView
+                    android:id="@+id/greeting_customer_message"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="N번째 손님으로 등록되었습니다."/>
+                    android:layout_marginTop="15dp"
+                    android:text="회원님 환영합니다."
+                    android:textSize="25dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintTop_toBottomOf="@id/main_logo"/>
+            <TextView
+                    android:id="@+id/waiting_number_message"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="N번째 손님으로 등록되었습니다."
+                    android:textSize="25dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintTop_toBottomOf="@id/greeting_customer_message"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

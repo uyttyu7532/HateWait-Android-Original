@@ -7,6 +7,7 @@ import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.activity_non_members_reigster.*
+import org.jetbrains.anko.support.v4.startActivity
 import java.util.zip.Inflater
 
 class NonMemberRegister : Fragment() {
@@ -53,14 +54,22 @@ class NonMemberRegister : Fragment() {
             override fun onTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
         })
+
         register_customer_button.setOnClickListener{
 //            둘다 입력되어있으면 code flow는 첫줄에서 반환됨.
-            if(user_name_not_empty and user_phone_number_not_empty) {Toast.makeText(context, "등록되었습니다!", Toast.LENGTH_SHORT).show()}
+            if(user_name_not_empty and user_phone_number_not_empty) {
+                Toast.makeText(context, "등록되었습니다!", Toast.LENGTH_SHORT).show()
+                startActivity<Register_Check>(
+                    "USER_NAME" to user_name.text.toString(),
+                    "USER_PHONE_NUMBER" to user_phone_number.toString()
+                )
+            }
             else if(user_phone_number_not_empty) Toast.makeText(context, "이름를 입력해주세요!", Toast.LENGTH_SHORT).show()
             else if(user_name_not_empty) Toast.makeText(context, "전화번호를 입력해주세요!", Toast.LENGTH_SHORT).show()
 //            else문에 도달할 일은 없음 (둘다 empty 인 경우 버튼 상태가 disabled 이기 때문에)
             else {}
         }
+
         super.onActivityCreated(savedInstanceState)
     }
 /*

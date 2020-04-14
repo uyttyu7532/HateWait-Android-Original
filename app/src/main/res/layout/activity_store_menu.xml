@@ -125,7 +125,7 @@
                     <TextView
 
                             android:text="대기 현황 확인"
-                            android:ems="9"
+                            android:ems="7"
                             android:textColor="#ffffff"
                             android:layout_width="wrap_content"
                             android:layout_height="45dp"
@@ -180,10 +180,11 @@
                             android:text="태블릿 버전"
                             android:layout_width="match_parent"
                             android:layout_height="45dp"
+                            android:ems="7"
                             android:id="@+id/textView2"
                             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                             android:textColor="#ffffff"
-                            android:gravity="center" android:ems="9"/>
+                            android:gravity="center"/>
                 </androidx.cardview.widget.CardView>
 
 
@@ -229,11 +230,11 @@
 
                     <TextView
                             android:text="가게 신규 등록"
+                            android:ems="7"
                             android:layout_width="wrap_content"
                             android:layout_height="45dp"
                             android:id="@+id/textView3"
                             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                            android:ems="9"
                             android:gravity="center"
                             android:textColor="#ffffff"
 
@@ -287,7 +288,7 @@
                             android:layout_height="45dp"
                             android:id="@+id/textView4"
                             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                            android:ems="9"
+                            android:ems="7"
                             android:gravity="center"
                             android:textColor="#ffffff"/>
 

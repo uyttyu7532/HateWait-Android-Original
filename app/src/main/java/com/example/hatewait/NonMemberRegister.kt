@@ -63,6 +63,8 @@ class NonMemberRegister : Fragment() {
                     "USER_NAME" to user_name.text.toString(),
                     "USER_PHONE_NUMBER" to user_phone_number.toString()
                 )
+                user_name.text.clear()
+                user_phone_number.text.clear()
             }
             else if(user_phone_number_not_empty) Toast.makeText(context, "이름를 입력해주세요!", Toast.LENGTH_SHORT).show()
             else if(user_name_not_empty) Toast.makeText(context, "전화번호를 입력해주세요!", Toast.LENGTH_SHORT).show()

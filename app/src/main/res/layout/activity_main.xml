@@ -6,57 +6,39 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity">
-    <Button
-            android:text="store로 로그인"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:id="@+id/button_store"
-            app:layout_constraintHorizontal_bias="0.204"
-            app:layout_constraintBaseline_toBaselineOf="@+id/button_customer"/>
-    <Button
-            android:text="customer로 로그인"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/button_customer"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.875"
-            android:layout_marginBottom="18dp"
-            app:layout_constraintBottom_toTopOf="@+id/login"/>
+
     <TextView
+            android:id="@+id/idView"
             android:text="예린"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            android:id="@+id/idView" app:layout_constraintHorizontal_bias="0.498"
-            android:layout_marginBottom="24dp" app:layout_constraintBottom_toTopOf="@+id/username"/>
-
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_bias="0.500" />
 
     <EditText
             android:id="@+id/username"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="96dp"
             android:layout_marginEnd="24dp"
             android:hint="아이디를 입력하세요"
             android:inputType="textEmailAddress"
             android:selectAllOnFocus="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@id/idView"/>
 
     <EditText
-            android:id="@+id/user_phone_number"
+            android:id="@+id/user_password"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="24dp"
-
-
             android:hint="비밀번호를 입력하세요"
             android:imeActionLabel="imeActionLabel"
             android:imeOptions="actionDone"
@@ -67,21 +49,39 @@
             app:layout_constraintTop_toBottomOf="@+id/username"/>
 
     <Button
+            android:id="@+id/button_store"
+            android:text="store로 로그인"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/user_password"
+            app:layout_constraintHorizontal_bias="0.204"
+            app:layout_constraintBaseline_toBaselineOf="@+id/button_customer"/>
+
+    <Button
+            android:id="@+id/button_customer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="customer로 로그인"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.875"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/user_password" />
+
+    <Button
             android:id="@+id/login"
             android:enabled="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_marginStart="48dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="48dp"
-            android:layout_marginBottom="64dp"
+            android:layout_marginTop="30dp"
             android:text="로그인"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/user_phone_number"
-            app:layout_constraintVertical_bias="0.2"/>
+            app:layout_constraintTop_toBottomOf="@+id/button_customer" />
 
     <ProgressBar
             android:id="@+id/loading"
@@ -94,8 +94,8 @@
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="64dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/user_phone_number"
-            app:layout_constraintStart_toStartOf="@+id/user_phone_number"
+            app:layout_constraintEnd_toEndOf="@+id/user_password"
+            app:layout_constraintStart_toStartOf="@+id/user_password"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.3"/>
 
@@ -104,11 +104,11 @@
     <ImageButton
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:src="@drawable/naver_login_white_size"
             android:adjustViewBounds="true"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/login"
-            />
+            app:layout_constraintTop_toBottomOf="@id/login" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

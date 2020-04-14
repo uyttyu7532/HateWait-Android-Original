@@ -64,8 +64,8 @@
             android:imeOptions="actionDone"
             android:inputType="phone"
             android:selectAllOnFocus="true"
-            app:layout_constraintStart_toStartOf="@id/user_name"
-            app:layout_constraintEnd_toEndOf="@id/user_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintTop_toBottomOf="@id/user_name" />
 

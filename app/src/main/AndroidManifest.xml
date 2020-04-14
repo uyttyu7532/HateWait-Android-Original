@@ -17,21 +17,6 @@
         </activity>
         <activity android:name=".store_menu">
         </activity>
-        <activity
-                android:name=".JoinActivity"
-                android:configChanges="orientation|keyboardHidden|screenSize"
-                android:label="@string/title_activity_join"
-                android:theme="@style/FullscreenTheme">
-        </activity>
-        <activity
-                android:name=".StoreInfo"
-                android:label="@string/title_activity_add_new_store"
-                android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity android:name=".CustomerMenu">
-        </activity>
-        <activity android:name=".StoreMenu">
-        </activity>
         <activity android:name=".LoginRegisterViewPagerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

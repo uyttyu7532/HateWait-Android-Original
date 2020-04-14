@@ -11,7 +11,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" android:id="@+id/button_store"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/button_store"
             app:layout_constraintHorizontal_bias="0.204"
             app:layout_constraintBaseline_toBaselineOf="@+id/button_customer"/>
     <Button
@@ -22,7 +23,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.875"
-            android:layout_marginBottom="18dp" app:layout_constraintBottom_toTopOf="@+id/login"/>
+            android:layout_marginBottom="18dp"
+            app:layout_constraintBottom_toTopOf="@+id/login"/>
     <TextView
             android:text="예린"
             android:layout_width="wrap_content"
@@ -39,7 +41,6 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="96dp"
             android:layout_marginEnd="24dp"
-
             android:hint="아이디를 입력하세요"
             android:inputType="textEmailAddress"
             android:selectAllOnFocus="true"
@@ -97,4 +98,17 @@
             app:layout_constraintStart_toStartOf="@+id/password"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.3"/>
+
+
+<!--    adjustViewBound: 가로 세로 비율 자동조정.-->
+    <ImageButton
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/naver_login_white_size"
+            android:adjustViewBounds="true"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/login"
+            />
 </androidx.constraintlayout.widget.ConstraintLayout>

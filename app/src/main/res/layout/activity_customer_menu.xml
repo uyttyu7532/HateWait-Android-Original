@@ -67,7 +67,7 @@
                     android:layout_margin="5dp"/>
 
             <TextView
-                    android:text="3번째 순서 전에 상태바 알림과 문자 알림이 발송됩니다. 취소 버튼을 눌러 대기를 취소할 수 있습니다. "
+                    android:text="5번째 순서 전에 상태바 알림과 문자 알림이 발송됩니다. 취소 버튼을 눌러 대기를 취소할 수 있습니다. "
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/marquee"

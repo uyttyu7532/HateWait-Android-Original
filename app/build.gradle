@@ -40,7 +40,8 @@ dependencies {
 //    implementation 'com.google.firebase:firebase-auth:19.1.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation "org.jetbrains.anko:anko:$anko_version"
-    implementation 'com.google.android.material:material:1.1.0'
+//    3자리중 1자리는 세대(major), 2자리는 minor (보통 하위 버전 호환가능)
+    implementation 'com.google.android.material:material:1.2.0-alpha04'
 
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'

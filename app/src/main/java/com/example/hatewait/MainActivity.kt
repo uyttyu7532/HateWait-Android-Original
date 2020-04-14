@@ -14,10 +14,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-        var id = "건대보쌈"
-        var waitingnum = "10"
+        val id = "건대보쌈"
+        val waitingnum = "10"
 
         button_store.setOnClickListener{
+//            user의 아이디, 비번 입력했던 것은 지워줘야함. (뒤로가기시 복원되지 않도록)
+            user_id.text.clear()
+            user_password.text.clear()
             startActivity<store_menu>(
             "storename" to id,
             "waitingnum" to waitingnum
@@ -25,9 +28,12 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        var customername = "조예린"
+        val customername = "조예린"
 
         button_customer.setOnClickListener{
+
+            user_id.text.clear()
+            user_password.text.clear()
             startActivity<customer_menu>(
                 "customername" to customername
             )

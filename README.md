@@ -1,1 +1,5 @@
 # HateWait
+
+[Server]
+
+[Client]

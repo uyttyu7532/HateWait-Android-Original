@@ -1,5 +1,7 @@
 package com.example.hatewait
 
+import android.annotation.SuppressLint
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -9,10 +11,12 @@ import org.jetbrains.anko.startActivity
 
 class MainActivity : AppCompatActivity() {
     private val TAG = "MainActivity"
+    @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         val id = "건대보쌈"
         val waitingnum = "10"
@@ -21,7 +25,7 @@ class MainActivity : AppCompatActivity() {
 //            user의 아이디, 비번 입력했던 것은 지워줘야함. (뒤로가기시 복원되지 않도록)
             user_id.text.clear()
             user_password.text.clear()
-            startActivity<store_menu>(
+            startActivity<StoreMenu>(
             "storename" to id,
             "waitingnum" to waitingnum
             )
@@ -34,7 +38,7 @@ class MainActivity : AppCompatActivity() {
 
             user_id.text.clear()
             user_password.text.clear()
-            startActivity<customer_menu>(
+            startActivity<CustomerMenu>(
                 "customername" to customername
             )
         }

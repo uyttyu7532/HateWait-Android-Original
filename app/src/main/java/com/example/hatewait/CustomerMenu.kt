@@ -10,7 +10,7 @@ import android.text.style.StyleSpan
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_customer_menu.*
 
-class customer_menu : AppCompatActivity() {
+class CustomerMenu : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

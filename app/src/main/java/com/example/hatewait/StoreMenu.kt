@@ -1,5 +1,6 @@
 package com.example.hatewait
 
+import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
 import android.graphics.Typeface
 import android.os.Bundle
@@ -9,19 +10,18 @@ import android.text.Spanned
 import android.text.style.RelativeSizeSpan
 import android.text.style.StyleSpan
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_non_members_reigster.*
 import kotlinx.android.synthetic.main.activity_store_menu.*
 import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.support.v4.startActivity
 
-class store_menu : AppCompatActivity() {
+class StoreMenu : AppCompatActivity() {
+    @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_store_menu)
 
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
-//        imageButton2 이름 바꿀 필요성 있음 ex) tabblet_mode_button
+//        imageButton2 이름 바꿀 필요성 있음 ex) tablet_mode_button
         imageButton2.setOnClickListener {
             startActivity<LoginRegisterViewPagerActivity>(
             )

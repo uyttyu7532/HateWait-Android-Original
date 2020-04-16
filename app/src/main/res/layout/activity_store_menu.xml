@@ -104,7 +104,7 @@
                 app:layout_gravity="center"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="2dp"
-                android:clickable="true" android:id="@+id/checkWaiting">
+                android:clickable="true">
 
             <LinearLayout
                     android:orientation="vertical"
@@ -157,7 +157,8 @@
                 app:layout_gravity="center"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="2dp"
-                android:clickable="true">
+                android:clickable="true"
+                android:id="@+id/grid_tablet">
 
             <LinearLayout
                     android:orientation="vertical"
@@ -194,7 +195,8 @@
                         android:id="@+id/imageButton2"
                         android:scaleType="centerInside"
                         android:background="@drawable/touchipad"
-                        android:clickable="true" android:layout_margin="25dp"/>
+                        android:clickable="true"
+                        android:layout_margin="25dp"/>
 
             </LinearLayout>
 

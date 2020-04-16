@@ -1,22 +1,24 @@
 package com.example.hatewait
 
+import android.annotation.SuppressLint
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_register_tab_pager.*
 
 //Recycler View Adpater
 class LoginRegisterViewPagerActivity : AppCompatActivity() {
+    @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_tab_pager)
-        kind_of_member_tab_layout.addTab(kind_of_member_tab_layout.newTab().setText("비회원 로그인"))
-        kind_of_member_tab_layout.addTab(kind_of_member_tab_layout.newTab().setText("회원 로그인"))
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+        kind_of_member_tab_layout.addTab(kind_of_member_tab_layout.newTab().setText("비회원"))
+        kind_of_member_tab_layout.addTab(kind_of_member_tab_layout.newTab().setText("회원"))
 
         val pagerAdapter = PagerAdapter(supportFragmentManager, tabCount = 2)
         view_pager.adapter = pagerAdapter

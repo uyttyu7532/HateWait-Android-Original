@@ -21,10 +21,13 @@ class StoreMenu : AppCompatActivity() {
 
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
-//        imageButton2 이름 바꿀 필요성 있음 ex) tablet_mode_button
-        imageButton2.setOnClickListener {
+        tabletBtn.setOnClickListener {
             startActivity<LoginRegisterViewPagerActivity>(
             )
+        }
+
+        listBtn.setOnClickListener {
+            startActivity<StoreWaitingList>()
         }
 
         var nextname = "조예린"

@@ -13,7 +13,8 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".CustomerWaitingList"></activity>
+        <activity android:name=".Add_waiting"></activity>
+        <activity android:name=".CustomerWaitingList" />
         <activity android:name=".StoreWaitingList" />
         <activity android:name=".CustomerMenu" />
         <activity android:name=".StoreMenu" /> <!--  -->

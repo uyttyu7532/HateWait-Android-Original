@@ -81,6 +81,7 @@ class SwipeRecyclerViewAdapter( val items: ArrayList<ClientData>) : RecyclerSwip
                 }
             }
 
+            // db목록에서 대기손님지우기?
         viewHolder.delBtn.setOnClickListener { view ->
             mItemManger.removeShownLayouts(viewHolder.swipeLayout)
             items.removeAt(position)
@@ -88,6 +89,12 @@ class SwipeRecyclerViewAdapter( val items: ArrayList<ClientData>) : RecyclerSwip
             notifyItemRangeChanged(position, items.size)
             mItemManger.closeAllItems()
         }
+
+
+        viewHolder.callBtn.setOnClickListener { view ->
+            // 호출 (상태바알림)
+        }
+
         // mItemManger is member in RecyclerSwipeAdapter Class
         mItemManger.bindView(viewHolder.itemView, position)
     }
@@ -108,12 +115,14 @@ class SwipeRecyclerViewAdapter( val items: ArrayList<ClientData>) : RecyclerSwip
         var clientView:TextView
         var detailView:TextView
         var delBtn : ImageButton
+        var callBtn : ImageButton
 
         init {
             swipeLayout = itemView.findViewById(R.id.swipeLayout) as SwipeLayout
             clientView = itemView.findViewById(R.id.clientView) as TextView
             detailView = itemView.findViewById(R.id.detailView) as TextView
             delBtn = itemView.findViewById(R.id.delBtn) as ImageButton
+            callBtn = itemView.findViewById(R.id.callBtn) as ImageButton
         }
     }
 

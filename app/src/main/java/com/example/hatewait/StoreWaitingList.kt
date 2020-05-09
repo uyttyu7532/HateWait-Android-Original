@@ -3,14 +3,17 @@ package com.example.hatewait
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.CompoundButton
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.daimajia.swipe.util.Attributes
+import kotlinx.android.synthetic.main.activity_store_waiting_list.*
 import java.util.*
 
-    /**
+
+/**
      * RecyclerView: The new recycler view replaces the list view. Its more modular and therefore we
      * must implement some of the functionality ourselves and attach it to our recyclerview.
      * 1) Position items on the screen: This is done with LayoutManagers
@@ -39,6 +42,15 @@ class StoreWaitingList : AppCompatActivity() {
             fab.setOnClickListener { view ->
                 addDialog()
             }
+
+            autoCallSwitch.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
+                if(isChecked){
+                    //자동호출 on
+                }
+                else{
+                    //자동호출 off
+                }
+            })
         }
 
 
@@ -122,5 +134,7 @@ class StoreWaitingList : AppCompatActivity() {
             val dig = builder.create()
             dig.show()
         }
+
+
 
             }

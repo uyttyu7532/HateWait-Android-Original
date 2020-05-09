@@ -7,7 +7,7 @@ import android.os.Handler
 
 class Splash : Activity(){
 
-    val TIME_OUT : Long = 4000
+    val TIME_OUT : Long = 2000
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

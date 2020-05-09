@@ -16,12 +16,12 @@
                 android:id="@+id/autoCallSwitch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignRight="@id/recyclerView"
+                android:layout_alignRight="@id/myRecyclerView"
                 android:layout_margin="10dp"
                 android:text="자동호출" />
 
         <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
+                android:id="@+id/myRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@id/autoCallSwitch">
@@ -37,6 +37,7 @@
             android:layout_margin="20dp"
             android:clickable="true"
             android:tint="#ffffff"
+            app:backgroundTint="@color/colorPrimary"
             app:srcCompat="@drawable/ic_add_black_24dp" />
 
 

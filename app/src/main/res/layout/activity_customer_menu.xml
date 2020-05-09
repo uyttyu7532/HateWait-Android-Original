@@ -163,7 +163,7 @@
                 <ImageButton
                         android:layout_width="70dp"
                         android:layout_height="60dp"
-                        android:id="@+id/imageButton"
+                        android:id="@+id/delBtn"
                         android:scaleType="centerInside"
                         android:background="@drawable/test"
                         android:clickable="true"

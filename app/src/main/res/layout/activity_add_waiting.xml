@@ -20,12 +20,12 @@
                 android:orientation="horizontal"
                 android:layout_gravity="center">
             <TextView
-                    android:id="@+id/addWaitingName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="이름: "
                     android:ems="5"/>
             <EditText
+                    android:id="@+id/addWaitingName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -37,12 +37,12 @@
                 android:orientation="horizontal"
                 android:layout_gravity="center">
             <TextView
-                    android:id="@+id/addWaitingPerson"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="인원 수: "
                     android:ems="5"/>
             <EditText
+                    android:id="@+id/addWaitingPerson"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -55,13 +55,12 @@
                 android:orientation="horizontal"
                 android:layout_gravity="center">
             <TextView
-                    android:id="@+id/addWaitingPhonenum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="핸드폰 번호: "
                     android:ems="5"/>
             <EditText
-                    android:id="@+id/editText"
+                    android:id="@+id/addWaitingPhonenum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

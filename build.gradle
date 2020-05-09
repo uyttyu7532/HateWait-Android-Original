@@ -22,7 +22,7 @@ allprojects {
         google()
         jcenter()
 //        business hour time picker
-        maven { url 'https://jitpack.io' }
+//        maven { url 'https://jitpack.io' }
     }
 }
 

@@ -1,13 +1,19 @@
 package com.example.hatewait
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.CompoundButton
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.customview.customView
+import com.afollestad.materialdialogs.customview.getCustomView
 import com.daimajia.swipe.util.Attributes
 import kotlinx.android.synthetic.main.activity_store_waiting_list.*
 import java.util.*
@@ -33,6 +39,7 @@ class StoreWaitingList : AppCompatActivity() {
         }
 
 
+        @SuppressLint("WrongViewCast")
         private fun init() {
 
             readFile()
@@ -40,8 +47,33 @@ class StoreWaitingList : AppCompatActivity() {
 
             val fab: View = findViewById(R.id.addFab)
             fab.setOnClickListener { view ->
-                addDialog()
+//                addDialog()
+
+
+
+                val materialDialog = MaterialDialog(this).show {
+                    noAutoDismiss()
+                    title(text = "대기손님 추가")
+                    val customView = customView(R.layout.activity_add_waiting).getCustomView()
+                    val addWaitingName = customView.findViewById(R.id.addWaitingName) as TextView
+                    var addWaitingPerson = customView.findViewById(R.id.addWaitingPerson) as TextView
+                    var addWaitingPhonenum = customView.findViewById(R.id.addWaitingPhonenum) as TextView
+                    positiveButton() { dialog ->
+                        Log.d("이름",addWaitingName.text.toString())
+                        Log.d("인원",addWaitingPerson.text.toString())
+                        Log.d("전화번호",addWaitingPhonenum.text.toString())
+
+                        dismiss()
+                    }
+                    negativeButton() { dialog ->
+                        dismiss()
+                    }
+                }
             }
+
+
+
+
 
             autoCallSwitch.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
                 if(isChecked){

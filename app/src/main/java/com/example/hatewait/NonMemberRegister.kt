@@ -1,27 +1,25 @@
 package com.example.hatewait
 
+
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.activity_non_members_reigster.*
 import org.jetbrains.anko.support.v4.startActivity
 import java.util.zip.Inflater
 
-class NonMemberRegister : Fragment() {
+class NonMemberRegister : androidx.fragment.app.Fragment() {
 
 // non_member 페이지를 열어줌
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View ? {
-
-
         return inflater.inflate(R.layout.activity_non_members_reigster, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
-        var user_name_not_empty : Boolean = false
-        var user_phone_number_not_empty : Boolean = false
+        var user_name_not_empty = false
+        var user_phone_number_not_empty = false
 
         user_name.addTextChangedListener(object : TextWatcher {
             //            text에 변화가 있을 때마다

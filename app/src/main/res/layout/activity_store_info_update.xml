@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:context=".StoreInfoUpdate">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/store_name_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+                android:id="@+id/store_logo"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/restaurant_ex"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+        <TextView
+                android:id="@+id/store_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/store_logo"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="건국족발"
+                android:textSize="40sp"/>
+
+        <ImageButton
+                android:id="@+id/store_name_edit_button"
+                android:src="@drawable/edit_button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:baselineAlignBottom="true"
+                android:adjustViewBounds="true"
+                android:padding="0dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/store_info_layout"
+            android:layout_marginTop="150dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginHorizontal="50dp"
+        app:layout_constraintTop_toBottomOf="@id/store_name_layout">
+
+
+        <LinearLayout
+                android:id="@+id/store_address_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toTopOf="parent">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/store_item_text"
+                    android:layout_gravity="center"
+                    android:text="주소"/>
+
+            <EditText
+                    android:id="@+id/store_address_editText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/store_input_left_margin"
+                    android:maxLines="2"
+                    android:enabled="false"
+                    android:text="서울특별시 광진구 화양1동 487-2"
+                    android:inputType="textMultiLine"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/store_capacity_number_layout"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/store_address_layout">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/store_item_text"
+                    android:layout_gravity="center"
+                    android:text="수용 가능 인원"/>
+
+            <EditText
+                    android:id="@+id/store_capacity_number_editText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/store_input_left_margin"
+                    android:enabled="false"
+                    android:hint="수용 가능한 인원수를 입력하세요"
+                    android:text="50"
+                    android:inputType="number"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/store_phone_number_layout"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/store_capacity_number_layout">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/store_item_text"
+                    android:layout_gravity="center"
+                    android:text="전화번호"/>
+
+            <EditText
+                    android:id="@+id/store_phone_number_editText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/store_input_left_margin"
+                    android:enabled="false"
+                    android:hint="가게 전화번호를 입력하세요"
+                    android:text="02-XXXX-XXXX"
+                    android:inputType="phone"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/store_business_hours_layout"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:orientation="horizontal"
+                android:baselineAligned="true"
+                app:layout_constraintTop_toBottomOf="@+id/store_phone_number_layout">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/store_item_text"
+                    android:layout_gravity="center"
+                    android:text="영업시간"/>
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/store_input_left_margin"
+                    android:text="매일 08:00 ~ 22:00 (휴무일: X)" />
+
+            <!--            <EditText-->
+<!--                    android:id="@+id/store_phone_number_editText"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginLeft="@dimen/store_input_left_margin"-->
+<!--                    android:enabled="false"-->
+<!--                    android:hint="가게 전화번호를 입력하세요"-->
+<!--                    android:text="02-XXXX-XXXX"-->
+<!--                    android:inputType="phone"/>-->
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

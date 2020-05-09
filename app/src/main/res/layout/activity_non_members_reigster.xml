@@ -16,9 +16,7 @@
             android:src="@drawable/main_logo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/username"
-            app:layout_constraintHorizontal_bias="0.498" />
+            app:layout_constraintTop_toTopOf="parent" />
 
 
 <!--    username -> user_name (id는 언더바 사용 (snake case))-->

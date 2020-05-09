@@ -6,8 +6,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
+
+
 // RecyclerView에 표시될 View 생성
 class MyAdapter(val items: ArrayList<ClientData>): RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
+
 
     interface onItemClickListener{
        fun onItemClick( holder:MyViewHolder, view: View, data:String, position: Int)
@@ -30,6 +33,8 @@ class MyAdapter(val items: ArrayList<ClientData>): RecyclerView.Adapter<MyAdapte
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.clientView.text=items[position].name+" "+items[position].people_num+"명 "+items[position].phone
         holder.detailView.text=items[position].id +" "+items[position].is_member
+
+
     }
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
@@ -59,9 +64,6 @@ class MyAdapter(val items: ArrayList<ClientData>): RecyclerView.Adapter<MyAdapte
         items.removeAt(pos)
         notifyItemRemoved(pos)
     }
-
-
-
 
 
 }

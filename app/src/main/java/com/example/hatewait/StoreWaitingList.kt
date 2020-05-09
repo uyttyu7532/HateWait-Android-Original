@@ -81,7 +81,6 @@ class StoreWaitingList : AppCompatActivity() {
         }
 
 
-
     }
 
 
@@ -125,5 +124,9 @@ class StoreWaitingList : AppCompatActivity() {
         }
     }
 
+
+
 }
+
+
 

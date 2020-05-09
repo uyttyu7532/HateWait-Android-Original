@@ -14,15 +14,18 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".StoreInfoUpdate"/>
+        <activity android:name=".StoreNameChangeDialog"></activity>
+        <activity android:name=".StoreInfoUpdate">
+        </activity>
         <activity android:name=".CustomerMenu" />
-        <activity android:name=".StoreMenu"/>
-        <activity android:name=".LoginRegisterViewPagerActivity"/>
-        <activity android:name=".Register_Check"/>
-        <activity android:name=".MainActivity"/>
+         <activity android:name=".StoreMenu"/>
+        <activity android:name=".LoginRegisterViewPagerActivity" />
+        <activity android:name=".Register_Check" />
+        <activity android:name=".MainActivity" />
         <activity android:name=".Add_waiting" />
         <activity android:name=".CustomerWaitingList" />
-        <activity android:name=".StoreWaitingList" />
+         <activity android:name=".StoreWaitingList" />
+        <activity android:name=".BusinessHourPick" />
         <activity
                 android:name=".Splash"
                 android:screenOrientation="portrait"
@@ -30,12 +33,10 @@
                 tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
-
 
         <service android:name=".MyFirebaseMessagingService">
             <intent-filter>

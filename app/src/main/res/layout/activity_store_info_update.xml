@@ -16,8 +16,8 @@
 
         <ImageView
                 android:id="@+id/store_logo"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
                 android:src="@drawable/restaurant_ex"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
@@ -26,17 +26,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toEndOf="@id/store_logo"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/store_logo"
+                app:layout_constraintBottom_toBottomOf="@id/store_logo"
                 android:text="건국족발"
                 android:textSize="40sp"/>
 
         <ImageButton
                 android:id="@+id/store_name_edit_button"
                 android:src="@drawable/edit_button"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/store_name"
                 android:baselineAlignBottom="true"
                 android:adjustViewBounds="true"
                 android:padding="0dp" />
@@ -100,7 +101,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/store_input_left_margin"
-                    android:enabled="false"
+                    android:enabled="true"
                     android:hint="수용 가능한 인원수를 입력하세요"
                     android:text="50"
                     android:inputType="number"/>
@@ -152,8 +153,9 @@
                     android:text="영업시간"/>
 
             <TextView
+                    android:id="@+id/store_business_hours_text"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:layout_marginLeft="@dimen/store_input_left_margin"
                     android:text="매일 08:00 ~ 22:00 (휴무일: X)" />

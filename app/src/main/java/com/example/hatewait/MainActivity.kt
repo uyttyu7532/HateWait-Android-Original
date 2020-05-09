@@ -25,10 +25,10 @@ class MainActivity : AppCompatActivity() {
 //            user의 아이디, 비번 입력했던 것은 지워줘야함. (뒤로가기시 복원되지 않도록)
             user_id.text.clear()
             user_password.text.clear()
-            startActivity<StoreMenu>(
-            "storename" to id,
-            "waitingnum" to waitingnum
-            )
+//            startActivity<StoreMenu>(
+//            "storename" to id,
+//            "waitingnum" to waitingnum
+//            )
         }
 
 

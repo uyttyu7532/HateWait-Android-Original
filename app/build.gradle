@@ -16,6 +16,15 @@ android {
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
     }
+
+
+//    Android O (min 26 제한 풀기)
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+
     buildTypes {
         release {
             minifyEnabled false
@@ -44,10 +53,12 @@ dependencies {
     implementation "org.jetbrains.anko:anko:$anko_version"
 //    3자리중 1자리는 세대(major), 2자리는 minor (보통 하위 버전 호환가능)
 
-    implementation 'com.google.android.material:material:1.2.0-alpha02'
+    implementation 'com.google.android.material:material:1.2.0-alpha06'
 
-//    business hours time picker
-//    implementation 'com.github.bashizip:business-hours-picker:v1.0.0-beta.2'
+//    AppCompatButton library
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    //    business hours time picker
+    implementation 'com.github.bashizip:business-hours-picker:v1.0.0-beta.2'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.android.support:gridlayout-v7:28.0.0'
 

@@ -32,7 +32,7 @@ class StoreNameChangeDialog : AppCompatDialogFragment() {
                 store_name.text = store_name_editText.text.toString()
             })
 
-
+        init()
         return builder.create()
     }
 
@@ -55,7 +55,7 @@ class StoreNameChangeDialog : AppCompatDialogFragment() {
     }
 
     fun init() {
-        val storeNameRegex = Regex("^[a-zA-Zㄱ-힣0-9|\\s]{1,}$")
+        val storeNameRegex = Regex("^[a-zA-Zㄱ-힣0-9|\\s|,]{1,}$")
         fun verifyName(storeName : String) : Boolean = storeNameRegex.matches(storeName)
 
         store_name_editText.addTextChangedListener(object : TextWatcher {

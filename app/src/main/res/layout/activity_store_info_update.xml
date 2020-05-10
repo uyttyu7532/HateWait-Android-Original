@@ -171,6 +171,17 @@
 <!--                    android:inputType="phone"/>-->
         </LinearLayout>
 
+        <LinearLayout
+                android:id="@+id/store_pictures_layout"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/store_business_hours_layout">
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

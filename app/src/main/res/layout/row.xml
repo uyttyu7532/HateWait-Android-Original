@@ -1,0 +1,80 @@
+<com.daimajia.swipe.SwipeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/swipeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
+
+
+
+    <!-- Bottom View Start-->
+    <FrameLayout
+            android:id="@+id/bottom_wrapper"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:background="#F14545"
+            android:orientation="vertical">
+
+        <ImageButton
+                android:id="@+id/delBtn"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:background="@drawable/trash"
+                android:tint="#FFFFFF" />
+    </FrameLayout>
+    <!-- Bottom View End-->
+
+
+    <FrameLayout
+            android:id="@+id/bottom_wrapper_left"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:background="#66ddff00"
+            android:orientation="vertical">
+
+        <ImageButton
+                android:id="@+id/callBtn"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:background="@drawable/bell" />
+    </FrameLayout>
+
+    <!-- Surface View Start -->
+    <LinearLayout
+            android:id="@id/bottom_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#EFEFEF"
+            android:orientation="vertical">
+
+        <TextView
+                android:id="@+id/clientView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="#FFFFFF"
+                android:clickable="true"
+                android:padding="25dp"
+                android:text="TextView"
+                android:textColor="#000000"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+        <TextView
+                android:id="@+id/detailView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:paddingHorizontal="20dp"
+                android:text="대기열에 추가된 시간: 2020-05-03-09:14:02 \n최근 알림 보낸시간: 2020-05-08-09:40:15"
+                android:visibility="gone" />
+
+    </LinearLayout>
+    <!-- Surface View End -->
+
+
+
+</com.daimajia.swipe.SwipeLayout>

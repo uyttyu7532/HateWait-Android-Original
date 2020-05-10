@@ -16,7 +16,7 @@ class LoginRegisterViewPagerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_tab_pager)
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+//        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         kind_of_member_tab_layout.addTab(kind_of_member_tab_layout.newTab().setText("비회원"))
         kind_of_member_tab_layout.addTab(kind_of_member_tab_layout.newTab().setText("회원"))
 

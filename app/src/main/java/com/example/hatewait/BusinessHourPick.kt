@@ -1,7 +1,5 @@
 package com.example.hatewait
 
-import android.app.admin.SystemUpdatePolicy
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -9,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bashizip.bhlib.BusinessHours
 import kotlinx.android.synthetic.main.activity_business_hour_pick.*
 import java.io.InvalidObjectException
-import java.io.Serializable
 
 class BusinessHourPick : AppCompatActivity() {
 
@@ -21,6 +18,14 @@ class BusinessHourPick : AppCompatActivity() {
     }
 
     fun init() {
+        var bhs: List<BusinessHours>? = null
+//        bhs = try {
+//            bh_picker.businessHoursList
+//        } catch (e: ValdationException) {
+//            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show()
+//            return
+//        }
+//
         cancel_button.setOnClickListener {
             finish()
         }

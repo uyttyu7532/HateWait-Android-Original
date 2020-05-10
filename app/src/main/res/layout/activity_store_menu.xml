@@ -264,16 +264,17 @@
                 app:cardCornerRadius="10dp"
                 app:cardElevation="2dp"
                 android:clickable="true"
-                android:id="@+id/editBtn">
+                android:id="@+id/store_info_update_button">
 
             <LinearLayout
+                    android:id="@+id/store_info_update_button2"
                     android:orientation="vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     app:layout_gravity="center"
                     android:clickable="true"
-            >
+                    android:focusable="true">
 
                 <androidx.cardview.widget.CardView
                         android:layout_height="wrap_content"

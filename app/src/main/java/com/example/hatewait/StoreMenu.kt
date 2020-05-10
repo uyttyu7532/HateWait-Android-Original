@@ -22,12 +22,18 @@ class StoreMenu : AppCompatActivity() {
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         tabletBtn.setOnClickListener {
-            startActivity<LoginRegisterViewPagerActivity>(
-            )
+            startActivity<LoginRegisterViewPagerActivity>()
         }
 
         listBtn.setOnClickListener {
             startActivity<StoreWaitingList>()
+        }
+
+//        store_info_update_button.setOnClickListener {
+//            startActivity<StoreInfoUpdate>()
+//        }
+        store_info_update_button2.setOnClickListener {
+            startActivity<StoreInfoUpdate>()
         }
 
         var nextname = "조예린"

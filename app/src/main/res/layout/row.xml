@@ -1,5 +1,4 @@
-<com.daimajia.swipe.SwipeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/swipeLayout"
         android:layout_width="match_parent"
@@ -7,13 +6,13 @@
         android:layout_margin="10dp">
 
 
-
     <!-- Bottom View Start-->
     <FrameLayout
-            android:id="@+id/bottom_wrapper"
-            android:layout_width="100dp"
+            android:id="@+id/bottom_wrapper_right"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="#F14545"
+            android:clickable="true"
             android:orientation="vertical">
 
         <ImageButton
@@ -22,59 +21,139 @@
                 android:layout_height="20dp"
                 android:layout_gravity="center"
                 android:background="@drawable/trash"
-                android:tint="#FFFFFF" />
+                android:tint="#FFFFFF"
+                android:layout_margin="30dp"/>
     </FrameLayout>
     <!-- Bottom View End-->
 
 
-    <FrameLayout
-            android:id="@+id/bottom_wrapper_left"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:background="#66ddff00"
-            android:orientation="vertical">
+    <!--        <FrameLayout-->
+    <!--                android:id="@+id/bottom_wrapper_left"-->
+    <!--                android:layout_width="100dp"-->
+    <!--                android:layout_height="match_parent"-->
+    <!--                android:background="#66ddff00"-->
+    <!--                android:orientation="vertical">-->
 
-        <ImageButton
-                android:id="@+id/callBtn"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center"
-                android:background="@drawable/bell" />
-    </FrameLayout>
+    <!--            <ImageButton-->
+    <!--                    android:id="@+id/callBtn"-->
+    <!--                    android:layout_width="20dp"-->
+    <!--                    android:layout_height="20dp"-->
+    <!--                    android:layout_gravity="center"-->
+    <!--                    android:background="@drawable/bell" />-->
+    <!--        </FrameLayout>-->
 
     <!-- Surface View Start -->
+
     <LinearLayout
-            android:id="@id/bottom_wrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#EFEFEF"
             android:orientation="vertical">
 
-        <TextView
+
+        <androidx.cardview.widget.CardView
                 android:id="@+id/clientView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="#FFFFFF"
-                android:clickable="true"
-                android:padding="25dp"
-                android:text="TextView"
-                android:textColor="#000000"
-                android:textSize="15dp"
-                android:textStyle="bold" />
+                android:layout_height="wrap_content">
 
-        <TextView
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center">
+
+                <FrameLayout
+                        android:id="@+id/bottom_wrapper_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="#66ddff00">
+
+                    <ImageButton
+                            android:id="@+id/callBtn"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:layout_margin="30dp"
+                            android:background="@drawable/bell" />
+                </FrameLayout>
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_margin="10dp"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                    <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:orientation="horizontal">
+
+                        <TextView
+                                android:id="@+id/clientNameView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="#FFFFFF"
+                                android:paddingLeft="10dp"
+                                android:text="조예린"
+                                android:textColor="#000000"
+                                android:textSize="15dp"
+                                android:textStyle="bold" />
+
+                        <TextView
+                                android:id="@+id/clientNumView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="#FFFFFF"
+                                android:paddingLeft="10dp"
+                                android:text="(3명)" />
+                    </LinearLayout>
+
+                    <TextView
+                            android:id="@+id/clientPhoneView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="#FFFFFF"
+                            android:paddingLeft="10dp"
+                            android:text="010-0000-1111" />
+                </LinearLayout>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
                 android:id="@+id/detailView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:paddingHorizontal="20dp"
-                android:text="대기열에 추가된 시간: 2020-05-03-09:14:02 \n최근 알림 보낸시간: 2020-05-08-09:40:15"
-                android:visibility="gone" />
+                android:visibility="gone"
+                android:background="#EFEFEF">
+
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                <TextView
+                        android:id="@+id/detailView1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="대기열에 추가된 시간: 2020-05-03-09:14:02" />
+
+                <TextView
+                        android:id="@+id/detailView2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="최근에 알림 보낸시간: 2020-05-08-09:40:15" />
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
 
     </LinearLayout>
-    <!-- Surface View End -->
 
+    <!-- Surface View End -->
 
 
 </com.daimajia.swipe.SwipeLayout>

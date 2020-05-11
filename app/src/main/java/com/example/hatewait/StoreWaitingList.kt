@@ -72,9 +72,6 @@ class StoreWaitingList : AppCompatActivity() {
             }
 
 
-
-
-
             autoCallSwitch.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
                 if(isChecked){
                     //자동호출 on

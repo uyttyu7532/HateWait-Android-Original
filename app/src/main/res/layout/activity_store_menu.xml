@@ -1,100 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity"
-        android:visibility="visible"
         android:background="@color/bgColor"
->
+        android:visibility="visible"
+        tools:context=".MainActivity">
 
     <LinearLayout
-            android:orientation="vertical"
+            android:id="@+id/greeting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/greeting"
-            android:layout_marginTop="20dp"
             android:layout_marginStart="25dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="25dp"
-            android:layout_marginBottom="20dp">
+            android:layout_marginBottom="20dp"
+            android:orientation="vertical">
+
         <TextView
+                android:id="@+id/greetStoreText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="건대족발 회원님 환영합니다."
-                android:id="@+id/greetStoreText"
-        />
+                android:text="건대족발 회원님 환영합니다." />
+
         <TextView
+                android:id="@+id/waitingnumText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="30명 대기중"
-                android:id="@+id/waitingnumText"
 
-        />
+                />
     </LinearLayout>
 
     <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:cardCornerRadius="20dp"
-            android:layout_centerHorizontal="true"
-            app:cardBackgroundColor="@color/cardview_light_background"
-            app:cardElevation="2dp"
-            android:clickable="true"
             android:layout_above="@+id/nextCard"
             android:layout_below="@id/greeting"
-            android:layout_marginStart="50dp" android:layout_marginEnd="50dp"
-    >
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:clickable="true"
+            app:cardBackgroundColor="@color/cardview_light_background"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="2dp">
+
         <TextView
-                android:text="다음 순서 호출"
+                android:id="@+id/textView6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView6"
                 android:layout_gravity="center"
+                android:text="다음 순서 호출"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@color/common_google_signin_btn_text_dark_focused"/>
+                android:textColor="@color/common_google_signin_btn_text_dark_focused" />
     </androidx.cardview.widget.CardView>
 
 
     <androidx.cardview.widget.CardView
+            android:id="@+id/nextCard"
             android:layout_width="match_parent"
-            android:layout_above="@+id/grid"
-            app:cardElevation="2dp"
-            app:cardCornerRadius="10dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_above="@+id/grid"
             android:layout_marginStart="25dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="25dp"
             android:layout_marginBottom="20dp"
-            android:id="@+id/nextCard">
+            app:cardCornerRadius="10dp"
+            app:cardElevation="2dp">
+
         <TextView
-                android:text="다음 순서: "
+                android:id="@+id/nextText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/nextText"
-                android:singleLine="true"
+                android:layout_gravity="bottom"
+                android:layout_margin="5dp"
                 android:ellipsize="marquee"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:marqueeRepeatLimit="marquee_forever"
-                android:layout_gravity="bottom"
-                android:layout_margin="5dp"
+                android:singleLine="true"
+                android:text="다음 순서: "
 
-        />
+                />
     </androidx.cardview.widget.CardView>
 
     <androidx.gridlayout.widget.GridLayout
             android:id="@+id/grid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:rowCount="2"
-            app:columnCount="2"
-            app:useDefaultMargins="true"
-            android:layout_centerInParent="true"
             android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="10dp"
             android:paddingBottom="10dp"
-            android:layout_marginBottom="10dp">
+            app:columnCount="2"
+            app:rowCount="2"
+            app:useDefaultMargins="true">
 
         <androidx.cardview.widget.CardView
                 android:id="@+id/listBtn"
@@ -150,15 +151,15 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-                android:layout_margin="10dp"
+                android:id="@+id/tabletBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:clickable="true"
                 android:gravity="center"
-                app:layout_gravity="center"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="2dp"
-                android:clickable="true"
-                android:id="@+id/tabletBtn">
+                app:layout_gravity="center">
 
             <LinearLayout
                     android:layout_width="match_parent"
@@ -201,109 +202,106 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-                android:layout_margin="10dp"
+                android:id="@+id/infoBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:clickable="true"
                 android:gravity="center"
-                app:layout_gravity="center"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="2dp"
-                android:clickable="true" android:id="@+id/infoBtn">
+                app:layout_gravity="center">
 
             <LinearLayout
-                    android:orientation="vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    app:layout_gravity="center"
                     android:clickable="true"
-            >
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    app:layout_gravity="center">
 
                 <androidx.cardview.widget.CardView
-                        android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
-                        app:cardBackgroundColor="@color/colorPrimary"
-                        app:cardElevation="2dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
+                        app:cardBackgroundColor="@color/colorPrimary"
                         app:cardCornerRadius="0dp"
-                >
+                        app:cardElevation="2dp">
 
                     <TextView
-                            android:text="가게 신규 등록"
-                            android:ems="7"
+                            android:id="@+id/textView3"
                             android:layout_width="wrap_content"
                             android:layout_height="45dp"
-                            android:id="@+id/textView3"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            android:ems="7"
                             android:gravity="center"
+                            android:text="가게 신규 등록"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                             android:textColor="#ffffff"
 
-                    />
+                            />
                 </androidx.cardview.widget.CardView>
 
                 <ImageButton
+                        android:id="@+id/imageButton3"
                         android:layout_width="70dp"
                         android:layout_height="60dp"
-                        android:id="@+id/imageButton3"
-                        android:scaleType="centerInside"
+                        android:layout_margin="25dp"
                         android:background="@drawable/open"
                         android:clickable="true"
-                        android:layout_margin="25dp"
-                />
+                        android:scaleType="centerInside" />
 
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-                android:layout_margin="10dp"
+                android:id="@+id/store_info_update_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:clickable="true"
                 android:gravity="center"
-                app:layout_gravity="center"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="2dp"
-                android:clickable="true"
-                android:id="@+id/store_info_update_button">
+                app:layout_gravity="center">
 
             <LinearLayout
                     android:id="@+id/store_info_update_button2"
-                    android:orientation="vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    app:layout_gravity="center"
                     android:clickable="true"
-                    android:focusable="true">
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    app:layout_gravity="center">
 
                 <androidx.cardview.widget.CardView
-                        android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         app:cardBackgroundColor="@color/colorPrimary"
-                        app:cardCornerRadius="0dp"
-                >
+                        app:cardCornerRadius="0dp">
 
                     <TextView
-                            android:text="가게 정보 수정"
+                            android:id="@+id/textView4"
                             android:layout_width="wrap_content"
                             android:layout_height="45dp"
-                            android:id="@+id/textView4"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                             android:ems="7"
                             android:gravity="center"
-                            android:textColor="#ffffff"/>
+                            android:text="가게 정보 수정"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            android:textColor="#ffffff" />
 
                 </androidx.cardview.widget.CardView>
 
                 <ImageButton
+                        android:id="@+id/imageButton4"
                         android:layout_width="70dp"
                         android:layout_height="60dp"
-                        app:srcCompat="@null"
-                        android:id="@+id/imageButton4"
-                        android:scaleType="centerInside"
+                        android:layout_margin="25dp"
                         android:background="@drawable/shop"
                         android:clickable="true"
-                        android:layout_margin="25dp"/>
+                        android:scaleType="centerInside"
+                        app:srcCompat="@null" />
 
             </LinearLayout>
 

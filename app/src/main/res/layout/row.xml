@@ -22,7 +22,7 @@
                 android:layout_gravity="center"
                 android:background="@drawable/trash"
                 android:tint="#FFFFFF"
-                android:layout_margin="30dp"/>
+                android:layout_margin="20dp"/>
     </FrameLayout>
     <!-- Bottom View End-->
 
@@ -72,7 +72,7 @@
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:layout_gravity="center"
-                            android:layout_margin="30dp"
+                            android:layout_margin="20dp"
                             android:background="@drawable/bell" />
                 </FrameLayout>
 
@@ -80,9 +80,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
-                        android:layout_margin="10dp"
+                        android:layout_margin="5dp"
                         android:orientation="vertical"
-                        android:padding="10dp">
+                        android:padding="5dp">
 
                     <LinearLayout
                             android:layout_width="wrap_content"

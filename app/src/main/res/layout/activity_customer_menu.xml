@@ -1,228 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         tools:context=".CustomerMenu">
 
     <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/greeting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/greeting"
-            android:orientation="vertical"
+            android:layout_alignParentTop="true"
             android:layout_margin="25dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp">
+            android:orientation="vertical">
 
         <TextView
+                android:id="@+id/greetCustomerText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="회원님 환영합니다."
-                android:id="@+id/greetCustomerText"/>
+                android:text="회원님 환영합니다." />
+
         <TextView
-                android:text="회원 정보 수정"
+                android:id="@+id/editcustomerinfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/editcustomerinfo"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+                android:text="회원 정보 수정"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 
     <androidx.cardview.widget.CardView
+            android:id="@+id/mywaiting"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_margin="20dp"
             android:layout_below="@id/greeting"
-            android:layout_above="@id/grid"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp" android:id="@+id/mywaiting">
+            android:layout_above="@id/otherStore">
 
         <RelativeLayout
+                android:id="@+id/myturn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/myturn"
-
-        >
+                android:orientation="vertical">
 
             <TextView
-                    android:text="건대 족발"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/storename"
-
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginBottom="5dp" android:layout_below="@id/marquee"/>
-            <TextView
-                    android:text="11명 대기중"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/waitingnum"
-                    android:layout_below="@id/storename"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    android:layout_margin="5dp"/>
-
-            <TextView
-                    android:text="5번째 순서 전에 상태바 알림과 문자 알림이 발송됩니다. 취소 버튼을 눌러 대기를 취소할 수 있습니다. "
+                    android:layout_alignParentTop="true"
+                    android:id="@+id/marquee"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/marquee"
-                    android:singleLine="true"
+                    android:layout_margin="5dp"
                     android:ellipsize="marquee"
                     android:focusable="true"
+
                     android:focusableInTouchMode="true"
                     android:marqueeRepeatLimit="marquee_forever"
+                    android:singleLine="true"
+                    android:text="5번째 순서 전에 상태바 알림과 문자 알림이 발송됩니다. 취소 버튼을 눌러 대기를 취소할 수 있습니다. " />
 
-                    android:layout_marginTop="5dp"
-                    android:layout_marginStart="5dp" android:layout_marginEnd="5dp" android:layout_marginBottom="5dp"
-            />
 
-            <androidx.cardview.widget.CardView
+            <TextView
+                    android:id="@+id/storename"
+                    android:layout_below="@id/marquee"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_alignParentBottom="true" android:id="@+id/cancelBtn">
+                    android:layout_margin="10dp"
+                    android:text="건대 족발"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-                <TextView
+            <TextView
+                    android:id="@+id/waitingnum"
+                    android:layout_below="@id/storename"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="11팀 전 순서입니다"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+            <androidx.cardview.widget.CardView
+                    android:id="@+id/cancelBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                  android:layout_margin="5dp"
+                    android:elevation="2dp">
+
+                <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="취소하기"
-                        android:ems="10"
-                        android:gravity="center"
-                        android:layout_gravity="bottom"
-                        android:padding="10dp"/>
+                        android:orientation="horizontal">
+
+                    <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="취소하기"
+                            android:textColor="#000000" />
+
+                    <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/ic_refresh_black_24dp" />
+
+                </LinearLayout>
 
             </androidx.cardview.widget.CardView>
 
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
-
-    <androidx.gridlayout.widget.GridLayout
-            android:id="@+id/grid"
-            android:layout_width="wrap_content"
+    <androidx.cardview.widget.CardView
+            android:id="@+id/otherStore"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:rowCount="2"
-            app:columnCount="2"
-            app:useDefaultMargins="true"
-            android:layout_centerInParent="true"
             android:layout_alignParentBottom="true"
-            android:paddingBottom="10dp"
-            android:layout_marginBottom="20dp"
+            android:layout_margin="20dp"
+            android:clickable="true"
+            android:gravity="center"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="2dp"
+            app:layout_gravity="center">
 
-            android:layout_marginTop="25dp" android:layout_marginStart="20dp" android:layout_marginEnd="20dp">
-
-        <androidx.cardview.widget.CardView
-                android:layout_margin="10dp"
-                android:layout_width="wrap_content"
+        <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clickable="true"
                 android:gravity="center"
-                app:layout_gravity="center"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="2dp"
-                android:clickable="true" android:id="@+id/checkWaiting">
+                android:orientation="vertical"
+                app:layout_gravity="center">
 
-            <LinearLayout
-                    android:orientation="vertical"
+            <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    app:layout_gravity="center"
-            >
-
-                <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
-                        app:cardCornerRadius="0dp"
-                        android:layout_marginBottom="2dp"
-                        app:cardElevation="2dp"
-                        app:cardBackgroundColor="@color/colorPrimary"
-                        android:layout_height="wrap_content">
-
-                    <TextView
-
-                            android:text="대기 현황 확인하기"
-                            android:ems="8"
-                            android:textColor="#ffffff"
-                            android:layout_width="wrap_content"
-                            android:layout_height="45dp"
-                            android:id="@+id/clientView"
-
-                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                            android:gravity="center"/>
-
-                </androidx.cardview.widget.CardView>
-
-
-                <ImageButton
-                        android:layout_width="70dp"
-                        android:layout_height="60dp"
-                        android:id="@+id/delBtn"
-                        android:scaleType="centerInside"
-                        android:background="@drawable/test"
-                        android:clickable="true"
-                        android:layout_margin="25dp"/>
-
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-                android:layout_margin="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                app:layout_gravity="center"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="2dp"
-                android:clickable="true">
-
-            <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    app:layout_gravity="center"
+                    android:layout_marginBottom="2dp"
+                    app:cardBackgroundColor="@color/colorPrimary"
+                    app:cardCornerRadius="0dp"
+                    app:cardElevation="2dp">
+
+                <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:gravity="center"
+                        android:text="다른 가게 줄 확인하기"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="#ffffff" />
+            </androidx.cardview.widget.CardView>
+
+
+            <ImageButton
+                    android:id="@+id/imageButton2"
+                    android:layout_width="70dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="25dp"
+                    android:background="@drawable/retail"
                     android:clickable="true"
-            >
+                    android:scaleType="centerInside" />
 
-                <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_marginBottom="2dp"
-                        app:cardElevation="2dp"
-                        app:cardBackgroundColor="@color/colorPrimary"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="0dp">
+        </LinearLayout>
 
-                    <TextView
-                            android:text="다른 가게 줄 확인하기"
-                            android:layout_width="match_parent"
-                            android:layout_height="45dp"
-                            android:id="@+id/textView2"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                            android:textColor="#ffffff"
-                            android:gravity="center" android:ems="8"/>
-                </androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-
-                <ImageButton
-                        android:layout_width="70dp"
-                        android:layout_height="60dp"
-                        android:id="@+id/imageButton2"
-                        android:scaleType="centerInside"
-                        android:background="@drawable/retail"
-                        android:clickable="true" android:layout_margin="25dp"/>
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-
-    </androidx.gridlayout.widget.GridLayout>
 
 </RelativeLayout>

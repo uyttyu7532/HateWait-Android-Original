@@ -20,7 +20,6 @@ class CustomerMenu : AppCompatActivity() {
 
 
 
-
         val spannableString_greetcustomer = SpannableString(String.format("%s 회원님 환영합니다.", customername))
         spannableString_greetcustomer.setSpan(RelativeSizeSpan(1.5f), 0, customername.length, Spanned.SPAN_INTERMEDIATE)
         spannableString_greetcustomer.setSpan(StyleSpan(Typeface.BOLD), 0, customername.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)

@@ -12,6 +12,7 @@ import org.jetbrains.anko.startActivity
 class MainActivity : AppCompatActivity() {
     private val TAG = "MainActivity"
     @SuppressLint("SourceLockedOrientationActivity")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

@@ -20,9 +20,9 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="center"
+                android:layout_margin="20dp"
                 android:background="@drawable/trash"
-                android:tint="#FFFFFF"
-                android:layout_margin="20dp"/>
+                android:tint="#FFFFFF" />
     </FrameLayout>
     <!-- Bottom View End-->
 
@@ -65,7 +65,8 @@
                         android:id="@+id/bottom_wrapper_left"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="#66ddff00">
+                        android:background="#EFEFEF"
+                        android:clickable="true">
 
                     <ImageButton
                             android:id="@+id/callBtn"
@@ -80,9 +81,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
+                        android:layout_toRightOf="@+id/bottom_wrapper_left"
                         android:orientation="vertical"
-                        android:padding="5dp"
-                        android:layout_toRightOf="@+id/bottom_wrapper_left">
+                        android:padding="5dp">
 
                     <LinearLayout
                             android:layout_width="wrap_content"
@@ -123,8 +124,8 @@
                 android:id="@+id/detailView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:background="#EFEFEF">
+                android:background="#EFEFEF"
+                android:visibility="gone">
 
             <LinearLayout
                     android:layout_width="wrap_content"

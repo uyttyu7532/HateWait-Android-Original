@@ -7,11 +7,14 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.daimajia.swipe.SwipeLayout
 import com.daimajia.swipe.adapters.RecyclerSwipeAdapter
+import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.row.view.*
+import org.jetbrains.anko.backgroundColorResource
 import java.util.*
 
 
@@ -25,6 +28,27 @@ class SwipeRecyclerViewAdapter(val items: ArrayList<ClientData>) :
             LayoutInflater.from(parent.context).inflate(R.layout.row, parent, false)
         return SimpleViewHolder(view)
     }
+
+//    var itemClickListener: onItemClickListener? = null
+
+//    interface onItemClickListener {
+//        fun onItemClick(holder: SimpleViewHolder, view: View, data: String, position: Int)
+//
+//    }
+//
+//    inner class MyViewHolder(itemView: View) : SwipeRecyclerViewAdapter.SimpleViewHolder(itemView) {
+////        var textView: TextView = itemView.findViewById(R.id.textView)
+////        var meaningView: TextView = itemView.findViewById(R.id.meaningView)
+//
+//
+//        init {
+//
+//            itemView.setOnClickListener {
+//                itemClickListener?.onItemClick(this, it, items[adapterPosition], adapterPosition)
+//            }
+//
+//        }
+//    }
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(
@@ -91,6 +115,15 @@ class SwipeRecyclerViewAdapter(val items: ArrayList<ClientData>) :
             }
         })
 
+
+        // !!!!!!!callBtn과 swipeLayout clicklistener 매우이상!!!!!!!!!
+
+        viewHolder.callBtn.setOnClickListener{view->
+            viewHolder.bottom_wrapper_left.backgroundColorResource=R.color.colorAccent
+//            viewHolder.bottom_wrapper_left.backgroundColor=R.color.colorAccent
+            Toasty.warning(view.context, "호출되었습니다.", Toast.LENGTH_SHORT, true).show()
+        }
+
         viewHolder.swipeLayout.clientView
             .setOnClickListener {
                 if (viewHolder.detailView.visibility == View.GONE) {
@@ -100,6 +133,10 @@ class SwipeRecyclerViewAdapter(val items: ArrayList<ClientData>) :
                 }
             }
 
+
+
+
+
         // db목록에서 대기손님지우기?
         viewHolder.delBtn.setOnClickListener { view ->
             mItemManger.removeShownLayouts(viewHolder.swipeLayout)
@@ -107,13 +144,10 @@ class SwipeRecyclerViewAdapter(val items: ArrayList<ClientData>) :
             notifyItemRemoved(position)
             notifyItemRangeChanged(position, items.size)
             mItemManger.closeAllItems()
+            Toasty.error(view.context, "삭제되었습니다", Toast.LENGTH_SHORT, true).show()
+
         }
 
-
-        //호출하면 배경색 변경
-//        viewHolder.callBtn.setOnClickListener { view ->
-//            view.bottom_wrapper_left.backgroundColor = Color.GRAY
-//        }
 
         // mItemManger is member in RecyclerSwipeAdapter Class
         mItemManger.bindView(viewHolder.itemView, position)
@@ -153,7 +187,7 @@ class SwipeRecyclerViewAdapter(val items: ArrayList<ClientData>) :
             detailView1 = itemView.findViewById(R.id.detailView1) as TextView
             detailView2 = itemView.findViewById(R.id.detailView2) as TextView
             delBtn = itemView.findViewById(R.id.delBtn) as ImageButton
-            bottom_wrapper_left = itemView.findViewById(R.id.bottom_wrapper_right) as FrameLayout
+            bottom_wrapper_left = itemView.findViewById(R.id.bottom_wrapper_left) as FrameLayout
             callBtn = itemView.findViewById(R.id.callBtn) as ImageButton
         }
     }

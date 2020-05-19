@@ -15,25 +15,50 @@
             android:layout_height="50dp"
             android:layout_marginTop="30dp"
             android:src="@drawable/main_logo"
-            app:layout_constraintBottom_toTopOf="@+id/user_id_form"
+            app:layout_constraintBottom_toTopOf="@+id/user_id_input_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent" />
 
-    <EditText
-            android:id="@+id/user_id_form"
+<!--    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        이상하게 icon이 안보이네.. -->
+    <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/user_id_input_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="24dp"
-            android:hint="헤잇웨잇의 아이디를 입력해주세요"
-            android:selectAllOnFocus="true"
+            app:startIconDrawable="@drawable/custom_id_icon"
+            app:startIconContentDescription="ID"
+            app:endIconDrawable="@drawable/text_input_cancel_icon"
+            app:endIconMode="clear_text"
+            android:layout_marginTop="@dimen/login_margin_top"
+            android:layout_marginHorizontal="24dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintTop_toBottomOf="@id/main_logo" />
+            app:layout_constraintTop_toBottomOf="@id/main_logo">
+        <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/user_id_input_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="헤잇웨잇의 아이디를 입력해주세요"
+                android:inputType="text"
+                android:selectAllOnFocus="true"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+<!--    <EditText-->
+<!--            android:id="@+id/user_id_form"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="24dp"-->
+<!--            android:layout_marginTop="40dp"-->
+<!--            android:layout_marginEnd="24dp"-->
+<!--            android:hint="헤잇웨잇의 아이디를 입력해주세요"-->
+<!--            android:selectAllOnFocus="true"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.0"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/main_logo" />-->
 
     <ProgressBar
             android:id="@+id/loading"
@@ -56,8 +81,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:text="등록하기"
+            android:enabled="false"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/user_id_form"
+            app:layout_constraintTop_toBottomOf="@+id/user_id_input_layout"
             app:layout_constraintHorizontal_bias="0.5"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

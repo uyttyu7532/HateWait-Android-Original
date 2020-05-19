@@ -21,36 +21,67 @@
 
 <!--    username -> user_name (id는 언더바 사용 (snake case))-->
 
-    <EditText
-            android:id="@+id/user_name"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/user_name_input_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:startIconDrawable="@drawable/name_icon"
+        app:startIconContentDescription="Name"
+        app:endIconMode="clear_text"
+        android:layout_marginTop="35dp"
+        android:layout_marginHorizontal="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_logo">
+        <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/user_name_input_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="이름을 입력해주세요"
+                android:inputType="text"
+                android:selectAllOnFocus="true"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/user_phone_number_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="35dp"
-            android:layout_marginEnd="24dp"
-            android:hint="이름을 입력해주세요"
-            android:selectAllOnFocus="true"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintTop_toBottomOf="@id/main_logo" />
+            app:startIconDrawable="@drawable/phone_icon"
+            app:startIconContentDescription="Name"
+            app:counterMaxLength="11"
+            app:endIconMode="clear_text"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@id/user_name_input_layout"
+            app:layout_constraintEnd_toEndOf="@id/user_name_input_layout"
+            app:layout_constraintTop_toBottomOf="@id/user_name_input_layout">
+        <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/user_phone_number_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="전화번호를 입력해주세요"
+                android:inputType="phone"
+                android:selectAllOnFocus="true"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
 
 <!--    constraintBaseLine (글씨 크기 서로 다를 때 맞춤 좋음)-->
-    <EditText
-            android:id="@+id/user_phone_number"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+<!--    <EditText-->
+<!--            android:id="@+id/user_phone_number"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="8dp"-->
 
-            android:hint="전화번호를 입력해주세요"
-            android:imeActionLabel="imeActionLabel"
-            android:imeOptions="actionDone"
-            android:inputType="phone"
-            android:selectAllOnFocus="true"
-            app:layout_constraintStart_toStartOf="@id/user_name"
-            app:layout_constraintEnd_toEndOf="@id/user_name"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintTop_toBottomOf="@id/user_name" />
+<!--            android:hint="전화번호를 입력해주세요"-->
+<!--            android:imeActionLabel="imeActionLabel"-->
+<!--            android:imeOptions="actionDone"-->
+<!--            android:inputType="phone"-->
+<!--            android:selectAllOnFocus="true"-->
+<!--            app:layout_constraintStart_toStartOf="@id/user_name"-->
+<!--            app:layout_constraintEnd_toEndOf="@id/user_name"-->
+<!--            app:layout_constraintHorizontal_bias="0.0"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/user_name" />-->
 
     <ProgressBar
             android:id="@+id/loading"
@@ -75,8 +106,8 @@
             android:text="등록하기"
             android:enabled="false"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.500"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/user_phone_number" />
+            app:layout_constraintTop_toBottomOf="@+id/user_phone_number_layout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,4 +2,5 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="store_item_text">20sp</dimen>
     <dimen name="store_input_left_margin">5dp</dimen>
+    <dimen name="login_margin_top">40dp</dimen>
 </resources>

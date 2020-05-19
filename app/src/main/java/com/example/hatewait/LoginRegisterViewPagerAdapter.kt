@@ -32,17 +32,5 @@ class LoginRegisterViewPagerActivity : AppCompatActivity() {
         //attach() :    Link the TabLayout and the ViewPager2 together.
         // Must be called after ViewPager2 has an adapter set
 
-//        kind_of_member_tab_layout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-//                override fun onTabSelected(tab: TabLayout.Tab?) {
-//                    view_pager.currentItem = tab!!.position
-//                }
-//                override fun onTabReselected(tab: TabLayout.Tab?) {
-//                }
-//                override fun onTabUnselected(tab: TabLayout.Tab?) {
-//                }
-//            })
-
-//        view_pager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(kind_of_member_tab_layout))
-
     }
 }

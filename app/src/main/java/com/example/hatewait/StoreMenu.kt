@@ -29,41 +29,64 @@ class StoreMenu : AppCompatActivity() {
             startActivity<StoreWaitingList>()
         }
 
-//        store_info_update_button.setOnClickListener {
-//            startActivity<StoreInfoUpdate>()
-//        }
+
         store_info_update_button2.setOnClickListener {
             startActivity<StoreInfoUpdate>()
         }
 
         var nextname = "조예린"
         var namenum = 3
-        nextText.setText(String.format("다음 순서 : %s 외 %d명 입니다. 호출 버튼을 눌러 다음 대기자에게 알림을 보내주세요", nextname, namenum));
+        nextText.setText(
+            String.format(
+                "다음 순서 : %s 외 %d명 입니다. 호출 버튼을 눌러 다음 대기자에게 알림을 보내주세요 다음 순서 : %s 외 %d명 입니다. 호출 버튼을 눌러 다음 대기자에게 알림을 보내주세요",
+                nextname,
+                namenum,
+                nextname,
+                namenum
+            )
+        )
 
 
-        var storename= intent.getStringExtra("storename")
+        var storename = intent.getStringExtra("storename")
         var waitingnum = intent.getStringExtra("waitingnum")
 
 
-
-
         val spannableString_greetstore = SpannableString(String.format("%s 회원님 환영합니다.", storename))
-        spannableString_greetstore.setSpan(RelativeSizeSpan(1.5f), 0, storename.length, Spanned.SPAN_INTERMEDIATE)
-        spannableString_greetstore.setSpan(StyleSpan(Typeface.BOLD), 0, storename.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannableString_greetstore.setSpan(
+            RelativeSizeSpan(1.5f),
+            0,
+            storename.length,
+            Spanned.SPAN_INTERMEDIATE
+        )
+        spannableString_greetstore.setSpan(
+            StyleSpan(Typeface.BOLD),
+            0,
+            storename.length,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
 //        spannableString_greetstore.setSpan(ForegroundColorSpan(Color.parseColor("#000000")), 0, storename.length, Spanned.SPAN_INTERMEDIATE)
         greetStoreText.setText(spannableString_greetstore)
 
-        val spannableString_waitingnum = SpannableString(String.format("%s 명 대기중 입니다.",waitingnum))
-        spannableString_waitingnum.setSpan(RelativeSizeSpan(3.0f), 0, waitingnum.length, Spanned.SPAN_INTERMEDIATE)
-        spannableString_waitingnum.setSpan(StyleSpan(Typeface.BOLD), 0, waitingnum.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        val spannableString_waitingnum = SpannableString(String.format("%s 명 대기중 입니다.", waitingnum))
+        spannableString_waitingnum.setSpan(
+            RelativeSizeSpan(3.0f),
+            0,
+            waitingnum.length,
+            Spanned.SPAN_INTERMEDIATE
+        )
+        spannableString_waitingnum.setSpan(
+            StyleSpan(Typeface.BOLD),
+            0,
+            waitingnum.length,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
 //        spannableString_waitingnum.setSpan(ForegroundColorSpan(Color.parseColor("#000000")), 0, waitingnum.length, Spanned.SPAN_INTERMEDIATE)
         waitingnumText.setText(spannableString_waitingnum)
 
-            nextText.setSelected(true) // 마키 텍스트에 포커스
+        nextText.setSelected(true) // 마키 텍스트에 포커스
 
 
     }
-
 
 
 }

@@ -18,6 +18,8 @@ class MainActivity : AppCompatActivity() {
 
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
+
+
         val id = "건대보쌈"
         val waitingnum = "10"
 

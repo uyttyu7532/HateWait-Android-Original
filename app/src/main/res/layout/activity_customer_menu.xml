@@ -74,7 +74,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="11팀 전 순서입니다"
+                    android:text="5팀 전 순서입니다"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             <androidx.cardview.widget.CardView

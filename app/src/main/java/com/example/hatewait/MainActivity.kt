@@ -71,8 +71,7 @@ class MainActivity : AppCompatActivity() {
 
         button_customer.setOnClickListener{
 
-            id_input_editText.text?.clear()
-            password_input_editText.text?.clear()
+            inputLayoutInitialize()
             startActivity<CustomerMenu>(
                 "customername" to customername
             )
@@ -90,7 +89,7 @@ class MainActivity : AppCompatActivity() {
                 } else {
                     id_input_layout.error = null
                 }
-                button_store.isEnabled = (id_input_layout.error == null && password_input_layout.error == null)
+                button_store.isEnabled = (id_input_layout.error == null && password_input_layout.error == null && !password_input_editText.text.isNullOrBlank())
                 button_customer.isEnabled = button_store.isEnabled
             }
 
@@ -111,7 +110,7 @@ class MainActivity : AppCompatActivity() {
                     password_input_layout.error = null
                 }
 //                둘다 알맞게 입력한 경우
-                button_store.isEnabled = (id_input_layout.error == null && password_input_layout.error == null)
+                button_store.isEnabled = (id_input_layout.error == null && password_input_layout.error == null && !id_input_editText.text.isNullOrBlank())
                 button_customer.isEnabled = button_store.isEnabled
             }
 

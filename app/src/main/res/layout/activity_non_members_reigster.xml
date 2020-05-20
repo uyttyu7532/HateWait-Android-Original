@@ -103,6 +103,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
+            android:paddingHorizontal="@dimen/register_button_padding_horizontal"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:text="등록하기"
             android:enabled="false"
             app:layout_constraintEnd_toEndOf="parent"

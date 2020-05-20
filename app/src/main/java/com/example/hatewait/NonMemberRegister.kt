@@ -2,7 +2,6 @@ package com.example.hatewait
 
 
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
@@ -41,7 +40,7 @@ class NonMemberRegister : androidx.fragment.app.Fragment() {
                 }
 
             //    둘다 에러가 없을 때 등록 버튼 활성화
-                register_customer_button.isEnabled = (user_name_input_layout.error == null && user_phone_number_layout.error == null)
+                register_customer_button.isEnabled = (user_name_input_layout.error == null && user_phone_number_layout.error == null && !user_phone_number_editText.text.isNullOrBlank())
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -54,12 +53,12 @@ class NonMemberRegister : androidx.fragment.app.Fragment() {
         user_phone_number_editText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 if (!verifyPhoneNumber(s.toString())) {
-                    user_phone_number_layout.error = "11자리 전화번호를 입력해주세요"
+                    user_phone_number_layout.error = "10~11자리 전화번호를 입력해주세요"
                     register_customer_button.isEnabled = false
                 } else {
                     user_phone_number_layout.error = null
                 }
-                register_customer_button.isEnabled = (user_name_input_layout.error == null && user_phone_number_layout.error == null)
+                register_customer_button.isEnabled = (user_name_input_layout.error == null && user_phone_number_layout.error == null && !user_name_input_editText.text.isNullOrBlank())
             }
 
             override fun beforeTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {

@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.CompoundButton
 import android.widget.TextView
 import android.widget.Toast
@@ -81,7 +83,6 @@ class StoreWaitingList : AppCompatActivity() {
     }
 
 
-
     // RecyclerView와 Adapter 연결
     private fun setRecyclerView() {
         // 나중에 디자인부분 DividerItemDecoration.java 참고
@@ -96,50 +97,46 @@ class StoreWaitingList : AppCompatActivity() {
         // mRecyclerView.setItemAnimator(new FadeInLeftAnimator());
 
         // Creating Adapter object
-        var mAdapter = SwipeRecyclerViewAdapter(clientList!!)
-//        mAdapter.itemClickListener = object : SwipeRecyclerViewAdapter.onItemClickListener {
-//            @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-//            override fun onItemClick(
-//                holder: SwipeRecyclerViewAdapter.SimpleViewHolder,
-//                view: View,
-//                data: String,
-//                position: Int
-//            ) {
-//                if (isTtsReady) {
-//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                        tts.speak(data, TextToSpeech.QUEUE_FLUSH, null, null)
-//                    }
-//                }
-//                if (holder.meaningView.visibility == View.GONE) {
-//                    holder.meaningView.visibility = View.VISIBLE
-//                } else {
-//                    holder.meaningView.visibility = View.GONE
-//                }
-//            }
-//        }
+        mAdapter = SwipeRecyclerViewAdapter(clientList!!)
+
         //Single or Multiple
         mAdapter.mode = Attributes.Mode.Single
+
+        mAdapter.itemClickListener = object : SwipeRecyclerViewAdapter.onItemClickListener {
+            override fun onItemClick(
+                holder: SwipeRecyclerViewAdapter.SimpleViewHolder,
+                view: View,
+                position: Int
+            ) {
+                Log.d("position", position?.toString())
+                if (holder.detailView.visibility == GONE) {
+                    holder.detailView.visibility = VISIBLE
+                } else {
+                    holder.detailView.visibility = GONE
+                }
+            }
+        }
         mRecyclerView!!.adapter = mAdapter
 
         /* Scroll Listeners */
-//            mRecyclerView!!.addOnScrollListener(object :
-//                RecyclerView.OnScrollListener() {
-//                override fun onScrollStateChanged(
-//                    recyclerView: RecyclerView,
-//                    newState: Int
-//                ) {
-//                    super.onScrollStateChanged(recyclerView, newState)
-//                    Log.e("RecyclerView", "onScrollStateChanged")
-//                }
+//        mRecyclerView!!.addOnScrollListener(object :
+//            RecyclerView.OnScrollListener() {
+//            override fun onScrollStateChanged(
+//                recyclerView: RecyclerView,
+//                newState: Int
+//            ) {
+//                super.onScrollStateChanged(recyclerView, newState)
+//                Log.e("RecyclerView", "onScrollStateChanged")
+//            }
 //
-//                override fun onScrolled(
-//                    recyclerView: RecyclerView,
-//                    dx: Int,
-//                    dy: Int
-//                ) {
-//                    super.onScrolled(recyclerView, dx, dy)
-//                }
-//            })
+//            override fun onScrolled(
+//                recyclerView: RecyclerView,
+//                dx: Int,
+//                dy: Int
+//            ) {
+//                super.onScrolled(recyclerView, dx, dy)
+//            }
+//        })
     }
 
 

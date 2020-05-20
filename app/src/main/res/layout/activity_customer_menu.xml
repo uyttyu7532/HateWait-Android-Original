@@ -77,8 +77,17 @@
                     android:text="5팀 전 순서입니다"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
+            <TextView
+                    android:layout_above="@+id/twoButton"
+                    android:id="@+id/recentRefreshTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="최근 새로고침 시간: 2020-05-20 16:28:50"
+                    android:gravity="right"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
             <androidx.cardview.widget.CardView
-                    android:id="@+id/cancelBtn"
+                    android:id="@+id/twoButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
@@ -112,8 +121,12 @@
 
             </androidx.cardview.widget.CardView>
 
+
+
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
+
+
 
     <androidx.cardview.widget.CardView
             android:id="@+id/otherStore"

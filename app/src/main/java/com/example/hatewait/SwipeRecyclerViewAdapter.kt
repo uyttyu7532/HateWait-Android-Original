@@ -13,13 +13,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.daimajia.swipe.SwipeLayout
 import com.daimajia.swipe.adapters.RecyclerSwipeAdapter
 import es.dmoral.toasty.Toasty
-import kotlinx.android.synthetic.main.row.view.*
 import org.jetbrains.anko.backgroundColorResource
 import java.util.*
 
 
 class SwipeRecyclerViewAdapter(val items: ArrayList<ClientData>) :
     RecyclerSwipeAdapter<SwipeRecyclerViewAdapter.SimpleViewHolder>() {
+
+    interface onItemClickListener {
+        fun onItemClick(holder: SimpleViewHolder, view: View, position: Int)
+    }
+
+    var itemClickListener: onItemClickListener? = null
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -29,26 +35,44 @@ class SwipeRecyclerViewAdapter(val items: ArrayList<ClientData>) :
         return SimpleViewHolder(view)
     }
 
-//    var itemClickListener: onItemClickListener? = null
 
-//    interface onItemClickListener {
-//        fun onItemClick(holder: SimpleViewHolder, view: View, data: String, position: Int)
-//
-//    }
-//
-//    inner class MyViewHolder(itemView: View) : SwipeRecyclerViewAdapter.SimpleViewHolder(itemView) {
-////        var textView: TextView = itemView.findViewById(R.id.textView)
-////        var meaningView: TextView = itemView.findViewById(R.id.meaningView)
-//
-//
-//        init {
-//
-//            itemView.setOnClickListener {
-//                itemClickListener?.onItemClick(this, it, items[adapterPosition], adapterPosition)
-//            }
-//
-//        }
-//    }
+    override fun getItemCount(): Int {
+        return items.size
+    }
+
+    //  ViewHolder Class
+    inner class SimpleViewHolder(itemView: View) :
+        RecyclerView.ViewHolder(itemView) {
+
+        var swipeLayout = itemView.findViewById(R.id.swipeLayout) as SwipeLayout
+        var clientView = itemView.findViewById(R.id.clientView) as CardView
+        var clientNameView = itemView.findViewById(R.id.clientNameView) as TextView
+        var clientNumView = itemView.findViewById(R.id.clientNumView) as TextView
+        var clientPhoneView = itemView.findViewById(R.id.clientPhoneView) as TextView
+        var detailView = itemView.findViewById(R.id.detailView) as CardView
+        var detailView1 = itemView.findViewById(R.id.detailView1) as TextView
+        var detailView2 = itemView.findViewById(R.id.detailView2) as TextView
+        var delBtn = itemView.findViewById(R.id.delBtn) as ImageButton
+        var bottom_wrapper_left = itemView.findViewById(R.id.bottom_wrapper_left) as FrameLayout
+        var callBtn = itemView.findViewById(R.id.callBtn) as ImageButton
+
+
+        init {
+
+            // !!!!!!!callBtn과 swipeLayout clicklistener 매우이상!!!!!!!!!
+
+            callBtn.setOnClickListener{
+                bottom_wrapper_left.backgroundColorResource= R.color.colorCall
+//                Toasty.warning(itemView, "호출되었습니다.", Toast.LENGTH_SHORT, true).show()
+            }
+
+            clientView.setOnClickListener {
+                itemClickListener?.onItemClick(this, itemView, adapterPosition)
+            }
+
+        }
+    }
+
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(
@@ -116,27 +140,6 @@ class SwipeRecyclerViewAdapter(val items: ArrayList<ClientData>) :
         })
 
 
-        // !!!!!!!callBtn과 swipeLayout clicklistener 매우이상!!!!!!!!!
-
-        viewHolder.callBtn.setOnClickListener{view->
-            viewHolder.bottom_wrapper_left.backgroundColorResource=R.color.colorAccent
-//            viewHolder.bottom_wrapper_left.backgroundColor=R.color.colorAccent
-            Toasty.warning(view.context, "호출되었습니다.", Toast.LENGTH_SHORT, true).show()
-        }
-
-        viewHolder.swipeLayout.clientView
-            .setOnClickListener {
-                if (viewHolder.detailView.visibility == View.GONE) {
-                    viewHolder.detailView.visibility = View.VISIBLE
-                } else {
-                    viewHolder.detailView.visibility = View.GONE
-                }
-            }
-
-
-
-
-
         // db목록에서 대기손님지우기?
         viewHolder.delBtn.setOnClickListener { view ->
             mItemManger.removeShownLayouts(viewHolder.swipeLayout)
@@ -145,53 +148,31 @@ class SwipeRecyclerViewAdapter(val items: ArrayList<ClientData>) :
             notifyItemRangeChanged(position, items.size)
             mItemManger.closeAllItems()
             Toasty.error(view.context, "삭제되었습니다", Toast.LENGTH_SHORT, true).show()
-
         }
-        //    이미 펼쳤던 단어를 다시 올려볼 때는 보이지 않도록.
-        //    스크롤시 뷰가 재사용 되어 펼쳐진 모든 포지션에 대해 단어가 열리므로 재사용을 false
-        viewHolder.setIsRecyclable(false)
+
+//        viewHolder.setIsRecyclable(false)
+
+//        viewHolder.clientView.setOnClickListener { view->
+////            itemClickListener?.onItemClick(viewHolder, view, position)
+//            Toasty.error(view.context, position.toString(), Toast.LENGTH_SHORT, true).show()
+//            if (viewHolder.detailView.visibility == View.GONE) {
+//                viewHolder.detailView.visibility = View.VISIBLE
+//            } else {
+//                viewHolder.detailView.visibility = View.GONE
+//            }
+
+
+//        }
+
 
         // mItemManger is member in RecyclerSwipeAdapter Class
         mItemManger.bindView(viewHolder.itemView, position)
     }
 
-    override fun getItemCount(): Int {
-        return items.size
-    }
 
     override fun getSwipeLayoutResourceId(position: Int): Int {
         return R.id.swipeLayout
     }
 
-    //  ViewHolder Class
-    class SimpleViewHolder(itemView: View) :
-        RecyclerView.ViewHolder(itemView) {
-
-        var swipeLayout: SwipeLayout
-        var clientView: CardView
-        var clientNameView: TextView
-        var clientNumView: TextView
-        var clientPhoneView: TextView
-        var detailView: CardView
-        var detailView1: TextView
-        var detailView2: TextView
-        var delBtn: ImageButton
-        var bottom_wrapper_left: FrameLayout
-        var callBtn: ImageButton
-
-        init {
-            swipeLayout = itemView.findViewById(R.id.swipeLayout) as SwipeLayout
-            clientView = itemView.findViewById(R.id.clientView) as CardView
-            clientNameView = itemView.findViewById(R.id.clientNameView) as TextView
-            clientNumView = itemView.findViewById(R.id.clientNumView) as TextView
-            clientPhoneView = itemView.findViewById(R.id.clientPhoneView) as TextView
-            detailView = itemView.findViewById(R.id.detailView) as CardView
-            detailView1 = itemView.findViewById(R.id.detailView1) as TextView
-            detailView2 = itemView.findViewById(R.id.detailView2) as TextView
-            delBtn = itemView.findViewById(R.id.delBtn) as ImageButton
-            bottom_wrapper_left = itemView.findViewById(R.id.bottom_wrapper_left) as FrameLayout
-            callBtn = itemView.findViewById(R.id.callBtn) as ImageButton
-        }
-    }
 
 }

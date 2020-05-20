@@ -147,7 +147,9 @@ class SwipeRecyclerViewAdapter(val items: ArrayList<ClientData>) :
             Toasty.error(view.context, "삭제되었습니다", Toast.LENGTH_SHORT, true).show()
 
         }
-
+        //    이미 펼쳤던 단어를 다시 올려볼 때는 보이지 않도록.
+        //    스크롤시 뷰가 재사용 되어 펼쳐진 모든 포지션에 대해 단어가 열리므로 재사용을 false
+        viewHolder.setIsRecyclable(false)
 
         // mItemManger is member in RecyclerSwipeAdapter Class
         mItemManger.bindView(viewHolder.itemView, position)

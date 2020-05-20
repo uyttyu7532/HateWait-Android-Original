@@ -59,9 +59,7 @@ class MainActivity : AppCompatActivity() {
         addTextChangeListener()
 
         button_store.setOnClickListener{
-//            user의 아이디, 비번 입력했던 것은 지워줘야함. (뒤로가기시 복원되지 않도록)
-            id_input_editText.text?.clear()
-            password_input_editText.text?.clear()
+            inputLayoutInitialize()
             startActivity<StoreMenu>(
                 "storename" to id,
                 "waitingnum" to waitingnum
@@ -124,5 +122,12 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
-
+    private fun inputLayoutInitialize() {
+        id_input_editText.text?.clear()
+        id_input_layout.error = null
+        id_input_layout.clearFocus()
+        password_input_editText.text?.clear()
+        password_input_layout.clearFocus()
+        password_input_layout.error = null
+    }
 }

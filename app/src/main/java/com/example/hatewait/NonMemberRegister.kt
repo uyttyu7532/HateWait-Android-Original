@@ -77,37 +77,24 @@ class NonMemberRegister : androidx.fragment.app.Fragment() {
                     "USER_NAME" to user_name_input_editText.text.toString(),
                     "USER_PHONE_NUMBER" to user_phone_number_editText.toString()
                 )
-                user_name_input_editText.text?.clear()
-                user_phone_number_editText.text?.clear()
+//           intent를 넘기고 초기화해야함.
+            inputLayoutInitialize()
 
         }
 
         super.onActivityCreated(savedInstanceState)
     }
-/*
-//   fragment 안에서 옵션 선택을 가능하게함.
-    override fun onCreate(savedInstanceState: Bundle?) {
-        setHasOptionsMenu(true)
-        super.onCreate(savedInstanceState)
-    }
-// inflate the menu
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater!!.inflate(R.menu.menu_login, menu)
-        super.onCreateOptionsMenu(menu, inflater)
+
+    fun inputLayoutInitialize() {
+        user_name_input_editText.text?.clear()
+        user_name_input_editText.clearFocus()
+        user_name_input_layout.error = null
+        user_phone_number_editText.text?.clear()
+        user_phone_number_editText.clearFocus()
+        user_phone_number_layout.error = null
+
     }
 
-
-    // 회원 & 비회원 항목 (여러 항목중 1개만 selected state)
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        get item id to handle item clicks
-        val id = item!!.itemId
-//        handle item clicks
-        if(id == R.id.main_logo) {
-            Toast.makeText(activity, "환경 설정!!", Toast.LENGTH_SHORT).show()
-        }
-        return super.onOptionsItemSelected(item)
-    }
-*/
 }
 
 

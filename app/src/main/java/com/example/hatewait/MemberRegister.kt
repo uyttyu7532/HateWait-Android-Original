@@ -49,9 +49,17 @@ class MemberRegister : Fragment() {
             startActivity<Register_Check>(
                 "USER_ID" to user_id_input_editText.toString()
             )
-            user_id_input_editText.text?.clear()
+            inputLayoutInitialize()
         }
         super.onActivityCreated(savedInstanceState)
+
     }
+
+    fun inputLayoutInitialize() {
+        user_id_input_editText.error = null
+        user_id_input_editText.clearFocus()
+        user_id_input_editText.text?.clear()
+    }
+
 
 }

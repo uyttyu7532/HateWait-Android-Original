@@ -20,7 +20,7 @@ import java.lang.ClassCastException
 
 class StoreNameChangeDialog : AppCompatDialogFragment() {
     lateinit var dialogListener : DialogListener
-    val storeNameRegex = Regex("^[a-zA-Zㄱ-힣0-9|\\s|,]{1,}$")
+    val storeNameRegex = Regex("^(?=.*[a-zA-Z가-힣0-9])[a-zA-Z가-힣0-9|\\s|,]{1,}$")
     fun verifyName(storeName : String) : Boolean = storeNameRegex.matches(storeName)
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -59,7 +59,11 @@ class StoreNameChangeDialog : AppCompatDialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         init()
+        super.onViewCreated(view, savedInstanceState)
     }
 
     fun init() {

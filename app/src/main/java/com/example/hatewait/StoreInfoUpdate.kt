@@ -9,20 +9,26 @@ import android.text.TextWatcher
 import androidx.fragment.app.DialogFragment
 import kotlinx.android.synthetic.main.activity_non_members_reigster.*
 import kotlinx.android.synthetic.main.activity_store_info_update.*
+import kotlinx.android.synthetic.main.activity_store_name_change_dialog.*
 import org.jetbrains.anko.numberPicker
 
-class StoreInfoUpdate : AppCompatActivity() {
+class StoreInfoUpdate : AppCompatActivity(), StoreNameChangeDialog.DialogListener  {
 
     //    3자리 - 3 or 4자리 - 4자리
     //    첫자리는 반드시 0으로 시작.
     private val storePhoneRegex = Regex("^[0](\\d{1,2})(\\d{3,4})(\\d{4})")
     fun verifyPhoneNumber (input_phone_number : String) : Boolean = input_phone_number.matches(storePhoneRegex)
 
-    fun openDialog() {
+    private fun openDialog() {
 //            여기 아직 확실하지않음.
         val storeNameChangeDialog = StoreNameChangeDialog()
         storeNameChangeDialog.show(supportFragmentManager, "store name changing!")
 
+    }
+
+//    interface class (DialogListener) function implements
+    override fun applyText(storeName: String) {
+        store_name.text = storeName
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,5 +70,7 @@ class StoreInfoUpdate : AppCompatActivity() {
         })
 
     }
+
+
 
 }

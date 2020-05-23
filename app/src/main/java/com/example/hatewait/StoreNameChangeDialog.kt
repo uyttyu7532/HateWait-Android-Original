@@ -10,47 +10,60 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDialogFragment
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.activity_store_info_update.*
 import kotlinx.android.synthetic.main.activity_store_name_change_dialog.*
+import org.jetbrains.anko.layoutInflater
 import java.lang.ClassCastException
 
 class StoreNameChangeDialog : AppCompatDialogFragment() {
+    // 그대로 두면 onCreateView method에서 null을 리턴하면서
+    //     onActivityCreated, onViewCreated 가 모두 호출되지 않음
+    // viewModel 을 커스터마이징 할 수 가없으므로 일종의 트릭을 건다.
+    var customView : View? = null
     lateinit var dialogListener : DialogListener
     val storeNameRegex = Regex("^(?=.*[a-zA-Z가-힣0-9])[a-zA-Z가-힣0-9|\\s|,]{1,}$")
     fun verifyName(storeName : String) : Boolean = storeNameRegex.matches(storeName)
 
+    interface DialogListener {
+        fun applyText(storeName : String) : Unit
+    }
+
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(activity)
-        val inflater : LayoutInflater = requireActivity().layoutInflater
-        val view = inflater.inflate(R.layout.activity_store_name_change_dialog, null)
+        val inflater : LayoutInflater = activity?.layoutInflater!!
+        customView = context?.layoutInflater?.inflate(R.layout.activity_store_name_change_dialog, null)!!
+        val editStoreNameText : TextInputEditText = customView?.findViewById(R.id.store_name_editText)!!
 
-        builder.setView(view)
+        builder.setView(customView)
             .setTitle("가게이름")
             .setNegativeButton("취소",DialogInterface.OnClickListener { dialogInterface, i ->
 
             } )
             .setPositiveButton("변경", DialogInterface.OnClickListener { dialogInterface, i ->
-                val updatedStoreName = store_name_editText.text.toString()
+                val updatedStoreName = editStoreNameText.text.toString()
+                dialogListener.applyText(updatedStoreName)
             })
-
         return builder.create()
     }
 
-//    override fun onAttach(context: Context) {
-//        super.onAttach(context)
-//        try {
-//            dialogListener = context as DialogListener
-//        } catch (e : ClassCastException) {
-//            e.printStackTrace()
-//        }
-//    }
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
 
-    interface DialogListener {
-        fun applyText(storeName : String) : Unit
+        try {
+            dialogListener = context as DialogListener
+
+        } catch (e : ClassCastException) {
+            throw e
+        }
+
     }
 
     override fun onCreateView(
@@ -58,21 +71,39 @@ class StoreNameChangeDialog : AppCompatDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return super.onCreateView(inflater, container, savedInstanceState)
+        Log.i("onCreateView", "this is dialog onCreateView")
+        return customView
     }
 
+//    호출안됨
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        Log.i("onActivityCreated", "this is dialog onActivityCreated")
+        super.onActivityCreated(savedInstanceState)
+    }
+// 호출안됨 -> customView를 onCreateView에서 리턴함으로써 호출됨.
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        init()
+        Log.i("onViewCreated", "this is dialog initialize")
         super.onViewCreated(view, savedInstanceState)
+        init()
     }
 
-    fun init() {
-        store_name_editText.addTextChangedListener(object : TextWatcher {
+    override fun onDestroyView() {
+//        Memory Leak을 방지하기 위함
+        customView = null
+        Log.i("onDestroyView", "this is dialog destroyed!!! without memory leak")
+        super.onDestroyView()
+    }
+
+    private fun init() {
+        val editStoreNameText : TextInputEditText = customView?.findViewById(R.id.store_name_editText)!!
+        val editStoreNameLayout : TextInputLayout = customView?.findViewById(R.id.store_name_text_layout)!!
+        editStoreNameText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(str: Editable?) {
                 if (!verifyName(str.toString())) {
-                    store_name_text.error = "특수문자는 허용되지 않습니다."
+                    editStoreNameLayout.error = "특수문자는 허용되지 않습니다."
                 } else {
-                    store_name_text.error = null
+                    editStoreNameLayout.error = null
                 }
             }
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {

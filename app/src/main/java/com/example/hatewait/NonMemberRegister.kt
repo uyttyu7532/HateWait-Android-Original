@@ -17,8 +17,8 @@ class NonMemberRegister : androidx.fragment.app.Fragment() {
 //    3자리 - 3 or 4자리 - 4자리
 //    첫자리는 반드시 0으로 시작.
     private val phoneRegex = Regex("^[0](\\d{2})(\\d{3,4})(\\d{4})")
-//   첫자리는 반드시 0이 아닌 숫자 총 3자리까지 입력가능
-    private val peopleNumberRegex = Regex("^[1-9](\\d{0,2})")
+//   첫자리는 반드시 0이 아닌 숫자 총 2자리까지 입력가능 (1~99 입력 가능)
+    private val peopleNumberRegex = Regex("^[1-9](\\d?)")
 
     fun verifyName (input_name : String) : Boolean = input_name.matches(nameRegex)
     fun verifyPhoneNumber (input_phone_number : String) : Boolean = input_phone_number.matches(phoneRegex)

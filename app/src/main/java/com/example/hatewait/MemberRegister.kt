@@ -11,7 +11,7 @@ import org.jetbrains.anko.support.v4.startActivity
 
 class MemberRegister : Fragment() {
     private val idRegex = Regex("^(?=.*[a-zA-Zㄱ-ㅎ가-힣0-9])[a-zA-Zㄱ-ㅎ가-힣0-9]{1,}$")
-    private val peopleNumberRegex = Regex("^[1-9](\\d{0,2})")
+    private val peopleNumberRegex = Regex("^[1-9](\\d?)")
 
     fun verifyId(input_id : String) : Boolean = idRegex.matches(input_id)
     fun verifyPeopleNumber (input_people_number : String) : Boolean = input_people_number.matches(peopleNumberRegex)

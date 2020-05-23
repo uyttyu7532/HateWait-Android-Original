@@ -1,34 +1,38 @@
 package com.example.hatewait
 
-import android.app.Dialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.fragment.app.DialogFragment
-import kotlinx.android.synthetic.main.activity_non_members_reigster.*
 import kotlinx.android.synthetic.main.activity_store_info_update.*
-import kotlinx.android.synthetic.main.activity_store_name_change_dialog.*
-import org.jetbrains.anko.numberPicker
 
-class StoreInfoUpdate : AppCompatActivity(), StoreNameChangeDialog.DialogListener  {
+class StoreInfoUpdate : AppCompatActivity(), StoreNameChangeDialog.DialogListener, AutoCallNumberChangeDialog.DialogListener  {
 
     //    3자리 - 3 or 4자리 - 4자리
     //    첫자리는 반드시 0으로 시작.
     private val storePhoneRegex = Regex("^[0](\\d{1,2})(\\d{3,4})(\\d{4})")
     fun verifyPhoneNumber (input_phone_number : String) : Boolean = input_phone_number.matches(storePhoneRegex)
 
-    private fun openDialog() {
+    private fun openStoreNameChangeDialog() {
 //            여기 아직 확실하지않음.
         val storeNameChangeDialog = StoreNameChangeDialog()
         storeNameChangeDialog.show(supportFragmentManager, "store name changing!")
+    }
 
+    private fun openAutoCallNumberChangeDialog() {
+//            여기 아직 확실하지않음.
+        val autoCallNumberChangeDialog = AutoCallNumberChangeDialog()
+        autoCallNumberChangeDialog.show(supportFragmentManager, "auto call number change!")
     }
 
 //    interface class (DialogListener) function implements
     override fun applyText(storeName: String) {
         store_name.text = storeName
+    }
+
+    override fun applyPickedNumber(autoCallNumber: String) {
+        auto_call_number.text = autoCallNumber
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,16 +44,16 @@ class StoreInfoUpdate : AppCompatActivity(), StoreNameChangeDialog.DialogListene
     fun init() {
 
         store_name_edit_button.setOnClickListener {
-            openDialog()
+            openStoreNameChangeDialog()
         }
         store_business_hours_text.setOnClickListener {
             val intent = Intent(this@StoreInfoUpdate, BusinessHourPick::class.java)
             startActivity(intent)
         }
-        auto_call_number_picker.apply {
-            minValue = 1
-            maxValue = 30
+        auto_call_number.setOnClickListener {
+            openAutoCallNumberChangeDialog()
         }
+
         store_phone_number_editText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 if (!verifyPhoneNumber(s.toString())) {

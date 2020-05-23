@@ -46,34 +46,29 @@
                 android:selectAllOnFocus="true"/>
     </com.google.android.material.textfield.TextInputLayout>
 
-<!--    <EditText-->
-<!--            android:id="@+id/user_id_form"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginStart="24dp"-->
-<!--            android:layout_marginTop="40dp"-->
-<!--            android:layout_marginEnd="24dp"-->
-<!--            android:hint="헤잇웨잇의 아이디를 입력해주세요"-->
-<!--            android:selectAllOnFocus="true"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintHorizontal_bias="0.0"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/main_logo" />-->
-
-    <ProgressBar
-            android:id="@+id/loading"
-            android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/people_number_layout"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginBottom="64dp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/user_phone_number"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@+id/user_phone_number"
-            app:layout_constraintVertical_bias="0.272" />
+            app:startIconDrawable="@drawable/people_number_icon_32"
+            app:startIconContentDescription="Name"
+            app:counterMaxLength="11"
+            app:endIconMode="clear_text"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@id/user_id_input_layout"
+            app:layout_constraintEnd_toEndOf="@id/user_id_input_layout"
+            app:layout_constraintTop_toBottomOf="@id/user_id_input_layout">
+        <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/people_number_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="총 몇 분이 오셨나요?"
+                android:inputType="number"
+                android:selectAllOnFocus="true"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
 
     <Button
             android:id="@+id/register_customer_button"
@@ -86,6 +81,7 @@
             android:enabled="false"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/user_id_input_layout"
+            app:layout_constraintTop_toBottomOf="@+id/people_number_layout"
             app:layout_constraintHorizontal_bias="0.5"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -29,4 +29,12 @@
         <item name="android:background">@color/black_overlay</item>
     </style>
 
+    <style name="numberPickerCustomSize">
+        <!--Display textSize-->
+        <item name="android:textSize">50sp</item>
+        <!--Display textColor-->
+<!--        <item name="android:editTextColor">@color/colorTime</item>-->
+    </style>
+
+
 </resources>

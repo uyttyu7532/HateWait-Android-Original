@@ -10,9 +10,12 @@ import kotlinx.android.synthetic.main.activity_members_register.*
 import org.jetbrains.anko.support.v4.startActivity
 
 class MemberRegister : Fragment() {
-    val idRegex = Regex("^(?=.*[a-zA-Zㄱ-ㅎ가-힣0-9])[a-zA-Zㄱ-ㅎ가-힣0-9]{1,}$")
+    private val idRegex = Regex("^(?=.*[a-zA-Zㄱ-ㅎ가-힣0-9])[a-zA-Zㄱ-ㅎ가-힣0-9]{1,}$")
+    private val peopleNumberRegex = Regex("^[1-9](\\d{0,2})")
 
     fun verifyId(input_id : String) : Boolean = idRegex.matches(input_id)
+    fun verifyPeopleNumber (input_people_number : String) : Boolean = input_people_number.matches(peopleNumberRegex)
+
 
     //   fragment 안에서 옵션 선택을 가능하게함.
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,12 +36,37 @@ class MemberRegister : Fragment() {
                     register_customer_button.isEnabled = false
                 } else {
                     user_id_input_layout.error = null
-                    register_customer_button.isEnabled = true
+                    register_customer_button.isEnabled =
+                                (user_id_input_layout.error == null
+                                && people_number_layout.error == null
+                                && !people_number_editText.text.isNullOrBlank())
                 }
 
             }
             override fun beforeTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
+            override fun onTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+        })
+
+
+        people_number_editText.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                if (!verifyPeopleNumber(s.toString())) {
+                    people_number_layout.error = "단체 손님은 가게에 문의해주세요"
+                    register_customer_button.isEnabled = false
+                } else {
+                    people_number_layout.error = null
+                }
+                register_customer_button.isEnabled =
+                            (user_id_input_layout.error == null
+                            && people_number_layout.error == null
+                            && !user_id_input_editText.text.isNullOrBlank())
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
             override fun onTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
         })
@@ -55,10 +83,14 @@ class MemberRegister : Fragment() {
 
     }
 
-    fun inputLayoutInitialize() {
+    private fun inputLayoutInitialize() {
         user_id_input_editText.error = null
         user_id_input_editText.clearFocus()
         user_id_input_editText.text?.clear()
+        people_number_layout.error = null
+        people_number_editText.clearFocus()
+        people_number_editText.text?.clear()
+
     }
 
 

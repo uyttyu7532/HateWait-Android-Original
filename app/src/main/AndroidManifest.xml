@@ -14,16 +14,17 @@
             android:roundIcon="@mipmap/ic_launcher"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".StoreNameChangeDialog"/>
-        <activity android:name=".StoreInfoUpdate"/>
+        <activity android:name=".AutoCallNumberChangeDialog"></activity>
+        <activity android:name=".StoreNameChangeDialog" />
+        <activity android:name=".StoreInfoUpdate" />
         <activity android:name=".CustomerMenu" />
-         <activity android:name=".StoreMenu"/>
+        <activity android:name=".StoreMenu" />
         <activity android:name=".LoginRegisterViewPagerActivity" />
         <activity android:name=".Register_Check" />
         <activity android:name=".MainActivity" />
         <activity android:name=".Add_waiting" />
         <activity android:name=".CustomerWaitingList" />
-         <activity android:name=".StoreWaitingList" />
+        <activity android:name=".StoreWaitingList" />
         <activity android:name=".BusinessHourPick" />
         <activity
                 android:name=".Splash"

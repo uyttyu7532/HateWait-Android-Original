@@ -31,6 +31,7 @@
                 android:text="건국족발"
                 android:textSize="40sp"/>
 
+
         <ImageButton
                 android:id="@+id/store_name_edit_button"
                 android:src="@drawable/edit_button"
@@ -43,7 +44,46 @@
                 android:padding="0dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <LinearLayout
+            android:id="@+id/auto_call_number_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:clickable="true"
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="50dp"
+            app:layout_constraintStart_toStartOf="@id/scrollView"
+            app:layout_constraintEnd_toEndOf="@id/scrollView"
+            app:layout_constraintTop_toBottomOf="@id/store_name_layout"
+            app:layout_constraintBottom_toTopOf="@id/scrollView">
+
+    <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            app:cardBackgroundColor="@color/colorPrimary"
+            app:cardCornerRadius="0dp"
+            app:cardElevation="2dp">
+
+        <TextView
+                android:id="@+id/auto_call_number_text"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:gravity="center"
+                android:text="자동 호출팀 번호"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="#ffffff" />
+
+    </androidx.cardview.widget.CardView>
+        <NumberPicker
+                android:id="@+id/auto_call_number_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
     <ScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="70dp"
@@ -98,7 +138,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/store_item_text"
                     android:layout_gravity="center"
-                    android:text="수용 가능 인원"/>
+                    android:text="수용인원"/>
 
             <EditText
                     android:id="@+id/store_capacity_number_editText"
@@ -127,15 +167,35 @@
                     android:layout_gravity="center"
                     android:text="전화번호"/>
 
-            <EditText
-                    android:id="@+id/store_phone_number_editText"
-                    android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/store_phone_number_editText_layout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/store_input_left_margin"
-                    android:enabled="false"
-                    android:hint="가게 전화번호를 입력하세요"
-                    android:text="02-XXXX-XXXX"
-                    android:inputType="phone"/>
+                    app:startIconDrawable="@drawable/phone_icon"
+                    app:startIconContentDescription="Name"
+                    app:counterMaxLength="11"
+                    app:endIconMode="clear_text">
+
+                <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/store_phone_number_editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="true"
+                        android:text="02XXXXXXXX"
+                        android:inputType="phone"
+                        android:selectAllOnFocus="true"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+<!--            <EditText-->
+<!--                    android:id="@+id/store_phone_number_editText"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginLeft="@dimen/store_input_left_margin"-->
+<!--                    android:enabled="false"-->
+<!--                    android:hint="가게 전화번호를 입력하세요"-->
+<!--                    android:text="02-XXXX-XXXX"-->
+<!--                    android:inputType="phone"/>-->
         </LinearLayout>
 
         <LinearLayout
@@ -197,6 +257,21 @@
                     android:src="@drawable/startbucks_menu"/>
 
         </LinearLayout>
+
+            <Button
+                    android:id="@+id/update_store_info_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:paddingHorizontal="@dimen/register_button_padding_horizontal"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:text="수정완료"
+                    android:enabled="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/store_menu_picture_layout" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

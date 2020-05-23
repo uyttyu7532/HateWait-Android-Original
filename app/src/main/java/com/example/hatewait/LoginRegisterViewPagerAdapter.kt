@@ -1,16 +1,11 @@
 package com.example.hatewait
 
 import android.annotation.SuppressLint
-import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentStatePagerAdapter
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_register_tab_pager.*
-import org.jetbrains.anko.support.v4.viewPager
+
 
 //Recycler View Adpater
 class LoginRegisterViewPagerActivity : AppCompatActivity() {

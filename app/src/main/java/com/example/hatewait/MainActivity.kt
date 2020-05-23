@@ -89,8 +89,8 @@ class MainActivity : AppCompatActivity() {
                 } else {
                     id_input_layout.error = null
                 }
-                button_store.isEnabled = (id_input_layout.error == null && password_input_layout.error == null && !password_input_editText.text.isNullOrBlank())
-                button_customer.isEnabled = button_store.isEnabled
+//                button_store.isEnabled = (id_input_layout.error == null && password_input_layout.error == null && !password_input_editText.text.isNullOrBlank())
+//                button_customer.isEnabled = button_store.isEnabled
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -110,8 +110,8 @@ class MainActivity : AppCompatActivity() {
                     password_input_layout.error = null
                 }
 //                둘다 알맞게 입력한 경우
-                button_store.isEnabled = (id_input_layout.error == null && password_input_layout.error == null && !id_input_editText.text.isNullOrBlank())
-                button_customer.isEnabled = button_store.isEnabled
+//                button_store.isEnabled = (id_input_layout.error == null && password_input_layout.error == null && !id_input_editText.text.isNullOrBlank())
+//                button_customer.isEnabled = button_store.isEnabled
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {

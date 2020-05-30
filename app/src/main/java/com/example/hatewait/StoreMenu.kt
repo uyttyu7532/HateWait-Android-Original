@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_store_menu.*
 import org.jetbrains.anko.startActivity
 
+
 class StoreMenu : AppCompatActivity() {
 
     lateinit var storeName :String
@@ -39,6 +40,7 @@ class StoreMenu : AppCompatActivity() {
         fun init(){
             setMenu()
         }
+
 
         fun setMenu() {
 

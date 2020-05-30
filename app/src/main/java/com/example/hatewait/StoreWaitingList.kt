@@ -26,9 +26,12 @@ class StoreWaitingList : AppCompatActivity() {
     var clientList = ArrayList<ClientData>()
     lateinit var mAdapter: SwipeRecyclerViewAdapter
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_store_waiting_list)
+
+
 
         init()
     }
@@ -36,6 +39,8 @@ class StoreWaitingList : AppCompatActivity() {
 
     @SuppressLint("WrongViewCast")
     private fun init() {
+
+
 
         readFile()
         setRecyclerView()
@@ -57,7 +62,7 @@ class StoreWaitingList : AppCompatActivity() {
         val fab: View = findViewById(R.id.addFab)
         fab.setOnClickListener { view ->
 
-            val materialDialog = MaterialDialog(this).show {
+            MaterialDialog(this).show {
                 noAutoDismiss()
                 title(text = "대기손님 추가")
                 val customView = customView(R.layout.activity_add_waiting).getCustomView()
@@ -71,9 +76,10 @@ class StoreWaitingList : AppCompatActivity() {
                     Log.d("이름", addWaitingName.text.toString())
                     Log.d("인원", addWaitingPerson.text.toString())
                     Log.d("전화번호", addWaitingPhonenum.text.toString())
-//                    addClient()
+                    //db에 addClient()
                     dismiss()
                     Toasty.success(view.context, "추가되었습니다", Toast.LENGTH_SHORT, true).show()
+                    setRecyclerView()
                 }
                 negativeButton() { dialog ->
                     dismiss()
@@ -88,7 +94,7 @@ class StoreWaitingList : AppCompatActivity() {
         // 나중에 디자인부분 DividerItemDecoration.java 참고
         // http://helloandroidexample.blogspot.com/2015/07/swipe-recyclerview-using.html
 
-        var mRecyclerView = findViewById<View>(R.id.myRecyclerView) as RecyclerView
+        val mRecyclerView = findViewById<View>(R.id.myRecyclerView) as RecyclerView
         // Layout Managers:
         mRecyclerView!!.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -116,7 +122,7 @@ class StoreWaitingList : AppCompatActivity() {
                 }
             }
         }
-        mRecyclerView!!.adapter = mAdapter
+        mRecyclerView.adapter = mAdapter
 
         /* Scroll Listeners */
 //        mRecyclerView!!.addOnScrollListener(object :
@@ -138,7 +144,6 @@ class StoreWaitingList : AppCompatActivity() {
 //            }
 //        })
     }
-
 
     // 나중에 db에서 불러오기
     // getList()

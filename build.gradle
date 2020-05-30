@@ -27,6 +27,8 @@ allprojects {
         jcenter()
 //        business hour time picker
         maven { url 'https://jitpack.io' }
+
+        mavenLocal()
     }
 }
 

@@ -1,6 +1,6 @@
 package com.example.hatewait
 
-import android.annotation.SuppressLint
+import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.daimajia.swipe.SwipeLayout
 import com.daimajia.swipe.adapters.RecyclerSwipeAdapter
 import es.dmoral.toasty.Toasty
+import kotlinx.android.synthetic.main.row.view.*
 import org.jetbrains.anko.backgroundColorResource
 import java.util.*
 
@@ -25,14 +26,16 @@ class SwipeRecyclerViewAdapter(val items: ArrayList<ClientData>) :
     }
 
     var itemClickListener: onItemClickListener? = null
+    private val mSelectedCallItems = SparseBooleanArray(0)
+    private val mSelectedDetailItems = SparseBooleanArray(0)
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): SimpleViewHolder {
-        val view: View =
+        val v: View =
             LayoutInflater.from(parent.context).inflate(R.layout.row, parent, false)
-        return SimpleViewHolder(view)
+        return SimpleViewHolder(v)
     }
 
 
@@ -42,39 +45,69 @@ class SwipeRecyclerViewAdapter(val items: ArrayList<ClientData>) :
 
     //  ViewHolder Class
     inner class SimpleViewHolder(itemView: View) :
+
         RecyclerView.ViewHolder(itemView) {
 
-        var swipeLayout = itemView.findViewById(R.id.swipeLayout) as SwipeLayout
-        var clientView = itemView.findViewById(R.id.clientView) as CardView
-        var clientNameView = itemView.findViewById(R.id.clientNameView) as TextView
-        var clientNumView = itemView.findViewById(R.id.clientNumView) as TextView
-        var clientPhoneView = itemView.findViewById(R.id.clientPhoneView) as TextView
-        var detailView = itemView.findViewById(R.id.detailView) as CardView
-        var detailView1 = itemView.findViewById(R.id.detailView1) as TextView
-        var detailView2 = itemView.findViewById(R.id.detailView2) as TextView
-        var delBtn = itemView.findViewById(R.id.delBtn) as ImageButton
-        var bottom_wrapper_left = itemView.findViewById(R.id.bottom_wrapper_left) as FrameLayout
-        var callBtn = itemView.findViewById(R.id.callBtn) as ImageButton
+
+        val swipeLayout = itemView.findViewById(R.id.swipeLayout) as SwipeLayout
+        val clientView = itemView.findViewById(R.id.clientView) as CardView
+        val clientNameView = itemView.findViewById(R.id.clientNameView) as TextView
+        val clientNumView = itemView.findViewById(R.id.clientNumView) as TextView
+        val clientPhoneView = itemView.findViewById(R.id.clientPhoneView) as TextView
+        val detailView = itemView.findViewById(R.id.detailView) as CardView
+        val detailView1 = itemView.findViewById(R.id.detailView1) as TextView
+        val detailView2 = itemView.findViewById(R.id.detailView2) as TextView
+        val delBtn = itemView.findViewById(R.id.delBtn) as ImageButton
+        val bottom_wrapper_left = itemView.findViewById(R.id.bottom_wrapper_left) as FrameLayout
+        val callBtn = itemView.callBtn
 
 
         init {
 
             // !!!!!!!callBtn과 swipeLayout clicklistener 매우이상!!!!!!!!!
+//
+//            callBtn.setOnClickListener{
+//                this.bottom_wrapper_left.backgroundColorResource= R.color.colorCall
+//                Toasty.warning(itemView.context, this.clientPhoneView.text.toString(), Toast.LENGTH_SHORT, true).show()
+//                // 서버에게 메시지 보내라는 요청 (with 손님 번호, 문자내용-n번째순서)
+//                // 상태바 알림보내기 요청
+//                notifyItemChanged(adapterPosition)
+//            }
+//
+//
+//            this.clientView.setOnClickListener {
+//                itemClickListener?.onItemClick(this, it, adapterPosition)
+//            }
 
-            callBtn.setOnClickListener{
-                bottom_wrapper_left.backgroundColorResource= R.color.colorCall
-//                Toasty.warning(itemView, "호출되었습니다.", Toast.LENGTH_SHORT, true).show()
+
+            callBtn.setOnClickListener { v ->
+                val position = adapterPosition
+                if (mSelectedCallItems.get(position, false)) {
+                    mSelectedCallItems.put(position, false)
+                    this.bottom_wrapper_left.backgroundColorResource = R.color.colorCall
+                    Toasty.warning(itemView.context, this.clientPhoneView.text.toString(), Toast.LENGTH_SHORT, true).show()
+
+                }
             }
 
-            clientView.setOnClickListener {
-                itemClickListener?.onItemClick(this, itemView, adapterPosition)
+            clientView.setOnClickListener { v ->
+                val position = adapterPosition
+                if (mSelectedDetailItems.get(position, false)) {
+                    mSelectedDetailItems.put(position, false)
+
+                        detailView.visibility = View.VISIBLE
+
+                }else{
+                    mSelectedDetailItems.put(position, true)
+                    detailView.visibility = View.GONE
+                }
             }
+
 
         }
     }
 
 
-    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(
         viewHolder: SimpleViewHolder,
         position: Int
@@ -150,19 +183,19 @@ class SwipeRecyclerViewAdapter(val items: ArrayList<ClientData>) :
             Toasty.error(view.context, "삭제되었습니다", Toast.LENGTH_SHORT, true).show()
         }
 
-//        viewHolder.setIsRecyclable(false)
+        if (mSelectedCallItems.get(position, false)) {
+            viewHolder.bottom_wrapper_left.backgroundColorResource = R.color.colorCall
+        } else {
+            viewHolder.bottom_wrapper_left.backgroundColorResource = R.color.white
+        }
 
-//        viewHolder.clientView.setOnClickListener { view->
-////            itemClickListener?.onItemClick(viewHolder, view, position)
-//            Toasty.error(view.context, position.toString(), Toast.LENGTH_SHORT, true).show()
-//            if (viewHolder.detailView.visibility == View.GONE) {
-//                viewHolder.detailView.visibility = View.VISIBLE
-//            } else {
-//                viewHolder.detailView.visibility = View.GONE
-//            }
+        if (mSelectedDetailItems.get(position, false)) {
+            viewHolder.detailView.visibility = View.VISIBLE
+        } else {
+            viewHolder.detailView.visibility = View.GONE
+        }
 
 
-//        }
 
 
         // mItemManger is member in RecyclerSwipeAdapter Class

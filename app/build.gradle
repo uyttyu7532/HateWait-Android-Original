@@ -15,6 +15,10 @@ android {
         versionCode 1
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
+    }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
     }
 
 
@@ -77,4 +81,6 @@ dependencies {
     // 다이얼로그
     implementation 'com.afollestad.material-dialogs:input:3.3.0'
     implementation 'com.github.GrenderG:Toasty:1.4.2'
+
+    implementation 'com.android.support:multidex:1.0.3'
 }

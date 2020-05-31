@@ -1,6 +1,7 @@
 package com.example.hatewait
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -19,6 +20,8 @@ import com.daimajia.swipe.util.Attributes
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_store_waiting_list.*
 import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 
 class StoreWaitingList : AppCompatActivity() {
@@ -26,11 +29,9 @@ class StoreWaitingList : AppCompatActivity() {
     var clientList = ArrayList<ClientData>()
     lateinit var mAdapter: SwipeRecyclerViewAdapter
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_store_waiting_list)
-
 
 
         init()
@@ -102,8 +103,24 @@ class StoreWaitingList : AppCompatActivity() {
         // mRecyclerView!!.addItemDecoration(DividerItemDecoration(resources.getDrawable(R.drawable.divider)))
         // mRecyclerView.setItemAnimator(new FadeInLeftAnimator());
 
+        val pref = this.getSharedPreferences("myPref", Context.MODE_PRIVATE)
+
+
+        val called = HashMap<String, Boolean>()
+        val prefKeys: MutableSet<String> = pref.all.keys
+        for (pref_key in prefKeys) {
+            called[pref_key] = true
+        }
+
+        val clicked = HashMap<String, Boolean>()
+        for(a in clientList){
+            clicked[a.phone] = false
+        }
+
+
+
         // Creating Adapter object
-        mAdapter = SwipeRecyclerViewAdapter(clientList!!)
+        mAdapter = SwipeRecyclerViewAdapter(clientList!!,called,clicked,pref)
 
         //Single or Multiple
         mAdapter.mode = Attributes.Mode.Single

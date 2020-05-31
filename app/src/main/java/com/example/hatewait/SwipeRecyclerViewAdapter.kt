@@ -1,6 +1,6 @@
 package com.example.hatewait
 
-import android.util.SparseBooleanArray
+import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,16 +18,20 @@ import org.jetbrains.anko.backgroundColorResource
 import java.util.*
 
 
-class SwipeRecyclerViewAdapter(val items: ArrayList<ClientData>) :
+class SwipeRecyclerViewAdapter(val items: ArrayList<ClientData>,
+                               val called:HashMap<String,Boolean>,
+                               val clicked:HashMap<String,Boolean>,
+                               val pref:SharedPreferences ) :
     RecyclerSwipeAdapter<SwipeRecyclerViewAdapter.SimpleViewHolder>() {
 
     interface onItemClickListener {
         fun onItemClick(holder: SimpleViewHolder, view: View, position: Int)
     }
 
+
     var itemClickListener: onItemClickListener? = null
-    private val mSelectedCallItems = SparseBooleanArray(0)
-    private val mSelectedDetailItems = SparseBooleanArray(0)
+//    private val mSelectedCallItems = SparseBooleanArray(0)
+//    private val mSelectedDetailItems = SparseBooleanArray(0)
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -82,24 +86,33 @@ class SwipeRecyclerViewAdapter(val items: ArrayList<ClientData>) :
 
             callBtn.setOnClickListener { v ->
                 val position = adapterPosition
-                if (mSelectedCallItems.get(position, false)) {
-                    mSelectedCallItems.put(position, false)
-                    this.bottom_wrapper_left.backgroundColorResource = R.color.colorCall
+                if (called.containsKey(items[position].phone) && called[items[position].phone]!! ) {
+                    setShared<Boolean>(pref,items[position].phone,false)
+                    called[items[position].phone] = false
+                    this.bottom_wrapper_left.backgroundColorResource = R.color.white
                     Toasty.warning(itemView.context, this.clientPhoneView.text.toString(), Toast.LENGTH_SHORT, true).show()
 
                 }
+                else{
+                    setShared<Boolean>(pref,items[position].phone,true)
+                    called[items[position].phone] = true
+                    this.bottom_wrapper_left.backgroundColorResource = R.color.colorCall
+                    Toasty.warning(itemView.context, this.clientPhoneView.text.toString(), Toast.LENGTH_SHORT, true).show()
+
+                    }
             }
 
             clientView.setOnClickListener { v ->
                 val position = adapterPosition
-                if (mSelectedDetailItems.get(position, false)) {
-                    mSelectedDetailItems.put(position, false)
-
-                        detailView.visibility = View.VISIBLE
+                if (clicked.containsKey(items[position].phone) && clicked[items[position].phone]!! ) {
+                    clicked[items[position].phone] = false
+                    detailView.visibility = View.GONE
 
                 }else{
-                    mSelectedDetailItems.put(position, true)
-                    detailView.visibility = View.GONE
+
+                    clicked[items[position].phone] = true
+
+                    detailView.visibility = View.VISIBLE
                 }
             }
 
@@ -183,13 +196,13 @@ class SwipeRecyclerViewAdapter(val items: ArrayList<ClientData>) :
             Toasty.error(view.context, "삭제되었습니다", Toast.LENGTH_SHORT, true).show()
         }
 
-        if (mSelectedCallItems.get(position, false)) {
+        if (called.containsKey(items[position].phone) && called[items[position].phone]!! ) {
             viewHolder.bottom_wrapper_left.backgroundColorResource = R.color.colorCall
         } else {
             viewHolder.bottom_wrapper_left.backgroundColorResource = R.color.white
         }
 
-        if (mSelectedDetailItems.get(position, false)) {
+        if (clicked.containsKey(items[position].phone) && clicked[items[position].phone]!! ) {
             viewHolder.detailView.visibility = View.VISIBLE
         } else {
             viewHolder.detailView.visibility = View.GONE

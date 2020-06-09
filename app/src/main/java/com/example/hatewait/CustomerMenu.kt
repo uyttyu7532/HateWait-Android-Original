@@ -42,6 +42,7 @@ class CustomerMenu : AppCompatActivity() {
             marquee.setSelected(true) // 마키 텍스트에 포커스
         }
 
+        setMenu()
 //        modifyCustomerInfo() // 회원 정보 수정
 ////        cancelWaiting() // 대기 취소하기
 ////        refreshMyTurn() // 내 순서 새로고침

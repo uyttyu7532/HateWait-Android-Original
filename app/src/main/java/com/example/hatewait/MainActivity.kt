@@ -1,6 +1,7 @@
 package com.example.hatewait
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.AsyncTask
 import android.os.Bundle
@@ -119,7 +120,7 @@ class MainActivity : AppCompatActivity() {
                 val resultUserInfoJSON = JSONObject(content).getJSONObject("response")
                 val userEmail = resultUserInfoJSON.getString("email")
                 val userName = resultUserInfoJSON.getString("name")
-                Log.i("userInfo", "이름 : $userName \n이메일: $userEmail")
+                Log.i("userInfo", "이름 : $userName\n이메일: $userEmail")
 
 //                일단은 로그인 계정이 customer 계정이라고 판단할 경우.
                 startActivity<CustomerMenu>(

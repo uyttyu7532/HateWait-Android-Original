@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AndroidLayouts">
+    <shared>
+      <config />
+    </shared>
+  </component>
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b62bc6b4-87bc-48f9-aad9-5f989b32c4db" name="Default Changelist" comment="" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="Nexus_5X_API_29_x86" />
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view />
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="resourceFile" />
+        <option value="Kotlin File" />
+        <option value="layoutResourceFile" />
+        <option value="Kotlin Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="PUSH_TAGS">
+      <GitPushTagMode>
+        <option name="argument" value="--tags" />
+        <option name="title" value="All" />
+      </GitPushTagMode>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1aRFyurMUZNibazTa78ZXCYKTfo" />
+  <component name="PropertiesComponent">
+    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="Nexus_5X_API_29_x86" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2020-05-10T05:25:20.726Z" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../EnglishQuiz" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\user\OneDrive\Hate_Wait\HateWait\app\src\main\res\drawable-store" />
+      <recent name="C:\Users\user\OneDrive\Hate_Wait\HateWait\app\src\main\java\com\example\hatewait" />
+      <recent name="C:\Users\user\OneDrive\Hate_Wait\HateWait\app\src\main\res\drawable" />
+    </key>
+    <key name="android.template.packageName">
+      <recent name="com.example.hatewait" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\user\OneDrive\Hate_Wait\HateWait\app\src\main\res\drawable" />
+      <recent name="C:\Users\user\OneDrive\Hate_Wait\HateWait\app\src\main\res\drawable-v24" />
+      <recent name="C:\Users\user\OneDrive\Hate_Wait\HateWait\app\src\main\res\drawable\login_register" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
+      <module name="app" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Hybrid>
+      <Java />
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sample Java Methods" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="com.example.hatewait.StoreInfoUpdate" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b62bc6b4-87bc-48f9-aad9-5f989b32c4db" name="Default Changelist" comment="" />
+      <created>1586690756483</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1586690756483</updated>
+    </task>
+    <task id="LOCAL-00001" summary="&quot;회원 / 비회원 화면 &amp; TabLayout + Pager&quot;">
+      <created>1586844007853</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1586844007853</updated>
+    </task>
+    <task id="LOCAL-00002" summary="&quot;회원 / 비회원 화면 &amp; TabLayout + Pager&quot;">
+      <created>1586844834842</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1586844834842</updated>
+    </task>
+    <task id="LOCAL-00003" summary="&quot;테블릿 등록하기 버튼 활성/비활성 조건식 추가 (TextWatcher) button &amp; inputText Listener&quot;">
+      <created>1586878812649</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1586878812649</updated>
+    </task>
+    <task id="LOCAL-00004" summary="&quot;activity_main Constraint (가로모드) 화면 조정&quot;">
+      <created>1586880619756</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1586880619756</updated>
+    </task>
+    <task id="LOCAL-00005" summary="&quot;App Action Bar 삭제&quot;">
+      <created>1586883611357</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1586883611357</updated>
+    </task>
+    <task id="LOCAL-00006" summary="&quot;&lt;Tablet App&gt; 비회원 등록시 대기인수 안내 추가&quot;">
+      <created>1586887927389</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1586887927389</updated>
+    </task>
+    <task id="LOCAL-00007" summary="&quot;Manifest (Tablet &lt;-&gt; SmartPhone 버튼 연동) &amp; 비회원 테블릿 등록 안내화면 구현 // not Yet: 회원 테블릿 등록 안내화면&quot;">
+      <created>1586889658183</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1586889658183</updated>
+    </task>
+    <task id="LOCAL-00008" summary="&quot;id, password 입력 후 로그인 or 대기열 등록시 자동 삭제 (뒤로가기로 복원 금지)&quot;">
+      <created>1586890321131</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1586890321131</updated>
+    </task>
+    <task id="LOCAL-00009" summary="&quot;id, password 입력 후 로그인 or 대기열 등록시 자동 삭제 (뒤로가기로 복원 금지)&quot;">
+      <created>1586890505475</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1586890505475</updated>
+    </task>
+    <task id="LOCAL-00010" summary="&quot;app logo update // store info register &amp; update activity (not yet business hour library)&quot;">
+      <created>1589042838517</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1589042838517</updated>
+    </task>
+    <task id="LOCAL-00011" summary="&quot;Store info update form // not yet: store name Edit through Dialog Activity (Sync)&quot;">
+      <created>1589058778212</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1589058778212</updated>
+    </task>
+    <task id="LOCAL-00012" summary="&quot;build test (with row.xml)&quot;">
+      <created>1589077944415</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1589077944415</updated>
+    </task>
+    <task id="LOCAL-00013" summary="&quot;Business Hour Pick 적용 NOT YET : widget Version crash (v7 vs androidx), 한글 패치&quot;">
+      <created>1589084738175</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1589084738175</updated>
+    </task>
+    <task id="LOCAL-00014" summary="&quot;가게 메뉴판 추가&quot;">
+      <created>1589087787870</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1589087787870</updated>
+    </task>
+    <task id="LOCAL-00015" summary="&quot;ViewPager1 -&gt; 2 update&quot;">
+      <created>1589909955843</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1589909955843</updated>
+    </task>
+    <task id="LOCAL-00016" summary="&quot;ViewPager1 -&gt; 2 update&quot;">
+      <created>1589909984618</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1589909984618</updated>
+    </task>
+    <task id="LOCAL-00017" summary="&quot;color Accent restore&quot;">
+      <created>1589950552144</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1589950552157</updated>
+    </task>
+    <task id="LOCAL-00018" summary="&quot;input value initialize after clicking login button&quot;">
+      <created>1589951578494</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1589951578494</updated>
+    </task>
+    <task id="LOCAL-00019" summary="&quot;add scroll view at store info &amp; businesss hour picker&quot;">
+      <created>1589952979020</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1589952979020</updated>
+    </task>
+    <task id="LOCAL-00020" summary="&quot;Login input Form null or blank check , login button style changing&quot;">
+      <created>1589955358968</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1589955358968</updated>
+    </task>
+    <task id="LOCAL-00021" summary="&quot;RecyclerView setRecycleFalse&quot;">
+      <created>1589959864344</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1589959864344</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="&quot;회원 / 비회원 화면 &amp; TabLayout + Pager&quot;" />
+    <MESSAGE value="&quot;테블릿 등록하기 버튼 활성/비활성 조건식 추가 (TextWatcher) button &amp; inputText Listener&quot;" />
+    <MESSAGE value="&quot;acitivity_main Constraint (가로모드) 화면 조정&quot;" />
+    <MESSAGE value="&quot;activity_main Constraint (가로모드) 화면 조정&quot;" />
+    <MESSAGE value="&quot;App Action Bar 삭제&quot;" />
+    <MESSAGE value="&quot;&lt;Tablet App&gt; 비회원 등록시 대기인수 안내 추가&quot;" />
+    <MESSAGE value="&quot;Manifest (Tablet &lt;-&gt; SmartPhone 버튼 연동) &amp; 비회원 테블릿 등록 안내화면 구현 // not Yet: 회원 테블릿 등록 안내화면&quot;" />
+    <MESSAGE value="&quot;id, password 입력 후 로그인 or 대기열 등록시 자동 삭제 (뒤로가기로 복원 금지)&quot;" />
+    <MESSAGE value="&quot;store info register &amp; update activity (not yet business hour library)&quot;" />
+    <MESSAGE value="&quot;app logo update // store info register &amp; update activity (not yet business hour library)&quot;" />
+    <MESSAGE value="&quot;Store info update form // not yet: store name Edit through Dialog Activity (Sync)&quot;" />
+    <MESSAGE value="&quot;build test (with row.xml)&quot;" />
+    <MESSAGE value="&quot;Business Hour Pick 적용 NOT YET : widget Version crash (v7 vs androidx), 한글 패치&quot;" />
+    <MESSAGE value="&quot;가게 메뉴판 추가&quot;" />
+    <MESSAGE value="&quot;ViewPager1 -&gt; 2 update&quot;" />
+    <MESSAGE value="&quot;color Accent restore&quot;" />
+    <MESSAGE value="&quot;input value initialize after clicking login button&quot;" />
+    <MESSAGE value="&quot;add scroll view at store info &amp; businesss hour picker&quot;" />
+    <MESSAGE value="&quot;Login input Form null or blank check , login button style changing&quot;" />
+    <MESSAGE value="&quot;RecyclerView setRecycleFalse&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="&quot;RecyclerView setRecycleFalse&quot;" />
+  </component>
+</project>

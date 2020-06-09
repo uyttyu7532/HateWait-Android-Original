@@ -5,12 +5,12 @@ import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.addTextChangedListener
+import com.nhn.android.naverlogin.OAuthLogin
+import com.nhn.android.naverlogin.OAuthLoginHandler
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_members_register.*
 import org.jetbrains.anko.startActivity
-import java.net.PasswordAuthentication
 
 
 class MainActivity : AppCompatActivity() {
@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         init()
+        naver_login_init()
         addTextChangeListener()
     }
 
@@ -75,6 +76,31 @@ class MainActivity : AppCompatActivity() {
             startActivity<CustomerMenu>(
                 "customername" to customername
             )
+        }
+
+    }
+
+    fun naver_login_init() {
+        val loginModule = OAuthLogin.getInstance();
+        val naverLoginKeyStringArray = resources.getStringArray(R.array.naver_login_api)
+//        Client ID, SecretKey, Name
+        loginModule.init( this@MainActivity, naverLoginKeyStringArray[0], naverLoginKeyStringArray[1], naverLoginKeyStringArray[2])
+
+        val loginHandler = object : OAuthLoginHandler() {
+            override fun run(success: Boolean) {
+                if (success) {
+                   val accessToken = loginModule.getAccessToken(this@MainActivity)
+                    var refreshToken = loginModule.getRefreshToken(this@MainActivity)
+                } else {
+                    val errorCode = loginModule.getLastErrorCode(this@MainActivity).code
+                    val errorDescription = loginModule.getLastErrorDesc(this@MainActivity)
+                    Toast.makeText(this@MainActivity, "errorCode : $errorCode\nerrorMessage : $errorDescription", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        naver_login_button.setOnClickListener {
+            loginModule.startOauthLoginActivity(this@MainActivity, loginHandler)
         }
 
     }

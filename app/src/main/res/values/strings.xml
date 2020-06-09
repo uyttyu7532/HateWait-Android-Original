@@ -17,4 +17,11 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
     <string name="title_activity_splash">SplashActivity</string>
+
+
+    <string-array name="naver_login_api">
+        <item>82cffPlMCADZx2gteyWB</item>
+        <item>AuVYTrPqZh</item>
+        <item>HateWait</item>
+    </string-array>
 </resources>

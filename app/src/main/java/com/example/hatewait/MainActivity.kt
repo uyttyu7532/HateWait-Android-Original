@@ -58,28 +58,19 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun init() {
-        val id = "건대보쌈"
-        val waitingnum = "10"
 
         addTextChangeListener()
 
         button_store.setOnClickListener{
             inputLayoutInitialize()
-            startActivity<StoreMenu>(
-                "storename" to id,
-                "waitingnum" to waitingnum
-            )
+            startActivity<StoreMenu>()
         }
 
-
-        val customername = "조예린"
 
         button_customer.setOnClickListener{
 
             inputLayoutInitialize()
-            startActivity<CustomerMenu>(
-                "customername" to customername
-            )
+            startActivity<CustomerMenu>()
         }
 
     }
@@ -124,7 +115,6 @@ class MainActivity : AppCompatActivity() {
 
 //                일단은 로그인 계정이 customer 계정이라고 판단할 경우.
                 startActivity<CustomerMenu>(
-                    "customername" to userName
                 )
             }
 

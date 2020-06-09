@@ -15,11 +15,23 @@
             android:layout_margin="25dp"
             android:orientation="vertical">
 
-        <TextView
-                android:id="@+id/greetCustomerText"
+        <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="회원님 환영합니다." />
+                android:orientation="horizontal">
+            <TextView
+                    android:id="@+id/customerNameView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="조예린" />
+            <TextView
+                    android:id="@+id/greetCustomerText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" 회원님 환영합니다." />
+
+        </LinearLayout>
+
 
         <TextView
                 android:id="@+id/editcustomerinfo"
@@ -34,9 +46,9 @@
             android:id="@+id/mywaiting"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="20dp"
+            android:layout_above="@id/otherStore"
             android:layout_below="@id/greeting"
-            android:layout_above="@id/otherStore">
+            android:layout_margin="20dp">
 
         <RelativeLayout
                 android:id="@+id/myturn"
@@ -45,10 +57,10 @@
                 android:orientation="vertical">
 
             <TextView
-                    android:layout_alignParentTop="true"
-                    android:id="@+id/marquee"
+                    android:id="@+id/customerMarquee"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
                     android:layout_margin="5dp"
                     android:ellipsize="marquee"
                     android:focusable="true"
@@ -60,30 +72,43 @@
 
 
             <TextView
-                    android:id="@+id/storename"
-                    android:layout_below="@id/marquee"
+                    android:id="@+id/waitingStoreView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/customerMarquee"
                     android:layout_margin="10dp"
                     android:text="건대 족발"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-            <TextView
-                    android:id="@+id/waitingnum"
-                    android:layout_below="@id/storename"
+            <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/waitingStoreView"
                     android:layout_margin="10dp"
-                    android:text="5팀 전 순서입니다"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                    android:orientation="horizontal">
+
+                <TextView
+                        android:id="@+id/customerWaitingNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="5팀"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+                <TextView
+                        android:id="@+id/waitingNumText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" 전 순서입니다."
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            </LinearLayout>
 
             <TextView
-                    android:layout_above="@+id/twoButton"
                     android:id="@+id/recentRefreshTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="최근 새로고침 시간: 2020-05-20 16:28:50"
+                    android:layout_above="@+id/twoButton"
                     android:gravity="right"
+                    android:text="최근 새로고침 시간: 2020-05-20 16:28:50"
                     android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
             <androidx.cardview.widget.CardView
@@ -92,7 +117,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
-                  android:layout_margin="5dp"
+                    android:layout_margin="5dp"
                     android:elevation="2dp">
 
                 <LinearLayout
@@ -122,10 +147,8 @@
             </androidx.cardview.widget.CardView>
 
 
-
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
-
 
 
     <androidx.cardview.widget.CardView

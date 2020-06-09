@@ -123,7 +123,7 @@ class MainActivity : AppCompatActivity() {
 
 //                일단은 로그인 계정이 customer 계정이라고 판단할 경우.
                 startActivity<CustomerMenu>(
-                    "customerName" to userName
+                    "customername" to userName
                 )
             }
 

@@ -90,23 +90,15 @@ class MainActivity : AppCompatActivity() {
     // 네아로(네이버 아이디로 로그인) 기능 이용시 전화번호는 따로 입력받아야한다.
     //     전화번호는 Naver 프로필 API에서 제공해주지 않기때문에
     fun naver_login_init() {
+
+
+
         val loginModule = OAuthLogin.getInstance();
         val naverLoginKeyStringArray = resources.getStringArray(R.array.naver_login_api)
 //        Client ID, SecretKey, Name
         loginModule.init( this@MainActivity, naverLoginKeyStringArray[0], naverLoginKeyStringArray[1], naverLoginKeyStringArray[2])
 
-        val loginHandler = object : OAuthLoginHandler() {
-            override fun run(success: Boolean) {
-                if (success) {
-                   val accessToken = loginModule.getAccessToken(this@MainActivity)
-                    var refreshToken = loginModule.getRefreshToken(this@MainActivity)
-                } else {
-                    val errorCode = loginModule.getLastErrorCode(this@MainActivity).code
-                    val errorDescription = loginModule.getLastErrorDesc(this@MainActivity)
-                    Toast.makeText(this@MainActivity, "errorCode : $errorCode\nerrorMessage : $errorDescription", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
+
 
 
         // Offline API 요청은 Network 를 사용하기 때문에 AsyncTask 사용.
@@ -136,6 +128,23 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
+
+
+        val loginHandler = object : OAuthLoginHandler() {
+            override fun run(success: Boolean) {
+                if (success) {
+                   val accessToken = loginModule.getAccessToken(this@MainActivity)
+                    var refreshToken = loginModule.getRefreshToken(this@MainActivity)
+                    RequestApiTask().execute()
+                } else {
+                    val errorCode = loginModule.getLastErrorCode(this@MainActivity).code
+                    val errorDescription = loginModule.getLastErrorDesc(this@MainActivity)
+                    Toast.makeText(this@MainActivity, "errorCode : $errorCode\nerrorMessage : $errorDescription", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+
 
 
         naver_login_button.setOnClickListener {

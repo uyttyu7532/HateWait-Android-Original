@@ -2,15 +2,18 @@ package com.example.hatewait
 
 import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
+import android.os.AsyncTask
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.nhn.android.naverlogin.OAuthLogin
 import com.nhn.android.naverlogin.OAuthLoginHandler
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.startActivity
+import org.json.JSONObject
 
 
 class MainActivity : AppCompatActivity() {
@@ -80,6 +83,12 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+
+
+    //    Naver Login Initilization
+
+    // 네아로(네이버 아이디로 로그인) 기능 이용시 전화번호는 따로 입력받아야한다.
+    //     전화번호는 Naver 프로필 API에서 제공해주지 않기때문에
     fun naver_login_init() {
         val loginModule = OAuthLogin.getInstance();
         val naverLoginKeyStringArray = resources.getStringArray(R.array.naver_login_api)
@@ -98,6 +107,36 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+
+        // Offline API 요청은 Network 를 사용하기 때문에 AsyncTask 사용.
+        class RequestApiTask : AsyncTask<Void?, Void?, String>() {
+            override fun onPreExecute() {
+            }
+            override fun doInBackground(vararg params: Void?): String? {
+//                naver user profile 을 JSON 객체 형태로 얻어옴.
+                val url = "https://openapi.naver.com/v1/nid/me"
+//                mOAuthLoginHandler로부터 토큰을 따로 받아오지 않으므로
+//                별도로 토큰을 얻는 메소드 호출 필요.
+                val at: String = loginModule.getAccessToken(this@MainActivity)
+//      API 호출   실패시 :  null 반환.
+//                성공시: 네이버 유저정보 JSON Format String return
+                return loginModule.requestApi(this@MainActivity, at, url)
+            }
+            override fun onPostExecute(content: String) {
+                val resultUserInfoJSON = JSONObject(content).getJSONObject("response")
+                val userEmail = resultUserInfoJSON.getString("email")
+                val userName = resultUserInfoJSON.getString("name")
+                Log.i("userInfo", "이름 : $userName \n이메일: $userEmail")
+
+//                일단은 로그인 계정이 customer 계정이라고 판단할 경우.
+                startActivity<StoreMenu>(
+                    "customerName" to userName
+                )
+            }
+
+        }
+
 
         naver_login_button.setOnClickListener {
             loginModule.startOauthLoginActivity(this@MainActivity, loginHandler)

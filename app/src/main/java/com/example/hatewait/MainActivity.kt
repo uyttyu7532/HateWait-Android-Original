@@ -130,7 +130,7 @@ class MainActivity : AppCompatActivity() {
                 Log.i("userInfo", "이름 : $userName \n이메일: $userEmail")
 
 //                일단은 로그인 계정이 customer 계정이라고 판단할 경우.
-                startActivity<StoreMenu>(
+                startActivity<CustomerMenu>(
                     "customerName" to userName
                 )
             }

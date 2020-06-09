@@ -95,32 +95,29 @@
 
     <Button
             android:id="@+id/button_store"
-            android:text="store로 로그인"
+            android:text="store 로그인"
             style="@style/Widget.AppCompat.Button.Colored"
+            app:layout_constraintHorizontal_chainStyle="spread"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:background="@color/colorPrimary"
             android:enabled="true"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/password_input_layout"
-            app:layout_constraintHorizontal_bias="0.204"
-            app:layout_constraintBaseline_toBaselineOf="@+id/button_customer"/>
+            app:layout_constraintEnd_toStartOf="@id/button_customer"
+            app:layout_constraintTop_toBottomOf="@id/password_input_layout" />
 
     <Button
             android:id="@+id/button_customer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_marginTop="30dp"
             android:background="@color/colorPrimary"
-            android:text="customer로 로그인"
+            android:text="customer 로그인"
             android:enabled="true"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.875"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/password_input_layout" />
+            app:layout_constraintStart_toEndOf="@id/button_store"
+            app:layout_constraintTop_toTopOf="@id/button_store" />
 
 
 
@@ -129,7 +126,7 @@
             android:id="@+id/naver_login_button"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:src="@drawable/naver_login_white_size"
             android:adjustViewBounds="true"
             android:scaleType="fitXY"

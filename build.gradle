@@ -25,7 +25,7 @@ allprojects {
     repositories {
         google()
         jcenter()
-//        business hour time picker
+//        business hour time picker + SegmentedButton
         maven { url 'https://jitpack.io' }
 
         mavenLocal()

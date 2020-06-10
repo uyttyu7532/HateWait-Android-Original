@@ -18,17 +18,59 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintHorizontal_bias="0.500" />
+            app:layout_constraintHorizontal_bias="0.5" />
 
+<!--    2가지 Toggle Button , Animation 효과 적용됨.-->
+<!-- Reference:  https://github.com/addisonElliott/SegmentedButton-->
+    <com.addisonelliott.segmentedbutton.SegmentedButtonGroup
+            android:id="@+id/user_kind_group"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:elevation="2dp"
+            android:background="@color/white"
+            app:borderWidth="1dp"
+            app:divider="@color/colorPrimary"
+            app:dividerPadding="10dp"
+            app:dividerWidth="1dp"
+            app:position="1"
+            app:ripple="true"
+            app:rippleColor="@color/colorAccent"
+            app:layout_constraintStart_toStartOf="@id/idView"
+            app:layout_constraintEnd_toEndOf="@id/idView"
+            app:layout_constraintTop_toBottomOf="@id/idView"
+            app:selectedBackground="@color/colorPrimary">
 
-<!--    <Button-->
-<!--            android:id="@+id/store_mode_button"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:drawableTop="@drawable/store_login_image"-->
-<!--            android:text="store"-->
-<!--            android:drawablePadding="0dp"-->
-<!--            android:padding="0dp"/>-->
+        <com.addisonelliott.segmentedbutton.SegmentedButton
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="10dp"
+                app:drawable="@drawable/store_login_icon"
+                app:drawableGravity="top"
+                app:drawableTint="@color/black_overlay"
+                app:selectedDrawableTint="@color/white"
+                app:selectedTextColor="@color/white"
+                app:text="Store"
+                app:textColor="@color/black_overlay" />
+
+<!--        Customer, Store Text간 baseLine이 맞지 않는 문제 (미해결)-->
+
+        <com.addisonelliott.segmentedbutton.SegmentedButton
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="0dp"
+                app:drawable="@drawable/customer_login_icon"
+                app:drawableTint="@color/black_overlay"
+                app:selectedDrawableTint="@color/white"
+                app:drawableGravity="top"
+                app:selectedTextColor="@color/white"
+                app:text="Customer"
+                app:textColor="@color/black_overlay" />
+
+    </com.addisonelliott.segmentedbutton.SegmentedButtonGroup>
 
     <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/id_input_layout"
@@ -41,7 +83,7 @@
             android:layout_marginHorizontal="24dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/idView">
+            app:layout_constraintTop_toBottomOf="@id/user_kind_group">
 
         <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/id_input_editText"
@@ -76,47 +118,60 @@
     </com.google.android.material.textfield.TextInputLayout>
 
 
-    <Button
-            android:id="@+id/button_store"
-            android:text="store 로그인"
-            style="@style/Widget.AppCompat.Button.Colored"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:background="@color/colorPrimary"
-            android:enabled="true"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/button_customer"
-            app:layout_constraintTop_toBottomOf="@id/password_input_layout" />
+<!--    <Button-->
+<!--            android:id="@+id/button_store"-->
+<!--            android:text="store 로그인"-->
+<!--            style="@style/Widget.AppCompat.Button.Colored"-->
+<!--            app:layout_constraintHorizontal_chainStyle="spread"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="30dp"-->
+<!--            android:background="@color/colorPrimary"-->
+<!--            android:enabled="true"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintEnd_toStartOf="@id/button_customer"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/password_input_layout" />-->
+
+<!--    <Button-->
+<!--            android:id="@+id/button_customer"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            style="@style/Widget.AppCompat.Button.Colored"-->
+<!--            android:background="@color/colorPrimary"-->
+<!--            android:text="customer 로그인"-->
+<!--            android:enabled="true"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toEndOf="@id/button_store"-->
+<!--            app:layout_constraintTop_toTopOf="@id/button_store" />-->
 
     <Button
-            android:id="@+id/button_customer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:background="@color/colorPrimary"
-            android:text="customer 로그인"
-            android:enabled="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/button_store"
-            app:layout_constraintTop_toTopOf="@id/button_store" />
-
+        android:id="@+id/button_login"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        app:layout_constraintStart_toStartOf="@id/password_input_layout"
+        app:layout_constraintEnd_toEndOf="@id/password_input_layout"
+        app:layout_constraintTop_toBottomOf="@id/password_input_layout"
+        android:text="로그인"
+        android:textSize="25dp"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/colorPrimary">
+    </Button>
 
 
 <!--    adjustViewBound: 가로 세로 비율 자동조정.-->
     <ImageButton
             android:id="@+id/naver_login_button"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
             android:layout_marginTop="30dp"
             android:src="@drawable/naver_login_white_size"
             android:adjustViewBounds="true"
             android:scaleType="fitXY"
             android:padding="0dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_store" />
+            app:layout_constraintStart_toStartOf="@id/button_login"
+            app:layout_constraintEnd_toEndOf="@id/button_login"
+            app:layout_constraintTop_toBottomOf="@id/button_login" />
 
 <!--    추가 예정: 계정이 없으신가요? 'Sign Up' (Text 형태) -->
 

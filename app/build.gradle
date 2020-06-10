@@ -86,4 +86,6 @@ dependencies {
 
 //    Naver Login Library
     implementation files('libs/naveridlogin_android_sdk_4.2.6.aar')
+// SegmentedButton (Toggle) "Customer - Store mode Selector" Animation Library
+    implementation 'com.github.addisonelliott:SegmentedButton:3.1.8'
 }

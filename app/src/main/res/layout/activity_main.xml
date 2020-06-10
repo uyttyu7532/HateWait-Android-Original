@@ -118,32 +118,6 @@
     </com.google.android.material.textfield.TextInputLayout>
 
 
-<!--    <Button-->
-<!--            android:id="@+id/button_store"-->
-<!--            android:text="store 로그인"-->
-<!--            style="@style/Widget.AppCompat.Button.Colored"-->
-<!--            app:layout_constraintHorizontal_chainStyle="spread"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="30dp"-->
-<!--            android:background="@color/colorPrimary"-->
-<!--            android:enabled="true"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintEnd_toStartOf="@id/button_customer"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/password_input_layout" />-->
-
-<!--    <Button-->
-<!--            android:id="@+id/button_customer"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            style="@style/Widget.AppCompat.Button.Colored"-->
-<!--            android:background="@color/colorPrimary"-->
-<!--            android:text="customer 로그인"-->
-<!--            android:enabled="true"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toEndOf="@id/button_store"-->
-<!--            app:layout_constraintTop_toTopOf="@id/button_store" />-->
-
     <Button
         android:id="@+id/button_login"
         android:layout_width="0dp"
@@ -152,10 +126,11 @@
         app:layout_constraintStart_toStartOf="@id/password_input_layout"
         app:layout_constraintEnd_toEndOf="@id/password_input_layout"
         app:layout_constraintTop_toBottomOf="@id/password_input_layout"
+        android:enabled="false"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:text="로그인"
         android:textSize="25dp"
-        android:textColor="@color/white"
-        android:backgroundTint="@color/colorPrimary">
+        android:textColor="@color/white">
     </Button>
 
 

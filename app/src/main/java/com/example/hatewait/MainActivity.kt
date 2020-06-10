@@ -26,6 +26,8 @@ class MainActivity : AppCompatActivity() {
     private val TAG = "MainActivity"
     @SuppressLint("SourceLockedOrientationActivity")
 
+    private var isCustomerMode = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -35,8 +37,11 @@ class MainActivity : AppCompatActivity() {
         addTextChangeListener()
     }
 
-
-//        //현재 기기의 토큰을 가져와서 출력 해보자.
+    override fun onStop() {
+        inputLayoutInitialize()
+        super.onStop()
+    }
+    //        //현재 기기의 토큰을 가져와서 출력 해보자.
 //        myToken()
 //    private fun myToken() =//쓰레드 사용할것
 //        Thread(Runnable {
@@ -61,18 +66,22 @@ class MainActivity : AppCompatActivity() {
 
         addTextChangeListener()
 
-        button_store.setOnClickListener{
-            inputLayoutInitialize()
-            startActivity<StoreMenu>()
+        user_kind_group.setOnPositionChangedListener {
+            when (user_kind_group.position) {
+                0 -> isCustomerMode = false
+                1 -> isCustomerMode = true
+                else -> true
+            }
         }
+//        Logic 추가. Customer? Store?
+        button_login.setOnClickListener{
 
-
-        button_customer.setOnClickListener{
-
-            inputLayoutInitialize()
-            startActivity<CustomerMenu>()
+            if (isCustomerMode) {
+                startActivity<CustomerMenu>()
+            } else {
+                startActivity<StoreMenu>()
+            }
         }
-
     }
 
 
@@ -114,8 +123,7 @@ class MainActivity : AppCompatActivity() {
                 Log.i("userInfo", "이름 : $userName\n이메일: $userEmail")
 
 //                일단은 로그인 계정이 customer 계정이라고 판단할 경우.
-                startActivity<CustomerMenu>(
-                )
+                startActivity<CustomerMenu>()
             }
 
         }
@@ -149,13 +157,12 @@ class MainActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {
                 if (!verifyId(s.toString())) {
                     id_input_layout.error = "특수문자나 공백은 허용되지 않습니다."
-                    button_store.isEnabled = false
-                    button_customer.isEnabled = false
+                    button_login.isEnabled = false
                 } else {
                     id_input_layout.error = null
+                    id_input_layout.hint = null
                 }
-//                button_store.isEnabled = (id_input_layout.error == null && password_input_layout.error == null && !password_input_editText.text.isNullOrBlank())
-//                button_customer.isEnabled = button_store.isEnabled
+                button_login.isEnabled = (id_input_layout.error == null && password_input_layout.error == null && !password_input_editText.text.isNullOrBlank())
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -169,14 +176,14 @@ class MainActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {
                 if (!verifyPassword(s.toString())) {
                     password_input_layout.error = "영문, 숫자, 특수문자 포함 8자 이상 입력해주세요"
-                    button_store.isEnabled = false
-                    button_customer.isEnabled = false
+                    button_login.isEnabled = false
                 } else {
                     password_input_layout.error = null
+                    password_input_layout.hint = null
                 }
 //                둘다 알맞게 입력한 경우
-//                button_store.isEnabled = (id_input_layout.error == null && password_input_layout.error == null && !id_input_editText.text.isNullOrBlank())
-//                button_customer.isEnabled = button_store.isEnabled
+                button_login.isEnabled = (id_input_layout.error == null && password_input_layout.error == null && !id_input_editText.text.isNullOrBlank())
+// enabled 상태에 따라 button 색상 ColorPrimary 로 설정할 수 있어야함. (selector 사용 or app Compat Button)
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -190,8 +197,10 @@ class MainActivity : AppCompatActivity() {
         id_input_editText.text?.clear()
         id_input_layout.error = null
         id_input_layout.clearFocus()
+        id_input_layout.hint = "아이디를 입력해주세요"
         password_input_editText.text?.clear()
         password_input_layout.clearFocus()
         password_input_layout.error = null
+        password_input_layout.hint = "비밀번호를 입력해주세요"
     }
 }

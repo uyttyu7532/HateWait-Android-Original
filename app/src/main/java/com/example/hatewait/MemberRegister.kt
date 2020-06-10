@@ -36,6 +36,7 @@ class MemberRegister : Fragment() {
                     register_customer_button.isEnabled = false
                 } else {
                     user_id_input_layout.error = null
+                    user_id_input_layout.hint = null
                     register_customer_button.isEnabled =
                                 (user_id_input_layout.error == null
                                 && people_number_layout.error == null
@@ -57,6 +58,7 @@ class MemberRegister : Fragment() {
                     register_customer_button.isEnabled = false
                 } else {
                     people_number_layout.error = null
+                    people_number_layout.hint = null
                 }
                 register_customer_button.isEnabled =
                             (user_id_input_layout.error == null
@@ -77,20 +79,25 @@ class MemberRegister : Fragment() {
             startActivity<Register_Check>(
                 "USER_ID" to user_id_input_editText.toString()
             )
-            inputLayoutInitialize()
         }
         super.onActivityCreated(savedInstanceState)
 
+    }
+
+    override fun onStop() {
+        inputLayoutInitialize()
+        super.onStop()
     }
 
     private fun inputLayoutInitialize() {
         user_id_input_editText.error = null
         user_id_input_editText.clearFocus()
         user_id_input_editText.text?.clear()
+        user_id_input_layout.hint = "헤잇웨잇의 아이디를 입력해주세요"
         people_number_layout.error = null
         people_number_editText.clearFocus()
         people_number_editText.text?.clear()
-
+        people_number_layout.hint = "총 몇 분이 오셨나요?"
     }
 
 

@@ -29,6 +29,12 @@ class NonMemberRegister : androidx.fragment.app.Fragment() {
         return inflater.inflate(R.layout.activity_non_members_reigster, container, false)
     }
 
+    override fun onStop() {
+        //   editText Form Initialize
+        inputLayoutInitialize()
+        super.onStop()
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         var user_name_not_empty = false
         var user_phone_number_not_empty = false
@@ -41,6 +47,7 @@ class NonMemberRegister : androidx.fragment.app.Fragment() {
                     register_customer_button.isEnabled = false
                 } else {
                     user_name_input_layout.error = null
+                    user_name_input_layout.hint = null
                 }
 
             //    둘다 에러가 없을 때 등록 버튼 활성화
@@ -66,6 +73,7 @@ class NonMemberRegister : androidx.fragment.app.Fragment() {
                     register_customer_button.isEnabled = false
                 } else {
                     user_phone_number_layout.error = null
+                    user_phone_number_layout.hint = null
                 }
                 register_customer_button.isEnabled =
                             (user_name_input_layout.error == null
@@ -89,6 +97,7 @@ class NonMemberRegister : androidx.fragment.app.Fragment() {
                     register_customer_button.isEnabled = false
                 } else {
                     people_number_layout.error = null
+                    people_number_layout.hint = null
                 }
                 register_customer_button.isEnabled =
                             (user_name_input_layout.error == null
@@ -114,8 +123,6 @@ class NonMemberRegister : androidx.fragment.app.Fragment() {
                     "USER_NAME" to user_name_input_editText.text.toString(),
                     "USER_PHONE_NUMBER" to user_phone_number_editText.toString()
                 )
-//           intent를 넘기고 초기화해야함.
-            inputLayoutInitialize()
 
         }
 
@@ -127,12 +134,15 @@ class NonMemberRegister : androidx.fragment.app.Fragment() {
         user_name_input_editText.text?.clear()
         user_name_input_editText.clearFocus()
         user_name_input_layout.error = null
+        user_name_input_layout.hint = "이름을 입력해주세요"
         user_phone_number_editText.text?.clear()
         user_phone_number_editText.clearFocus()
         user_phone_number_layout.error = null
+        user_phone_number_layout.hint = "전화번호를 입력해주세요"
         people_number_editText.text?.clear()
         people_number_editText.clearFocus()
         people_number_layout.error = null
+        people_number_layout.hint = "총 몇 분이 오셨나요?"
     }
 
 }

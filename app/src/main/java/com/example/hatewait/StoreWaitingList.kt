@@ -17,6 +17,8 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.daimajia.swipe.util.Attributes
+import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.messaging.FirebaseMessaging
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_store_waiting_list.*
 import java.util.*
@@ -35,6 +37,17 @@ class StoreWaitingList : AppCompatActivity() {
 
 
         init()
+
+        // 자기 폰번호 subscribe하면 됨!!!
+        FirebaseMessaging.getInstance().subscribeToTopic("weather")
+
+        // 임시로 여기에
+        //Get Firebase FCM token
+        FirebaseInstanceId.getInstance().instanceId
+            .addOnSuccessListener(this,
+                { instanceIdResult ->
+                    Log.i("현재 토큰: ", instanceIdResult.token)
+                })
     }
 
 

@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.messaging.FirebaseMessaging
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -28,6 +30,23 @@ class CustomerMenu : AppCompatActivity() {
 
         customerMenuAsyncTask(this)
 
+        fcm()
+
+    }
+
+    fun fcm(){
+        // 현재 토큰을 db에 저장
+        //Get Firebase FCM token
+        FirebaseInstanceId.getInstance().instanceId
+            .addOnSuccessListener(this,
+                { instanceIdResult ->
+                    Log.i("현재 토큰: ", instanceIdResult.token)
+                })
+
+        // or
+
+        // 자기 폰번호 subscribe하면 됨!!!
+        FirebaseMessaging.getInstance().subscribeToTopic("자기 폰번호")
     }
 
     class customerMenuAsyncTask(context: CustomerMenu) : AsyncTask<Unit, Unit, Unit>() {

@@ -47,9 +47,11 @@ class FcmPush() {
 
     fun sendMessage(context: Context) {
         var token =
+//            "c1cacBQUc2Q:APA91bFt3MUoTGGaapIjrDj1aFVe_R5zvBAuZNDrPG7VVMsED0IS-lDTwHbDxbSWGG7kfLTTPDMsR2JR_Hb1M0bHMUC3kHOmVw5QclUyympAbz2jAAJUU1oEHutcg4r3T63Cld35p-Lb"
             "fiARZ0G9lxs:APA91bENjxB-zasfoMSaD3cfUl-d5wWFS9E50NcuSv6c91WWDXxLJl5-SV_tDEu8aHP3AgR_gTPmQVhW_k6yW73wxd2aVK_bn2n1h-8e-27qp7OiN-qcIKOkJZk94Hwuvqfs_KaKZSRj"
         var pushDTO = PushDTO()
-        pushDTO.to = token                   //푸시토큰 세팅
+//        pushDTO.to = token                   //푸시토큰 세팅
+        pushDTO.to = "/topics/weather" // 토픽넣어주기(호출하는폰번호)
         pushDTO.notification?.title = "title"  //푸시 타이틀 세팅
         pushDTO.notification?.body = "message" //푸시 메시지 세팅
 
@@ -59,7 +61,7 @@ class FcmPush() {
             .addHeader("Content-Type", "application/json")
             .addHeader("Authorization", "key=" + serverKey)
             .url(url)       //푸시 URL 세팅
-            .post(body)     //pushDTO가 담긴 body 세팅
+            .post(body) //pushDTO가 담긴 body 세팅
             .build()
         okHttpClient?.newCall(request)?.enqueue(object : Callback {
             //푸시 전송

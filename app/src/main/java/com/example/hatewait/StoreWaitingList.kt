@@ -120,25 +120,25 @@ class StoreWaitingList : AppCompatActivity() {
 
 
         // Creating Adapter object
-        mAdapter = SwipeRecyclerViewAdapter(clientList!!,called,clicked,pref)
+        mAdapter = SwipeRecyclerViewAdapter(clientList!!,called,clicked,pref,baseContext)
 
         //Single or Multiple
         mAdapter.mode = Attributes.Mode.Single
 
-        mAdapter.itemClickListener = object : SwipeRecyclerViewAdapter.onItemClickListener {
-            override fun onItemClick(
-                holder: SwipeRecyclerViewAdapter.SimpleViewHolder,
-                view: View,
-                position: Int
-            ) {
-                Log.d("position", position?.toString())
-                if (holder.detailView.visibility == GONE) {
-                    holder.detailView.visibility = VISIBLE
-                } else {
-                    holder.detailView.visibility = GONE
-                }
-            }
-        }
+//        mAdapter.itemClickListener = object : SwipeRecyclerViewAdapter.onItemClickListener {
+//            override fun onItemClick(
+//                holder: SwipeRecyclerViewAdapter.SimpleViewHolder,
+//                view: View,
+//                position: Int
+//            ) {
+//                Log.d("position", position?.toString())
+//                if (holder.detailView.visibility == GONE) {
+//                    holder.detailView.visibility = VISIBLE
+//                } else {
+//                    holder.detailView.visibility = GONE
+//                }
+//            }
+//        }
         mRecyclerView.adapter = mAdapter
 
         /* Scroll Listeners */

@@ -12,69 +12,67 @@ import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
-class MyFirebaseMessagingService: FirebaseMessagingService() {
-    private val TAG="FirebaseService"
+class MyFirebaseMessagingService : FirebaseMessagingService() {
 
-    override fun onNewToken(token:String?){
-        Log.d(TAG,"new Token:$token")
+    private val TAG = "FirebaseService"
+
+    /**
+     * FirebaseInstanceIdService is deprecated.
+     * this is new on firebase-messaging:17.1.0
+     */
+    //앱이 재설치되거나 유효기간이 만료되면 자동으로 토큰을 새로 생성해 줍니다.
+    override fun onNewToken(token: String?) {
+        Log.d(TAG, "Refreshed Token: $token")
     }
+    // 가상기기 현재 토큰 : fiARZ0G9lxs:APA91bENjxB-zasfoMSaD3cfUl-d5wWFS9E50NcuSv6c91WWDXxLJl5-SV_tDEu8aHP3AgR_gTPmQVhW_k6yW73wxd2aVK_bn2n1h-8e-27qp7OiN-qcIKOkJZk94Hwuvqfs_KaKZSRj
 
-    override fun onMessageReceived(remoteMessage: RemoteMessage){
-        Log.d(TAG,"From:"+remoteMessage.from)
+    /**
+     * this method will be triggered every time there is new FCM Message.
+     */
+    override fun onMessageReceived(remoteMessage: RemoteMessage) {
+        Log.d(TAG, "From: " + remoteMessage.from)
 
-        NotiAlarm()
-
-        if(remoteMessage.notification!=null) {
+        if(remoteMessage.notification != null) {
             Log.d(TAG, "Notification Message Body: ${remoteMessage.notification?.body}")
-            sendNotification(remoteMessage.notification?.title,remoteMessage.notification?.body)
-        }
-
-        if(remoteMessage.data!=null){
-            Log.d(TAG, "Notification Message body: ${remoteMessage.data.getValue("body").toString()}")
-            sendNotification(remoteMessage.data?.getValue("title").toString(),remoteMessage.data.getValue("body").toString())
+            sendNotification(remoteMessage.notification?.body)
         }
     }
 
-    private fun NotiAlarm(){
-        val CHANNEL_ID = "Notification"
-        val CHANNEL_NAME = "Channel"
-        val description = "This is notification channel"
-        val importance = NotificationManager.IMPORTANCE_HIGH
-
-        var notificationManager: NotificationManager=
-                this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-        if(android.os.Build.VERSION.SDK_INT>=android.os.Build.VERSION_CODES.O){
-            val channel = NotificationChannel(CHANNEL_ID,CHANNEL_NAME,importance)
-            channel.description=description
-            channel.enableLights(true)
-            channel.lightColor= Color.RED
-            channel.enableVibration(true)
-            channel.setShowBadge(false)
-            notificationManager.createNotificationChannel(channel)
-        }
-    }
-
-    private fun sendNotification(title:String?,body:String?){
-        val intent = Intent(this, MainActivity::class.java).apply{
+    // 수신된 알림을 기기에 표시
+    private fun sendNotification(body: String?) {
+        val intent = Intent(this, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             putExtra("Notification", body)
         }
 
-        // FLAG_ONE_SHOT : 일회성 intent
-        var pendingIntent = PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_ONE_SHOT)
-        var notificationSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+        val CHANNEL_ID = "CollocNotification"
+        val CHANNEL_NAME = "CollocChannel"
+        val description = "This is Colloc channel"
+        val importance = NotificationManager.IMPORTANCE_HIGH
+
+        var notificationManager: NotificationManager = this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        if( android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, importance)
+            channel.description = description
+            channel.enableLights(true)
+            channel.lightColor = Color.RED
+            channel.enableVibration(true)
+            channel.setShowBadge(false)
+            notificationManager.createNotificationChannel(channel)
+        }
+
+        var pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
+        val notificationSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
         var notificationBuilder = NotificationCompat.Builder(this,"Notification")
             .setSmallIcon(R.mipmap.ic_launcher)
-            .setContentTitle(title)
+            .setContentTitle("Push Notification FCM")
             .setContentText(body)
             .setAutoCancel(true)
             .setSound(notificationSound)
             .setContentIntent(pendingIntent)
 
-        var notificationManager: NotificationManager = this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.notify(0,notificationBuilder.build())
+        notificationManager.notify(0, notificationBuilder.build())
     }
-
 }

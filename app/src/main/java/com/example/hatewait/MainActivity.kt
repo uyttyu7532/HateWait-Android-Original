@@ -41,25 +41,8 @@ class MainActivity : AppCompatActivity() {
         inputLayoutInitialize()
         super.onStop()
     }
-    //        //현재 기기의 토큰을 가져와서 출력 해보자.
-//        myToken()
-//    private fun myToken() =//쓰레드 사용할것
-//        Thread(Runnable {
-//            try {
-//                FirebaseInstanceId.getInstance().instanceId
-//                    .addOnCompleteListener(OnCompleteListener { task ->
-//                        if (!task.isSuccessful) {
-//                            Log.i(TAG, "getInstanceId failed", task.exception)
-//                            return@OnCompleteListener
-//                        }
-//                        val token = task.result?.token
-////                        textView.text = token
-//                        //Log.d(TAG, token)
-//                    })
-//            } catch (e: IOException){
-//                e.printStackTrace()
-//            }
-//        }).start()
+
+
 
 
     private fun init() {
@@ -82,6 +65,9 @@ class MainActivity : AppCompatActivity() {
                 startActivity<StoreMenu>()
             }
         }
+
+        MyFirebaseMessagingService()
+
     }
 
 

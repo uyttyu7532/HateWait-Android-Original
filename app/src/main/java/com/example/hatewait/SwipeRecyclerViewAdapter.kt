@@ -16,12 +16,14 @@ import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.row.view.*
 import org.jetbrains.anko.backgroundColorResource
 import java.util.*
+import android.content.Context
 
 
 class SwipeRecyclerViewAdapter(val items: ArrayList<ClientData>,
                                val called:HashMap<String,Boolean>,
                                val clicked:HashMap<String,Boolean>,
-                               val pref:SharedPreferences ) :
+                               val pref:SharedPreferences,
+                               val context:Context) :
     RecyclerSwipeAdapter<SwipeRecyclerViewAdapter.SimpleViewHolder>() {
 
     interface onItemClickListener {
@@ -68,22 +70,6 @@ class SwipeRecyclerViewAdapter(val items: ArrayList<ClientData>,
 
         init {
 
-            // !!!!!!!callBtn과 swipeLayout clicklistener 매우이상!!!!!!!!!
-//
-//            callBtn.setOnClickListener{
-//                this.bottom_wrapper_left.backgroundColorResource= R.color.colorCall
-//                Toasty.warning(itemView.context, this.clientPhoneView.text.toString(), Toast.LENGTH_SHORT, true).show()
-//                // 서버에게 메시지 보내라는 요청 (with 손님 번호, 문자내용-n번째순서)
-//                // 상태바 알림보내기 요청
-//                notifyItemChanged(adapterPosition)
-//            }
-//
-//
-//            this.clientView.setOnClickListener {
-//                itemClickListener?.onItemClick(this, it, adapterPosition)
-//            }
-
-
             callBtn.setOnClickListener { v ->
                 val position = adapterPosition
                 if (called.containsKey(items[position].phone) && called[items[position].phone]!! ) {
@@ -99,22 +85,29 @@ class SwipeRecyclerViewAdapter(val items: ArrayList<ClientData>,
                     this.bottom_wrapper_left.backgroundColorResource = R.color.colorCall
                     Toasty.warning(itemView.context, this.clientPhoneView.text.toString(), Toast.LENGTH_SHORT, true).show()
 
+
+                    //푸시를 받을 유저의 UID가 담긴 destinationUid 값을 넣어준후 fcmPush클래스의 sendMessage 메소드 호출
+                    val fcmPush = FcmPush()
+                    var message = "상태바 알림 테스트"
+                    fcmPush?.sendMessage(context)
+                    //fcmPush?.sendMessage("fiARZ0G9lxs:APA91bENjxB-zasfoMSaD3cfUl-d5wWFS9E50NcuSv6c91WWDXxLJl5-SV_tDEu8aHP3AgR_gTPmQVhW_k6yW73wxd2aVK_bn2n1h-8e-27qp7OiN-qcIKOkJZk94Hwuvqfs_KaKZSRj", "알림 메세지 입니다.", message)
+
                     }
             }
 
-            clientView.setOnClickListener { v ->
-                val position = adapterPosition
-                if (clicked.containsKey(items[position].phone) && clicked[items[position].phone]!! ) {
-                    clicked[items[position].phone] = false
-                    detailView.visibility = View.GONE
-
-                }else{
-
-                    clicked[items[position].phone] = true
-
-                    detailView.visibility = View.VISIBLE
-                }
-            }
+//            clientView.setOnClickListener { v ->
+//                val position = adapterPosition
+//                if (clicked.containsKey(items[position].phone) && clicked[items[position].phone]!! ) {
+//                    clicked[items[position].phone] = false
+//                    detailView.visibility = View.GONE
+//
+//                }else{
+//
+//                    clicked[items[position].phone] = true
+//
+//                    detailView.visibility = View.VISIBLE
+//                }
+//            }
 
 
         }

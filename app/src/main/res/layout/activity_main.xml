@@ -47,7 +47,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:padding="10dp"
-                app:drawable="@drawable/store_login_icon"
+                app:drawable="@drawable/store_login_image"
                 app:drawableGravity="top"
                 app:drawableTint="@color/black_overlay"
                 app:selectedDrawableTint="@color/white"
@@ -83,7 +83,7 @@
             android:layout_marginHorizontal="24dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/user_kind_group">
+            app:layout_constraintTop_toBottomOf="@+id/user_kind_group">
 
         <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/id_input_editText"

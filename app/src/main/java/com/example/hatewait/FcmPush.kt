@@ -8,6 +8,10 @@ import com.google.gson.Gson
 import okhttp3.*
 import java.io.IOException
 
+
+// TODO 포그라운드 수신
+// TODO 사용자 토큰 저장
+
 class FcmPush() {
     val JSON = MediaType.parse("application/json; charset=utf-8")//Post전송 JSON Type
     val url = "https://fcm.googleapis.com/fcm/send" //FCM HTTP를 호출하는 URL

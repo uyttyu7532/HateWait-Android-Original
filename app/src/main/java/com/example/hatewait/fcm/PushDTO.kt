@@ -1,4 +1,4 @@
-package com.example.hatewait
+package com.example.hatewait.fcm
 
 data class PushDTO(
     // 앱 서버는 to 키를 /topics/yourTopic과 같은 값으로 설정합니다.

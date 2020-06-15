@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-            android:drawable="@drawable/store_login_icon"
+            android:drawable="@drawable/name_icon"
             android:width="100dp"
             android:height="60dp"
             android:id="@+id/customer_login_image" />

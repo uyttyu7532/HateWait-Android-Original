@@ -46,7 +46,7 @@ class CustomerMenu : AppCompatActivity() {
         // or
 
         // 자기 폰번호 subscribe하면 됨!!!
-        FirebaseMessaging.getInstance().subscribeToTopic("자기 폰번호")
+//        FirebaseMessaging.getInstance().subscribeToTopic("자기 폰번호")
     }
 
     class customerMenuAsyncTask(context: CustomerMenu) : AsyncTask<Unit, Unit, Unit>() {

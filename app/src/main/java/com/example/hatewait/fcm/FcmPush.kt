@@ -1,4 +1,4 @@
-package com.example.hatewait
+package com.example.hatewait.fcm
 
 import android.content.Context
 import android.widget.Toast

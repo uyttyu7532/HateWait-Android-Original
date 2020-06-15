@@ -78,85 +78,85 @@
         </LinearLayout>
     </LinearLayout>
 
-
-    <LinearLayout
-            android:id="@+id/grid"
+    <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="10dp"
-            android:orientation="vertical">
-
-        <androidx.cardview.widget.CardView
-                android:id="@+id/listBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:clickable="true"
-                android:gravity="center"
-
-                app:cardCornerRadius="10dp"
-                app:cardElevation="2dp"
-                app:layout_gravity="center">
-
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    app:layout_gravity="center">
-
-                <androidx.cardview.widget.CardView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="2dp"
-                        app:cardBackgroundColor="@color/colorPrimary"
-                        app:cardCornerRadius="0dp"
-                        app:cardElevation="2dp">
-
-                    <TextView
-                            android:id="@+id/clientView"
-                            android:layout_width="match_parent"
-                            android:layout_height="45dp"
-                            android:gravity="center"
-                            android:text="대기 현황 확인"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                            android:textColor="#ffffff" />
-
-                </androidx.cardview.widget.CardView>
-
-
-                <ImageButton
-                        android:id="@+id/delBtn"
-                        android:layout_width="70dp"
-                        android:layout_height="60dp"
-                        android:layout_margin="25dp"
-                        android:background="@drawable/test"
-                        android:clickable="true"
-                        android:scaleType="centerInside" />
-
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+            android:layout_height="match_parent"
+            android:layout_below="@+id/greeting"
+            android:layout_margin="10dp">
 
         <LinearLayout
+                android:id="@+id/grid"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:orientation="vertical"
+                android:weightSum="3">
 
             <androidx.cardview.widget.CardView
-                    android:id="@+id/tabletBtn"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/listBtn"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
                     android:clickable="true"
-                    android:gravity="center"
                     app:cardCornerRadius="10dp"
-                    app:cardElevation="2dp"
-                    app:layout_gravity="center">
+                    app:cardElevation="2dp">
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        app:layout_gravity="center">
+
+                    <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="2dp"
+                            app:cardBackgroundColor="@color/colorPrimary"
+                            app:cardCornerRadius="0dp"
+                            app:cardElevation="2dp">
+
+                        <TextView
+                                android:id="@+id/clientView"
+                                android:layout_width="match_parent"
+                                android:layout_height="45dp"
+                                android:gravity="center"
+                                android:text="대기 현황 확인"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                                android:textColor="#ffffff" />
+
+                    </androidx.cardview.widget.CardView>
+
+                    <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                        <ImageButton
+                                android:id="@+id/delBtn"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_gravity="center"
+                                android:layout_margin="20dp"
+                                android:background="@drawable/test"
+                                android:clickable="true" />
+                    </FrameLayout>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                    android:id="@+id/tabletBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="2dp">
 
                 <LinearLayout
                         android:layout_width="match_parent"
@@ -183,15 +183,19 @@
                                 android:textColor="#ffffff" />
                     </androidx.cardview.widget.CardView>
 
+                    <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
 
-                    <ImageButton
-                            android:id="@+id/imageButton2"
-                            android:layout_width="70dp"
-                            android:layout_height="60dp"
-                            android:layout_margin="25dp"
-                            android:background="@drawable/touchipad"
-                            android:clickable="true"
-                            android:scaleType="centerInside" />
+                        <ImageButton
+                                android:id="@+id/imageButton2"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_gravity="center"
+                                android:layout_margin="20dp"
+                                android:background="@drawable/touchipad"
+                                android:clickable="true" />
+                    </FrameLayout>
 
                 </LinearLayout>
 
@@ -200,22 +204,19 @@
 
             <androidx.cardview.widget.CardView
                     android:id="@+id/store_info_update_button"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
                     android:clickable="true"
-                    android:gravity="center"
                     app:cardCornerRadius="10dp"
-                    app:cardElevation="2dp"
-                    app:layout_gravity="center">
+                    app:cardElevation="2dp">
 
                 <LinearLayout
                         android:id="@+id/store_info_update_button2"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:clickable="true"
-                        android:focusable="true"
                         android:gravity="center"
                         android:orientation="vertical"
                         app:layout_gravity="center">
@@ -224,13 +225,13 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:cardBackgroundColor="@color/colorPrimary"
-                            app:cardCornerRadius="0dp">
+                            app:cardCornerRadius="0dp"
+                            app:cardElevation="2dp">
 
                         <TextView
                                 android:id="@+id/textView4"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="45dp"
-                                android:layout_gravity="center"
                                 android:gravity="center"
                                 android:text="가게 정보 수정"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
@@ -238,21 +239,25 @@
 
                     </androidx.cardview.widget.CardView>
 
-                    <ImageButton
-                            android:id="@+id/imageButton4"
-                            android:layout_width="70dp"
-                            android:layout_height="60dp"
-                            android:layout_margin="25dp"
-                            android:background="@drawable/shop"
-                            android:clickable="true"
-                            android:scaleType="centerInside"
-                            app:srcCompat="@null" />
+                    <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                        <ImageButton
+                                android:id="@+id/imageButton4"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_gravity="center"
+                                android:layout_margin="20dp"
+                                android:background="@drawable/shop"
+                                android:clickable="true" />
+                    </FrameLayout>
 
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
         </LinearLayout>
+    </FrameLayout>
 
-    </LinearLayout>
 
 </RelativeLayout>

@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.row.view.*
 import org.jetbrains.anko.backgroundColorResource
 import java.util.*
 import android.content.Context
+import com.example.hatewait.fcm.FcmPush
 
 
 class SwipeRecyclerViewAdapter(val items: ArrayList<ClientData>,

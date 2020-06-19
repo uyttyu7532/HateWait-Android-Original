@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="10dp"
-                app:drawable="@drawable/store_login_style"
+                app:drawable="@drawable/store"
                 app:drawableGravity="top"
                 app:drawableTint="@color/black_overlay"
                 app:selectedDrawableTint="@color/white"

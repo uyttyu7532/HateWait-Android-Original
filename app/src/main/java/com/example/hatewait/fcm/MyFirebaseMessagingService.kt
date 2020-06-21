@@ -35,33 +35,30 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
      */
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         Log.d(TAG, "From: " + remoteMessage.from)
-        Log.d(TAG, "From: " + remoteMessage.data)
+        Log.d(TAG, "Data: " + remoteMessage.data)
 
         if(remoteMessage.notification != null) {
             Log.d(TAG, "Notification Message Body: ${remoteMessage.notification?.body}")
-
-
 
             sendNotification(remoteMessage.notification?.body)
         }
     }
 
-    // 수신된 알림을 기기에 표시
+    // 수신된 알림을 기기에 표시 (foreground)
     private fun sendNotification(body: String?) {
         val intent = Intent(this, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             putExtra("Notification", body)
         }
 
-        val CHANNEL_ID = "CollocNotification"
-        val CHANNEL_NAME = "CollocChannel"
+        val channelId = getString(R.string.default_notification_channel_id)
         val description = "This is Colloc channel"
         val importance = NotificationManager.IMPORTANCE_HIGH
 
         var notificationManager: NotificationManager = this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         if( android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, importance)
+            val channel = NotificationChannel(channelId, "channelname", importance)
             channel.description = description
             channel.enableLights(true)
             channel.lightColor = Color.RED
@@ -73,9 +70,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         var pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
         val notificationSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
-        var notificationBuilder = NotificationCompat.Builder(this,"Notification")
-            .setSmallIcon(R.mipmap.ic_launcher)
-            .setContentTitle("Push Notification FCM")
+        var notificationBuilder = NotificationCompat.Builder(this,channelId)
+            .setSmallIcon(R.drawable.main_logo)
+            .setContentTitle("3번째 순서 전입니다.")
             .setContentText(body)
             .setAutoCancel(true)
             .setSound(notificationSound)

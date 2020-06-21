@@ -18,6 +18,7 @@ import org.jetbrains.anko.backgroundColorResource
 import java.util.*
 import android.content.Context
 import com.example.hatewait.fcm.FcmPush
+import kotlin.collections.ArrayList
 
 
 class SwipeRecyclerViewAdapter(val items: ArrayList<ClientData>,
@@ -73,18 +74,17 @@ class SwipeRecyclerViewAdapter(val items: ArrayList<ClientData>,
 
             callBtn.setOnClickListener { v ->
                 val position = adapterPosition
-                if (called.containsKey(items[position].phone) && called[items[position].phone]!! ) {
-                    setShared<Boolean>(pref,items[position].phone,false)
+                if (called.containsKey(items[position].phone) && called[items[position].phone] !!) {
+                    setShared(pref,items[position].phone,false)
                     called[items[position].phone] = false
                     this.bottom_wrapper_left.backgroundColorResource = R.color.white
-                    Toasty.warning(itemView.context, this.clientPhoneView.text.toString(), Toast.LENGTH_SHORT, true).show()
-
+                    Toasty.error(itemView.context, items[position].phone, Toast.LENGTH_SHORT, true).show()
                 }
                 else{
-                    setShared<Boolean>(pref,items[position].phone,true)
+                    setShared(pref,items[position].phone,true)
                     called[items[position].phone] = true
                     this.bottom_wrapper_left.backgroundColorResource = R.color.colorCall
-                    Toasty.warning(itemView.context, this.clientPhoneView.text.toString(), Toast.LENGTH_SHORT, true).show()
+                    Toasty.warning(itemView.context, items[position].phone, Toast.LENGTH_SHORT, true).show()
 
 
                     //푸시를 받을 유저의 UID가 담긴 destinationUid 값을 넣어준후 fcmPush클래스의 sendMessage 메소드 호출
@@ -92,6 +92,8 @@ class SwipeRecyclerViewAdapter(val items: ArrayList<ClientData>,
                     var message = "상태바 알림 테스트"
                     fcmPush?.sendMessage(context)
                     //fcmPush?.sendMessage("fiARZ0G9lxs:APA91bENjxB-zasfoMSaD3cfUl-d5wWFS9E50NcuSv6c91WWDXxLJl5-SV_tDEu8aHP3AgR_gTPmQVhW_k6yW73wxd2aVK_bn2n1h-8e-27qp7OiN-qcIKOkJZk94Hwuvqfs_KaKZSRj", "알림 메세지 입니다.", message)
+
+                    // 서버쪽에서 문자메시지 보내기
 
                     }
             }
@@ -196,11 +198,11 @@ class SwipeRecyclerViewAdapter(val items: ArrayList<ClientData>,
             viewHolder.bottom_wrapper_left.backgroundColorResource = R.color.white
         }
 
-        if (clicked.containsKey(items[position].phone) && clicked[items[position].phone]!! ) {
-            viewHolder.detailView.visibility = View.VISIBLE
-        } else {
-            viewHolder.detailView.visibility = View.GONE
-        }
+//        if (clicked.containsKey(items[position].phone) && clicked[items[position].phone]!! ) {
+//            viewHolder.detailView.visibility = View.VISIBLE
+//        } else {
+//            viewHolder.detailView.visibility = View.GONE
+//        }
 
 
 

@@ -55,7 +55,7 @@ class CustomerMenu : AppCompatActivity() {
         private var reader: BufferedReader? = null // 서버 < 앱
         private var writer: PrintWriter? = null // 앱 > 서버
 
-        private val port = 1818 // port num
+        private val port = 3000 // port num
         private val ip: String = R.string.serverIPAddress.toString()// 서버 ip적기
         val customerId = 12345678
 

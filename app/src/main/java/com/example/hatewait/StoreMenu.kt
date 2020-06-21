@@ -68,8 +68,8 @@ class StoreMenu : AppCompatActivity() {
         private var reader: BufferedReader? = null // 서버 < 앱
         private var writer : PrintWriter? = null // 앱 > 서버
 
-        private val port = 1818 // port num
-        private val ip: String = R.string.serverIPAddress.toString()// 서버 ip적기
+        private val port = 3000 // port num
+        private val ip: String ="221.146.100.91"// 서버 ip적기
         val storeId = 12345678
 
         var StoreMenuArray: Array<String>? = null

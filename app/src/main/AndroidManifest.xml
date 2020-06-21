@@ -25,6 +25,13 @@
                 android:name="com.google.firebase.messaging.default_notification_channel_id"
                 android:value="@string/default_notification_channel_id" />
 
+        <service
+                android:name=".fcm.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
 
         <activity android:name=".AutoCallNumberChangeDialog"
                 tools:ignore="Instantiatable" />
@@ -61,12 +68,6 @@
 <!--            </intent-filter>-->
         </activity>
 
-        <service
-                android:name=".fcm.MyFirebaseMessagingService">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
-            </intent-filter>
-        </service>
 
 <!--        <service-->
 <!--                android:name=".util.MyJobService"-->

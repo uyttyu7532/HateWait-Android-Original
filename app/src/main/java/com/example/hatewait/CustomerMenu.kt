@@ -1,12 +1,18 @@
 package com.example.hatewait
 
+import android.app.Activity
+import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.messaging.FirebaseMessaging
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -32,9 +38,27 @@ class CustomerMenu : AppCompatActivity() {
 
         fcm()
 
+        // MyFirebaseMessagingService.kt > sendNotification에서 보내주는 값으로 판단
+        // TODO 로그인 여부 등에 따라 코드 수정 필요
+        if (intent.hasExtra("Notification")) {
+            SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("가게에 오실건가요??")
+                .setContentText("3번째 순서 전입니다!")
+                .setConfirmText("갈게요!")
+                .setConfirmClickListener { sDialog ->
+                    sDialog.dismissWithAnimation()
+                }
+                .setCancelButton(
+                    "안가요"
+                ) { sDialog ->
+                    // 대기열에서 삭제
+                    sDialog.dismissWithAnimation()
+                }
+                .show()
+        }
     }
 
-    fun fcm(){
+    fun fcm() {
         // 현재 토큰을 db에 저장
         //Get Firebase FCM token
         FirebaseInstanceId.getInstance().instanceId

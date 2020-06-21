@@ -17,67 +17,47 @@
 
         <meta-data
                 android:name="com.google.firebase.messaging.default_notification_icon"
-                android:resource="@drawable/ic_main_logo"/>
+                android:resource="@drawable/ic_main_logo" />
         <meta-data
                 android:name="com.google.firebase.messaging.default_notification_color"
-                android:resource="@color/colorAccent"/>
+                android:resource="@color/colorAccent" />
         <meta-data
                 android:name="com.google.firebase.messaging.default_notification_channel_id"
                 android:value="@string/default_notification_channel_id" />
 
-        <service
-                android:name=".fcm.MyFirebaseMessagingService">
+        <service android:name=".fcm.MyFirebaseMessagingService">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
 
-        <activity android:name=".AutoCallNumberChangeDialog"
+        <activity
+                android:name=".AutoCallNumberChangeDialog"
                 tools:ignore="Instantiatable" />
-        <activity android:name=".StoreNameChangeDialog"
+        <activity
+                android:name=".StoreNameChangeDialog"
                 tools:ignore="Instantiatable" />
         <activity android:name=".StoreInfoUpdate" />
         <activity android:name=".CustomerMenu" />
         <activity android:name=".StoreMenu" />
         <activity android:name=".LoginRegisterViewPagerActivity" />
         <activity android:name=".Register_Check" />
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".MainActivity"/>
         <activity android:name=".Add_waiting" />
-        <activity android:name=".StoreWaitingList">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-        </activity>
+        <activity android:name=".StoreWaitingList"/>
         <activity android:name=".BusinessHourPick" />
         <activity
                 android:name=".Splash"
                 android:screenOrientation="portrait"
                 android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
                 tools:ignore="LockedOrientationActivity">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-
-
-<!--        <service-->
-<!--                android:name=".util.MyJobService"-->
-<!--                android:exported="false">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />-->
-<!--            </intent-filter>-->
-<!--        </service>-->
-
-
     </application>
 
 </manifest>

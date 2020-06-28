@@ -4,4 +4,8 @@
     <dimen name="store_input_left_margin">5dp</dimen>
     <dimen name="login_margin_top">40dp</dimen>
     <dimen name="register_button_padding_horizontal">20dp</dimen>
+    <dimen name="dialog_fragment_width">400dp</dimen>
+    <dimen name="dialog_fragment_height">300dp</dimen>
+    <dimen name="yes_button_width">170dp</dimen>
+    <dimen name="no_button_width">170dp</dimen>
 </resources>

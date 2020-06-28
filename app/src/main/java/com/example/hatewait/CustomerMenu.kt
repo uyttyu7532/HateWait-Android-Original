@@ -1,18 +1,17 @@
 package com.example.hatewait
 
-import android.app.Activity
-import android.content.Intent
+
 import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.messaging.FirebaseMessaging
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.android.synthetic.main.activity_name_check_dialog.*
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -30,6 +29,13 @@ lateinit var customerMarquee: TextView
 lateinit var customerNameView: TextView
 
 class CustomerMenu : AppCompatActivity() {
+    var customView : View? = null
+    val yesButton : ImageButton by lazy {
+        customView?.findViewById(R.id.name_yes_button) as ImageButton
+    }
+    val noButton : ImageButton by lazy {
+        customView?.findViewById(R.id.name_no_button) as ImageButton
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_customer_menu)
@@ -38,24 +44,35 @@ class CustomerMenu : AppCompatActivity() {
 
         fcm()
 
+        customView = layoutInflater.inflate(R.layout.activity_name_check_dialog, null)
         // MyFirebaseMessagingService.kt > sendNotification에서 보내주는 값으로 판단
         // TODO 로그인 여부 등에 따라 코드 수정 필요
         if (intent.hasExtra("Notification")) {
-            SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+            val questionDialog = SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
                 .setTitleText("가게에 오실건가요??")
                 .setContentText("3번째 순서 전입니다!")
-                .setConfirmText("갈게요!")
-                .setConfirmClickListener { sDialog ->
-                    sDialog.dismissWithAnimation()
-                }
-                .setCancelButton(
-                    "안가요"
-                ) { sDialog ->
-                    // 대기열에서 삭제
-                    sDialog.dismissWithAnimation()
-                }
-                .show()
+//                .setConfirmText("갈게요!")
+                .setCustomView(customView)
+//                .setConfirmClickListener { sDialog ->
+//                    sDialog.dismissWithAnimation()
+//                }
+//                .setCancelButton(
+//                    "안가요"
+//                ) { sDialog ->
+//                    // 대기열에서 삭제
+//                    sDialog.dismissWithAnimation()
+//                }
+            questionDialog.show()
+
+//            06월 28일 추가
+            yesButton.setOnClickListener {
+                questionDialog.dismissWithAnimation()
+            }
+            noButton.setOnClickListener {
+                questionDialog.dismissWithAnimation()
+            }
         }
+
     }
 
     private fun fcm() {
@@ -144,4 +161,9 @@ class CustomerMenu : AppCompatActivity() {
 //        cancelWaiting() // 대기 취소하기
 //        refreshMyTurn() // 내 순서 새로고침
 
+    override fun onDestroy() {
+//        메모리 누수 방지
+        customView = null
+        super.onDestroy()
+    }
 }

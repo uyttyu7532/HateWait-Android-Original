@@ -2,11 +2,10 @@ package com.example.hatewait
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.widget.CompoundButton
 import android.widget.TextView
 import android.widget.Toast
@@ -17,10 +16,13 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.daimajia.swipe.util.Attributes
+import com.example.hatewait.serialize.QueueListSerializable
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.messaging.FirebaseMessaging
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_store_waiting_list.*
+import java.io.*
+import java.net.Socket
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -54,12 +56,10 @@ class StoreWaitingList : AppCompatActivity() {
     @SuppressLint("WrongViewCast")
     private fun init() {
 
-
-
         readFile()
         setRecyclerView()
         makeAddDialog()
-
+        storeWaitingListAsyncTask(this).execute()
 
 
         autoCallSwitch.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
@@ -69,6 +69,7 @@ class StoreWaitingList : AppCompatActivity() {
                 //자동호출 off
             }
         })
+
     }
 
 
@@ -119,10 +120,16 @@ class StoreWaitingList : AppCompatActivity() {
         val pref = this.getSharedPreferences("myPref", Context.MODE_PRIVATE)
 
 
-        val called = HashMap<String, Boolean>()
+        var called = HashMap<String, Boolean>()
         val prefKeys: MutableSet<String> = pref.all.keys
         for (pref_key in prefKeys) {
-            called[pref_key] = true
+            if(getShared(pref, pref_key)){
+                called[pref_key] = true
+            }
+            else{
+                called[pref_key] = false
+            }
+
         }
 
         val clicked = HashMap<String, Boolean>()
@@ -191,6 +198,45 @@ class StoreWaitingList : AppCompatActivity() {
                 ClientData(id_tmp, phone_tmp, name_tmp, people_num_tmp, is_member_tmp)
             clientList?.add(data_tmp)
         }
+
+    }
+
+}
+
+class storeWaitingListAsyncTask(context: StoreWaitingList) : AsyncTask<Unit, Unit, Unit>() {
+
+    override fun doInBackground(vararg params: Unit?) { // 소켓 연결
+        try {
+            Log.i("리스트 실행은되는거지?","응")
+            val sock = Socket("127.0.0.1", 3000)
+            val keyboard =
+                BufferedReader(InputStreamReader(System.`in`))
+            val out = sock.getOutputStream()
+            val ois =
+                ObjectInputStream(sock.getInputStream()) //객체 받는 스트림
+            val pw = PrintWriter(OutputStreamWriter(out))
+            var line: String? = null //단순 명령어입력.. 보내실 땐 그냥 프로토콜에 있는 대로 문자열로 보내시면 됩니당
+            while (keyboard.readLine().also { line = it } != null) {
+                //명령어 보내는 파트(필요없음)
+                pw.println(line)
+                pw.flush()
+
+                //객체 받는 파트(QueueListSerializable 객체로 받아와요! 객체 코드 참조!
+                val qls = ois.readObject() as QueueListSerializable
+
+                //이건 그냥 잘 받아왔는지 출력하는 코드.
+                println("서버한테서 받은거::::: $qls")
+            }
+            pw.close()
+            ois.close()
+            sock.close()
+        } catch (e: Exception) {
+            println(e)
+        }
+    }
+
+    override fun onPostExecute(result: Unit?) { // UI에 보이기
+        super.onPostExecute(result)
 
     }
 

@@ -13,12 +13,9 @@ fun<T> setShared(pref:SharedPreferences,key:String,data:T){
     }
 }
 
-fun getShared1(pref: SharedPreferences,key:String) : String {
-    return pref.getString(key, "null")
+fun getShared(pref: SharedPreferences,key:String) : Boolean{
+    return pref.getBoolean(key, false)
 }
 
 
-fun getShared2(pref: SharedPreferences,key:String) : String {
-    return pref.getString(key, "null")
-}
 

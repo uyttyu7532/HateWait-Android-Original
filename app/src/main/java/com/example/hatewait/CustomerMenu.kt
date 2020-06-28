@@ -41,7 +41,7 @@ class CustomerMenu : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_customer_menu)
 
-        customerMenuAsyncTask(this)
+        customerMenuAsyncTask(this).execute()
 
         fcm()
 
@@ -105,6 +105,7 @@ class CustomerMenu : AppCompatActivity() {
 
         override fun doInBackground(vararg params: Unit?) { // 소켓 연결
             try {
+                Log.i("손님메뉴 실행은되는거지?","응")
                 clientSocket = Socket(ip, port)
                 writer = PrintWriter(clientSocket!!.getOutputStream(), true)
                 reader = BufferedReader(
@@ -142,17 +143,17 @@ class CustomerMenu : AppCompatActivity() {
 
         override fun onPostExecute(result: Unit?) { // UI에 보이기
             super.onPostExecute(result)
-            //서버>앱: MAIN;MEMBER;customerName;waitingStoreName;waitingMyTurn
-
-            customerName = CustomerMenuArray!!.get(2)
-            waitingStoreName = CustomerMenuArray!!.get(3)
-            waitingMyTurn = CustomerMenuArray!!.get(4)
-
-            customerNameView.setText(customerName)
-            waitingStoreView.setText(waitingStoreName)
-            customerWaitingNum.setText(waitingMyTurn)
-            customerMarquee.setText("내 차례가 되면 상태바 알림과 문자 알림이 발송됩니다. 취소 버튼을 눌러 대기를 취소할 수 있습니다. ")
-            customerMarquee.setSelected(true) // 마키 텍스트에 포커스
+//            //서버>앱: MAIN;MEMBER;customerName;waitingStoreName;waitingMyTurn
+//
+//            customerName = CustomerMenuArray!!.get(2)
+//            waitingStoreName = CustomerMenuArray!!.get(3)
+//            waitingMyTurn = CustomerMenuArray!!.get(4)
+//
+//            customerNameView.setText(customerName)
+//            waitingStoreView.setText(waitingStoreName)
+//            customerWaitingNum.setText(waitingMyTurn)
+//            customerMarquee.setText("내 차례가 되면 상태바 알림과 문자 알림이 발송됩니다. 취소 버튼을 눌러 대기를 취소할 수 있습니다. ")
+//            customerMarquee.setSelected(true) // 마키 텍스트에 포커스
 
         }
 

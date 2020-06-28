@@ -42,7 +42,7 @@ class StoreMenu : AppCompatActivity() {
 
     fun init() {
         setMenuBtn()
-        storeMenuAsyncTask(this)
+        storeMenuAsyncTask(this).execute()
     }
 
 
@@ -76,6 +76,7 @@ class StoreMenu : AppCompatActivity() {
 
         override fun doInBackground(vararg params: Unit?) { // 소켓 연결
             try {
+                Log.i("메뉴 실행은되는거지?","응")
                 clientSocket = Socket(ip, port)
                 writer = PrintWriter(clientSocket!!.getOutputStream(), true)
                 reader = BufferedReader(
@@ -114,23 +115,23 @@ class StoreMenu : AppCompatActivity() {
 
         override fun onPostExecute(result: Unit?) { // UI에 보이기
             super.onPostExecute(result)
-            //서버>앱: MAIN;STORE;storeName;waitingNum;nextName;nextNum
-            storeName = StoreMenuArray!!.get(2)
-            waitingNum= StoreMenuArray!!.get(3)
-            nextName= StoreMenuArray!!.get(4)
-            nextNum= StoreMenuArray!!.get(5)
-
-            storeNameView.setText(storeName)
-            storeWaitingNum.setText(waitingNum)
-            storeMarquee.setText(
-            String.format(
-                "다음 순서 : %s 외 %d명 입니다. 호출 버튼을 눌러 다음 대기자에게 알림을 보내주세요. 다음 순서 : %s 외 %d명 입니다. 호출 버튼을 눌러 다음 대기자에게 알림을 보내주세요",
-                nextName,
-                nextNum,
-                nextName,
-                nextNum
-            ))
-            storeMarquee.setSelected(true) // 마키 텍스트에 포커스
+//            //서버>앱: MAIN;STORE;storeName;waitingNum;nextName;nextNum
+//            storeName = StoreMenuArray!!.get(2)
+//            waitingNum= StoreMenuArray!!.get(3)
+//            nextName= StoreMenuArray!!.get(4)
+//            nextNum= StoreMenuArray!!.get(5)
+//
+//            storeNameView.setText(storeName)
+//            storeWaitingNum.setText(waitingNum)
+//            storeMarquee.setText(
+//            String.format(
+//                "다음 순서 : %s 외 %d명 입니다. 호출 버튼을 눌러 다음 대기자에게 알림을 보내주세요. 다음 순서 : %s 외 %d명 입니다. 호출 버튼을 눌러 다음 대기자에게 알림을 보내주세요",
+//                nextName,
+//                nextNum,
+//                nextName,
+//                nextNum
+//            ))
+//            storeMarquee.setSelected(true) // 마키 텍스트에 포커스
         }
 
     }

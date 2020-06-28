@@ -36,6 +36,7 @@ class CustomerMenu : AppCompatActivity() {
     val noButton : ImageButton by lazy {
         customView?.findViewById(R.id.name_no_button) as ImageButton
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_customer_menu)

@@ -3,6 +3,30 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="2"
         tools:context=".NameCheckDialogFragment">
 
+    <ImageButton
+            android:id="@+id/name_no_button"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/no_button_vector"
+            android:clickable="true"
+            android:layout_margin="10dp"
+            android:padding="0dp"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"/>
+    <ImageButton
+            android:id="@+id/name_yes_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:background="@drawable/yes_button_vector"
+            android:layout_margin="10dp"
+            android:padding="0dp"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"/>
 </LinearLayout>

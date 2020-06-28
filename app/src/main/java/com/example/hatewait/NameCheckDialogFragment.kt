@@ -6,9 +6,12 @@ import android.content.DialogInterface
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
+import android.widget.LinearLayout
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
+import com.twilio.rest.monitor.v1.Alert
 
 class NameCheckDialogFragment : DialogFragment() {
 
@@ -37,7 +40,28 @@ class NameCheckDialogFragment : DialogFragment() {
                     nameChecklistener.onDialogNegativeClick(this)
                 })
                 .setNegativeButtonIcon(resources.getDrawable(R.drawable.no_button_vector, context!!.theme))
-            builder.create()
+            val dialog = builder.create()
+
+//            여기서부터 커스터마이징
+            //        Button Size Customzation
+//        https://stackoverflow.com/questions/34555107/how-to-customize-alertdialog-so-that-buttons-fit-in-the-alertdialog
+            val negativeButton: Button =
+                dialog.getButton(DialogInterface.BUTTON_NEGATIVE)
+            val positiveButton: Button =
+                dialog.getButton(DialogInterface.BUTTON_POSITIVE)
+            val params = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                2f
+            )
+            negativeButton.layoutParams = params
+            positiveButton.layoutParams = params
+
+            negativeButton.invalidate()
+            positiveButton.invalidate()
+
+//            커스터마이징 끝 return은 커스터마이징 된 dialog
+            dialog
 //           if builder fails to create Activity ->  Elvis Operator null check
         } ?: throw IllegalStateException("Activity Can't be null")
     }

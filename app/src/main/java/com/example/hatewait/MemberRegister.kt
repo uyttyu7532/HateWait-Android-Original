@@ -1,16 +1,18 @@
 package com.example.hatewait
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import android.view.*
-import android.widget.Toast
-import androidx.fragment.app.DialogFragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.LinearLayout
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.activity_members_register.*
-import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.support.v4.startActivity
+
 
 class MemberRegister : Fragment() {
     private val idRegex = Regex("^(?=.*[a-zA-Zㄱ-ㅎ가-힣0-9])[a-zA-Zㄱ-ㅎ가-힣0-9]{1,}$")
@@ -104,6 +106,7 @@ class MemberRegister : Fragment() {
         people_number_editText.text?.clear()
         people_number_layout.hint = "총 몇 분이 오셨나요?"
     }
+
 
     private fun showNameCheckDialog() {
         val nameCheckFragment = NameCheckDialogFragment()

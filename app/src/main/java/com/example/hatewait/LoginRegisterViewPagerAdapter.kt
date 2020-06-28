@@ -3,6 +3,7 @@ package com.example.hatewait
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
@@ -15,6 +16,7 @@ import org.jetbrains.anko.support.v4.startActivity
 
 //Recycler View Adpater
 class LoginRegisterViewPagerActivity : AppCompatActivity(), NameCheckDialogFragment.NameCheckListener {
+
     private val tabNameArray = arrayOf<String>("비회원", "회원")
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {

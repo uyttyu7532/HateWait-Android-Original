@@ -58,7 +58,7 @@ class CustomerMenu : AppCompatActivity() {
         }
     }
 
-    fun fcm() {
+    private fun fcm() {
         // 현재 토큰을 db에 저장
         //Get Firebase FCM token
         FirebaseInstanceId.getInstance().instanceId

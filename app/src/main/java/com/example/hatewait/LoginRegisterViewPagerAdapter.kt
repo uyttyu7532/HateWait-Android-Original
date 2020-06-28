@@ -2,13 +2,19 @@ package com.example.hatewait
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.DialogFragment
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.android.synthetic.main.activity_members_register.*
 import kotlinx.android.synthetic.main.activity_register_tab_pager.*
+import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.support.v4.startActivity
 
 
 //Recycler View Adpater
-class LoginRegisterViewPagerActivity : AppCompatActivity() {
+class LoginRegisterViewPagerActivity : AppCompatActivity(), NameCheckDialogFragment.NameCheckListener {
     private val tabNameArray = arrayOf<String>("비회원", "회원")
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,4 +34,16 @@ class LoginRegisterViewPagerActivity : AppCompatActivity() {
         // Must be called after ViewPager2 has an adapter set
 
     }
+    override fun onDialogPositiveClick(dialog: DialogFragment) {
+        Log.i("dialog", "positive?!")
+        startActivity<RegisterCheck>(
+            "USER_ID" to user_id_input_editText.toString()
+        )
+    }
+
+    override fun onDialogNegativeClick(dialog: DialogFragment) {
+        Log.i("dialog", "negative?!")
+        Toast.makeText(this, "아이디를 확인헤주세요!", Toast.LENGTH_SHORT).show()
+    }
+
 }

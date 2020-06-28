@@ -3,10 +3,13 @@ package com.example.hatewait
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.*
 import android.widget.Toast
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.activity_members_register.*
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.support.v4.startActivity
 
 class MemberRegister : Fragment() {
@@ -75,10 +78,12 @@ class MemberRegister : Fragment() {
 
         register_customer_button.setOnClickListener {
 //            등록이 끝났다면 지워줌!
-            Toast.makeText(context, "등록되었어요!", Toast.LENGTH_SHORT).show()
-            startActivity<Register_Check>(
-                "USER_ID" to user_id_input_editText.toString()
-            )
+//            Toast.makeText(context, "등록되었어요!", Toast.LENGTH_SHORT).show()
+//            DialogActivity (이름 3자중 가운데 모자이크 ex. 문X훈 회원님 맞으신가요?)
+            showNameCheckDialog()
+//            startActivity<RegisterCheck>(
+//                "USER_ID" to user_id_input_editText.toString()
+//            )
         }
         super.onActivityCreated(savedInstanceState)
 
@@ -100,5 +105,9 @@ class MemberRegister : Fragment() {
         people_number_layout.hint = "총 몇 분이 오셨나요?"
     }
 
+    private fun showNameCheckDialog() {
+        val nameCheckFragment = NameCheckDialogFragment()
+        nameCheckFragment.show(activity!!.supportFragmentManager, "NameCheck")
+    }
 
 }

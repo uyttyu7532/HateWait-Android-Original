@@ -8,9 +8,10 @@ import android.text.Spanned
 import android.text.style.RelativeSizeSpan
 import android.text.style.StyleSpan
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.DialogFragment
 import kotlinx.android.synthetic.main.activity_register_complete.*
 
-class Register_Check : AppCompatActivity() {
+class RegisterCheck : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_complete)
@@ -28,4 +29,6 @@ class Register_Check : AppCompatActivity() {
         greeting_customer_message.setText(spannableString_greetcustomer)
 
     }
+
+
 }

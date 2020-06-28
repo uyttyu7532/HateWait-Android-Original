@@ -14,6 +14,7 @@
             android:roundIcon="@mipmap/ic_launcher"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+        <activity android:name=".NameCheckDialogFragment"></activity>
 
         <meta-data
                 android:name="com.google.firebase.messaging.default_notification_icon"
@@ -31,7 +32,6 @@
             </intent-filter>
         </service>
 
-
         <activity
                 android:name=".AutoCallNumberChangeDialog"
                 tools:ignore="Instantiatable" />
@@ -42,10 +42,10 @@
         <activity android:name=".CustomerMenu" />
         <activity android:name=".StoreMenu" />
         <activity android:name=".LoginRegisterViewPagerActivity" />
-        <activity android:name=".Register_Check" />
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".RegisterCheck" />
+        <activity android:name=".MainActivity" />
         <activity android:name=".Add_waiting" />
-        <activity android:name=".StoreWaitingList"/>
+        <activity android:name=".StoreWaitingList" />
         <activity android:name=".BusinessHourPick" />
         <activity
                 android:name=".Splash"

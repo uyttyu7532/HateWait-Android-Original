@@ -119,7 +119,7 @@ class NonMemberRegister : androidx.fragment.app.Fragment() {
 //            둘다 입력되어있으면 code flow는 첫줄에서 반환됨.
 
                 Toast.makeText(context, "등록되었습니다!", Toast.LENGTH_SHORT).show()
-                startActivity<Register_Check>(
+                startActivity<RegisterCheck>(
                     "USER_NAME" to user_name_input_editText.text.toString(),
                     "USER_PHONE_NUMBER" to user_phone_number_editText.toString()
                 )

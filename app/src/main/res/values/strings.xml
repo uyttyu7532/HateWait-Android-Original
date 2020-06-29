@@ -19,6 +19,14 @@
     <string name="title_activity_splash">SplashActivity</string>
     <string name="default_notification_channel_id">HATEWAIT</string>
 
+    <string name="id_input_hint">아이디를 입력해주세요</string>
+    <string name="password_input_hint">비밀번호를 입력해주세요</string>
+    <string name="password_reinput_hint">비밀번호를 다시 입력해주세요</string>
+    <string-array name="user_info_hint">
+        <item>@string/id_input_hint</item>
+        <item>@string/password_input_hint</item>
+    </string-array>
+
 
     <string-array name="naver_login_api">
         <item>82cffPlMCADZx2gteyWB</item>

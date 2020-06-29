@@ -37,7 +37,6 @@ class LoginRegisterViewPagerActivity : AppCompatActivity(), NameCheckDialogFragm
 
     }
     override fun onDialogPositiveClick(dialog: DialogFragment) {
-        Log.i("dialog", "positive?!")
         startActivity<RegisterCheck>(
             "USER_ID" to user_id_input_editText.toString()
         )
@@ -45,7 +44,6 @@ class LoginRegisterViewPagerActivity : AppCompatActivity(), NameCheckDialogFragm
     }
 
     override fun onDialogNegativeClick(dialog: DialogFragment) {
-        Log.i("dialog", "negative?!")
         Toast.makeText(this, "아이디를 확인헤주세요!", Toast.LENGTH_SHORT).show()
         dialog.dismiss()
     }

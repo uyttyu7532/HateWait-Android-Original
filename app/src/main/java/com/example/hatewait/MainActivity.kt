@@ -69,7 +69,13 @@ class MainActivity : AppCompatActivity() {
                 startActivity<StoreMenu>()
             }
         }
-
+        account_register_textButton.setOnClickListener {
+            if (isCustomerMode) {
+                startActivity<CustomerRegister>()
+            } else {
+                startActivity<StoreRegister>()
+            }
+        }
     }
 
 
@@ -77,7 +83,7 @@ class MainActivity : AppCompatActivity() {
 
     // 네아로(네이버 아이디로 로그인) 기능 이용시 전화번호는 따로 입력받아야한다.
     //     전화번호는 Naver 프로필 API에서 제공해주지 않기때문에
-    fun naver_login_init() {
+    private fun naver_login_init() {
 
 
         val loginModule = OAuthLogin.getInstance();

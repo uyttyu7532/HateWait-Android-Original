@@ -89,7 +89,7 @@
                 android:id="@+id/id_input_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="아이디를 입력해주세요"
+                android:hint="@string/id_input_hint"
                 android:inputType="text"
                 android:selectAllOnFocus="true"/>
 
@@ -111,7 +111,7 @@
                 android:id="@+id/password_input_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="비밀번호를 입력해주세요"
+                android:hint="@string/password_input_hint"
                 android:inputType="textPassword"
                 android:selectAllOnFocus="true"/>
 
@@ -167,6 +167,7 @@
             android:textStyle="bold"
             android:text="회원가입"
             android:textColor="@color/colorPrimary"
+            android:clickable="true"
             android:layout_marginLeft="10dp"
             app:layout_constraintStart_toEndOf="@id/account_introduction_textView"
             app:layout_constraintEnd_toEndOf="parent"

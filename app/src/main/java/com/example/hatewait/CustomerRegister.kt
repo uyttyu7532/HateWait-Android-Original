@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import kotlinx.android.synthetic.main.activity_customer_register.*
+import org.jetbrains.anko.startActivity
 
 class CustomerRegister : AppCompatActivity() {
     private val idRegex = Regex("^(?=.*[a-zA-Zㄱ-ㅎ가-힣0-9])[a-zA-Zㄱ-ㅎ가-힣0-9]{1,}$")
@@ -17,6 +18,9 @@ class CustomerRegister : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_customer_register)
         addTextChangeListener()
+        button_continue.setOnClickListener {
+            startActivity<CustomRegister2>()
+        }
 
     }
 
@@ -98,24 +102,18 @@ class CustomerRegister : AppCompatActivity() {
     }
 
     private fun inputLayoutInitialize() {
-        id_input_editText.apply{
-            text?.clear()
-            error = null
-            clearFocus()
-            hint = resources.getString(R.string.id_input_hint)
-        }
-        password_input_editText.apply{
-            text?.clear()
-            error = null
-            clearFocus()
-            hint = resources.getString(R.string.password_input_hint)
-        }
-        password_reinput_editText.apply {
-            text?.clear()
-            error = null
-            clearFocus()
-            hint = resources.getString(R.string.password_reinput_hint)
-        }
+        id_input_editText.text?.clear()
+        id_input_layout.error = null
+        id_input_layout.clearFocus()
+        id_input_layout.hint = resources.getString(R.string.id_input_hint)
+        password_input_editText.text?.clear()
+        password_input_layout.clearFocus()
+        password_input_layout.error = null
+        password_input_layout.hint = resources.getString(R.string.password_input_hint)
+        password_reinput_editText.text?.clear()
+        password_reinput_layout.error = null
+        password_reinput_layout.clearFocus()
+        password_reinput_layout.hint = resources.getString(R.string.password_reinput_hint)
     }
 
     override fun onStop() {

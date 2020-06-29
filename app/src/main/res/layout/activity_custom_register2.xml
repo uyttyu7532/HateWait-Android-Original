@@ -62,7 +62,7 @@
             app:layout_constraintTop_toBottomOf="@id/user_phone_number_layout"
             android:enabled="false"
             style="@style/Widget.AppCompat.Button.Colored"
-            android:text="계속하기"
+            android:text="가입완료"
             android:textSize="25dp"
             android:textColor="@color/white"/>
 

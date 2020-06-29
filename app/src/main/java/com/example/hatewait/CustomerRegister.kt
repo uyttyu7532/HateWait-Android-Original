@@ -78,7 +78,7 @@ class CustomerRegister : AppCompatActivity() {
         password_reinput_editText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(reinputText: Editable?) {
                 if (reinputText.toString() != password_input_editText.text.toString()) {
-                    password_reinput_layout.error = "패스워드가 일치하지 않아요"
+                    password_reinput_layout.error = "비밀번호가 일치하지 않아요"
                     button_continue.isEnabled = false
                 } else {
                     password_reinput_layout.error = null

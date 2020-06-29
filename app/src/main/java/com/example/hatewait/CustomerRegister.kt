@@ -7,6 +7,8 @@ import android.text.TextWatcher
 import kotlinx.android.synthetic.main.activity_customer_register.*
 import org.jetbrains.anko.startActivity
 
+
+// App Bar 추가
 class CustomerRegister : AppCompatActivity() {
     private val idRegex = Regex("^(?=.*[a-zA-Zㄱ-ㅎ가-힣0-9])[a-zA-Zㄱ-ㅎ가-힣0-9]{1,}$")
     private val passwordRegex =
@@ -21,6 +23,8 @@ class CustomerRegister : AppCompatActivity() {
         button_continue.setOnClickListener {
             startActivity<CustomRegister2>()
         }
+//        Set a Toolbar to act as the ActionBar for this Activity window
+        setSupportActionBar(register_toolbar)
 
     }
 

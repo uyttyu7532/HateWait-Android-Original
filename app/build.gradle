@@ -68,7 +68,7 @@ dependencies {
     implementation 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1'
 
     //noinspection GradleCompatible
-    implementation 'com.android.support:support-v4:20.0.0'
+    implementation 'com.android.support:support-v4:28.0.0'
     implementation "com.daimajia.swipelayout:library:1.2.0@aar"
 
     // 로티

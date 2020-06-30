@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.Menu
+import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_customer_register.*
 import org.jetbrains.anko.startActivity
 
@@ -25,9 +27,32 @@ class CustomerRegister : AppCompatActivity() {
         }
 //        Set a Toolbar to act as the ActionBar for this Activity window
         setSupportActionBar(register_toolbar)
-
+// Default Task : App Name + 더보기 // Option Menu has only a'settings'
+        supportActionBar?.apply {
+//            Set whether home should be displayed as an "up" affordance.
+//            Set this to true if selecting "home" returns up by a single level in your UI rather than back to the top level or front page.
+            setDisplayHomeAsUpEnabled(true)
+            setHomeAsUpIndicator(R.drawable.back_icon)
+            setTitle("로그인 이동")
+//            setDisplayShowHomeEnabled(true)
+        }
     }
 
+//     Menu 추가 콜백 메소드
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.back_front_button_menu, menu)
+        return true
+    }
+
+//    메뉴에서 선택된 아이템 클릭 리스너 역할
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.forward_button -> {
+                onBackPressed()
+            }
+        }
+        return true
+    }
 
     private fun addTextChangeListener() {
         id_input_editText.addTextChangedListener(object : TextWatcher {

@@ -7,6 +7,9 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         tools:context=".CustomerRegister">
 
+<!--    https://developer.android.com/training/appbar/setting-up -->
+<!--    Android Version 따라 Native ActionBar가 다르게 동작하므로
+        일관된 기능을 위해 Toolbar 사용 권장-->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/register_toolbar"
         android:layout_width="match_parent"

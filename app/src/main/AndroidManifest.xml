@@ -17,7 +17,6 @@
         <activity android:name=".CustomRegister2"></activity>
         <activity android:name=".StoreRegister" />
         <activity android:name=".CustomerRegister" />
-        <activity android:name=".NameCheckDialogFragment" />
 
         <meta-data
                 android:name="com.google.firebase.messaging.default_notification_icon"
@@ -46,7 +45,13 @@
         <activity android:name=".StoreMenu" />
         <activity android:name=".LoginRegisterViewPagerActivity" />
         <activity android:name=".RegisterCheck" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".Add_waiting" />
         <activity android:name=".StoreWaitingList" />
         <activity android:name=".BusinessHourPick" />

@@ -73,7 +73,7 @@ class StoreWaitingList : AppCompatActivity() {
     }
 
 
-    fun makeAddDialog() {
+    private fun makeAddDialog() {
         val fab: View = findViewById(R.id.addFab)
         fab.setOnClickListener { view ->
 

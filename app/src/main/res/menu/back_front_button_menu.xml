@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
+<menu
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<!--    Activity 코드 대신 xml menu resource를 정의하는 것이 편하다. -->
+<!--    Application Code <-> Menu Contents (Divide 편함) -->
+
     <item android:id="@+id/forward_button"
         android:icon="@drawable/forward_icon"
         android:title="Name/Phone"

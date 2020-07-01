@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.Menu
+import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_custom_register2.*
 
 class CustomRegister2 : AppCompatActivity() {
@@ -25,7 +27,25 @@ class CustomRegister2 : AppCompatActivity() {
         button_finish.setOnClickListener {
 
         }
+        setSupportActionBar(register_toolbar)
+        supportActionBar?.apply {
+            //            Set this to true if selecting "home" returns up by a single level in your UI rather than back to the top level or front page.
+            setDisplayHomeAsUpEnabled(true)
+//            you should also call setHomeActionContentDescription() to provide a correct description of the action for accessibility support.
+            setHomeAsUpIndicator(R.drawable.back_icon)
+            setDisplayShowTitleEnabled(false)
+        }
+    }
 
+//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+//        return true
+//    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            android.R.id.home -> onBackPressed()
+        }
+        return true
     }
 
     private fun addTextChangeListener() {
@@ -89,7 +109,7 @@ class CustomRegister2 : AppCompatActivity() {
     }
 
     override fun onStop() {
-        inputLayoutInitialize()
+//        inputLayoutInitialize()
         super.onStop()
     }
 }

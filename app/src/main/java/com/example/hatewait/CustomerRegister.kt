@@ -1,5 +1,7 @@
 package com.example.hatewait
 
+import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -32,26 +34,54 @@ class CustomerRegister : AppCompatActivity() {
 //            Set whether home should be displayed as an "up" affordance.
 //            Set this to true if selecting "home" returns up by a single level in your UI rather than back to the top level or front page.
             setDisplayHomeAsUpEnabled(true)
+//            you should also call setHomeActionContentDescription() to provide a correct description of the action for accessibility support.
             setHomeAsUpIndicator(R.drawable.back_icon)
-            setTitle("로그인 이동")
+
+            setHomeActionContentDescription("로그인 화면 이동")
+            setDisplayShowTitleEnabled(false)
 //            setDisplayShowHomeEnabled(true)
         }
     }
 
+//    앱내의 여러 액티비티가 같은 포멧의 옵션 메뉴를 제공할 경우
+//    onCreateOptionsMenu, onOptionItemSelected Method만 구현해놓은 액티비티를 만들어두는것도 좋음.
+
 //     Menu 추가 콜백 메소드
+//    Initialize the contents of the Activity's standard options menu.
+//    메뉴를 생성하는 최초 1번만 호출함.
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.back_front_button_menu, menu)
+
         return true
+
     }
 
-//    메뉴에서 선택된 아이템 클릭 리스너 역할
+
+    //    메뉴에서 선택된 아이템 클릭 리스너 역할
+//    When you add items to the menu, you can implement the Activity's onOptionsItemSelected method to handle them there.
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.forward_button -> {
+//                입력완료 or 앞서 입력했던 이름, 주소 액티비티 상태로 이동.
+                val intent = Intent(this, CustomRegister2::class.java)
+//                시작 중인 활동이 현재 활동(백 스택의 맨 위에 있는)이면 활동의 새 인스턴스가 생성되는 대신 기존 인스턴스가 onNewIntent() 호출을 수신합니다.
+                intent.flags = FLAG_ACTIVITY_SINGLE_TOP
+                startActivity(intent)
+            }
+            android.R.id.home -> {
                 onBackPressed()
             }
         }
         return true
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        return if (button_continue.isEnabled) {
+            menuInflater.inflate(R.menu.back_front_button_menu, menu)
+            true
+        } else {
+            false
+        }
     }
 
     private fun addTextChangeListener() {
@@ -146,7 +176,7 @@ class CustomerRegister : AppCompatActivity() {
     }
 
     override fun onStop() {
-        inputLayoutInitialize()
+//        inputLayoutInitialize()
         super.onStop()
     }
 

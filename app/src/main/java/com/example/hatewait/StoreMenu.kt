@@ -3,7 +3,6 @@ package com.example.hatewait
 import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
 import android.os.AsyncTask
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
@@ -16,14 +15,15 @@ import java.io.InputStreamReader
 import java.io.PrintWriter
 import java.net.Socket
 
-lateinit var storeName: String
-lateinit var waitingNum: String
-lateinit var nextName :String
-lateinit var nextNum :String
+//lateinit var storeName: String
+//lateinit var waitingNum: String
+//lateinit var nextName :String
+//lateinit var nextNum :String
 
-lateinit var storeNameView  : TextView
-lateinit var storeWaitingNum : TextView
-lateinit var storeMarquee : TextView
+lateinit var storeNameView: TextView
+lateinit var storeWaitingNum: TextView
+lateinit var storeMarquee: TextView
+
 
 class StoreMenu : AppCompatActivity() {
 
@@ -34,19 +34,22 @@ class StoreMenu : AppCompatActivity() {
         setContentView(R.layout.activity_store_menu)
 
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        storeNameView = findViewById(R.id.store_name_view) as TextView
+        storeWaitingNum = findViewById(R.id.store_waiting_num) as TextView
+        storeMarquee = findViewById(R.id.store_marquee) as TextView
 
 
         init()
 
     }
 
-    fun init() {
-        setMenuBtn()
-        storeMenuAsyncTask(this).execute()
+    override fun onResume() {
+        super.onResume()
+//        storeMenuAsyncTask(this).execute()
     }
 
+    fun init() {
 
-    fun setMenuBtn() {
 
         tabletBtn.setOnClickListener {
             startActivity<LoginRegisterViewPagerActivity>()
@@ -62,22 +65,22 @@ class StoreMenu : AppCompatActivity() {
 
     }
 
-    class storeMenuAsyncTask(context: StoreMenu) : AsyncTask<Unit, Unit, Unit>() {
+    class storeMenuAsyncTask(context: StoreMenu) : AsyncTask<Unit, Unit, Array<String>?>() {
 
-        private var clientSocket : Socket? = null
+        private var clientSocket: Socket? = null
         private var reader: BufferedReader? = null // 서버 < 앱
-        private var writer : PrintWriter? = null // 앱 > 서버
+        private var writer: PrintWriter? = null // 앱 > 서버
 
-        private val port = 3000 // port num
-        private val ip: String ="221.146.100.91"// 서버 ip적기
-        val storeId = 12345678
+        private val port = 3000// port num
+        private val ip: String = "192.168.35.203"// 서버 ip적기
+        val storeId = "s1111"
 
         var StoreMenuArray: Array<String>? = null
 
-        override fun doInBackground(vararg params: Unit?) { // 소켓 연결
+        override fun doInBackground(vararg params: Unit): Array<String>? { // 소켓 연결
             try {
-                Log.i("메뉴 실행은되는거지?","응")
                 clientSocket = Socket(ip, port)
+                Log.i("로그", "storeMenuAsyncTask:: ok")
                 writer = PrintWriter(clientSocket!!.getOutputStream(), true)
                 reader = BufferedReader(
                     InputStreamReader(
@@ -86,11 +89,11 @@ class StoreMenu : AppCompatActivity() {
                     )
                 )
                 writer!!.println("MAIN;STORE;storeId")
-                Log.i("로그:서버에게 정보 달라고 보냄", storeId.toString())
+                Log.i("로그:서버에게 정보 달라고 보냄", storeId)
                 val storeMenuResponse: String = reader!!.readLine()
                 Log.i("로그:서버응답", storeMenuResponse)
                 //서버>앱: MAIN;STORE;storeName;waitingNum;nextName;nextNum
-                StoreMenuArray =storeMenuResponse.split(";").toTypedArray()
+                StoreMenuArray = storeMenuResponse.split(";").toTypedArray()
                 if (reader != null) {
                     try {
                         reader!!.close()
@@ -111,27 +114,31 @@ class StoreMenu : AppCompatActivity() {
             } catch (e: IOException) {
                 e.printStackTrace()
             }
+
+            return StoreMenuArray
         }
 
-        override fun onPostExecute(result: Unit?) { // UI에 보이기
-            super.onPostExecute(result)
-//            //서버>앱: MAIN;STORE;storeName;waitingNum;nextName;nextNum
-//            storeName = StoreMenuArray!!.get(2)
-//            waitingNum= StoreMenuArray!!.get(3)
-//            nextName= StoreMenuArray!!.get(4)
-//            nextNum= StoreMenuArray!!.get(5)
-//
-//            storeNameView.setText(storeName)
-//            storeWaitingNum.setText(waitingNum)
-//            storeMarquee.setText(
-//            String.format(
-//                "다음 순서 : %s 외 %d명 입니다. 호출 버튼을 눌러 다음 대기자에게 알림을 보내주세요. 다음 순서 : %s 외 %d명 입니다. 호출 버튼을 눌러 다음 대기자에게 알림을 보내주세요",
-//                nextName,
-//                nextNum,
-//                nextName,
-//                nextNum
-//            ))
-//            storeMarquee.setSelected(true) // 마키 텍스트에 포커스
+        override fun onPostExecute(result: Array<String>??) { // UI에 보이기
+            try {
+                super.onPostExecute(result)
+                Log.i("로그", " storeMenuAsyncTask-onPostExecute:: ok")
+                //서버>앱: MAIN;STORE;storeName;waitingNum;nextName;nextNum
+
+                storeNameView.setText(result?.get(2))
+                storeWaitingNum.setText(result?.get(3))
+                storeMarquee.setText(
+                    String.format(
+                        "다음 순서 : %s 외 %d명 입니다. 호출 버튼을 눌러 다음 대기자에게 알림을 보내주세요. 다음 순서 : %s 외 %d명 입니다. 호출 버튼을 눌러 다음 대기자에게 알림을 보내주세요",
+                        result?.get(4),
+                        result?.get(5)?.toInt(),
+                        result?.get(4),
+                        result?.get(5)?.toInt()
+                    )
+                )
+                storeMarquee.setSelected(true) // 마키 텍스트에 포커스
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
         }
 
     }

@@ -33,12 +33,12 @@
         </LinearLayout>
 
 
-        <TextView
-                android:id="@+id/editcustomerinfo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="회원 정보 수정"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+<!--        <TextView-->
+<!--                android:id="@+id/editcustomerinfo"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="회원 정보 수정"-->
+<!--                android:textAppearance="@style/TextAppearance.AppCompat.Small" />-->
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 

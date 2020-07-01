@@ -28,10 +28,13 @@ import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 
+var qls: QueueListSerializable? = null
+
 class StoreWaitingList : AppCompatActivity() {
 
     var clientList = ArrayList<ClientData>()
     lateinit var mAdapter: SwipeRecyclerViewAdapter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +55,11 @@ class StoreWaitingList : AppCompatActivity() {
                 })
     }
 
+    override fun onResume() {
+        super.onResume()
+        storeWaitingListAsyncTask(this).execute()
+    }
+
 
     @SuppressLint("WrongViewCast")
     private fun init() {
@@ -59,7 +67,7 @@ class StoreWaitingList : AppCompatActivity() {
         readFile()
         setRecyclerView()
         makeAddDialog()
-        storeWaitingListAsyncTask(this).execute()
+
 
 
         autoCallSwitch.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
@@ -123,24 +131,22 @@ class StoreWaitingList : AppCompatActivity() {
         var called = HashMap<String, Boolean>()
         val prefKeys: MutableSet<String> = pref.all.keys
         for (pref_key in prefKeys) {
-            if(getShared(pref, pref_key)){
+            if (getShared(pref, pref_key)) {
                 called[pref_key] = true
-            }
-            else{
+            } else {
                 called[pref_key] = false
             }
 
         }
 
         val clicked = HashMap<String, Boolean>()
-        for(a in clientList){
+        for (a in clientList) {
             clicked[a.phone] = false
         }
 
 
-
         // Creating Adapter object
-        mAdapter = SwipeRecyclerViewAdapter(clientList!!,called,clicked,pref,baseContext)
+        mAdapter = SwipeRecyclerViewAdapter(clientList!!, called, clicked, pref, baseContext)
 
         //Single or Multiple
         mAdapter.mode = Attributes.Mode.Single
@@ -201,43 +207,79 @@ class StoreWaitingList : AppCompatActivity() {
 
     }
 
-}
 
-class storeWaitingListAsyncTask(context: StoreWaitingList) : AsyncTask<Unit, Unit, Unit>() {
+    class storeWaitingListAsyncTask(context: StoreWaitingList) :
+        AsyncTask<Unit, Unit, QueueListSerializable?>() {
 
-    override fun doInBackground(vararg params: Unit?) { // 소켓 연결
-        try {
-            Log.i("리스트 실행은되는거지?","응")
-            val sock = Socket("127.0.0.1", 3000)
-            val keyboard =
-                BufferedReader(InputStreamReader(System.`in`))
-            val out = sock.getOutputStream()
-            val ois =
-                ObjectInputStream(sock.getInputStream()) //객체 받는 스트림
-            val pw = PrintWriter(OutputStreamWriter(out))
-            var line: String? = null //단순 명령어입력.. 보내실 땐 그냥 프로토콜에 있는 대로 문자열로 보내시면 됩니당
-            while (keyboard.readLine().also { line = it } != null) {
-                //명령어 보내는 파트(필요없음)
-                pw.println(line)
-                pw.flush()
+        private var clientSocket: Socket? = null
+        private var reader: BufferedReader? = null // 서버 < 앱
+        private var writer: PrintWriter? = null // 앱 > 서버
+        private val port = 3000// port num
+        private val ip: String = "192.168.35.203"// 서버 ip적기
+
+        override fun doInBackground(vararg params: Unit?): QueueListSerializable? { // 소켓 연결
+            try {
+                clientSocket = Socket(ip, port)
+                Log.i("로그", "storeWaitingListAsyncTask:: ok")
+                writer = PrintWriter(clientSocket!!.getOutputStream(), true)
+                writer!!.println("STRQUE;s1111")
+//            val out = clientSocket!!.getOutputStream()
+//            val pw = PrintWriter(OutputStreamWriter(out))
+//            var line: String? = "STRQUE;s1111" //단순 명령어입력.. 보내실 땐 그냥 프로토콜에 있는 대로 문자열로 보내시면 됩니당
+//            pw.println(line)
+//            pw.flush()
+
+
+                val ois = ObjectInputStream(clientSocket!!.getInputStream()) //객체 받는 스트림
 
                 //객체 받는 파트(QueueListSerializable 객체로 받아와요! 객체 코드 참조!
-                val qls = ois.readObject() as QueueListSerializable
+                qls = ois.readObject() as QueueListSerializable
 
                 //이건 그냥 잘 받아왔는지 출력하는 코드.
-                println("서버한테서 받은거::::: $qls")
+                Log.i("로그", "객체 잘 받아왔나" + qls.toString())
+//          }
+                writer!!.close()
+                ois.close()
+                clientSocket!!.close()
+
+            } catch (e: Exception) {
+                println(e)
             }
-            pw.close()
-            ois.close()
-            sock.close()
-        } catch (e: Exception) {
-            println(e)
+
+            return qls
+
+
+//        try {
+//            val sock = Socket("192.168.35.203", 3000)
+//            val keyboard = BufferedReader(InputStreamReader(System.`in`))
+//            val out = sock.getOutputStream()
+//            val ois = ObjectInputStream(sock.getInputStream()) //객체 받는 스트림
+//            val pw = PrintWriter(OutputStreamWriter(out))
+//            var line: String? = null //단순 명령어입력.. 보내실 땐 그냥 프로토콜에 있는 대로 문자열로 보내시면 됩니당
+//            while (keyboard.readLine().also { line = it } != null) {
+//                //명령어 보내는 파트(필요없음)
+//                pw.println(line)
+//                pw.flush()
+//
+//                //객체 받는 파트(QueueListSerializable 객체로 받아와요! 객체 코드 참조!
+//                val qls = ois.readObject() as QueueListSerializable
+//
+//                //이건 그냥 잘 받아왔는지 출력하는 코드.
+//                println("서버한테서 받은거::::: $qls")
+//            }
+//            pw.close()
+//            ois.close()
+//            sock.close()
+//        } catch (e: Exception) {
+//            println(e)
+//        }
+//        return qls
+        }
+
+        override fun onPostExecute(result: QueueListSerializable?) { // UI에 보이기
+            super.onPostExecute(result)
+            Log.i("로그", "storeWaitingListAsyncTask - onPostExecute :: ok")
+            Log.i("로그", "result :: ${result}")
         }
     }
-
-    override fun onPostExecute(result: Unit?) { // UI에 보이기
-        super.onPostExecute(result)
-
-    }
-
 }

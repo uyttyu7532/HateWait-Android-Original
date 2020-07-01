@@ -15,7 +15,7 @@
             app:cardElevation="2dp">
 
         <TextView
-                android:id="@+id/storeMarquee"
+                android:id="@+id/store_marquee"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -43,7 +43,7 @@
                 android:orientation="horizontal">
 
             <TextView
-                    android:id="@+id/storeNameView"
+                    android:id="@+id/store_name_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="건대족발"
@@ -63,7 +63,7 @@
                 android:orientation="horizontal">
 
             <TextView
-                    android:id="@+id/storeWaitingNum"
+                    android:id="@+id/store_waiting_num"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="30"

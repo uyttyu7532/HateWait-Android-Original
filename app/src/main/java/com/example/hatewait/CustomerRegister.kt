@@ -1,6 +1,7 @@
 package com.example.hatewait
 
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
 import android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,6 +10,11 @@ import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_customer_register.*
+import kotlinx.android.synthetic.main.activity_customer_register.id_input_editText
+import kotlinx.android.synthetic.main.activity_customer_register.id_input_layout
+import kotlinx.android.synthetic.main.activity_customer_register.password_input_editText
+import kotlinx.android.synthetic.main.activity_customer_register.password_input_layout
+import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.startActivity
 
 
@@ -25,7 +31,13 @@ class CustomerRegister : AppCompatActivity() {
         setContentView(R.layout.activity_customer_register)
         addTextChangeListener()
         button_continue.setOnClickListener {
-            startActivity<CustomRegister2>()
+//            startActivity<CustomRegister2>()
+            val intent = Intent(this, CustomRegister2::class.java)
+            intent.putExtra("user_id", id_input_editText.text.toString())
+            intent.putExtra("user_password", password_input_editText.text.toString())
+//                시작 중인 활동이 현재 활동(백 스택의 맨 위에 있는)이면 활동의 새 인스턴스가 생성되는 대신 기존 인스턴스가 onNewIntent() 호출을 수신합니다.
+            intent.flags = FLAG_ACTIVITY_REORDER_TO_FRONT
+            startActivity(intent)
         }
 //        Set a Toolbar to act as the ActionBar for this Activity window
         setSupportActionBar(register_toolbar)
@@ -51,7 +63,6 @@ class CustomerRegister : AppCompatActivity() {
 //    메뉴를 생성하는 최초 1번만 호출함.
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.back_front_button_menu, menu)
-
         return true
 
     }
@@ -64,8 +75,10 @@ class CustomerRegister : AppCompatActivity() {
             R.id.forward_button -> {
 //                입력완료 or 앞서 입력했던 이름, 주소 액티비티 상태로 이동.
                 val intent = Intent(this, CustomRegister2::class.java)
+                intent.putExtra("user_id", id_input_editText.text.toString())
+                intent.putExtra("user_password", password_input_editText.text.toString())
 //                시작 중인 활동이 현재 활동(백 스택의 맨 위에 있는)이면 활동의 새 인스턴스가 생성되는 대신 기존 인스턴스가 onNewIntent() 호출을 수신합니다.
-                intent.flags = FLAG_ACTIVITY_SINGLE_TOP
+                intent.flags = FLAG_ACTIVITY_REORDER_TO_FRONT
                 startActivity(intent)
             }
             android.R.id.home -> {

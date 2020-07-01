@@ -1,12 +1,17 @@
 package com.example.hatewait
 
+import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.Menu
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_custom_register2.*
+import java.io.BufferedReader
+import java.io.IOException
+import java.io.InputStreamReader
+import java.io.PrintWriter
+import java.net.Socket
 
 class CustomRegister2 : AppCompatActivity() {
     //    한글 2~4자 (공백 허용 X) or 영문 First name 2~10, Last name 2~10
@@ -25,6 +30,11 @@ class CustomRegister2 : AppCompatActivity() {
         addTextChangeListener()
 
         button_finish.setOnClickListener {
+            val userId = intent.getStringExtra("user_id")
+            val userPassword = intent.getStringExtra("user_password")
+            val userName = user_name_input_editText.text.toString()
+            val userPhone = user_phone_number_editText.text.toString()
+            CustomerRegisterAsyncTask(this@CustomRegister2).execute(userId, userPassword, userName, userPhone)
 
         }
         setSupportActionBar(register_toolbar)
@@ -111,5 +121,40 @@ class CustomRegister2 : AppCompatActivity() {
     override fun onStop() {
 //        inputLayoutInitialize()
         super.onStop()
+    }
+
+
+    class CustomerRegisterAsyncTask(context: CustomRegister2) : AsyncTask<String, Unit, Unit>() {
+
+                private lateinit var clientSocket: Socket
+                private lateinit var reader: BufferedReader
+                private lateinit var writer: PrintWriter
+
+                private val port = 3000
+                private val ip = "192.168.1.166"
+
+                override fun doInBackground(vararg params: String) { // 소켓 연결
+                    val userId= params[0]
+                    val userPassword = params[1]
+                    val userName = params[2]
+            val userPhone = params[3]
+            try {
+                clientSocket = Socket(ip, port)
+                writer = PrintWriter(clientSocket!!.getOutputStream(), true)
+                reader = BufferedReader(InputStreamReader(clientSocket!!.getInputStream(), "UTF-8"))
+                writer!!.println("SIGNUP;MEMBER;$userId;$userName;$userPhone;$userPassword")
+            } catch (ioe: IOException) {
+                ioe.printStackTrace()
+            } finally {
+                reader.close()
+                writer.close()
+                clientSocket.close()
+            }
+        }
+
+        override fun onPostExecute(result: Unit?) {
+            super.onPostExecute(result)
+        }
+
     }
 }

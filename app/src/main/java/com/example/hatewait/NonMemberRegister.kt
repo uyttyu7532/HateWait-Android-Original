@@ -1,6 +1,7 @@
 package com.example.hatewait
 
 
+import android.os.AsyncTask
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -8,6 +9,11 @@ import android.view.*
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_non_members_reigster.*
 import org.jetbrains.anko.support.v4.startActivity
+import java.io.BufferedReader
+import java.io.IOException
+import java.io.InputStreamReader
+import java.io.PrintWriter
+import java.net.Socket
 
 class NonMemberRegister : androidx.fragment.app.Fragment() {
 
@@ -119,10 +125,11 @@ class NonMemberRegister : androidx.fragment.app.Fragment() {
 //            둘다 입력되어있으면 code flow는 첫줄에서 반환됨.
 
                 Toast.makeText(context, "등록되었습니다!", Toast.LENGTH_SHORT).show()
-                startActivity<RegisterCheck>(
-                    "USER_NAME" to user_name_input_editText.text.toString(),
-                    "USER_PHONE_NUMBER" to user_phone_number_editText.toString()
-                )
+            NonMemberRegisterAsyncTask(this@NonMemberRegister).execute(user_name_input_editText.text.toString(),user_phone_number_editText.text.toString(), people_number_editText.text.toString())
+//                startActivity<RegisterCheck>(
+//                    "USER_NAME" to user_name_input_editText.text.toString(),
+//                    "USER_PHONE_NUMBER" to user_phone_number_editText.toString()
+//                )
 
         }
 
@@ -145,6 +152,40 @@ class NonMemberRegister : androidx.fragment.app.Fragment() {
         people_number_layout.hint = "총 몇 분이 오셨나요?"
     }
 
+    class NonMemberRegisterAsyncTask(context: NonMemberRegister) : AsyncTask<String, Unit, Unit>() {
+
+        private lateinit var clientSocket: Socket
+        private lateinit var reader: BufferedReader
+        private lateinit var writer: PrintWriter
+
+        private val port = 3000
+        private val ip = "192.168.1.166"
+
+        override fun doInBackground(vararg params: String) { // 소켓 연결
+            val storeId= "s0000"
+            val userName = params[0]
+            val userPhone = params[1]
+            val numOfGroup = params[2]
+            try {
+                clientSocket = Socket(ip, port)
+                writer = PrintWriter(clientSocket!!.getOutputStream(), true)
+                reader = BufferedReader(InputStreamReader(clientSocket!!.getInputStream(), "UTF-8"))
+                writer!!.println("INSQUE;NONMEM;$storeId;$userName;$userPhone;$numOfGroup")
+            } catch (ioe: IOException) {
+                ioe.printStackTrace()
+            } finally {
+                writer.close()
+                reader.close()
+                clientSocket.close()
+            }
+
+        }
+
+        override fun onPostExecute(result: Unit?) {
+            super.onPostExecute(result)
+        }
+
+    }
 }
 
 

@@ -57,7 +57,7 @@ class StoreWaitingList : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-//        storeWaitingListAsyncTask(this).execute()
+        storeWaitingListAsyncTask().execute()
     }
 
 
@@ -100,7 +100,8 @@ class StoreWaitingList : AppCompatActivity() {
                     Log.d("인원", addWaitingPerson.text.toString())
                     Log.d("전화번호", addWaitingPhonenum.text.toString())
                     //db에 addClient()
-                    addCustomerTask().execute()
+                    //TODO asynctask 실행하기
+//                    addCustomerTask().execute()
                     dismiss()
                     Toasty.success(view.context, "추가되었습니다", Toast.LENGTH_SHORT, true).show()
                     setRecyclerView()
@@ -115,16 +116,10 @@ class StoreWaitingList : AppCompatActivity() {
 
     // RecyclerView와 Adapter 연결
     private fun setRecyclerView() {
-        // 나중에 디자인부분 DividerItemDecoration.java 참고
-        // http://helloandroidexample.blogspot.com/2015/07/swipe-recyclerview-using.html
 
         val mRecyclerView = findViewById<View>(R.id.myRecyclerView) as RecyclerView
-        // Layout Managers:
         mRecyclerView!!.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        // Item Decorator:
-        // mRecyclerView!!.addItemDecoration(DividerItemDecoration(resources.getDrawable(R.drawable.divider)))
-        // mRecyclerView.setItemAnimator(new FadeInLeftAnimator());
 
         val pref = this.getSharedPreferences("myPref", Context.MODE_PRIVATE)
 
@@ -145,11 +140,7 @@ class StoreWaitingList : AppCompatActivity() {
             clicked[a.phone] = false
         }
 
-
-        // Creating Adapter object
         mAdapter = SwipeRecyclerViewAdapter(clientList!!, called, clicked, pref, baseContext)
-
-        //Single or Multiple
         mAdapter.mode = Attributes.Mode.Single
 
 //        mAdapter.itemClickListener = object : SwipeRecyclerViewAdapter.onItemClickListener {
@@ -186,12 +177,10 @@ class StoreWaitingList : AppCompatActivity() {
                 ClientData(id_tmp, phone_tmp, name_tmp, people_num_tmp, is_member_tmp)
             clientList?.add(data_tmp)
         }
-
     }
 
 
-    class storeWaitingListAsyncTask(context: StoreWaitingList) :
-        AsyncTask<Unit, Unit, QueueListSerializable>() {
+    class storeWaitingListAsyncTask : AsyncTask<Unit, Unit, QueueListSerializable>() {
 
         private var clientSocket: Socket? = null
         private var reader: BufferedReader? = null // 서버 < 앱
@@ -203,19 +192,18 @@ class StoreWaitingList : AppCompatActivity() {
         override fun doInBackground(vararg params: Unit?): QueueListSerializable { // 소켓 연결
 
             try {
-                clientSocket = Socket(ip, port)
-                Log.i("로그", "storeWaitingListAsyncTask:: ok")
-                writer = PrintWriter(clientSocket!!.getOutputStream(), true)
-                writer!!.println("STRQUE;s1111")
+//                clientSocket = Socket(ip, port)
+//                Log.i("로그", "storeWaitingListAsyncTask:: ok")
+//                writer = PrintWriter(clientSocket!!.getOutputStream(), true)
+//                writer!!.println("STRQUE;s1111")
 
+//                val ois = ObjectInputStream(clientSocket!!.getInputStream()) //객체 받는 스트림
+                // ois 주소값?을 출력하는 것까지는 됨. 근데 이 밑부터 안됨.
+//                qls = ois.readObject() as QueueListSerializable
+//                Log.i("로그", "qls객체 잘 받아왔나" + qls!!.autonum.toString())
+//                Log.i("로그", "qls객체 잘 받아왔나" + qls!!.qivo.toString())
+//                Log.i("로그", "qls객체 잘 받아왔나" + qls!!.toString())
 
-                val ois = ObjectInputStream(clientSocket!!.getInputStream()) //객체 받는 스트림
-
-                // ois 왜 못받아오지...
-                qls = ois.readObject() as QueueListSerializable
-                Log.i("로그", "qls객체 잘 받아왔나" + qls!!.autonum.toString())
-                Log.i("로그", "qls객체 잘 받아왔나" + qls!!.qivo.toString())
-                Log.i("로그", "qls객체 잘 받아왔나" + qls!!.toString())
 
                 // 임시 객체
                 var qiv = QueueInfoVo()
@@ -225,31 +213,30 @@ class StoreWaitingList : AppCompatActivity() {
                 qiv.peopleNum = 22
                 qiv.turn = 4
 
-                var list = MutableList<QueueInfoVo>(1, { qiv })
+                var list = MutableList(1, { qiv })
 
                 // 임시 객체
                 qls = QueueListSerializable()
                 qls!!.autonum = 10
                 qls!!.qivo = list
 
-
-                if (ois != null) {
-                    try {
-                        ois!!.close()
-                    } catch (e: IOException) {
-                        e.printStackTrace()
-                    }
-                }
-                if (writer != null) {
-                    writer!!.close()
-                }
-                if (clientSocket != null) {
-                    try {
-                        clientSocket!!.close()
-                    } catch (e: IOException) {
-                        e.printStackTrace()
-                    }
-                }
+//                if (ois != null) {
+//                    try {
+//                        ois!!.close()
+//                    } catch (e: IOException) {
+//                        e.printStackTrace()
+//                    }
+//                }
+//                if (writer != null) {
+//                    writer!!.close()
+//                }
+//                if (clientSocket != null) {
+//                    try {
+//                        clientSocket!!.close()
+//                    } catch (e: IOException) {
+//                        e.printStackTrace()
+//                    }
+//                }
             } catch (e: Exception) {
                 println(e)
             }
@@ -265,71 +252,69 @@ class StoreWaitingList : AppCompatActivity() {
     }
 
 
-}
+    class addCustomerTask : AsyncTask<Unit, Unit, Unit>() {
 
-class addCustomerTask : AsyncTask<Unit, Unit, Unit>() {
+        private var clientSocket: Socket? = null
+        private var reader: BufferedReader? = null // 서버 < 앱
+        private var writer: PrintWriter? = null // 앱 > 서버
 
-    private var clientSocket: Socket? = null
-    private var reader: BufferedReader? = null // 서버 < 앱
-    private var writer: PrintWriter? = null // 앱 > 서버
+        private val port = 3000// port num
+        private val ip: String = "192.168.1.166"// 서버 ip적기
 
-    private val port = 3000// port num
-    private val ip: String = "192.168.1.166"// 서버 ip적기
+        var StoreMenuArray: Array<String>? = null
 
-    var StoreMenuArray: Array<String>? = null
-
-    override fun doInBackground(vararg params: Unit) { // 소켓 연결
-        try {
-            clientSocket = Socket(ip, port)
-            Log.i("로그", "addCustomerTask:: ok")
-            writer = PrintWriter(clientSocket!!.getOutputStream(), true)
-            reader = BufferedReader(
-                InputStreamReader(
-                    clientSocket!!.getInputStream(),
-                    StandardCharsets.UTF_8
+        override fun doInBackground(vararg params: Unit) { // 소켓 연결
+            try {
+                clientSocket = Socket(ip, port)
+                Log.i("로그", "addCustomerTask:: ok")
+                writer = PrintWriter(clientSocket!!.getOutputStream(), true)
+                reader = BufferedReader(
+                    InputStreamReader(
+                        clientSocket!!.getInputStream(),
+                        StandardCharsets.UTF_8
+                    )
                 )
-            )
 
-            //TODO INSQUE;NONMEM;가게id;이름;전화번호;대기인원
-            writer!!.println("INSQUE;NONMEM;s0000;chocho;12345678;3")
-            Log.i("로그: 대기 추가 서버로 보냄", "INSQUE;NONMEM;s0000;chocho;12345678;3")
-            val addCustomerResponse: String = reader!!.readLine()
-            Log.i("로그: add서버응답", addCustomerResponse)
-            //서버>앱: 서버 > 앱: INSQUE;NONMEM;대기열 몇번째인지(turn)
+                //TODO INSQUE;NONMEM;가게id;이름;전화번호;대기인원
+                writer!!.println("INSQUE;NONMEM;s0000;chocho;12345678;3")
+                Log.i("로그: 대기 추가 서버로 보냄", "INSQUE;NONMEM;s0000;chocho;12345678;3")
+                val addCustomerResponse: String = reader!!.readLine()
+                Log.i("로그: add서버응답", addCustomerResponse)
+                //서버>앱: 서버 > 앱: INSQUE;NONMEM;대기열 몇번째인지(turn)
 //                StoreMenuArray = storeMenuResponse.split(";").toTypedArray()
 
 
-            if (reader != null) {
-                try {
-                    reader!!.close()
-                } catch (e: IOException) {
-                    e.printStackTrace()
+                if (reader != null) {
+                    try {
+                        reader!!.close()
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    }
                 }
-            }
-            if (writer != null) {
-                writer!!.close()
-            }
-            if (clientSocket != null) {
-                try {
-                    clientSocket!!.close()
-                } catch (e: IOException) {
-                    e.printStackTrace()
+                if (writer != null) {
+                    writer!!.close()
                 }
+                if (clientSocket != null) {
+                    try {
+                        clientSocket!!.close()
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    }
+                }
+            } catch (e: IOException) {
+                e.printStackTrace()
             }
-        } catch (e: IOException) {
-            e.printStackTrace()
+
+        }
+
+        override fun onPostExecute(result: Unit) {
+            try {
+                super.onPostExecute(result)
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
         }
 
     }
-
-    override fun onPostExecute(result: Unit) { // UI에 보이기
-        try {
-            super.onPostExecute(result)
-
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-    }
-
 }
 

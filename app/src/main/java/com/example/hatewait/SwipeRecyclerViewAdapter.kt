@@ -233,7 +233,7 @@ class SwipeRecyclerViewAdapter(
 
 }
 
-class delCustomerTask() : AsyncTask<Unit, Unit, Unit>() {
+class delCustomerTask : AsyncTask<Unit, Unit, Unit>() {
 
     private var clientSocket: Socket? = null
     private var reader: BufferedReader? = null // 서버 < 앱
@@ -242,7 +242,6 @@ class delCustomerTask() : AsyncTask<Unit, Unit, Unit>() {
     private val port = 3000// port num
     private val ip: String = "192.168.1.166"// 서버 ip적기
 
-    var StoreMenuArray: Array<String>? = null
 
     override fun doInBackground(vararg params: Unit) { // 소켓 연결
         try {
@@ -260,8 +259,6 @@ class delCustomerTask() : AsyncTask<Unit, Unit, Unit>() {
             Log.i("로그: 대기 삭제 서버로 보냄", "DELQUE;가게 id;손님(회원) id")
             val addCustomerResponse: String = reader!!.readLine()
             Log.i("로그: del서버응답", addCustomerResponse)
-            //서버>앱: 서버 > 앱: INSQUE;NONMEM;대기열 몇번째인지(turn)
-//                StoreMenuArray = storeMenuResponse.split(";").toTypedArray()
 
 
             if (reader != null) {

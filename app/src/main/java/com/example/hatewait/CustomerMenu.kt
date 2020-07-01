@@ -87,6 +87,7 @@ class CustomerMenu : AppCompatActivity() {
                 questionDialog.dismissWithAnimation()
             }
             noButton.setOnClickListener {
+                delCustomerTask().execute()
                 questionDialog.dismissWithAnimation()
             }
         }

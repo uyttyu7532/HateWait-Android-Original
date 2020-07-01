@@ -10,8 +10,6 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.google.firebase.iid.FirebaseInstanceId
-import com.google.firebase.messaging.FirebaseMessaging
-import kotlinx.android.synthetic.main.activity_name_check_dialog.*
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -41,7 +39,7 @@ class CustomerMenu : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_customer_menu)
 
-        customerMenuAsyncTask(this).execute()
+        CustomerMenuAsyncTask(this).execute()
 
         fcm()
 
@@ -91,7 +89,7 @@ class CustomerMenu : AppCompatActivity() {
 //        FirebaseMessaging.getInstance().subscribeToTopic("자기 폰번호")
     }
 
-    class customerMenuAsyncTask(context: CustomerMenu) : AsyncTask<Unit, Unit, Unit>() {
+    class CustomerMenuAsyncTask(context: CustomerMenu) : AsyncTask<Unit, Unit, Unit>() {
 
         private var clientSocket: Socket? = null
         private var reader: BufferedReader? = null // 서버 < 앱

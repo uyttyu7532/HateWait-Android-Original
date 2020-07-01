@@ -37,6 +37,8 @@ class LoginRegisterViewPagerActivity : AppCompatActivity(), NameCheckDialogFragm
 
     }
     override fun onDialogPositiveClick(dialog: DialogFragment) {
+
+//        여기에서 asynctask 수행 방법?
         startActivity<RegisterCheck>(
             "USER_ID" to user_id_input_editText.toString()
         )

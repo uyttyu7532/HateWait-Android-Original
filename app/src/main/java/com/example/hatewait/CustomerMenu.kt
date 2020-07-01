@@ -17,6 +17,7 @@ import java.io.IOException
 import java.io.InputStreamReader
 import java.io.PrintWriter
 import java.net.Socket
+import java.nio.charset.StandardCharsets
 
 // 앱;서버: MAIN;MEMBER;손님(회원) id
 // 서버;앱: MAIN;MEMBER;이름;대기중인 가게이름;내순서
@@ -118,7 +119,7 @@ class CustomerMenu : AppCompatActivity() {
         private var writer: PrintWriter? = null // 앱 > 서버
 
         private val port = 3000 // port num
-        private val ip: String = "192.168.35.203"// 서버 ip적기
+        private val ip: String = "192.168.1.166"// 서버 ip적기
 
         var CustomerMenuArray: Array<String>? = null
 
@@ -130,12 +131,12 @@ class CustomerMenu : AppCompatActivity() {
                 reader = BufferedReader(
                     InputStreamReader(
                         clientSocket!!.getInputStream(),
-                        "EUC_KR"
+                        StandardCharsets.UTF_8
                     )
                 )
-                writer!!.println("MAIN;MEMBER;${customerId}")
+                writer!!.println("MAIN;MEMBER;m0000")
                 val storeMenuResponse: String = reader!!.readLine()
-                Log.i("로그", "서버응답" + storeMenuResponse)
+                Log.i("로그", "서버응답: " + storeMenuResponse)
                 CustomerMenuArray = storeMenuResponse.split(";").toTypedArray()
                 Log.i("로그", "CustomerMenu > Server::" + CustomerMenuArray.toString())
                 if (reader != null) {

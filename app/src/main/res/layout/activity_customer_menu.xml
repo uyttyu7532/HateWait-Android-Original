@@ -91,14 +91,14 @@
                         android:id="@+id/customerWaitingNum"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="5팀"
+                        android:text="5"
                         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
                 <TextView
                         android:id="@+id/waitingNumText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=" 전 순서입니다."
+                        android:text="번째 전 순서입니다."
                         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
             </LinearLayout>
 

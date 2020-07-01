@@ -14,6 +14,7 @@ import java.io.IOException
 import java.io.InputStreamReader
 import java.io.PrintWriter
 import java.net.Socket
+import java.nio.charset.StandardCharsets
 
 //lateinit var storeName: String
 //lateinit var waitingNum: String
@@ -45,7 +46,7 @@ class StoreMenu : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-//        storeMenuAsyncTask(this).execute()
+        storeMenuAsyncTask(this).execute()
     }
 
     fun init() {
@@ -72,7 +73,7 @@ class StoreMenu : AppCompatActivity() {
         private var writer: PrintWriter? = null // 앱 > 서버
 
         private val port = 3000// port num
-        private val ip: String = "192.168.35.203"// 서버 ip적기
+        private val ip: String = "192.168.1.166"// 서버 ip적기
         val storeId = "s1111"
 
         var StoreMenuArray: Array<String>? = null
@@ -85,10 +86,11 @@ class StoreMenu : AppCompatActivity() {
                 reader = BufferedReader(
                     InputStreamReader(
                         clientSocket!!.getInputStream(),
-                        "EUC_KR"
+                        StandardCharsets.UTF_8
                     )
                 )
-                writer!!.println("MAIN;STORE;storeId")
+                writer!!.println("MAIN;STORE;s0000")
+//                writer!!.println("PUSHMSG;enu")
                 Log.i("로그:서버에게 정보 달라고 보냄", storeId)
                 val storeMenuResponse: String = reader!!.readLine()
                 Log.i("로그:서버응답", storeMenuResponse)

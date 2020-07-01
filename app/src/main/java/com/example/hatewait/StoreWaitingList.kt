@@ -16,6 +16,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.daimajia.swipe.util.Attributes
+import com.example.hatewait.serialize.QueueInfoVo
 import com.example.hatewait.serialize.QueueListSerializable
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.messaging.FirebaseMessaging
@@ -23,12 +24,11 @@ import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_store_waiting_list.*
 import java.io.*
 import java.net.Socket
+import java.nio.charset.StandardCharsets
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
-
-var qls: QueueListSerializable? = null
 
 class StoreWaitingList : AppCompatActivity() {
 
@@ -57,7 +57,7 @@ class StoreWaitingList : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        storeWaitingListAsyncTask(this).execute()
+//        storeWaitingListAsyncTask(this).execute()
     }
 
 
@@ -100,6 +100,7 @@ class StoreWaitingList : AppCompatActivity() {
                     Log.d("인원", addWaitingPerson.text.toString())
                     Log.d("전화번호", addWaitingPhonenum.text.toString())
                     //db에 addClient()
+                    addCustomerTask().execute()
                     dismiss()
                     Toasty.success(view.context, "추가되었습니다", Toast.LENGTH_SHORT, true).show()
                     setRecyclerView()
@@ -167,25 +168,6 @@ class StoreWaitingList : AppCompatActivity() {
 //        }
         mRecyclerView.adapter = mAdapter
 
-        /* Scroll Listeners */
-//        mRecyclerView!!.addOnScrollListener(object :
-//            RecyclerView.OnScrollListener() {
-//            override fun onScrollStateChanged(
-//                recyclerView: RecyclerView,
-//                newState: Int
-//            ) {
-//                super.onScrollStateChanged(recyclerView, newState)
-//                Log.e("RecyclerView", "onScrollStateChanged")
-//            }
-//
-//            override fun onScrolled(
-//                recyclerView: RecyclerView,
-//                dx: Int,
-//                dy: Int
-//            ) {
-//                super.onScrolled(recyclerView, dx, dy)
-//            }
-//        })
     }
 
     // 나중에 db에서 불러오기
@@ -209,77 +191,145 @@ class StoreWaitingList : AppCompatActivity() {
 
 
     class storeWaitingListAsyncTask(context: StoreWaitingList) :
-        AsyncTask<Unit, Unit, QueueListSerializable?>() {
+        AsyncTask<Unit, Unit, QueueListSerializable>() {
 
         private var clientSocket: Socket? = null
         private var reader: BufferedReader? = null // 서버 < 앱
         private var writer: PrintWriter? = null // 앱 > 서버
         private val port = 3000// port num
-        private val ip: String = "192.168.35.203"// 서버 ip적기
+        private val ip: String = "192.168.1.166"// 서버 ip적기
+        var qls: QueueListSerializable? = null
 
-        override fun doInBackground(vararg params: Unit?): QueueListSerializable? { // 소켓 연결
+        override fun doInBackground(vararg params: Unit?): QueueListSerializable { // 소켓 연결
+
             try {
                 clientSocket = Socket(ip, port)
                 Log.i("로그", "storeWaitingListAsyncTask:: ok")
                 writer = PrintWriter(clientSocket!!.getOutputStream(), true)
                 writer!!.println("STRQUE;s1111")
-//            val out = clientSocket!!.getOutputStream()
-//            val pw = PrintWriter(OutputStreamWriter(out))
-//            var line: String? = "STRQUE;s1111" //단순 명령어입력.. 보내실 땐 그냥 프로토콜에 있는 대로 문자열로 보내시면 됩니당
-//            pw.println(line)
-//            pw.flush()
 
 
                 val ois = ObjectInputStream(clientSocket!!.getInputStream()) //객체 받는 스트림
 
-                //객체 받는 파트(QueueListSerializable 객체로 받아와요! 객체 코드 참조!
+                // ois 왜 못받아오지...
                 qls = ois.readObject() as QueueListSerializable
+                Log.i("로그", "qls객체 잘 받아왔나" + qls!!.autonum.toString())
+                Log.i("로그", "qls객체 잘 받아왔나" + qls!!.qivo.toString())
+                Log.i("로그", "qls객체 잘 받아왔나" + qls!!.toString())
 
-                //이건 그냥 잘 받아왔는지 출력하는 코드.
-                Log.i("로그", "객체 잘 받아왔나" + qls.toString())
-//          }
-                writer!!.close()
-                ois.close()
-                clientSocket!!.close()
+                // 임시 객체
+                var qiv = QueueInfoVo()
+                qiv.id = "s1234"
+                qiv.phone = 1093097866
+                qiv.name = "choyerin"
+                qiv.peopleNum = 22
+                qiv.turn = 4
 
+                var list = MutableList<QueueInfoVo>(1, { qiv })
+
+                // 임시 객체
+                qls = QueueListSerializable()
+                qls!!.autonum = 10
+                qls!!.qivo = list
+
+
+                if (ois != null) {
+                    try {
+                        ois!!.close()
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    }
+                }
+                if (writer != null) {
+                    writer!!.close()
+                }
+                if (clientSocket != null) {
+                    try {
+                        clientSocket!!.close()
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    }
+                }
             } catch (e: Exception) {
                 println(e)
             }
 
-            return qls
-
-
-//        try {
-//            val sock = Socket("192.168.35.203", 3000)
-//            val keyboard = BufferedReader(InputStreamReader(System.`in`))
-//            val out = sock.getOutputStream()
-//            val ois = ObjectInputStream(sock.getInputStream()) //객체 받는 스트림
-//            val pw = PrintWriter(OutputStreamWriter(out))
-//            var line: String? = null //단순 명령어입력.. 보내실 땐 그냥 프로토콜에 있는 대로 문자열로 보내시면 됩니당
-//            while (keyboard.readLine().also { line = it } != null) {
-//                //명령어 보내는 파트(필요없음)
-//                pw.println(line)
-//                pw.flush()
-//
-//                //객체 받는 파트(QueueListSerializable 객체로 받아와요! 객체 코드 참조!
-//                val qls = ois.readObject() as QueueListSerializable
-//
-//                //이건 그냥 잘 받아왔는지 출력하는 코드.
-//                println("서버한테서 받은거::::: $qls")
-//            }
-//            pw.close()
-//            ois.close()
-//            sock.close()
-//        } catch (e: Exception) {
-//            println(e)
-//        }
-//        return qls
+            return qls!!
         }
 
-        override fun onPostExecute(result: QueueListSerializable?) { // UI에 보이기
+        override fun onPostExecute(result: QueueListSerializable) { // UI에 보이기
             super.onPostExecute(result)
             Log.i("로그", "storeWaitingListAsyncTask - onPostExecute :: ok")
-            Log.i("로그", "result :: ${result}")
+            Log.i("로그", "result ::" + result.toString())
         }
     }
+
+
 }
+
+class addCustomerTask : AsyncTask<Unit, Unit, Unit>() {
+
+    private var clientSocket: Socket? = null
+    private var reader: BufferedReader? = null // 서버 < 앱
+    private var writer: PrintWriter? = null // 앱 > 서버
+
+    private val port = 3000// port num
+    private val ip: String = "192.168.1.166"// 서버 ip적기
+
+    var StoreMenuArray: Array<String>? = null
+
+    override fun doInBackground(vararg params: Unit) { // 소켓 연결
+        try {
+            clientSocket = Socket(ip, port)
+            Log.i("로그", "addCustomerTask:: ok")
+            writer = PrintWriter(clientSocket!!.getOutputStream(), true)
+            reader = BufferedReader(
+                InputStreamReader(
+                    clientSocket!!.getInputStream(),
+                    StandardCharsets.UTF_8
+                )
+            )
+
+            //TODO INSQUE;NONMEM;가게id;이름;전화번호;대기인원
+            writer!!.println("INSQUE;NONMEM;s0000;chocho;12345678;3")
+            Log.i("로그: 대기 추가 서버로 보냄", "INSQUE;NONMEM;s0000;chocho;12345678;3")
+            val addCustomerResponse: String = reader!!.readLine()
+            Log.i("로그: add서버응답", addCustomerResponse)
+            //서버>앱: 서버 > 앱: INSQUE;NONMEM;대기열 몇번째인지(turn)
+//                StoreMenuArray = storeMenuResponse.split(";").toTypedArray()
+
+
+            if (reader != null) {
+                try {
+                    reader!!.close()
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+            }
+            if (writer != null) {
+                writer!!.close()
+            }
+            if (clientSocket != null) {
+                try {
+                    clientSocket!!.close()
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+
+    }
+
+    override fun onPostExecute(result: Unit) { // UI에 보이기
+        try {
+            super.onPostExecute(result)
+
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+    }
+
+}
+

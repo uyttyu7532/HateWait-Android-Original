@@ -17,16 +17,25 @@ import kotlinx.android.synthetic.main.row.view.*
 import org.jetbrains.anko.backgroundColorResource
 import java.util.*
 import android.content.Context
+import android.os.AsyncTask
 import android.util.Log
 import com.example.hatewait.fcm.FcmPush
+import java.io.BufferedReader
+import java.io.IOException
+import java.io.InputStreamReader
+import java.io.PrintWriter
+import java.net.Socket
+import java.nio.charset.StandardCharsets
 import kotlin.collections.ArrayList
 
 
-class SwipeRecyclerViewAdapter(val items: ArrayList<ClientData>,
-                               val called:HashMap<String,Boolean>,
-                               val clicked:HashMap<String,Boolean>,
-                               val pref:SharedPreferences,
-                               val context:Context) :
+class SwipeRecyclerViewAdapter(
+    val items: ArrayList<ClientData>,
+    val called: HashMap<String, Boolean>,
+    val clicked: HashMap<String, Boolean>,
+    val pref: SharedPreferences,
+    val context: Context
+) :
     RecyclerSwipeAdapter<SwipeRecyclerViewAdapter.SimpleViewHolder>() {
 
     interface onItemClickListener {
@@ -75,28 +84,32 @@ class SwipeRecyclerViewAdapter(val items: ArrayList<ClientData>,
 
             callBtn.setOnClickListener { v ->
                 val position = adapterPosition
-                if (called.containsKey(items[position].phone) && called[items[position].phone] !!) {
-                    setShared(pref,items[position].phone,false)
+                if (called.containsKey(items[position].phone) && called[items[position].phone]!!) {
+                    setShared(pref, items[position].phone, false)
                     called[items[position].phone] = false
                     this.bottom_wrapper_left.backgroundColorResource = R.color.white
-                    Toasty.error(itemView.context, items[position].phone, Toast.LENGTH_SHORT, true).show()
-                }
-                else{
-                    setShared(pref,items[position].phone,true)
+                    Toasty.error(itemView.context, items[position].phone, Toast.LENGTH_SHORT, true)
+                        .show()
+                } else {
+                    setShared(pref, items[position].phone, true)
                     called[items[position].phone] = true
                     this.bottom_wrapper_left.backgroundColorResource = R.color.colorCall
-                    Toasty.warning(itemView.context, items[position].phone, Toast.LENGTH_SHORT, true).show()
+                    Toasty.warning(
+                        itemView.context,
+                        items[position].phone,
+                        Toast.LENGTH_SHORT,
+                        true
+                    ).show()
 
 
                     //푸시를 받을 유저의 UID가 담긴 destinationUid 값을 넣어준후 fcmPush클래스의 sendMessage 메소드 호출
                     val fcmPush = FcmPush()
-                    var message = "상태바 알림 테스트"
                     fcmPush?.sendMessage(context)
                     //fcmPush?.sendMessage("fiARZ0G9lxs:APA91bENjxB-zasfoMSaD3cfUl-d5wWFS9E50NcuSv6c91WWDXxLJl5-SV_tDEu8aHP3AgR_gTPmQVhW_k6yW73wxd2aVK_bn2n1h-8e-27qp7OiN-qcIKOkJZk94Hwuvqfs_KaKZSRj", "알림 메세지 입니다.", message)
 
                     // 서버쪽에서 문자메시지 보내기
-
-                    }
+                    callCustomerMenuAsyncTask().execute()
+                }
             }
 
 //            clientView.setOnClickListener { v ->
@@ -185,15 +198,17 @@ class SwipeRecyclerViewAdapter(val items: ArrayList<ClientData>,
 
         // db목록에서 대기손님지우기?
         viewHolder.delBtn.setOnClickListener { view ->
+            delCustomerTask().execute()
             mItemManger.removeShownLayouts(viewHolder.swipeLayout)
             items.removeAt(position)
             notifyItemRemoved(position)
             notifyItemRangeChanged(position, items.size)
             mItemManger.closeAllItems()
+
             Toasty.error(view.context, "삭제되었습니다", Toast.LENGTH_SHORT, true).show()
         }
 
-        if (called.containsKey(items[position].phone) && called[items[position].phone]!! ) {
+        if (called.containsKey(items[position].phone) && called[items[position].phone]!!) {
             viewHolder.bottom_wrapper_left.backgroundColorResource = R.color.colorCall
         } else {
             viewHolder.bottom_wrapper_left.backgroundColorResource = R.color.white
@@ -206,8 +221,6 @@ class SwipeRecyclerViewAdapter(val items: ArrayList<ClientData>,
 //        }
 
 
-
-
         // mItemManger is member in RecyclerSwipeAdapter Class
         mItemManger.bindView(viewHolder.itemView, position)
     }
@@ -217,5 +230,132 @@ class SwipeRecyclerViewAdapter(val items: ArrayList<ClientData>,
         return R.id.swipeLayout
     }
 
+
+}
+
+class delCustomerTask() : AsyncTask<Unit, Unit, Unit>() {
+
+    private var clientSocket: Socket? = null
+    private var reader: BufferedReader? = null // 서버 < 앱
+    private var writer: PrintWriter? = null // 앱 > 서버
+
+    private val port = 3000// port num
+    private val ip: String = "192.168.1.166"// 서버 ip적기
+
+    var StoreMenuArray: Array<String>? = null
+
+    override fun doInBackground(vararg params: Unit) { // 소켓 연결
+        try {
+            clientSocket = Socket(ip, port)
+            Log.i("로그", "delCustomerTask:: ok")
+            writer = PrintWriter(clientSocket!!.getOutputStream(), true)
+            reader = BufferedReader(
+                InputStreamReader(
+                    clientSocket!!.getInputStream(),
+                    StandardCharsets.UTF_8
+                )
+            )
+            // TODO 삭제할 명단 :::: DELQUE;가게 id;손님id
+            writer!!.println("DELQUE;s0000;n0000")
+            Log.i("로그: 대기 삭제 서버로 보냄", "DELQUE;가게 id;손님(회원) id")
+            val addCustomerResponse: String = reader!!.readLine()
+            Log.i("로그: del서버응답", addCustomerResponse)
+            //서버>앱: 서버 > 앱: INSQUE;NONMEM;대기열 몇번째인지(turn)
+//                StoreMenuArray = storeMenuResponse.split(";").toTypedArray()
+
+
+            if (reader != null) {
+                try {
+                    reader!!.close()
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+            }
+            if (writer != null) {
+                writer!!.close()
+            }
+            if (clientSocket != null) {
+                try {
+                    clientSocket!!.close()
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+
+    }
+
+    override fun onPostExecute(result: Unit) { // UI에 보이기
+        try {
+            super.onPostExecute(result)
+
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+    }
+
+}
+
+
+class callCustomerMenuAsyncTask() : AsyncTask<Unit, Unit, Unit>() {
+
+    private var clientSocket: Socket? = null
+    private var reader: BufferedReader? = null // 서버 < 앱
+    private var writer: PrintWriter? = null // 앱 > 서버
+
+    private val port = 3000// port num
+    private val ip: String = "192.168.1.166"// 서버 ip적기
+    val storeId = "s1111"
+
+
+    override fun doInBackground(vararg params: Unit) { // 소켓 연결
+        try {
+            clientSocket = Socket(ip, port)
+            Log.i("로그", "storeMenuAsyncTask:: ok")
+            writer = PrintWriter(clientSocket!!.getOutputStream(), true)
+            reader = BufferedReader(
+                InputStreamReader(
+                    clientSocket!!.getInputStream(),
+                    StandardCharsets.UTF_8
+                )
+            )
+
+            // TODO 문자를 받을 손님id
+            // writer!!.println("PUSHMSG;enu")
+            Log.i("로그:서버에게 정보 달라고 보냄", storeId)
+            val storeMenuResponse: String = reader!!.readLine()
+            Log.i("로그:서버응답", storeMenuResponse)
+            //서버>앱: MAIN;STORE;storeName;waitingNum;nextName;nextNum
+            if (reader != null) {
+                try {
+                    reader!!.close()
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+            }
+            if (writer != null) {
+                writer!!.close()
+            }
+            if (clientSocket != null) {
+                try {
+                    clientSocket!!.close()
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+    }
+
+    override fun onPostExecute(result: Unit) { // UI에 보이기
+        try {
+            super.onPostExecute(result)
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+    }
 
 }

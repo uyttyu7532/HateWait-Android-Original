@@ -16,18 +16,12 @@ import java.io.PrintWriter
 import java.net.Socket
 import java.nio.charset.StandardCharsets
 
-//lateinit var storeName: String
-//lateinit var waitingNum: String
-//lateinit var nextName :String
-//lateinit var nextNum :String
 
 lateinit var storeNameView: TextView
 lateinit var storeWaitingNum: TextView
 lateinit var storeMarquee: TextView
 
-
 class StoreMenu : AppCompatActivity() {
-
 
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,19 +33,16 @@ class StoreMenu : AppCompatActivity() {
         storeWaitingNum = findViewById(R.id.store_waiting_num) as TextView
         storeMarquee = findViewById(R.id.store_marquee) as TextView
 
-
-        init()
+        initView()
 
     }
 
     override fun onResume() {
         super.onResume()
-        storeMenuAsyncTask(this).execute()
+        storeMenuAsyncTask().execute()
     }
 
-    fun init() {
-
-
+    fun initView() {
         tabletBtn.setOnClickListener {
             startActivity<LoginRegisterViewPagerActivity>()
         }
@@ -63,18 +54,15 @@ class StoreMenu : AppCompatActivity() {
         store_info_update_button2.setOnClickListener {
             startActivity<StoreInfoUpdate>()
         }
-
     }
 
-    class storeMenuAsyncTask(context: StoreMenu) : AsyncTask<Unit, Unit, Array<String>?>() {
+    class storeMenuAsyncTask : AsyncTask<Unit, Unit, Array<String>?>() {
 
         private var clientSocket: Socket? = null
         private var reader: BufferedReader? = null // 서버 < 앱
         private var writer: PrintWriter? = null // 앱 > 서버
 
         private val port = 3000// port num
-        private val ip: String = "192.168.1.166"// 서버 ip적기
-        val storeId = "s1111"
 
         var StoreMenuArray: Array<String>? = null
 
@@ -90,8 +78,7 @@ class StoreMenu : AppCompatActivity() {
                     )
                 )
                 writer!!.println("MAIN;STORE;s0000")
-//                writer!!.println("PUSHMSG;enu")
-                Log.i("로그:서버에게 정보 달라고 보냄", storeId)
+                Log.i("로그:서버에게 정보 달라고 보냄", "MAIN;STORE;s1111")
                 val storeMenuResponse: String = reader!!.readLine()
                 Log.i("로그:서버응답", storeMenuResponse)
                 //서버>앱: MAIN;STORE;storeName;waitingNum;nextName;nextNum
@@ -142,10 +129,7 @@ class StoreMenu : AppCompatActivity() {
                 e.printStackTrace()
             }
         }
-
     }
-
-
 }
 
 

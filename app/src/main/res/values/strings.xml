@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">HateWait</string>
-    <string name="serverIPAddress">192.168.35.203</string>
+    <string name="serverIPAddress">192.168.56.1</string>
     <string name="sockerPortNum">3000</string>
     <string-array name="menu_store">
         <item>신규가게 등록하기</item>

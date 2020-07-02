@@ -14,7 +14,7 @@
             android:roundIcon="@mipmap/ic_launcher"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".CustomRegister2"></activity>
+        <activity android:name=".CustomRegister2"/>
         <activity android:name=".StoreRegister" />
         <activity android:name=".CustomerRegister" />
 
@@ -42,13 +42,12 @@
                 tools:ignore="Instantiatable" />
         <activity android:name=".StoreInfoUpdate" />
         <activity android:name=".CustomerMenu" />
-        <activity android:name=".StoreMenu" />
+        <activity android:name=".StoreMenu"/>
         <activity android:name=".LoginRegisterViewPagerActivity" />
         <activity android:name=".RegisterCheck" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -62,7 +61,6 @@
                 tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

@@ -240,7 +240,7 @@ class delCustomerTask : AsyncTask<Unit, Unit, Unit>() {
     private var writer: PrintWriter? = null // 앱 > 서버
 
     private val port = 3000// port num
-    private val ip: String = "192.168.1.166"// 서버 ip적기
+//    private val ip: String = "192.168.1.166"// 서버 ip적기
 
 
     override fun doInBackground(vararg params: Unit) { // 소켓 연결
@@ -283,28 +283,17 @@ class delCustomerTask : AsyncTask<Unit, Unit, Unit>() {
         }
 
     }
-
-    override fun onPostExecute(result: Unit) { // UI에 보이기
-        try {
-            super.onPostExecute(result)
-
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-    }
-
 }
 
 
-class callCustomerMenuAsyncTask() : AsyncTask<Unit, Unit, Unit>() {
+class callCustomerMenuAsyncTask : AsyncTask<Unit, Unit, Unit>() {
 
     private var clientSocket: Socket? = null
     private var reader: BufferedReader? = null // 서버 < 앱
     private var writer: PrintWriter? = null // 앱 > 서버
 
     private val port = 3000// port num
-    private val ip: String = "192.168.1.166"// 서버 ip적기
-    val storeId = "s1111"
+//    private val ip: String = "192.168.1.166"// 서버 ip적기
 
 
     override fun doInBackground(vararg params: Unit) { // 소켓 연결
@@ -319,9 +308,9 @@ class callCustomerMenuAsyncTask() : AsyncTask<Unit, Unit, Unit>() {
                 )
             )
 
-            // TODO 문자를 받을 손님id
+            // TODO 문자를 받을 손님 id
             // writer!!.println("PUSHMSG;enu")
-            Log.i("로그:서버에게 정보 달라고 보냄", storeId)
+            Log.i("로그:서버에게 정보 달라고 보냄", "PUSHMSG;enu")
             val storeMenuResponse: String = reader!!.readLine()
             Log.i("로그:서버응답", storeMenuResponse)
             //서버>앱: MAIN;STORE;storeName;waitingNum;nextName;nextNum
@@ -346,13 +335,4 @@ class callCustomerMenuAsyncTask() : AsyncTask<Unit, Unit, Unit>() {
             e.printStackTrace()
         }
     }
-
-    override fun onPostExecute(result: Unit) { // UI에 보이기
-        try {
-            super.onPostExecute(result)
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-    }
-
 }

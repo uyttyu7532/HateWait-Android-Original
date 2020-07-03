@@ -118,6 +118,14 @@
     </com.google.android.material.textfield.TextInputLayout>
 
 
+    <CheckBox
+            android:id="@+id/auto_login_checkBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ID/PW 저장"
+            app:layout_constraintStart_toStartOf="@id/button_login"
+            app:layout_constraintTop_toBottomOf="@id/password_input_layout"/>
+
     <Button
         android:id="@+id/button_login"
         android:layout_width="0dp"
@@ -138,7 +146,7 @@
     <ImageButton
             android:id="@+id/naver_login_button"
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:layout_marginTop="30dp"
             android:src="@drawable/naver_login_white_size"
             android:adjustViewBounds="true"

@@ -30,6 +30,9 @@
     </string-array>
 
 
+    <string name="customer_mode">CUSTOMER_USER_INFO</string>
+    <string name="store_mode">STORE_USER_INFO</string>
+
     <string-array name="naver_login_api">
         <item>82cffPlMCADZx2gteyWB</item>
         <item>AuVYTrPqZh</item>

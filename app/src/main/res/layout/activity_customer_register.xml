@@ -98,15 +98,35 @@
                 android:selectAllOnFocus="true"/>
     </com.google.android.material.textfield.TextInputLayout>
 
+    <TextView
+            android:id="@+id/register_progress_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/password_reinput_layout"
+            app:layout_constraintEnd_toEndOf="@id/password_reinput_layout"
+            android:text="1/2"
+            android:textSize="15sp"
+            android:textColor="@color/colorAccent"/>
+    <ProgressBar
+        android:id="@+id/register_progressbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:progress="1"
+            android:max="2"
+        app:layout_constraintStart_toStartOf="@id/password_reinput_layout"
+        app:layout_constraintEnd_toEndOf="@id/password_reinput_layout"
+        app:layout_constraintTop_toBottomOf="@id/register_progress_textView"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
 
     <Button
             android:id="@+id/button_continue"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="15dp"
             app:layout_constraintStart_toStartOf="@id/password_reinput_layout"
             app:layout_constraintEnd_toEndOf="@id/password_reinput_layout"
-            app:layout_constraintTop_toBottomOf="@id/password_reinput_layout"
+            app:layout_constraintTop_toBottomOf="@id/register_progressbar"
             android:enabled="false"
             style="@style/Widget.AppCompat.Button.Colored"
             android:text="계속하기"

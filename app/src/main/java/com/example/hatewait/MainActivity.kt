@@ -1,6 +1,7 @@
 package com.example.hatewait
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.pm.ActivityInfo
 import android.os.AsyncTask
 import android.os.Bundle
@@ -9,10 +10,6 @@ import android.text.TextWatcher
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.tasks.OnSuccessListener
-import com.google.firebase.iid.FirebaseInstanceId
-import com.google.firebase.iid.InstanceIdResult
-import com.google.firebase.messaging.FirebaseMessaging
 import com.nhn.android.naverlogin.OAuthLogin
 import com.nhn.android.naverlogin.OAuthLoginHandler
 import kotlinx.android.synthetic.main.activity_main.*
@@ -39,8 +36,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         init()
-        naver_login_init()
+        naverLoginInit()
         addTextChangeListener()
+
     }
 
     override fun onStop() {
@@ -55,17 +53,57 @@ class MainActivity : AppCompatActivity() {
 
         user_kind_group.setOnPositionChangedListener {
             when (user_kind_group.position) {
-                0 -> isCustomerMode = false
-                1 -> isCustomerMode = true
+                0 -> {
+                    val storeReference = getSharedPreferences(resources.getString(R.string.store_mode), Context.MODE_PRIVATE)
+                    if (storeReference.getBoolean("AUTO_LOGIN", false)) {
+                        id_input_editText.setText(storeReference.getString("STORE_ID", null))
+                        password_input_editText.setText(storeReference.getString("STORE_PASSWORD", null))
+                    }
+                    isCustomerMode = false
+                }
+                1 -> {
+                    val customerReference = getSharedPreferences(resources.getString(R.string.customer_mode), Context.MODE_PRIVATE)
+                    if (customerReference.getBoolean("AUTO_LOGIN", false)) {
+                            id_input_editText.setText(customerReference.getString("CUSTOMER_ID", null))
+                            password_input_editText.setText(customerReference.getString("CUSTOMER_PASSWORD", null))
+                        }
+                    isCustomerMode = true
+                }
                 else -> true
             }
         }
-//        Logic 추가. Customer? Store?
         button_login.setOnClickListener {
 
             if (isCustomerMode) {
+                val sharedReference = getSharedPreferences(resources.getString(R.string.customer_mode), Context.MODE_PRIVATE)
+                val editor = sharedReference.edit()
+                if(auto_login_checkBox.isChecked) {
+                    editor.putString("CUSTOMER_ID", id_input_editText.text.toString())
+                    editor.putString("CUSTOMER_PASSWORD", password_input_editText.text.toString())
+                    editor.putBoolean("AUTO_LOGIN", true)
+                    editor.commit()
+                } else {
+//                    editor.remove("CUSTOMER_ID")
+//                    editor.remove("CUSTOMER_PASSWORD")
+                    editor.putBoolean("AUTO_LOGIN", false)
+                    editor.commit()
+                }
                 startActivity<CustomerMenu>()
+
             } else {
+                val sharedReference = getSharedPreferences(resources.getString(R.string.store_mode), Context.MODE_PRIVATE)
+                val editor = sharedReference.edit()
+                if(auto_login_checkBox.isChecked){
+                    editor.putString("STORE_ID", id_input_editText.text.toString())
+                    editor.putString("STORE_PASSWORD", password_input_editText.text.toString())
+                    editor.putBoolean("AUTO_LOGIN", true)
+                    editor.commit()
+                } else {
+//                    editor.remove("STORE_ID")
+//                    editor.remove("STORE_PASSWORD")
+                    editor.putBoolean("AUTO_LOGIN", false)
+                    editor.commit()
+                }
                 startActivity<StoreMenu>()
             }
         }
@@ -83,7 +121,7 @@ class MainActivity : AppCompatActivity() {
 
     // 네아로(네이버 아이디로 로그인) 기능 이용시 전화번호는 따로 입력받아야한다.
     //     전화번호는 Naver 프로필 API에서 제공해주지 않기때문에
-    private fun naver_login_init() {
+    private fun naverLoginInit() {
 
 
         val loginModule = OAuthLogin.getInstance();

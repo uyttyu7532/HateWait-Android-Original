@@ -1,5 +1,6 @@
 package com.example.hatewait
 
+
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.AsyncTask
@@ -17,11 +18,10 @@ import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.daimajia.swipe.util.Attributes
 import com.example.hatewait.model.newClient
-import com.example.hatewait.serialize.QueueListSerializable
-import com.example.hatewait.serialize.QueueListSerializable2
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.messaging.FirebaseMessaging
 import es.dmoral.toasty.Toasty
+import hatewait.vo.QueueListSerializable
 import kotlinx.android.synthetic.main.activity_store_waiting_list.*
 import java.io.*
 import java.net.Socket
@@ -29,6 +29,7 @@ import java.nio.charset.StandardCharsets
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
+
 
 
 class StoreWaitingList : AppCompatActivity() {
@@ -59,7 +60,12 @@ class StoreWaitingList : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         Log.i("로그","Resume")
-        storeWaitingListAsyncTask().execute()
+        try{
+            storeWaitingListAsyncTask().execute()
+        }catch (e:Exception){
+            Log.i("로그",e.toString())
+        }
+
     }
 
 
@@ -185,15 +191,15 @@ class StoreWaitingList : AppCompatActivity() {
     }
 
 
-    class storeWaitingListAsyncTask : AsyncTask<Unit, Unit, QueueListSerializable2?>() {
+    class storeWaitingListAsyncTask : AsyncTask<Unit, Unit, QueueListSerializable?>() {
 
         private var clientSocket: Socket? = null
         private var reader: BufferedReader? = null // 서버 < 앱
         private var writer: PrintWriter? = null // 앱 > 서버
         private val port = 3000// port num
-        var qls: QueueListSerializable2? = null
+        var qls: QueueListSerializable? = null
 
-        override fun doInBackground(vararg params: Unit?): QueueListSerializable2? { // 소켓 연결
+        override fun doInBackground(vararg params: Unit?): QueueListSerializable? { // 소켓 연결
 
             try {
                 clientSocket = Socket(ip, port)
@@ -203,7 +209,7 @@ class StoreWaitingList : AppCompatActivity() {
 
                 val ois = ObjectInputStream(clientSocket!!.getInputStream()) //객체 받는 스트림
 //                 ois 주소값?을 출력하는 것까지는 됨. 근데 이 밑부터 안됨.
-                qls = ois.readObject() as QueueListSerializable2
+                qls = ois.readObject() as QueueListSerializable
                 if(qls !=null){
                     Log.i("로그", "qls객체 잘 받아왔나" + qls!!.autonum.toString())
                     Log.i("로그", "qls객체 잘 받아왔나" + qls!!.qivo.toString())
@@ -255,7 +261,7 @@ class StoreWaitingList : AppCompatActivity() {
             return qls
         }
 
-        override fun onPostExecute(result: QueueListSerializable2?) { // UI에 보이기
+        override fun onPostExecute(result: QueueListSerializable?) { // UI에 보이기
             super.onPostExecute(result)
             Log.i("로그", "storeWaitingListAsyncTask - onPostExecute :: ok")
             Log.i("로그", "result ::" + result.toString()?:"전달된 리스트가 없습니다.")

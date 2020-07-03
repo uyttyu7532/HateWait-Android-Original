@@ -1,8 +1,8 @@
-package com.example.hatewait.serialize;
+package HateWait.vo;
 
 import java.io.Serializable;
 
-public class QueueInfoVo2 implements Serializable{
+public class QueueInfoVo implements Serializable{
 	String id;
 	int phone;
 	String name;

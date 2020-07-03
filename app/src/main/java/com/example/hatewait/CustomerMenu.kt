@@ -5,6 +5,7 @@ import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -78,7 +79,7 @@ class CustomerMenu : AppCompatActivity() {
 
         customView = layoutInflater.inflate(R.layout.activity_name_check_dialog, null)
         // MyFirebaseMessagingService.kt > sendNotification에서 보내주는 값으로 판단
-        // TODO 로그인 여부 등에 따라 코드 수정 필요
+
         if (intent.hasExtra("Notification")) {
             val questionDialog = SweetAlertDialog(this)
                 .setTitleText("가게에 오실건가요??")
@@ -86,15 +87,8 @@ class CustomerMenu : AppCompatActivity() {
                 .setConfirmText("")
                 .setCustomView(customView)
                 .setCustomImage(R.drawable.yes_button_vector)
-//                .setConfirmClickListener { sDialog ->
-//                    sDialog.dismissWithAnimation()
-//                }
-//                .setCancelButton(
-//                    "안가요"
-//                ) { sDialog ->
-//                    // 대기열에서 삭제
-//                    sDialog.dismissWithAnimation()
-//                }
+//            Confirm_button 자동생성된거 숨겨버리기~
+            questionDialog.findViewById<Button>(R.id.confirm_button).visibility = View.GONE
             questionDialog.show()
 
 //            06월 28일 추가

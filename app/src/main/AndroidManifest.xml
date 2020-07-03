@@ -58,7 +58,8 @@
                 android:name=".Splash"
                 android:screenOrientation="portrait"
                 android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-                tools:ignore="LockedOrientationActivity">
+                tools:ignore="LockedOrientationActivity"
+                android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

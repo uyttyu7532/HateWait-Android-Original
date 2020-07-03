@@ -25,6 +25,7 @@ import kotlinx.android.synthetic.main.activity_store_waiting_list.*
 import java.io.*
 import java.net.Socket
 import java.nio.charset.StandardCharsets
+import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
@@ -58,7 +59,7 @@ class StoreWaitingList : AppCompatActivity() {
 //                })
 
         // 자기 폰번호 subscribe하면 됨!!!
-        FirebaseMessaging.getInstance().subscribeToTopic("weather")
+        FirebaseMessaging.getInstance().subscribeToTopic("01093097866")
 
         init()
     }
@@ -74,10 +75,9 @@ class StoreWaitingList : AppCompatActivity() {
     }
 
     fun init() {
-
-//        readFile()
-//        setRecyclerView()
+        setRecyclerView()
         makeAddDialog()
+        readFile()
 
 
         autoCallSwitch.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
@@ -91,23 +91,22 @@ class StoreWaitingList : AppCompatActivity() {
     }
 
 
-//    // 나중에 db에서 불러오기
-//    // getList()
-//    private fun readFile() {
-//
-//        val scan = Scanner(resources.openRawResource(R.raw.client))
-//        while (scan.hasNextLine()) {
-//            val client = scan.nextLine()
-//            var id_tmp = client.split(",")[0]
-//            var phone_tmp = client.split(",")[1]
-//            var name_tmp = client.split(",")[2]
-//            var people_num_tmp = client.split(",")[3]
-//            var is_member_tmp = client.split(",")[4]
-//            var data_tmp =
-//                ClientData(id_tmp, phone_tmp, name_tmp, people_num_tmp, is_member_tmp)
-//            clientList?.add(data_tmp)
-//        }
-//    }
+    private fun readFile() {
+
+        val scan = Scanner(resources.openRawResource(R.raw.client))
+        while (scan.hasNextLine()) {
+            val client = scan.nextLine()
+            var id_tmp = client.split(",")[0]
+            var phone_tmp = client.split(",")[1]
+            var name_tmp = client.split(",")[2]
+            var people_num_tmp = client.split(",")[3]
+            var is_member_tmp = client.split(",")[4]
+            var data_tmp =
+                ClientData(id_tmp, phone_tmp, name_tmp, people_num_tmp, is_member_tmp)
+            clientList?.add(data_tmp)
+        }
+    }
+
 
 
     class storeWaitingListAsyncTask : AsyncTask<Unit, Unit, QueueListSerializable?>() {
@@ -155,7 +154,6 @@ class StoreWaitingList : AppCompatActivity() {
             Log.i("로그", "storeWaitingListAsyncTask - onPostExecute :: ok")
             Log.i("로그", "result ::" + result.toString() ?: "전달된 리스트가 없습니다.")
 
-            totalWaitingNumView.text = "현재 ${result?.qivo?.size}팀 대기중"
             autoCallSwitchView.text = "${result?.autonum}번째 팀까지 자동호출"
 
             clientList.clear()
@@ -192,9 +190,19 @@ class StoreWaitingList : AppCompatActivity() {
 
                 //TODO INSQUE;NONMEM;가게id;이름;전화번호;대기인원
                 writer!!.println("INSQUE;NONMEM;${STOREID};" + "${params[0].name};${params[0].phoneNum};${params[0].peopleNum}")
-                Log.i("로그: 대기 추가 서버로 보냄", "INSQUE;NONMEM;s1111;choyerin;1093097866;2")
+                Log.i("로그: 대기 추가 서버로 보냄", "INSQUE;NONMEM;${STOREID};" + "${params[0].name};${params[0].phoneNum};${params[0].peopleNum}")
                 val addCustomerResponse: String = reader!!.readLine()
                 Log.i("로그: add서버응답", addCustomerResponse)
+
+                var data_tmp =
+                    ClientData(
+                        "",
+                        params[0].phoneNum,
+                        params[0].name,
+                        params[0].peopleNum,
+                        ""
+                    )
+                clientList?.add(data_tmp)
 
                 if (reader != null) {
                     try {
@@ -270,6 +278,8 @@ class StoreWaitingList : AppCompatActivity() {
 
 // RecyclerView와 Adapter 연결
 fun setRecyclerView() {
+    totalWaitingNumView.text = "현재 ${clientList.size}팀 대기중"
+
     mRecyclerView!!.layoutManager =
         LinearLayoutManager(listContext, LinearLayoutManager.VERTICAL, false)
 

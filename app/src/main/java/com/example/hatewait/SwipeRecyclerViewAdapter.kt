@@ -68,15 +68,14 @@ class SwipeRecyclerViewAdapter(
         val clientNameView = itemView.findViewById(R.id.clientNameView) as TextView
         val clientNumView = itemView.findViewById(R.id.clientNumView) as TextView
         val clientPhoneView = itemView.findViewById(R.id.clientPhoneView) as TextView
-        val detailView1 = itemView.findViewById(R.id.detailView1) as TextView
-        val detailView2 = itemView.findViewById(R.id.detailView2) as TextView
+//        val detailView1 = itemView.findViewById(R.id.detailView1) as TextView
+//        val detailView2 = itemView.findViewById(R.id.detailView2) as TextView
         val delBtn = itemView.findViewById(R.id.delBtn) as ImageButton
         val bottom_wrapper_left = itemView.findViewById(R.id.bottom_wrapper_left) as FrameLayout
         val callBtn = itemView.callBtn
 
 
         init {
-
             callBtn.setOnClickListener { v ->
                 val position = adapterPosition
                 if (called.containsKey(items[position].phone) && called[items[position].phone]!!) {
@@ -254,9 +253,7 @@ class delCustomerTask : AsyncTask<String, Unit, Unit>() {
         } catch (e: IOException) {
             e.printStackTrace()
         }
-
     }
-
 }
 
 

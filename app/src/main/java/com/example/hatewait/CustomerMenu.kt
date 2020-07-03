@@ -87,11 +87,12 @@ class CustomerMenu : AppCompatActivity() {
         // MyFirebaseMessagingService.kt > sendNotification에서 보내주는 값으로 판단
         // TODO 로그인 여부 등에 따라 코드 수정 필요
         if (intent.hasExtra("Notification")) {
-            val questionDialog = SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+            val questionDialog = SweetAlertDialog(this)
                 .setTitleText("가게에 오실건가요??")
                 .setContentText("3번째 순서 전입니다!")
-//                .setConfirmText("갈게요!")
+                .setConfirmText("")
                 .setCustomView(customView)
+                .setCustomImage(R.drawable.yes_button_vector)
 //                .setConfirmClickListener { sDialog ->
 //                    sDialog.dismissWithAnimation()
 //                }

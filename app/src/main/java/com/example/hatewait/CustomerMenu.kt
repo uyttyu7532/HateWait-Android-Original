@@ -23,11 +23,6 @@ import java.nio.charset.StandardCharsets
 // 앱;서버: MAIN;MEMBER;손님(회원) id
 // 서버;앱: MAIN;MEMBER;이름;대기중인 가게이름;내순서
 
-lateinit var customerId: String // 손님 id (app > server)
-lateinit var customerName: String // 손님이름 (server > app)
-lateinit var waitingStoreName: String // 대기중인 가게 이름 (server > app)
-lateinit var waitingMyTurn: String // 현재 대기중인 순서 (server > app)
-
 lateinit var waitingStoreView: TextView
 lateinit var customerWaitingNum: TextView
 lateinit var customerMarquee: TextView
@@ -54,8 +49,6 @@ class CustomerMenu : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_customer_menu)
-
-        customerId = "customerId"
 
         init()
 
@@ -129,61 +122,7 @@ class CustomerMenu : AppCompatActivity() {
 //        FirebaseMessaging.getInstance().subscribeToTopic("${customerPhoneNum}")
 //    }
 
-    class customerMenuAsyncTask : AsyncTask<Unit, Unit, Array<String>?>() {
 
-        var CustomerMenuArray: Array<String>? = null
-
-        override fun doInBackground(vararg params: Unit?):Array<String>? { // 소켓 연결
-            try {
-                clientSocket = Socket(SERVERIP, PORT)
-                Log.i("로그", " customerMenuAsyncTask:: ok")
-                writer = PrintWriter(clientSocket!!.getOutputStream(), true)
-                reader = BufferedReader(
-                    InputStreamReader(
-                        clientSocket!!.getInputStream(),
-                        StandardCharsets.UTF_8
-                    )
-                )
-                writer!!.println("MAIN;MEMBER;m0001")
-                val storeMenuResponse: String = reader!!.readLine()
-                Log.i("로그", "서버응답: " + storeMenuResponse)
-                CustomerMenuArray = storeMenuResponse.split(";").toTypedArray()
-                Log.i("로그", "CustomerMenu > Server::" + CustomerMenuArray.toString())
-                if (reader != null) {
-                    try {
-                        reader!!.close()
-                    } catch (e: IOException) {
-                        e.printStackTrace()
-                    }
-                }
-                if (writer != null) {
-                    writer!!.close()
-                }
-                if (clientSocket != null) {
-                    try {
-                        clientSocket!!.close()
-                    } catch (e: IOException) {
-                        e.printStackTrace()
-                    }
-                }
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
-            return CustomerMenuArray
-        }
-
-        override fun onPostExecute(result: Array<String>?) { // UI에 보이기
-            super.onPostExecute(result)
-            Log.i("로그", " customerMenuAsyncTask-onPostExecute:: ok")
-            //서버>앱: MAIN;MEMBER;customerName;waitingStoreName;waitingMyTurn
-
-            customerNameView.setText(result?.get(2) ?: "손님이름")
-            waitingStoreView.setText(result?.get(3) ?: "대기중인 가게가 없습니다.")
-            customerWaitingNum.setText(result?.get(4)?: "0")
-            customerMarquee.setText("내 차례가 되면 상태바 알림과 문자 알림이 발송됩니다. 취소 버튼을 눌러 대기를 취소할 수 있습니다. ")
-            customerMarquee.setSelected(true) // 마키 텍스트에 포커스
-        }
-    }
 
     override fun onDestroy() {
 //        메모리 누수 방지

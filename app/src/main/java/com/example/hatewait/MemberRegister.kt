@@ -12,6 +12,8 @@ import android.widget.Button
 import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import com.example.hatewait.socket.PORT
+import com.example.hatewait.socket.SERVERIP
 import kotlinx.android.synthetic.main.activity_members_register.*
 import java.io.BufferedReader
 import java.io.IOException
@@ -129,15 +131,13 @@ class MemberRegister : Fragment() {
         private lateinit var reader: BufferedReader
         private lateinit var writer: PrintWriter
 
-        private val port = 3000
-        private val ip = "192.168.1.166"
 
         override fun doInBackground(vararg params: String) { // 소켓 연결
             val storeId= "s0000"
             val userId = params[0]
             val numOfGroup = params[1]
             try {
-                clientSocket = Socket(ip, port)
+                clientSocket = Socket(SERVERIP, PORT)
                 writer = PrintWriter(clientSocket!!.getOutputStream(), true)
                 reader = BufferedReader(InputStreamReader(clientSocket!!.getInputStream(), "UTF-8"))
                 writer!!.println("INSQUE;MEMBER;$storeId;$userId;$numOfGroup")

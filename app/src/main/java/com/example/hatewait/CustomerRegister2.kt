@@ -3,9 +3,14 @@ package com.example.hatewait
 import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.MenuItem
+import androidx.fragment.app.FragmentManager
+import com.example.hatewait.socket.PORT
+import com.example.hatewait.socket.SERVERIP
 import kotlinx.android.synthetic.main.activity_custom_register2.*
 import java.io.BufferedReader
 import java.io.IOException
@@ -13,7 +18,7 @@ import java.io.InputStreamReader
 import java.io.PrintWriter
 import java.net.Socket
 
-class CustomRegister2 : AppCompatActivity() {
+class CustomerRegister2 : AppCompatActivity() {
     //    한글 2~4자 (공백 허용 X) or 영문 First name 2~10, Last name 2~10
     private val nameRegex = Regex("^[가-힣]{2,4}|[a-zA-Z]{2,10}\\s[a-zA-Z]{2,10}$")
     //    3자리 - 3 or 4자리 - 4자리
@@ -26,15 +31,22 @@ class CustomRegister2 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_custom_register2)
+        if(savedInstanceState != null) {
+            with (savedInstanceState) {
+                    Log.i("State", "onCreate Restore Instance")
+                        user_name_input_editText.setText(savedInstanceState.getString("USER_NAME"))
+                        user_phone_number_editText.setText(savedInstanceState.getString("USER_PHONE"))
+                }
 
+        }
         addTextChangeListener()
 
         button_finish.setOnClickListener {
-            val userId = intent.getStringExtra("user_id")
-            val userPassword = intent.getStringExtra("user_password")
+            val userId = intent.getStringExtra("USER_ID")
+            val userPassword = intent.getStringExtra("USER_PASSWORD")
             val userName = user_name_input_editText.text.toString()
             val userPhone = user_phone_number_editText.text.toString()
-            CustomerRegisterAsyncTask(this@CustomRegister2).execute(userId, userPassword, userName, userPhone)
+            CustomerRegisterAsyncTask(this@CustomerRegister2).execute(userId, userPassword, userName, userPhone)
 
         }
         setSupportActionBar(register_toolbar)
@@ -43,19 +55,38 @@ class CustomRegister2 : AppCompatActivity() {
             setDisplayHomeAsUpEnabled(true)
 //            you should also call setHomeActionContentDescription() to provide a correct description of the action for accessibility support.
             setHomeAsUpIndicator(R.drawable.back_icon)
+            setHomeActionContentDescription("아이디 패스워드 설정")
             setDisplayShowTitleEnabled(false)
         }
     }
+
+
 
 //    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 //        return true
 //    }
 
+//    뒤로가기 (onBackPressed)는 해당 Activity를 완전히 BackStack에서 제거하기 때문에
+//    되살릴 수 있는 방법이없음.
+//    살리고싶다면 Fragment 단위로 붙였다 떼어내야함.
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
-            android.R.id.home -> onBackPressed()
+            android.R.id.home -> {
+                onBackPressed()
+            }
         }
         return true
+    }
+
+//    뒤로 가기 버튼을 누르면 번들을 생성하며 기존 입력된
+//    유저 이름과 전화번호를 번들에 저장함.
+    override fun onBackPressed() {
+        val bundle = Bundle()
+//        bundle.putString("USER_NAME", user_name_input_editText.text.toString())
+//        bundle.putString("USER_PHONE", user_phone_number_editText.text.toString())
+        onSaveInstanceState(bundle)
+
+        super.onBackPressed()
     }
 
     private fun addTextChangeListener() {
@@ -118,28 +149,48 @@ class CustomRegister2 : AppCompatActivity() {
         user_phone_number_layout.hint = "전화번호를 입력해주세요"
     }
 
+//outState – Bundle in which to place your saved state.
+//    명시적으로 activity를 닫거나(ex. 뒤로가기) finish()호출시 다음 메소드는 호출되지않음.
+//    onPause ~ onStop
+    override fun onSaveInstanceState(outState: Bundle) {
+//    입력했던것 저장
+        Log.i("State", "save Instance")
+        outState.putString("USER_NAME", user_name_input_editText.text.toString())
+        outState.putString("USER_PHONE", user_phone_number_editText.text.toString())
+        super.onSaveInstanceState(outState)
+    }
+
+
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        Log.i("State", "Restore Instance")
+        super.onRestoreInstanceState(savedInstanceState)
+        savedInstanceState?.run {
+            user_name_input_editText.setText(savedInstanceState.getString("USER_NAME"))
+            user_phone_number_editText.setText(savedInstanceState.getString("USER_PHONE"))
+        }
+    }
+
     override fun onStop() {
 //        inputLayoutInitialize()
+        Log.i("state", "onStop!")
         super.onStop()
     }
 
 
-    class CustomerRegisterAsyncTask(context: CustomRegister2) : AsyncTask<String, Unit, Unit>() {
+    class CustomerRegisterAsyncTask(context: CustomerRegister2) : AsyncTask<String, Unit, Unit>() {
 
                 private lateinit var clientSocket: Socket
                 private lateinit var reader: BufferedReader
                 private lateinit var writer: PrintWriter
 
-                private val port = 3000
-                private val ip = "192.168.1.166"
-
                 override fun doInBackground(vararg params: String) { // 소켓 연결
                     val userId= params[0]
                     val userPassword = params[1]
                     val userName = params[2]
-            val userPhone = params[3]
+                    val userPhone = params[3]
             try {
-                clientSocket = Socket(ip, port)
+                clientSocket = Socket(SERVERIP, PORT)
                 writer = PrintWriter(clientSocket!!.getOutputStream(), true)
                 reader = BufferedReader(InputStreamReader(clientSocket!!.getInputStream(), "UTF-8"))
                 writer!!.println("SIGNUP;MEMBER;$userId;$userName;$userPhone;$userPassword")

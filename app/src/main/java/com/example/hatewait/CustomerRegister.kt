@@ -2,7 +2,6 @@ package com.example.hatewait
 
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
-import android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -14,8 +13,6 @@ import kotlinx.android.synthetic.main.activity_customer_register.id_input_editTe
 import kotlinx.android.synthetic.main.activity_customer_register.id_input_layout
 import kotlinx.android.synthetic.main.activity_customer_register.password_input_editText
 import kotlinx.android.synthetic.main.activity_customer_register.password_input_layout
-import kotlinx.android.synthetic.main.activity_main.*
-import org.jetbrains.anko.startActivity
 
 
 // App Bar 추가
@@ -32,10 +29,12 @@ class CustomerRegister : AppCompatActivity() {
         addTextChangeListener()
         button_continue.setOnClickListener {
 //            startActivity<CustomRegister2>()
-            val intent = Intent(this, CustomRegister2::class.java)
-            intent.putExtra("user_id", id_input_editText.text.toString())
-            intent.putExtra("user_password", password_input_editText.text.toString())
-//                시작 중인 활동이 현재 활동(백 스택의 맨 위에 있는)이면 활동의 새 인스턴스가 생성되는 대신 기존 인스턴스가 onNewIntent() 호출을 수신합니다.
+            val intent = Intent(this, CustomerRegister2::class.java)
+            intent.putExtra("USER_ID", id_input_editText.text.toString())
+            intent.putExtra("USER_PASSWORD", password_input_editText.text.toString())
+
+//            이 플래그를 이용하게 되면 호출하려는 Activity가 스택에 존재할 경우에, 최상위로 올려주는 효과를 가지게 됩니다.
+//  예를 들어 ABCDE가 있을 경우 C를 호출하게 되면 ABDEC순서로 정렬이 변경되게 됩니다.
             intent.flags = FLAG_ACTIVITY_REORDER_TO_FRONT
             startActivity(intent)
         }
@@ -48,10 +47,8 @@ class CustomerRegister : AppCompatActivity() {
             setDisplayHomeAsUpEnabled(true)
 //            you should also call setHomeActionContentDescription() to provide a correct description of the action for accessibility support.
             setHomeAsUpIndicator(R.drawable.back_icon)
-
             setHomeActionContentDescription("로그인 화면 이동")
             setDisplayShowTitleEnabled(false)
-//            setDisplayShowHomeEnabled(true)
         }
     }
 
@@ -71,15 +68,21 @@ class CustomerRegister : AppCompatActivity() {
     //    메뉴에서 선택된 아이템 클릭 리스너 역할
 //    When you add items to the menu, you can implement the Activity's onOptionsItemSelected method to handle them there.
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
         when (item.itemId) {
             R.id.forward_button -> {
-//                입력완료 or 앞서 입력했던 이름, 주소 액티비티 상태로 이동.
-                val intent = Intent(this, CustomRegister2::class.java)
-                intent.putExtra("user_id", id_input_editText.text.toString())
-                intent.putExtra("user_password", password_input_editText.text.toString())
+                if (!button_continue.isEnabled) {
+//            알맞게 ID/Password가 입력되지 않은경우 다음 액티비티로 넘어갈 수 없음.
+                    return false
+                } else {
+                    //                입력완료 or 앞서 입력했던 이름, 주소 액티비티 상태로 이동.
+                    val intent = Intent(this, CustomerRegister2::class.java)
+                    intent.putExtra("USER_ID", id_input_editText.text.toString())
+                    intent.putExtra("USER_PASSWORD", password_input_editText.text.toString())
 //                시작 중인 활동이 현재 활동(백 스택의 맨 위에 있는)이면 활동의 새 인스턴스가 생성되는 대신 기존 인스턴스가 onNewIntent() 호출을 수신합니다.
-                intent.flags = FLAG_ACTIVITY_REORDER_TO_FRONT
-                startActivity(intent)
+                    intent.flags = FLAG_ACTIVITY_REORDER_TO_FRONT
+                    startActivity(intent)
+                }
             }
             android.R.id.home -> {
                 onBackPressed()
@@ -88,14 +91,14 @@ class CustomerRegister : AppCompatActivity() {
         return true
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-        return if (button_continue.isEnabled) {
-            menuInflater.inflate(R.menu.back_front_button_menu, menu)
-            true
-        } else {
-            false
-        }
-    }
+//    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+//        return if (button_continue.isEnabled) {
+//            menuInflater.inflate(R.menu.back_front_button_menu, menu)
+//            true
+//        } else {
+//            false
+//        }
+//    }
 
     private fun addTextChangeListener() {
         id_input_editText.addTextChangedListener(object : TextWatcher {

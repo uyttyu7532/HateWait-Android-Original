@@ -7,6 +7,9 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
 import android.widget.Toast
+import com.example.hatewait.socket.PORT
+import com.example.hatewait.socket.SERVERIP
+import com.twilio.rest.api.v2010.account.sip.ipaccesscontrollist.IpAddress
 import kotlinx.android.synthetic.main.activity_non_members_reigster.*
 import org.jetbrains.anko.support.v4.startActivity
 import java.io.BufferedReader
@@ -158,8 +161,6 @@ class NonMemberRegister : androidx.fragment.app.Fragment() {
         private lateinit var reader: BufferedReader
         private lateinit var writer: PrintWriter
 
-        private val port = 3000
-        private val ip = "192.168.1.166"
 
         override fun doInBackground(vararg params: String) { // 소켓 연결
             val storeId= "s0000"
@@ -167,7 +168,7 @@ class NonMemberRegister : androidx.fragment.app.Fragment() {
             val userPhone = params[1]
             val numOfGroup = params[2]
             try {
-                clientSocket = Socket(ip, port)
+                clientSocket = Socket(SERVERIP, PORT)
                 writer = PrintWriter(clientSocket!!.getOutputStream(), true)
                 reader = BufferedReader(InputStreamReader(clientSocket!!.getInputStream(), "UTF-8"))
                 writer!!.println("INSQUE;NONMEM;$storeId;$userName;$userPhone;$numOfGroup")

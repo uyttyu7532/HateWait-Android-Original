@@ -17,6 +17,9 @@ import org.jetbrains.anko.startActivity
 import org.json.JSONObject
 
 
+
+
+
 class MainActivity : AppCompatActivity() {
     private val idRegex = Regex("^(?=.*[a-zA-Zㄱ-ㅎ가-힣0-9])[a-zA-Zㄱ-ㅎ가-힣0-9]{1,}$")
     private val passwordRegex =

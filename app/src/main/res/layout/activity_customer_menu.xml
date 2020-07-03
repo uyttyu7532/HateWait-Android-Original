@@ -110,6 +110,7 @@
                     android:layout_height="wrap_content"
                     android:layout_above="@+id/twoButton"
                     android:gravity="right"
+                    android:layout_marginRight="10dp"
                     android:text="최근 새로고침 시간: 2020-05-20 16:28:50"
                     android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 

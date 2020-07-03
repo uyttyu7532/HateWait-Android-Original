@@ -1,28 +1,17 @@
 package com.example.hatewait
 
 
-import android.os.AsyncTask
+import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.example.hatewait.socket.*
-import com.google.firebase.iid.FirebaseInstanceId
-import com.google.firebase.messaging.FirebaseMessaging
-import java.io.BufferedReader
-import java.io.IOException
-import java.io.InputStreamReader
-import java.io.PrintWriter
-import java.net.Socket
-import java.nio.charset.StandardCharsets
-
-// 앱;서버: MAIN;MEMBER;손님(회원) id
-// 서버;앱: MAIN;MEMBER;이름;대기중인 가게이름;내순서
+import java.text.SimpleDateFormat
+import java.util.*
 
 lateinit var waitingStoreView: TextView
 lateinit var customerWaitingNum: TextView
@@ -30,11 +19,11 @@ lateinit var customerMarquee: TextView
 lateinit var customerNameView: TextView
 lateinit var my_cancel_button: TextView
 lateinit var my_refresh_button: ImageView
+lateinit var recentRefreshTime: TextView
 
 class CustomerMenu : AppCompatActivity() {
 
     var customView: View? = null
-
     val yesButton: ImageButton by lazy {
         customView?.findViewById(R.id.name_yes_button) as ImageButton
     }
@@ -44,6 +33,10 @@ class CustomerMenu : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        var reservationTime = System.currentTimeMillis() + 1000*60*60*9
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
+        val curTime = dateFormat.format(Date(reservationTime))
+        recentRefreshTime.text = "최근 새로고침 시간: ${curTime}"
         customerMenuAsyncTask().execute()
     }
 
@@ -51,10 +44,14 @@ class CustomerMenu : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_customer_menu)
 
+        // customer mode
+        val customerReference =
+            getSharedPreferences(resources.getString(R.string.customer_mode), Context.MODE_PRIVATE)
+        CUSTOMERID = customerReference.getString("CUSTOMER_ID", "")
+
         init()
 
     }
-
 
 
     fun init() {
@@ -65,6 +62,7 @@ class CustomerMenu : AppCompatActivity() {
         customerNameView = findViewById(R.id.customerNameView) as TextView
         my_cancel_button = findViewById(R.id.my_cancel_button) as TextView
         my_refresh_button = findViewById(R.id.my_refresh_button) as ImageView
+        recentRefreshTime = findViewById(R.id.recentRefreshTime) as TextView
 
         my_cancel_button.setOnClickListener {
             // storeid, customerid
@@ -78,18 +76,13 @@ class CustomerMenu : AppCompatActivity() {
 
 
         customView = layoutInflater.inflate(R.layout.activity_name_check_dialog, null)
-        // MyFirebaseMessagingService.kt > sendNotification에서 보내주는 값으로 판단
-
         if (intent.hasExtra("Notification")) {
             val questionDialog = SweetAlertDialog(this)
                 .setTitleText("가게에 오실건가요??")
-                .setContentText("3번째 순서 전입니다!")
                 .hideConfirmButton()
                 .setCustomView(customView)
-                .setCustomImage(R.drawable.yes_button_vector)
             questionDialog.show()
 
-//            06월 28일 추가
             yesButton.setOnClickListener {
                 questionDialog.dismissWithAnimation()
             }
@@ -98,6 +91,8 @@ class CustomerMenu : AppCompatActivity() {
                 questionDialog.dismissWithAnimation()
             }
         }
+
+
     }
 
 
@@ -113,7 +108,6 @@ class CustomerMenu : AppCompatActivity() {
 //        // 회원가입 or 회원 정보 수정시 본인 폰번호 subscribe하기.
 //        FirebaseMessaging.getInstance().subscribeToTopic("${customerPhoneNum}")
 //    }
-
 
 
     override fun onDestroy() {

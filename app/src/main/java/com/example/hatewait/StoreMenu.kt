@@ -1,21 +1,15 @@
 package com.example.hatewait
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.pm.ActivityInfo
-import android.os.AsyncTask
 import android.os.Bundle
-import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hatewait.socket.*
 import kotlinx.android.synthetic.main.activity_store_menu.*
 import org.jetbrains.anko.startActivity
-import java.io.BufferedReader
-import java.io.IOException
-import java.io.InputStreamReader
-import java.io.PrintWriter
-import java.net.Socket
-import java.nio.charset.StandardCharsets
+
 
 lateinit var storeNameView: TextView
 lateinit var storeWaitingNum: TextView
@@ -27,6 +21,10 @@ class StoreMenu : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_store_menu)
+
+        //store mode
+        val storeReference = getSharedPreferences(resources.getString(R.string.store_mode), Context.MODE_PRIVATE)
+        STOREID = storeReference.getString("STORE_ID","")
 
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         storeNameView = findViewById(R.id.store_name_view) as TextView

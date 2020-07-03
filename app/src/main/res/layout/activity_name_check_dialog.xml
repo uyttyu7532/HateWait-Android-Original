@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="2"
         tools:context=".NameCheckDialogFragment">
 <LinearLayout
         android:layout_width="wrap_content"
@@ -13,26 +12,20 @@
         android:layout_gravity="center">
     <ImageButton
             android:id="@+id/name_no_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_margin="20dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="10dp"
             android:adjustViewBounds="true"
             android:background="@drawable/no_button_vector"
-            android:clickable="true"
-            android:padding="0dp"
-            android:scaleType="fitXY" />
+            android:clickable="true"/>
 
     <ImageButton
             android:id="@+id/name_yes_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:layout_weight="1"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="10dp"
             android:adjustViewBounds="true"
             android:background="@drawable/yes_button_vector"
-            android:clickable="true"
-            android:padding="0dp"
-            android:scaleType="fitXY" />
+            android:clickable="true" />
 </LinearLayout>
 </FrameLayout>

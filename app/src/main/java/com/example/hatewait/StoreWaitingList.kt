@@ -1,7 +1,7 @@
 package com.example.hatewait
 
 import android.content.Context
-import android.os.AsyncTask
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -20,23 +20,21 @@ import com.example.hatewait.model.newClient
 import com.example.hatewait.socket.*
 import com.google.firebase.messaging.FirebaseMessaging
 import es.dmoral.toasty.Toasty
-import hatewait.vo.QueueListSerializable
 import kotlinx.android.synthetic.main.activity_store_waiting_list.*
-import java.io.*
-import java.net.Socket
-import java.nio.charset.StandardCharsets
+import org.jetbrains.anko.backgroundColorResource
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 
-
-lateinit var mRecyclerView:RecyclerView
+lateinit var mRecyclerView: RecyclerView
 var clientList = ArrayList<ClientData>()
 lateinit var mAdapter: SwipeRecyclerViewAdapter
 lateinit var listContext: Context
-lateinit var totalWaitingNumView:TextView
-lateinit var autoCallSwitchView:Switch
+lateinit var totalWaitingNumView: TextView
+//lateinit var autoCallSwitchView: Switch
+var called = HashMap<String, Boolean>()
+lateinit var pref:SharedPreferences
 
 class StoreWaitingList : AppCompatActivity() {
 
@@ -46,9 +44,10 @@ class StoreWaitingList : AppCompatActivity() {
         setContentView(R.layout.activity_store_waiting_list)
 
         listContext = this.applicationContext
+        pref = listContext.getSharedPreferences("myPref", Context.MODE_PRIVATE)
         mRecyclerView = findViewById<View>(R.id.myRecyclerView) as RecyclerView
         totalWaitingNumView = findViewById<View>(R.id.totalWaitingNum) as TextView
-        autoCallSwitchView = findViewById<View>(R.id.autoCallSwitch) as Switch
+//        autoCallSwitchView = findViewById<View>(R.id.autoCallSwitch) as Switch
 
 //        // 임시로 여기에
 //        //Get Firebase FCM token
@@ -79,14 +78,16 @@ class StoreWaitingList : AppCompatActivity() {
         makeAddDialog()
         readFile()
 
-
-        autoCallSwitch.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked) {
-                //자동호출 on
-            } else {
-                //자동호출 off
-            }
-        })
+//
+//        autoCallSwitch.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
+//            if (isChecked) {
+//                //자동호출 on
+//                AUTOCALL = true
+//            } else {
+//                //자동호출 off
+//                AUTOCALL = false
+//            }
+//        })
 
     }
 
@@ -106,8 +107,6 @@ class StoreWaitingList : AppCompatActivity() {
             clientList?.add(data_tmp)
         }
     }
-
-
 
 
     fun makeAddDialog() {
@@ -159,10 +158,7 @@ fun setRecyclerView() {
     mRecyclerView!!.layoutManager =
         LinearLayoutManager(listContext, LinearLayoutManager.VERTICAL, false)
 
-    val pref = listContext.getSharedPreferences("myPref", Context.MODE_PRIVATE)
 
-
-    var called = HashMap<String, Boolean>()
     val prefKeys: MutableSet<String> = pref.all.keys
     for (pref_key in prefKeys) {
         if (getShared(pref, pref_key)) {
@@ -196,4 +192,15 @@ fun setRecyclerView() {
 //        }
     mRecyclerView.adapter = mAdapter
 }
+
+//fun autocall(clientCallList: MutableList<ClientData>?) {
+//    if (clientCallList != null) {
+//        for (i in clientCallList) {
+//            callCustomer(i.phone, i.id)
+//            setShared(pref, i.phone, true)
+//            called[i.phone] = true
+//        }
+//    }
+//    setRecyclerView()
+//}
 

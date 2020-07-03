@@ -20,6 +20,7 @@ import android.content.Context
 import android.os.AsyncTask
 import android.util.Log
 import com.example.hatewait.fcm.FcmPush
+import com.example.hatewait.socket.*
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -38,14 +39,12 @@ class SwipeRecyclerViewAdapter(
 ) :
     RecyclerSwipeAdapter<SwipeRecyclerViewAdapter.SimpleViewHolder>() {
 
-    interface onItemClickListener {
-        fun onItemClick(holder: SimpleViewHolder, view: View, position: Int)
-    }
+//    interface onItemClickListener {
+//        fun onItemClick(holder: SimpleViewHolder, view: View, position: Int)
+//    }
 
 
-    var itemClickListener: onItemClickListener? = null
-//    private val mSelectedCallItems = SparseBooleanArray(0)
-//    private val mSelectedDetailItems = SparseBooleanArray(0)
+//    var itemClickListener: onItemClickListener? = null
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -61,18 +60,14 @@ class SwipeRecyclerViewAdapter(
         return items.size
     }
 
-    //  ViewHolder Class
     inner class SimpleViewHolder(itemView: View) :
-
         RecyclerView.ViewHolder(itemView) {
-
-
         val swipeLayout = itemView.findViewById(R.id.swipeLayout) as SwipeLayout
-        val clientView = itemView.findViewById(R.id.clientView) as CardView
+//        val clientView = itemView.findViewById(R.id.clientView) as CardView
+//        val detailView = itemView.findViewById(R.id.detailView) as CardView
         val clientNameView = itemView.findViewById(R.id.clientNameView) as TextView
         val clientNumView = itemView.findViewById(R.id.clientNumView) as TextView
         val clientPhoneView = itemView.findViewById(R.id.clientPhoneView) as TextView
-        val detailView = itemView.findViewById(R.id.detailView) as CardView
         val detailView1 = itemView.findViewById(R.id.detailView1) as TextView
         val detailView2 = itemView.findViewById(R.id.detailView2) as TextView
         val delBtn = itemView.findViewById(R.id.delBtn) as ImageButton
@@ -104,9 +99,7 @@ class SwipeRecyclerViewAdapter(
 
                     //푸시를 받을 유저의 UID가 담긴 destinationUid 값을 넣어준후 fcmPush클래스의 sendMessage 메소드 호출
                     val fcmPush = FcmPush()
-                    fcmPush?.sendMessage(context)
-                    //fcmPush?.sendMessage("fiARZ0G9lxs:APA91bENjxB-zasfoMSaD3cfUl-d5wWFS9E50NcuSv6c91WWDXxLJl5-SV_tDEu8aHP3AgR_gTPmQVhW_k6yW73wxd2aVK_bn2n1h-8e-27qp7OiN-qcIKOkJZk94Hwuvqfs_KaKZSRj", "알림 메세지 입니다.", message)
-
+                    fcmPush?.sendMessage(items[position].phone)
                     // 서버쪽에서 문자메시지 보내기
                     callCustomerMenuAsyncTask().execute()
                 }
@@ -125,8 +118,6 @@ class SwipeRecyclerViewAdapter(
 //                    detailView.visibility = View.VISIBLE
 //                }
 //            }
-
-
         }
     }
 
@@ -140,13 +131,13 @@ class SwipeRecyclerViewAdapter(
 
 
         viewHolder.clientNameView.text = item.name
-        viewHolder.clientNumView.text = "(" + item.people_num + "명)"
-        viewHolder.clientPhoneView.text = item.phone
+        viewHolder.clientNumView.text = "(" + item.peopleNum + "명)"
+        viewHolder.clientPhoneView.text = "0"+item.phone
 
-        viewHolder.detailView1.text =
-            "대기열에 추가된 시간: 2020-05-03-09:14:02"
-        viewHolder.detailView2.text =
-            "최근에 알림 보낸시간: 2020-05-08-09:40:15"
+//        viewHolder.detailView1.text =
+//            "대기열에 추가된 시간: 2020-05-03-09:14:02"
+//        viewHolder.detailView2.text =
+//            "최근에 알림 보낸시간: 2020-05-08-09:40:15"
 
         viewHolder.swipeLayout.showMode = SwipeLayout.ShowMode.PullOut
         // Drag From Left
@@ -163,42 +154,31 @@ class SwipeRecyclerViewAdapter(
         viewHolder.swipeLayout.addSwipeListener(object : SwipeLayout.SwipeListener {
             override fun onClose(layout: SwipeLayout) { //when the SurfaceView totally cover the BottomView.
             }
-
             override fun onUpdate(
                 layout: SwipeLayout,
                 leftOffset: Int,
                 topOffset: Int
-            ) { //you are swiping.
+            ) {
             }
-
             override fun onStartOpen(layout: SwipeLayout) {
-
             }
 
             override fun onOpen(layout: SwipeLayout) { //when the BottomView totally show.
-
-//                if(layout.isRightSwipeEnabled){
-//                    mode = Attributes.Mode.Single
-//                }
-//
-//                if(layout.isLeftSwipeEnabled){
-//                    mode = Attributes.Mode.Multiple
-//                }
             }
-
             override fun onStartClose(layout: SwipeLayout) {}
             override fun onHandRelease(
                 layout: SwipeLayout,
                 xvel: Float,
                 yvel: Float
-            ) { //when user's hand released.
+            ) {
             }
         })
 
 
         // db목록에서 대기손님지우기?
         viewHolder.delBtn.setOnClickListener { view ->
-            delCustomerTask().execute()
+            delCustomerTask().execute(items[position].id)
+
             mItemManger.removeShownLayouts(viewHolder.swipeLayout)
             items.removeAt(position)
             notifyItemRemoved(position)
@@ -233,19 +213,11 @@ class SwipeRecyclerViewAdapter(
 
 }
 
-class delCustomerTask : AsyncTask<Unit, Unit, Unit>() {
+class delCustomerTask : AsyncTask<String, Unit, Unit>() {
 
-    private var clientSocket: Socket? = null
-    private var reader: BufferedReader? = null // 서버 < 앱
-    private var writer: PrintWriter? = null // 앱 > 서버
-
-    private val port = 3000// port num
-//    private val ip: String = "192.168.1.166"// 서버 ip적기
-
-
-    override fun doInBackground(vararg params: Unit) { // 소켓 연결
+    override fun doInBackground(vararg params: String) { // 소켓 연결
         try {
-            clientSocket = Socket(ip, port)
+            clientSocket = Socket(SERVERIP, PORT)
             Log.i("로그", "delCustomerTask:: ok")
             writer = PrintWriter(clientSocket!!.getOutputStream(), true)
             reader = BufferedReader(
@@ -255,8 +227,9 @@ class delCustomerTask : AsyncTask<Unit, Unit, Unit>() {
                 )
             )
             // TODO 삭제할 명단 :::: DELQUE;가게 id;손님id
-            writer!!.println("DELQUE;s0000;n0000")
-            Log.i("로그: 대기 삭제 서버로 보냄", "DELQUE;가게 id;손님(회원) id")
+            Log.i("로그: 대기열 삭제 요청", "DELQUE;${STOREID};${params[0]}")
+            writer!!.println("DELQUE;${STOREID};${params[0]}")
+
             val addCustomerResponse: String = reader!!.readLine()
             Log.i("로그: del서버응답", addCustomerResponse)
 
@@ -283,6 +256,7 @@ class delCustomerTask : AsyncTask<Unit, Unit, Unit>() {
         }
 
     }
+
 }
 
 
@@ -292,13 +266,9 @@ class callCustomerMenuAsyncTask : AsyncTask<Unit, Unit, Unit>() {
     private var reader: BufferedReader? = null // 서버 < 앱
     private var writer: PrintWriter? = null // 앱 > 서버
 
-    private val port = 3000// port num
-//    private val ip: String = "192.168.1.166"// 서버 ip적기
-
-
     override fun doInBackground(vararg params: Unit) { // 소켓 연결
         try {
-            clientSocket = Socket(ip, port)
+            clientSocket = Socket(SERVERIP, PORT)
             Log.i("로그", "storeMenuAsyncTask:: ok")
             writer = PrintWriter(clientSocket!!.getOutputStream(), true)
             reader = BufferedReader(

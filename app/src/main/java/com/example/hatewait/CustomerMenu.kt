@@ -10,7 +10,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import cn.pedant.SweetAlert.SweetAlertDialog
+import com.example.hatewait.socket.*
 import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.messaging.FirebaseMessaging
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -55,7 +57,6 @@ class CustomerMenu : AppCompatActivity() {
 
         customerId = "customerId"
 
-        fcm()
         init()
 
     }
@@ -114,35 +115,26 @@ class CustomerMenu : AppCompatActivity() {
     }
 
 
-
-    private fun fcm() {
-        // 현재 토큰을 db에 저장
-        //Get Firebase FCM token
-        FirebaseInstanceId.getInstance().instanceId
-            .addOnSuccessListener(this,
-                { instanceIdResult ->
-                    Log.i("현재 토큰: ", instanceIdResult.token)
-                })
-
-        // or
-
-        // 자기 폰번호 subscribe하면 됨!!!
-//        FirebaseMessaging.getInstance().subscribeToTopic("자기 폰번호")
-    }
+//    private fun fcm() {
+//        // 현재 토큰을 db에 저장
+//        //Get Firebase FCM token
+//        FirebaseInstanceId.getInstance().instanceId
+//            .addOnSuccessListener(this,
+//                { instanceIdResult ->
+//                    Log.i("현재 토큰: ", instanceIdResult.token)
+//                })
+//
+//        // 회원가입 or 회원 정보 수정시 본인 폰번호 subscribe하기.
+//        FirebaseMessaging.getInstance().subscribeToTopic("${customerPhoneNum}")
+//    }
 
     class customerMenuAsyncTask : AsyncTask<Unit, Unit, Array<String>?>() {
-
-        private var clientSocket: Socket? = null
-        private var reader: BufferedReader? = null // 서버 < 앱
-        private var writer: PrintWriter? = null // 앱 > 서버
-
-        private val port = 3000 // port num
 
         var CustomerMenuArray: Array<String>? = null
 
         override fun doInBackground(vararg params: Unit?):Array<String>? { // 소켓 연결
             try {
-                clientSocket = Socket(ip, port)
+                clientSocket = Socket(SERVERIP, PORT)
                 Log.i("로그", " customerMenuAsyncTask:: ok")
                 writer = PrintWriter(clientSocket!!.getOutputStream(), true)
                 reader = BufferedReader(
@@ -189,9 +181,7 @@ class CustomerMenu : AppCompatActivity() {
             customerWaitingNum.setText(result?.get(4)?: "0")
             customerMarquee.setText("내 차례가 되면 상태바 알림과 문자 알림이 발송됩니다. 취소 버튼을 눌러 대기를 취소할 수 있습니다. ")
             customerMarquee.setSelected(true) // 마키 텍스트에 포커스
-
         }
-
     }
 
     override fun onDestroy() {

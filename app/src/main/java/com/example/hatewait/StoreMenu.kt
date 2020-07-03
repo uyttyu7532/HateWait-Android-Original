@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.hatewait.socket.*
 import kotlinx.android.synthetic.main.activity_store_menu.*
 import org.jetbrains.anko.startActivity
 import java.io.BufferedReader
@@ -15,7 +16,6 @@ import java.io.InputStreamReader
 import java.io.PrintWriter
 import java.net.Socket
 import java.nio.charset.StandardCharsets
-
 
 lateinit var storeNameView: TextView
 lateinit var storeWaitingNum: TextView
@@ -58,17 +58,11 @@ class StoreMenu : AppCompatActivity() {
 
     class storeMenuAsyncTask : AsyncTask<Unit, Unit, Array<String>?>() {
 
-        private var clientSocket: Socket? = null
-        private var reader: BufferedReader? = null // 서버 < 앱
-        private var writer: PrintWriter? = null // 앱 > 서버
-
-        private val port = 3000// port num
-
         var StoreMenuArray: Array<String>? = null
 
         override fun doInBackground(vararg params: Unit): Array<String>? { // 소켓 연결
             try {
-                clientSocket = Socket(ip, port)
+                clientSocket = Socket(SERVERIP, PORT)
                 Log.i("로그", "storeMenuAsyncTask:: ok")
                 writer = PrintWriter(clientSocket!!.getOutputStream(), true)
                 reader = BufferedReader(
@@ -77,8 +71,8 @@ class StoreMenu : AppCompatActivity() {
                         StandardCharsets.UTF_8
                     )
                 )
-                writer!!.println("MAIN;STORE;s0000")
-                Log.i("로그:서버에게 정보 달라고 보냄", "MAIN;STORE;s1111")
+                writer!!.println("MAIN;STORE;${STOREID}")
+                Log.i("로그:서버에게 정보 달라고 보냄", "MAIN;STORE;${STOREID}")
                 val storeMenuResponse: String = reader!!.readLine()
                 Log.i("로그:서버응답", storeMenuResponse)
                 //서버>앱: MAIN;STORE;storeName;waitingNum;nextName;nextNum
@@ -127,6 +121,7 @@ class StoreMenu : AppCompatActivity() {
                 storeMarquee.setSelected(true) // 마키 텍스트에 포커스
             } catch (e: IOException) {
                 e.printStackTrace()
+                Log.i("로그", " storeMenuAsyncTask-onPostExecute:: ${e}")
             }
         }
     }

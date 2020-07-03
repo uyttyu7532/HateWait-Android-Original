@@ -84,11 +84,9 @@ class CustomerMenu : AppCompatActivity() {
             val questionDialog = SweetAlertDialog(this)
                 .setTitleText("가게에 오실건가요??")
                 .setContentText("3번째 순서 전입니다!")
-                .setConfirmText("")
+                .hideConfirmButton()
                 .setCustomView(customView)
                 .setCustomImage(R.drawable.yes_button_vector)
-//            Confirm_button 자동생성된거 숨겨버리기~
-            questionDialog.findViewById<Button>(R.id.confirm_button).visibility = View.GONE
             questionDialog.show()
 
 //            06월 28일 추가

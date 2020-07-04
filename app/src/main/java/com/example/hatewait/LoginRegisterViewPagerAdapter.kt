@@ -11,9 +11,7 @@ import kotlinx.android.synthetic.main.activity_register_tab_pager.*
 import org.jetbrains.anko.startActivity
 
 
-
-//Recycler View Adpater
-class LoginRegisterViewPagerActivity : AppCompatActivity(), NameCheckDialogFragment.NameCheckListener, MemberRegister.CustomerInfoListener {
+class LoginRegisterViewPagerActivity : AppCompatActivity(), RegisterErrorDialogFragment.RegisterMemberDialogListener, NameCheckDialogFragment.NameCheckListener, MemberRegister.CustomerInfoListener {
 
     lateinit var newCustomerName : String
     var newCustomerTurn = -1
@@ -51,8 +49,14 @@ class LoginRegisterViewPagerActivity : AppCompatActivity(), NameCheckDialogFragm
         dialog.dismiss()
     }
 
-    override fun registerCustomer(customerName: String, customerTurn: Int) {
-        newCustomerName = customerName
-        newCustomerTurn = customerTurn
+    override fun applyText(memberId: String) {
+        user_id_input_editText.setText(memberId)
     }
+
+    override fun registerCustomer(memberRegister: MemberRegister) {
+        newCustomerName = memberRegister.customerName!!
+        newCustomerTurn = memberRegister.customerTurn!!
+    }
+
+
 }

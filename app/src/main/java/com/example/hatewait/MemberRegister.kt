@@ -24,7 +24,7 @@ import java.lang.ref.WeakReference
 import java.net.Socket
 
 
-class MemberRegister : Fragment(), RegisterErrorDialogFragment.RegisterMemberDialogListener {
+class MemberRegister : Fragment() {
     private val idRegex = Regex("^(?=.*[a-zA-Zㄱ-ㅎ가-힣0-9])[a-zA-Zㄱ-ㅎ가-힣0-9]{1,}$")
     private val peopleNumberRegex = Regex("^[1-9](\\d?)")
 
@@ -38,7 +38,7 @@ class MemberRegister : Fragment(), RegisterErrorDialogFragment.RegisterMemberDia
 
     private lateinit var customerInfoListener: CustomerInfoListener
     interface CustomerInfoListener {
-        fun registerCustomer(customerName: String, customerTurn: Int)
+        fun registerCustomer(memberRegister: MemberRegister)
     }
 
     //   fragment 안에서 옵션 선택을 가능하게함.
@@ -103,9 +103,10 @@ class MemberRegister : Fragment(), RegisterErrorDialogFragment.RegisterMemberDia
 //            DialogActivity (이름 3자중 가운데 모자이크 ex. 문X훈 회원님 맞으신가요?)
             val userId = user_id_input_editText.text.toString()
             val numOfGroup =  people_number_editText.text.toString()
-//            MemberRegisterAsyncTask(this@MemberRegister).execute(userId, numOfGroup)
+            MemberRegisterAsyncTask(this@MemberRegister).execute(userId, numOfGroup)
+            openMemberIdErrorDialog()
             if(customerName != null && customerTurn != null) {
-                customerInfoListener.registerCustomer(customerName!!, customerTurn!!)
+                customerInfoListener.registerCustomer(this)
                 showNameCheckDialog()
             }
 
@@ -129,6 +130,8 @@ class MemberRegister : Fragment(), RegisterErrorDialogFragment.RegisterMemberDia
 
     override fun onStop() {
         inputLayoutInitialize()
+        customerName = null
+        customerTurn = null
         super.onStop()
     }
 
@@ -154,7 +157,7 @@ class MemberRegister : Fragment(), RegisterErrorDialogFragment.RegisterMemberDia
         memberIdCheckFragment.show(activity!!.supportFragmentManager, "MEMBER_ID_CHECK")
     }
     class MemberRegisterAsyncTask(context: MemberRegister) : AsyncTask<String, Unit, String>() {
-        val activityReference = WeakReference(context)
+        private val activityReference = WeakReference(context)
         private lateinit var clientSocket: Socket
         private lateinit var reader: BufferedReader
         private lateinit var writer: PrintWriter
@@ -202,7 +205,4 @@ class MemberRegister : Fragment(), RegisterErrorDialogFragment.RegisterMemberDia
     }
 
 
-    override fun applyText(memberId: String) {
-        user_id_input_editText.setText(memberId)
-    }
 }

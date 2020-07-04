@@ -16,16 +16,14 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.textfield.TextInputEditText
-import kotlinx.android.synthetic.main.activity_members_register.*
-import kotlinx.android.synthetic.main.activity_name_check_dialog.*
 import kotlinx.android.synthetic.main.fragment_register_error_dialog.*
 
 class RegisterErrorDialogFragment : DialogFragment() {
 
     var customView : View? = null
     lateinit var dialogListener : RegisterMemberDialogListener
-    val customerIdEditText : TextInputEditText by lazy {
-        customView?.findViewById<TextInputEditText>(R.id.id_input_editText)!!
+    private val customerIdEditText : TextInputEditText by lazy {
+        customView?.findViewById<TextInputEditText>(R.id.member_id_editText)!!
     }
 
     interface RegisterMemberDialogListener {
@@ -75,6 +73,7 @@ class RegisterErrorDialogFragment : DialogFragment() {
         val idRegex = Regex("^(?=.*[a-zA-Zㄱ-ㅎ가-힣0-9])[a-zA-Zㄱ-ㅎ가-힣0-9]{1,}$")
         fun verifyId(input_id : String) : Boolean = idRegex.matches(input_id)
 
+        customerIdEditText.text = activity?.findViewById<TextInputEditText>(R.id.user_id_input_editText)?.text
         super.onViewCreated(view, savedInstanceState)
         customerIdEditText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {

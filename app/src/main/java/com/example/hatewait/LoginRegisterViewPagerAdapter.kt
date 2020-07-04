@@ -2,8 +2,6 @@ package com.example.hatewait
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
-import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
@@ -11,12 +9,14 @@ import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_members_register.*
 import kotlinx.android.synthetic.main.activity_register_tab_pager.*
 import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.support.v4.startActivity
+
 
 
 //Recycler View Adpater
-class LoginRegisterViewPagerActivity : AppCompatActivity(), NameCheckDialogFragment.NameCheckListener {
+class LoginRegisterViewPagerActivity : AppCompatActivity(), NameCheckDialogFragment.NameCheckListener, MemberRegister.CustomerInfoListener {
 
+    lateinit var newCustomerName : String
+    var newCustomerTurn = -1
     private val tabNameArray = arrayOf<String>("비회원", "회원")
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,7 +40,8 @@ class LoginRegisterViewPagerActivity : AppCompatActivity(), NameCheckDialogFragm
 
 //        여기에서 asynctask 수행 방법?
         startActivity<RegisterCheck>(
-            "USER_ID" to user_id_input_editText.toString()
+            "CUSTOMER_NAME" to newCustomerName,
+            "CUSTOMER_TURN" to newCustomerTurn
         )
         dialog.dismiss()
     }
@@ -50,4 +51,8 @@ class LoginRegisterViewPagerActivity : AppCompatActivity(), NameCheckDialogFragm
         dialog.dismiss()
     }
 
+    override fun registerCustomer(customerName: String, customerTurn: Int) {
+        newCustomerName = customerName
+        newCustomerTurn = customerTurn
+    }
 }

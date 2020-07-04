@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.activity_name_check_dialog.*
 
 class NameCheckDialogFragment : DialogFragment() {
 
-    internal lateinit var nameChecklistener : NameCheckListener
+    private lateinit var nameChecklistener : NameCheckListener
     private var customView : View? = null
     interface NameCheckListener {
         fun onDialogPositiveClick(dialog: DialogFragment)

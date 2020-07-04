@@ -1,5 +1,6 @@
 package com.example.hatewait
 
+import android.content.Context
 import android.content.DialogInterface
 import android.os.AsyncTask
 import android.os.Bundle
@@ -19,16 +20,26 @@ import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
 import java.io.PrintWriter
+import java.lang.ref.WeakReference
 import java.net.Socket
 
 
-class MemberRegister : Fragment() {
+class MemberRegister : Fragment(), RegisterErrorDialogFragment.RegisterMemberDialogListener {
     private val idRegex = Regex("^(?=.*[a-zA-Zㄱ-ㅎ가-힣0-9])[a-zA-Zㄱ-ㅎ가-힣0-9]{1,}$")
     private val peopleNumberRegex = Regex("^[1-9](\\d?)")
 
     fun verifyId(input_id : String) : Boolean = idRegex.matches(input_id)
     fun verifyPeopleNumber (input_people_number : String) : Boolean = input_people_number.matches(peopleNumberRegex)
+    var customerName : String? = null
+    var customerTurn : Int? = null
 
+//    LoginRegisterViewPagerAdapter <->MemberRegister Communication?
+//    Bundle? Interface Listener?
+
+    private lateinit var customerInfoListener: CustomerInfoListener
+    interface CustomerInfoListener {
+        fun registerCustomer(customerName: String, customerTurn: Int)
+    }
 
     //   fragment 안에서 옵션 선택을 가능하게함.
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -93,7 +104,11 @@ class MemberRegister : Fragment() {
             val userId = user_id_input_editText.text.toString()
             val numOfGroup =  people_number_editText.text.toString()
 //            MemberRegisterAsyncTask(this@MemberRegister).execute(userId, numOfGroup)
-            showNameCheckDialog()
+            if(customerName != null && customerTurn != null) {
+                customerInfoListener.registerCustomer(customerName!!, customerTurn!!)
+                showNameCheckDialog()
+            }
+
 
 //            startActivity<RegisterCheck>(
 //                "USER_ID" to user_id_input_editText.toString()
@@ -101,6 +116,15 @@ class MemberRegister : Fragment() {
         }
         super.onActivityCreated(savedInstanceState)
 
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        try {
+            customerInfoListener = context as CustomerInfoListener
+        } catch (e : ClassCastException) {
+            throw ClassCastException((context.toString() + "must implement dialogListener"))
+        }
     }
 
     override fun onStop() {
@@ -122,39 +146,63 @@ class MemberRegister : Fragment() {
 
     private fun showNameCheckDialog() {
         val nameCheckFragment = NameCheckDialogFragment()
-        nameCheckFragment.show(activity!!.supportFragmentManager, "NameCheck")
+        nameCheckFragment.show(activity!!.supportFragmentManager, "MEMBER_NAME_CHECK")
     }
 
-    class MemberRegisterAsyncTask(context: MemberRegister) : AsyncTask<String, Unit, Unit>() {
-
+    private fun openMemberIdErrorDialog() {
+        val memberIdCheckFragment = RegisterErrorDialogFragment()
+        memberIdCheckFragment.show(activity!!.supportFragmentManager, "MEMBER_ID_CHECK")
+    }
+    class MemberRegisterAsyncTask(context: MemberRegister) : AsyncTask<String, Unit, String>() {
+        val activityReference = WeakReference(context)
         private lateinit var clientSocket: Socket
         private lateinit var reader: BufferedReader
         private lateinit var writer: PrintWriter
+        var responseString = ""
 
-
-        override fun doInBackground(vararg params: String) { // 소켓 연결
+        override fun doInBackground(vararg params: String): String { // 소켓 연결
             val storeId= "s0000"
             val userId = params[0]
             val numOfGroup = params[1]
             try {
                 clientSocket = Socket(SERVERIP, PORT)
-                writer = PrintWriter(clientSocket!!.getOutputStream(), true)
-                reader = BufferedReader(InputStreamReader(clientSocket!!.getInputStream(), "UTF-8"))
-                writer!!.println("INSQUE;MEMBER;$storeId;$userId;$numOfGroup")
+                writer = PrintWriter(clientSocket.getOutputStream(), true)
+                writer.println("INSQUE;MEMBER;$storeId;$userId;$numOfGroup")
             } catch (ioe: IOException) {
                 ioe.printStackTrace()
             } finally {
                 writer.close()
+            }
+
+            try {
+                reader = BufferedReader(InputStreamReader(clientSocket.getInputStream(), "UTF-8"))
+                responseString = reader.readLine()
+            } catch (ioe: IOException) {
+                ioe.printStackTrace()
+            } finally {
                 reader.close()
                 clientSocket.close()
             }
-
+            return responseString
         }
 
-        override fun onPostExecute(result: Unit?) {
+        override fun onPostExecute(result: String) {
+            val currentActivity = activityReference.get()
+            val memberInfoArray = result.split(";")
+            if (memberInfoArray[0] == "ERROR" && memberInfoArray[1] == "NOTEXIST") {
+                currentActivity?.openMemberIdErrorDialog()
+            } else {
+                currentActivity?.customerName = memberInfoArray[2]
+                currentActivity?.customerTurn = memberInfoArray[3].toInt()
+            }
+
             super.onPostExecute(result)
         }
 
     }
 
+
+    override fun applyText(memberId: String) {
+        user_id_input_editText.setText(memberId)
+    }
 }

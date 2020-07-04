@@ -2,6 +2,7 @@ package com.example.hatewait
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.SharedPreferences
 import android.content.pm.ActivityInfo
 import android.os.AsyncTask
 import android.os.Bundle
@@ -16,10 +17,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.startActivity
 import org.json.JSONObject
 
-
-
-
-
 class MainActivity : AppCompatActivity() {
     private val idRegex = Regex("^(?=.*[a-zA-Zㄱ-ㅎ가-힣0-9])[a-zA-Zㄱ-ㅎ가-힣0-9]{1,}$")
     private val passwordRegex =
@@ -27,6 +24,16 @@ class MainActivity : AppCompatActivity() {
 
     fun verifyId(input_id: String): Boolean = idRegex.matches(input_id)
     fun verifyPassword(input_password: String): Boolean = passwordRegex.matches(input_password)
+
+    private val storeReference: SharedPreferences by lazy {
+//        initalizer Property에 다음 초기화 블록 코드 내용 자체를 저장.
+        getSharedPreferences(resources.getString(R.string.store_mode), Context.MODE_PRIVATE)
+    }
+    private val customerReference: SharedPreferences by lazy {
+//        한번도 초기화 되지 않은 val lazy는 getValue() == UNINITIALIZED_VALUE 상태
+//        초기화 1번이라도 되면 getValue()호출하여 값을 얻어옴.
+        getSharedPreferences(resources.getString(R.string.customer_mode), Context.MODE_PRIVATE)
+    }
 
     private val TAG = "MainActivity"
 
@@ -38,10 +45,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-        init()
+        autoLoginCheck()
+        buttonInitialize()
         naverLoginInit()
         addTextChangeListener()
-
     }
 
     override fun onStop() {
@@ -50,36 +57,22 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun init() {
+    private fun autoLoginCheck() {
+//        둘중 하나라도 자동로그인 설정시 ID/PASSWORD 불러오기 체크박스 체크상태
+        auto_login_checkBox.isChecked = (customerReference.getBoolean("AUTO_LOGIN", false)
+                                        or storeReference.getBoolean("AUTO_LOGIN", false))
+    }
 
+    private fun buttonInitialize() {
         addTextChangeListener()
+        userKindAndAutoLoginCheck()
 
         user_kind_group.setOnPositionChangedListener {
-            when (user_kind_group.position) {
-                0 -> {
-                    val storeReference = getSharedPreferences(resources.getString(R.string.store_mode), Context.MODE_PRIVATE)
-                    if (storeReference.getBoolean("AUTO_LOGIN", false)) {
-                        id_input_editText.setText(storeReference.getString("STORE_ID", null))
-                        password_input_editText.setText(storeReference.getString("STORE_PASSWORD", null))
-                    }
-                    isCustomerMode = false
-                }
-                1 -> {
-                    val customerReference = getSharedPreferences(resources.getString(R.string.customer_mode), Context.MODE_PRIVATE)
-                    if (customerReference.getBoolean("AUTO_LOGIN", false)) {
-                            id_input_editText.setText(customerReference.getString("CUSTOMER_ID", null))
-                            password_input_editText.setText(customerReference.getString("CUSTOMER_PASSWORD", null))
-                        }
-                    isCustomerMode = true
-                }
-                else -> true
-            }
+            userKindAndAutoLoginCheck()
         }
         button_login.setOnClickListener {
-
             if (isCustomerMode) {
-                val sharedReference = getSharedPreferences(resources.getString(R.string.customer_mode), Context.MODE_PRIVATE)
-                val editor = sharedReference.edit()
+                val editor = customerReference.edit()
                 if(auto_login_checkBox.isChecked) {
                     editor.putString("CUSTOMER_ID", id_input_editText.text.toString())
                     editor.putString("CUSTOMER_PASSWORD", password_input_editText.text.toString())
@@ -94,8 +87,7 @@ class MainActivity : AppCompatActivity() {
                 startActivity<CustomerMenu>()
 
             } else {
-                val sharedReference = getSharedPreferences(resources.getString(R.string.store_mode), Context.MODE_PRIVATE)
-                val editor = sharedReference.edit()
+                val editor = storeReference.edit()
                 if(auto_login_checkBox.isChecked){
                     editor.putString("STORE_ID", id_input_editText.text.toString())
                     editor.putString("STORE_PASSWORD", password_input_editText.text.toString())
@@ -141,7 +133,7 @@ class MainActivity : AppCompatActivity() {
 
 
         // Offline API 요청은 Network 를 사용하기 때문에 AsyncTask 사용.
-        class RequestApiTask : AsyncTask<Void?, Void?, String>() {
+        class NaverProfileApiTask : AsyncTask<Void?, Void?, String>() {
             override fun onPreExecute() {
             }
 
@@ -174,7 +166,7 @@ class MainActivity : AppCompatActivity() {
                 if (success) {
                     val accessToken = loginModule.getAccessToken(this@MainActivity)
                     var refreshToken = loginModule.getRefreshToken(this@MainActivity)
-                    RequestApiTask().execute()
+                    NaverProfileApiTask().execute()
                 } else {
                     val errorCode = loginModule.getLastErrorCode(this@MainActivity).code
                     val errorDescription = loginModule.getLastErrorDesc(this@MainActivity)
@@ -186,8 +178,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
-
 
 
         naver_login_button.setOnClickListener {
@@ -234,10 +224,29 @@ class MainActivity : AppCompatActivity() {
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
-
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             }
         })
+    }
+
+    private fun userKindAndAutoLoginCheck() {
+        when (user_kind_group.position) {
+            0 -> {
+                if (storeReference.getBoolean("AUTO_LOGIN", false)) {
+                    id_input_editText.setText(storeReference.getString("STORE_ID", null))
+                    password_input_editText.setText(storeReference.getString("STORE_PASSWORD", null))
+                }
+                isCustomerMode = false
+            }
+            1 -> {
+                if (customerReference.getBoolean("AUTO_LOGIN", false)) {
+                    id_input_editText.setText(customerReference.getString("CUSTOMER_ID", null))
+                    password_input_editText.setText(customerReference.getString("CUSTOMER_PASSWORD", null))
+                }
+                isCustomerMode = true
+            }
+            else -> true
+        }
     }
 
     private fun inputLayoutInitialize() {

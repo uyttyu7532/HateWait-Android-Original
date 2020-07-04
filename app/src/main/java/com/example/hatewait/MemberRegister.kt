@@ -104,12 +104,13 @@ class MemberRegister : Fragment() {
             val userId = user_id_input_editText.text.toString()
             val numOfGroup =  people_number_editText.text.toString()
             MemberRegisterAsyncTask(this@MemberRegister).execute(userId, numOfGroup)
-            openMemberIdErrorDialog()
+
             if(customerName != null && customerTurn != null) {
                 customerInfoListener.registerCustomer(this)
                 showNameCheckDialog()
+            } else {
+                openMemberIdErrorDialog()
             }
-
 
 //            startActivity<RegisterCheck>(
 //                "USER_ID" to user_id_input_editText.toString()

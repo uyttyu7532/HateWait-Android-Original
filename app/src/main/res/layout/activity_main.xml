@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity">
@@ -11,36 +10,38 @@
             android:id="@+id/idView"
             android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="10dp"
             android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:src="@drawable/main_logo"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintHorizontal_bias="0.5" />
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-<!--    2가지 Toggle Button , Animation 효과 적용됨.-->
-<!-- Reference:  https://github.com/addisonElliott/SegmentedButton-->
+    <!--    2가지 Toggle Button , Animation 효과 적용됨.-->
+    <!-- Reference:  https://github.com/addisonElliott/SegmentedButton-->
     <com.addisonelliott.segmentedbutton.SegmentedButtonGroup
             android:id="@+id/user_kind_group"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:elevation="2dp"
             android:background="@color/white"
+            android:elevation="2dp"
             app:borderWidth="1dp"
             app:divider="@color/colorPrimary"
             app:dividerPadding="10dp"
             app:dividerWidth="1dp"
+            app:layout_constraintEnd_toEndOf="@id/idView"
+            app:layout_constraintStart_toStartOf="@id/idView"
+            app:layout_constraintTop_toBottomOf="@id/idView"
             app:position="1"
             app:ripple="true"
             app:rippleColor="@color/colorAccent"
-            app:layout_constraintStart_toStartOf="@id/idView"
-            app:layout_constraintEnd_toEndOf="@id/idView"
-            app:layout_constraintTop_toBottomOf="@id/idView"
             app:selectedBackground="@color/colorPrimary">
+
+        <!--        Customer, Store Text간 baseLine이 맞지 않는 문제 (미해결)-->
 
         <com.addisonelliott.segmentedbutton.SegmentedButton
                 android:layout_width="0dp"
@@ -55,17 +56,15 @@
                 app:text="Store"
                 app:textColor="@color/black_overlay" />
 
-<!--        Customer, Store Text간 baseLine이 맞지 않는 문제 (미해결)-->
-
         <com.addisonelliott.segmentedbutton.SegmentedButton
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:padding="0dp"
+                android:padding="10dp"
                 app:drawable="@drawable/customer_login_icon"
+                app:drawableGravity="top"
                 app:drawableTint="@color/black_overlay"
                 app:selectedDrawableTint="@color/white"
-                app:drawableGravity="top"
                 app:selectedTextColor="@color/white"
                 app:text="Customer"
                 app:textColor="@color/black_overlay" />
@@ -76,14 +75,14 @@
             android:id="@+id/id_input_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:startIconDrawable="@drawable/custom_id_icon"
-            app:startIconContentDescription="ID"
-            app:endIconMode="clear_text"
-            android:layout_marginTop="25dp"
             android:layout_marginHorizontal="24dp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="25dp"
+            app:endIconMode="clear_text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/user_kind_group">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/user_kind_group"
+            app:startIconContentDescription="ID"
+            app:startIconDrawable="@drawable/custom_id_icon">
 
         <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/id_input_editText"
@@ -91,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/id_input_hint"
                 android:inputType="text"
-                android:selectAllOnFocus="true"/>
+                android:selectAllOnFocus="true" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -100,20 +99,21 @@
             android:id="@+id/password_input_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:startIconDrawable="@drawable/custom_password_icon"
-            app:startIconContentDescription="Name"
-            app:endIconMode="password_toggle"
             android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="@id/id_input_layout"
+            app:endIconMode="password_toggle"
             app:layout_constraintEnd_toEndOf="@id/id_input_layout"
-            app:layout_constraintTop_toBottomOf="@id/id_input_layout">
+            app:layout_constraintStart_toStartOf="@id/id_input_layout"
+            app:layout_constraintTop_toBottomOf="@id/id_input_layout"
+            app:startIconContentDescription="Name"
+            app:startIconDrawable="@drawable/custom_password_icon">
+
         <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/password_input_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/password_input_hint"
                 android:inputType="textPassword"
-                android:selectAllOnFocus="true"/>
+                android:selectAllOnFocus="true" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -124,62 +124,61 @@
             android:layout_height="wrap_content"
             android:text="ID/PW 저장"
             app:layout_constraintStart_toStartOf="@id/button_login"
-            app:layout_constraintTop_toBottomOf="@id/password_input_layout"/>
+            app:layout_constraintTop_toBottomOf="@id/password_input_layout" />
 
     <Button
-        android:id="@+id/button_login"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        app:layout_constraintStart_toStartOf="@id/password_input_layout"
-        app:layout_constraintEnd_toEndOf="@id/password_input_layout"
-        app:layout_constraintTop_toBottomOf="@id/password_input_layout"
-        android:enabled="false"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:text="로그인"
-        android:textSize="25dp"
-        android:textColor="@color/white">
-    </Button>
+            android:id="@+id/button_login"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:enabled="false"
+            android:text="로그인"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            app:layout_constraintEnd_toEndOf="@id/password_input_layout"
+            app:layout_constraintStart_toStartOf="@id/password_input_layout"
+            app:layout_constraintTop_toBottomOf="@id/password_input_layout"></Button>
 
 
-<!--    adjustViewBound: 가로 세로 비율 자동조정.-->
+    <!--    adjustViewBound: 가로 세로 비율 자동조정.-->
     <ImageButton
             android:id="@+id/naver_login_button"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="30dp"
-            android:src="@drawable/naver_login_white_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:scaleType="fitXY"
             android:padding="0dp"
-            app:layout_constraintStart_toStartOf="@id/button_login"
+            android:layout_marginTop="50dp"
+            android:src="@drawable/naver_login_white_size"
             app:layout_constraintEnd_toEndOf="@id/button_login"
-            app:layout_constraintTop_toBottomOf="@id/button_login" />
+            app:layout_constraintStart_toStartOf="@id/button_login"
+            app:layout_constraintTop_toBottomOf="@id/button_login"/>
 
-<!--    추가 예정: 계정이 없으신가요? 'Sign Up' (Text 형태) -->
+    <!--    추가 예정: 계정이 없으신가요? 'Sign Up' (Text 형태) -->
 
     <TextView
             android:id="@+id/account_introduction_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            android:text="계정이 없으신가요?"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/account_register_textButton"
             android:layout_marginBottom="30dp"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            android:text="계정이 없으신가요?"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/account_register_textButton"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent" />
+
     <TextView
             android:id="@+id/account_register_textButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
+            android:layout_marginLeft="10dp"
+            android:clickable="true"
             android:text="회원가입"
             android:textColor="@color/colorPrimary"
-            android:clickable="true"
-            android:layout_marginLeft="10dp"
-            app:layout_constraintStart_toEndOf="@id/account_introduction_textView"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/account_introduction_textView"/>
+            app:layout_constraintStart_toEndOf="@id/account_introduction_textView"
+            app:layout_constraintTop_toTopOf="@id/account_introduction_textView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

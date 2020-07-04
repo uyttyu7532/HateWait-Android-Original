@@ -81,13 +81,13 @@ class SwipeRecyclerViewAdapter(
                     this.bottom_wrapper_left.backgroundColorResource = R.color.colorCall
                     Toasty.warning(
                         itemView.context,
-                        items[position].phone,
+                        items[position].name+" 손님 호출 완료.",
                         Toast.LENGTH_SHORT,
                         true
                     ).show()
 
 
-                    callCustomer(items[position].phone,items[position].id)
+                    callCustomer(items[position].phone,items[position].id, "${AUTONUM}번째 순서 전 입니다. 가게 앞으로 와주세요.")
 
                 }
             }
@@ -165,7 +165,7 @@ class SwipeRecyclerViewAdapter(
 
         // db목록에서 대기손님지우기?
         viewHolder.delBtn.setOnClickListener { view ->
-            delCustomerTask().execute(items[position].id)
+            DelCustomerAsyncTask().execute(items[position].id)
 
             mItemManger.removeShownLayouts(viewHolder.swipeLayout)
             items.removeAt(position)
@@ -206,10 +206,10 @@ class SwipeRecyclerViewAdapter(
 }
 
 
-fun callCustomer(phone:String, id:String){
+fun callCustomer(phone:String, id:String, message:String){
     //푸시를 받을 유저의 UID가 담긴 destinationUid 값을 넣어준후 fcmPush클래스의 sendMessage 메소드 호출
     val fcmPush = FcmPush()
-    fcmPush?.sendMessage(phone)
+    fcmPush?.sendMessage(phone,message)
     // 서버쪽에서 문자메시지 보내기
-    callCustomerMenuAsyncTask().execute(id)
+    PushMessageAsyncTask().execute(id)
 }

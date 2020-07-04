@@ -9,17 +9,12 @@ import java.io.PrintWriter
 import java.net.Socket
 import java.nio.charset.StandardCharsets
 
-
-class callCustomerMenuAsyncTask : AsyncTask<String, Unit, Unit>() {
-
-    private var clientSocket: Socket? = null
-    private var reader: BufferedReader? = null // 서버 < 앱
-    private var writer: PrintWriter? = null // 앱 > 서버
+class DelCustomerAsyncTask : AsyncTask<String, Unit, Unit>() {
 
     override fun doInBackground(vararg params: String) { // 소켓 연결
         try {
             clientSocket = Socket(SERVERIP, PORT)
-            Log.i("로그", "storeMenuAsyncTask:: ok")
+            Log.i("로그", "delCustomerTask:: ok")
             writer = PrintWriter(clientSocket!!.getOutputStream(), true)
             reader = BufferedReader(
                 InputStreamReader(
@@ -27,13 +22,14 @@ class callCustomerMenuAsyncTask : AsyncTask<String, Unit, Unit>() {
                     StandardCharsets.UTF_8
                 )
             )
+            // TODO 삭제할 명단 :::: DELQUE;가게 id;손님id
+            Log.i("로그: 대기열 삭제 요청", "DELQUE;STORE;${STOREID};${params[0]}")
+            writer!!.println("DELQUE;STORE;${STOREID};${params[0]}")
 
-            // TODO 문자를 받을 손님 id 주석 풀기
-            // writer!!.println("PUSHMSG;${params[0]}")
-            Log.i("로그:서버에게 정보 달라고 보냄", "PUSHMSG;${params[0]}")
-            val storeMenuResponse: String = reader!!.readLine()
-            Log.i("로그:서버응답", storeMenuResponse)
-            //서버>앱: MAIN;STORE;storeName;waitingNum;nextName;nextNum
+            val addCustomerResponse: String = reader!!.readLine()
+            Log.i("로그: del서버응답", addCustomerResponse)
+
+
             if (reader != null) {
                 try {
                     reader!!.close()

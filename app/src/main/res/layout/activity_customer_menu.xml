@@ -12,7 +12,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_margin="25dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
             android:orientation="vertical">
 
         <LinearLayout
@@ -24,7 +26,9 @@
                     android:id="@+id/customerNameView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="조예린" />
+                    android:text="조예린"
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
 
             <TextView
                     android:id="@+id/greetCustomerText"
@@ -66,53 +70,74 @@
                     android:layout_margin="5dp"
                     android:ellipsize="marquee"
                     android:focusable="true"
-
                     android:focusableInTouchMode="true"
                     android:marqueeRepeatLimit="marquee_forever"
                     android:singleLine="true"
-                    android:text="5번째 순서 전에 상태바 알림과 문자 알림이 발송됩니다. 취소 버튼을 눌러 대기를 취소할 수 있습니다. " />
+                    android:text="대기 순서 전에 상태바 알림과 문자 알림이 발송됩니다. 취소 버튼을 눌러 대기를 취소할 수 있습니다. " />
 
-
-            <TextView
-                    android:id="@+id/waitingStoreView"
+            <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/customerMarquee"
-                    android:layout_margin="10dp"
-                    android:text="건대 족발"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+                    android:layout_height="match_parent"
+                    android:layout_above="@id/recentRefreshTime"
+                    android:layout_below="@id/customerMarquee">
 
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/waitingStoreView"
-                    android:layout_margin="10dp"
-                    android:orientation="horizontal">
 
-                <TextView
-                        android:id="@+id/customerWaitingNum"
+
+                <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="5"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-                <TextView
-                        android:id="@+id/waitingNumText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="번째 전 순서입니다."
-                        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-            </LinearLayout>
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:id="@+id/waitingStoreView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="현재 대기중인 \n음식점이 없습니다."
+                            android:textColor="#000000"
+                            android:textSize="40sp" />
+
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/waitingStoreView"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                        <TextView
+                                android:id="@+id/customerWaitingNum"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0"
+                                android:textColor="#000000"
+                                android:textSize="40sp" />
+
+                        <TextView
+                                android:id="@+id/waitingNumText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="번째 전 순서입니다."
+                                android:textSize="30sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </FrameLayout>
+
+
 
             <TextView
                     android:id="@+id/recentRefreshTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_above="@+id/twoButton"
-                    android:gravity="right"
                     android:layout_marginRight="10dp"
+                    android:gravity="right"
                     android:text="최근 새로고침 시간: 2020-05-20 16:28:50"
                     android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+
 
             <androidx.cardview.widget.CardView
                     android:id="@+id/twoButton"
@@ -133,12 +158,12 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:clickable="true"
                             android:ems="10"
                             android:gravity="center"
                             android:padding="10dp"
                             android:text="취소하기"
-                            android:textColor="#000000"
-                            android:clickable="true"/>
+                            android:textColor="#000000" />
 
                     <ImageView
                             android:id="@+id/my_refresh_button"

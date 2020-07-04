@@ -102,5 +102,4 @@ dependencies {
 
     implementation 'com.github.f0ris.sweetalert:library:1.5.6'
 
-
 }

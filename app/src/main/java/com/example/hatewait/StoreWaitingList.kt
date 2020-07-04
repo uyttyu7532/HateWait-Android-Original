@@ -5,10 +5,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.CompoundButton
-import android.widget.Switch
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,9 +16,6 @@ import com.daimajia.swipe.util.Attributes
 import com.example.hatewait.model.newClient
 import com.example.hatewait.socket.*
 import com.google.firebase.messaging.FirebaseMessaging
-import es.dmoral.toasty.Toasty
-import kotlinx.android.synthetic.main.activity_store_waiting_list.*
-import org.jetbrains.anko.backgroundColorResource
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -67,7 +61,7 @@ class StoreWaitingList : AppCompatActivity() {
         super.onResume()
         Log.i("로그", "Resume")
         try {
-            storeWaitingListAsyncTask().execute()
+            StoreWaitingListAsyncTask().execute()
         } catch (e: Exception) {
             Log.i("로그", e.toString())
         }
@@ -106,6 +100,7 @@ class StoreWaitingList : AppCompatActivity() {
                 ClientData(id_tmp, phone_tmp, name_tmp, people_num_tmp, is_member_tmp)
             clientList?.add(data_tmp)
         }
+        totalWaitingNumView.text = "현재 ${clientList.size}팀 대기중"
     }
 
 
@@ -138,7 +133,7 @@ class StoreWaitingList : AppCompatActivity() {
                         )
 
                         //TODO asynctask 실행하기
-                        addCustomerTask().execute(newclient)
+                        AddCustomerAsyncTask().execute(newclient)
                         dismiss()
                     }
                 }

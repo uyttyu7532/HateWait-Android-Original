@@ -3,6 +3,7 @@ package com.example.hatewait
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -37,7 +38,8 @@ class CustomerMenu : AppCompatActivity() {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
         val curTime = dateFormat.format(Date(reservationTime))
         recentRefreshTime.text = "최근 새로고침 시간: ${curTime}"
-        customerMenuAsyncTask().execute()
+        Log.i("로그","onresume 손님메뉴")
+        CustomerMenuAsyncTask().execute()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,19 +68,19 @@ class CustomerMenu : AppCompatActivity() {
 
         my_cancel_button.setOnClickListener {
             // storeid, customerid
-            delCustomerTask().execute()
+            DelCustomerAsyncTask().execute()
         }
 
         my_refresh_button.setOnClickListener {
             // 내 id
-            customerMenuAsyncTask().execute()
+            CustomerMenuAsyncTask().execute()
         }
 
 
         customView = layoutInflater.inflate(R.layout.activity_name_check_dialog, null)
         if (intent.hasExtra("Notification")) {
-            val questionDialog = SweetAlertDialog(this)
-                .setTitleText("가게에 오실건가요??")
+            val questionDialog = SweetAlertDialog(this,SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("가게에 오셔서 직원에게 안내를 받으세요. 가게에 오실 건가요?")
                 .hideConfirmButton()
                 .setCustomView(customView)
             questionDialog.show()
@@ -87,7 +89,7 @@ class CustomerMenu : AppCompatActivity() {
                 questionDialog.dismissWithAnimation()
             }
             noButton.setOnClickListener {
-                delCustomerTask().execute()
+                CancelAsyncTask().execute()
                 questionDialog.dismissWithAnimation()
             }
         }

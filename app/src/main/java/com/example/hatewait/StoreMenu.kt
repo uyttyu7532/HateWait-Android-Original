@@ -37,7 +37,7 @@ class StoreMenu : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        storeMenuAsyncTask().execute()
+        StoreMenuAsyncTask().execute()
     }
 
     fun initView() {

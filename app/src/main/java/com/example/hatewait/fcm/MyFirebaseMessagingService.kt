@@ -73,7 +73,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         var notificationBuilder = NotificationCompat.Builder(this,channelId)
             .setSmallIcon(R.drawable.main_logo)
-            .setContentTitle("3번째 순서 전입니다.")
+            .setContentTitle("HATEWAIT")
             .setContentText(body)
             .setAutoCancel(true)
             .setSound(notificationSound)

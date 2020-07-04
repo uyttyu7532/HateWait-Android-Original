@@ -16,7 +16,7 @@ import java.io.PrintWriter
 import java.net.Socket
 import java.nio.charset.StandardCharsets
 
-class addCustomerTask : AsyncTask<newClient, Unit, Unit>() {
+class AddCustomerAsyncTask : AsyncTask<newClient, Unit, Unit>() {
 
     override fun doInBackground(vararg params: newClient) { // 소켓 연결
         try {

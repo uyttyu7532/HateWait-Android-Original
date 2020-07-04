@@ -43,13 +43,13 @@ class FcmPush() {
             })
     }
 
-    fun sendMessage(phoneNumber : String) {
+    fun sendMessage(phoneNumber : String, message:String) {
    var pushDTO = PushDTO()
 //        pushDTO.to = token                   //푸시토큰 세팅
 //        pushDTO.to = "/topics/${phoneNumber}" // 토픽넣어주기(호출하는폰번호)
         pushDTO.to = "/topics/01093097866" // 토픽넣어주기(호출하는폰번호)
         pushDTO.notification?.title = "HateWait"  //푸시 타이틀 세팅
-        pushDTO.notification?.body = "message" //푸시 메시지 세팅
+        pushDTO.notification?.body = "${message}" //푸시 메시지 세팅
 
         var body = RequestBody.create(JSON, gson?.toJson(pushDTO)!!)
         var request = Request

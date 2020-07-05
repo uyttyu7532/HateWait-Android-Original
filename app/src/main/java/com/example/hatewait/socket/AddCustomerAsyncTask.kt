@@ -16,9 +16,11 @@ import java.io.PrintWriter
 import java.net.Socket
 import java.nio.charset.StandardCharsets
 
-class AddCustomerAsyncTask : AsyncTask<newClient, Unit, Unit>() {
+class AddCustomerAsyncTask : AsyncTask<newClient, Unit, String?>() {
 
-    override fun doInBackground(vararg params: newClient) { // 소켓 연결
+    var tempClientName = ""
+
+    override fun doInBackground(vararg params: newClient): String? { // 소켓 연결
         try {
             clientSocket = Socket(SERVERIP, PORT)
             Log.i("로그", "addCustomerTask:: ok")
@@ -29,6 +31,8 @@ class AddCustomerAsyncTask : AsyncTask<newClient, Unit, Unit>() {
                     StandardCharsets.UTF_8
                 )
             )
+
+            tempClientName = params[0].name
 
             //TODO INSQUE;NONMEM;가게id;이름;전화번호;대기인원
             writer!!.println("INSQUE;NONMEM;${STOREID};" + "${params[0].name};${params[0].phoneNum};${params[0].peopleNum}")
@@ -52,7 +56,7 @@ class AddCustomerAsyncTask : AsyncTask<newClient, Unit, Unit>() {
             if (reader != null) {
                 try {
                     reader!!.close()
-                } catch (e: IOException) {
+                } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }
@@ -62,18 +66,43 @@ class AddCustomerAsyncTask : AsyncTask<newClient, Unit, Unit>() {
             if (clientSocket != null) {
                 try {
                     clientSocket!!.close()
-                } catch (e: IOException) {
+                } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }
-        } catch (e: IOException) {
+            return addCustomerResponse
+
+        } catch (e: Exception) {
             e.printStackTrace()
         }
+
+        return null
     }
 
-    override fun onPostExecute(result: Unit?) {
-        super.onPostExecute(result)
-        setRecyclerView()
+    override fun onPostExecute(result: String?) {
+        try {
+            super.onPostExecute(result)
+            if (result != null) {
+                Toasty.success(
+                    listContext,
+                    tempClientName + " 손님 추가 완료",
+                    Toast.LENGTH_SHORT,
+                    true
+                ).show()
+                tempClientName=""
+                setRecyclerView()
+            }else{
+                Toasty.normal(
+                    listContext,
+                    "서버 연결을 확인해주세요.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.i("로그", " addCustomerTask-onPostExecute:: ${e}")
+        }
     }
 
 }

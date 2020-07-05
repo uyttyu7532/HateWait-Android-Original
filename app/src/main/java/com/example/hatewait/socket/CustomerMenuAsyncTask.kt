@@ -60,24 +60,32 @@ class CustomerMenuAsyncTask : AsyncTask<String?, Unit, Array<String>?>() {
     }
 
     override fun onPostExecute(result: Array<String>?) { // UI에 보이기
-        super.onPostExecute(result)
-        Log.i("로그", " customerMenuAsyncTask-onPostExecute:: ok")
-        //서버>앱: MAIN;MEMBER;customerName;waitingStoreName;waitingMyTurn
+        if (result != null) {
+            try {
+                super.onPostExecute(result)
+                Log.i("로그", " customerMenuAsyncTask-onPostExecute:: ok")
+                //서버>앱: MAIN;MEMBER;customerName;waitingStoreName;waitingMyTurn
 
-        Log.i("로그 result?.get(3):", result?.get(3))
-        if(result?.get(3).equals("null")){
-            waitingStoreView.text = "대기중인 가게가 없습니다."
-            customerWaiting.visibility = GONE
-        }else{
-            waitingStoreView.text = result?.get(3)
-            customerWaitingNum.text = result?.get(4)
-            customerWaiting.visibility = VISIBLE
+                Log.i("로그 result?.get(3):", result?.get(3))
+                if (result?.get(3).equals("null")) {
+                    waitingStoreView.text = "대기중인 가게가 없습니다."
+                    customerWaiting.visibility = GONE
+                } else {
+                    waitingStoreView.text = result?.get(3)
+                    customerWaitingNum.text = result?.get(4)
+                    customerWaiting.visibility = VISIBLE
+                }
+
+
+                var reservationTime = System.currentTimeMillis() + 1000 * 60 * 60 * 9
+                val dateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
+                val curTime = dateFormat.format(Date(reservationTime))
+                recentRefreshTime.text = "최근 새로고침 시간: ${curTime}"
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Log.i("로그", " customerMenuAsyncTask-onPostExecute:: ${e}")
+            }
         }
-
-
-        var reservationTime = System.currentTimeMillis() + 1000 * 60 * 60 * 9
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
-        val curTime = dateFormat.format(Date(reservationTime))
-        recentRefreshTime.text = "최근 새로고침 시간: ${curTime}"
     }
 }

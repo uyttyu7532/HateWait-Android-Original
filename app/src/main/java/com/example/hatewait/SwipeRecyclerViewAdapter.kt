@@ -1,6 +1,10 @@
 package com.example.hatewait
 
+import android.content.Context
+import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.content.SharedPreferences
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,17 +14,15 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.daimajia.swipe.SwipeLayout
 import com.daimajia.swipe.adapters.RecyclerSwipeAdapter
+import com.example.hatewait.fcm.FcmPush
+import com.example.hatewait.socket.*
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.row.view.*
 import org.jetbrains.anko.backgroundColorResource
 import java.util.*
-import android.content.Context
-import cn.pedant.SweetAlert.SweetAlertDialog
-import com.example.hatewait.fcm.FcmPush
-import com.example.hatewait.socket.*
-import kotlin.collections.ArrayList
 
 
 class SwipeRecyclerViewAdapter(
@@ -31,6 +33,7 @@ class SwipeRecyclerViewAdapter(
     val context: Context
 ) :
     RecyclerSwipeAdapter<SwipeRecyclerViewAdapter.SimpleViewHolder>() {
+
 
     interface onItemClickListener {
         fun onItemClick(holder: SimpleViewHolder, view: View, position: Int)
@@ -63,22 +66,22 @@ class SwipeRecyclerViewAdapter(
         val detailView1 = itemView.findViewById(R.id.detailView1) as TextView
         val detailView2 = itemView.findViewById(R.id.detailView2) as TextView
         val delBtn = itemView.findViewById(R.id.delBtn) as ImageButton
-        val bottom_wrapper_left = itemView.findViewById(R.id.bottom_wrapper_left) as FrameLayout
+        val bottomWrapperLeft = itemView.findViewById(R.id.bottom_wrapper_left) as FrameLayout
         val callBtn = itemView.callBtn
 
 
         init {
-            callBtn.setOnClickListener { v ->
+            callBtn.setOnClickListener {
                 val position = adapterPosition
                 if (called.containsKey(items[position].phone) && called[items[position].phone]!!) {
                     //TODO 원래는 이 if의 내용이 없어야 함!!!
                     setShared(pref, items[position].phone, false)
                     called[items[position].phone] = false
-                    this.bottom_wrapper_left.backgroundColorResource = R.color.white
+                    this.bottomWrapperLeft.backgroundColorResource = R.color.white
                 } else {
                     setShared(pref, items[position].phone, true)
                     called[items[position].phone] = true
-                    this.bottom_wrapper_left.backgroundColorResource = R.color.colorCall
+                    this.bottomWrapperLeft.backgroundColorResource = R.color.colorCall
                     Toasty.warning(
                         itemView.context,
                         items[position].name + " 손님 호출 완료",
@@ -96,18 +99,21 @@ class SwipeRecyclerViewAdapter(
                 }
             }
 
-            clientView.setOnClickListener { v ->
+            clientView.setOnClickListener {
                 val position = adapterPosition
-                if (clicked.containsKey(items[position].phone) && clicked[items[position].phone]!!) {
-                    clicked[items[position].phone] = false
-                    detailView.visibility = View.GONE
 
-                } else {
+//                if (clicked.containsKey(items[position].phone) && clicked[items[position].phone]!!) {
+//                    clicked[items[position].phone] = false
+//                    detailView.visibility = View.GONE
+//                } else {
+//                    clicked[items[position].phone] = true
+//                    detailView.visibility = View.VISIBLE
+//                }
 
-                    clicked[items[position].phone] = true
-
-                    detailView.visibility = View.VISIBLE
-                }
+                val callIntent =
+                    Intent(Intent.ACTION_DIAL, Uri.parse("tel:0" + items[position].phone))
+                callIntent.flags = FLAG_ACTIVITY_NEW_TASK
+                context.startActivity(callIntent)
             }
         }
     }
@@ -125,10 +131,10 @@ class SwipeRecyclerViewAdapter(
         viewHolder.clientNumView.text = "(" + item.peopleNum + "명)"
         viewHolder.clientPhoneView.text = "0" + item.phone
 
-        viewHolder.detailView1.text =
-            "대기열에 추가된 시간: 2020-05-03-09:14:02"
-        viewHolder.detailView2.text =
-            "최근에 알림 보낸시간: 2020-05-08-09:40:15"
+//        viewHolder.detailView1.text =
+//            "대기열에 추가된 시간: 2020-00-00-00:00:00"
+//        viewHolder.detailView2.text =
+//            "최근에 알림 보낸시간: 2020-00-00-00:00:00"
 
         viewHolder.swipeLayout.showMode = SwipeLayout.ShowMode.PullOut
         // Drag From Left
@@ -206,14 +212,13 @@ class SwipeRecyclerViewAdapter(
                     "아니오"
                 ) { sDialog -> sDialog.dismissWithAnimation() }
                 .show()
-
-
         }
 
+
         if (called.containsKey(items[position].phone) && called[items[position].phone]!!) {
-            viewHolder.bottom_wrapper_left.backgroundColorResource = R.color.colorCall
+            viewHolder.bottomWrapperLeft.backgroundColorResource = R.color.colorCall
         } else {
-            viewHolder.bottom_wrapper_left.backgroundColorResource = R.color.white
+            viewHolder.bottomWrapperLeft.backgroundColorResource = R.color.white
         }
 
         if (clicked.containsKey(items[position].phone) && clicked[items[position].phone]!!) {

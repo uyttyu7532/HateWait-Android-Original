@@ -14,6 +14,7 @@ import org.jetbrains.anko.startActivity
 lateinit var storeNameView: TextView
 lateinit var storeWaitingNum: TextView
 lateinit var storeMarquee: TextView
+lateinit var storeContext:Context
 
 class StoreMenu : AppCompatActivity() {
 
@@ -21,6 +22,8 @@ class StoreMenu : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_store_menu)
+
+        storeContext = this.applicationContext
 
         //store mode
         val storeReference = getSharedPreferences(resources.getString(R.string.store_mode), Context.MODE_PRIVATE)
@@ -38,6 +41,7 @@ class StoreMenu : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         StoreMenuAsyncTask().execute()
+
     }
 
     fun initView() {

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -12,48 +11,75 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-<!--        <Switch-->
-<!--                android:id="@+id/autoCallSwitch"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_alignRight="@id/myRecyclerView"-->
-<!--                android:layout_marginStart="10dp"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:layout_marginEnd="10dp"-->
-<!--                android:layout_marginBottom="10dp"-->
-<!--                android:checked="true"-->
-<!--                android:text="0번째 팀까지 자동호출" />-->
+
+        <ImageView
+                android:id="@+id/refreshBtn"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentRight="true"
+                android:layout_margin="10dp"
+                android:layout_marginRight="15dp"
+                android:clickable="true"
+                app:srcCompat="@drawable/ic_baseline_autorenew_24" />
+
+        <ProgressBar
+
+                android:id="@+id/progressBar2"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentRight="true"
+                android:layout_margin="10dp"
+                android:layout_marginRight="15dp"
+                android:visibility="invisible" />
+        <!--        <Switch-->
+        <!--                android:id="@+id/autoCallSwitch"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_alignRight="@id/myRecyclerView"-->
+        <!--                android:layout_marginStart="10dp"-->
+        <!--                android:layout_marginTop="10dp"-->
+        <!--                android:layout_marginEnd="10dp"-->
+        <!--                android:layout_marginBottom="10dp"-->
+        <!--                android:checked="true"-->
+        <!--                android:text="0번째 팀까지 자동호출" />-->
 
 
-            <TextView
-                    android:id="@+id/totalWaitingNum"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="현재 0팀 대기중"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textColor="#000000"
-                    android:layout_alignLeft="@id/myRecyclerView"
-                    android:layout_margin="10dp"/>
+        <TextView
+                android:id="@+id/totalWaitingNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/swiperefresh"
+                android:layout_margin="10dp"
+                android:text="현재 0팀 대기중"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="#000000" />
 
-        <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/myRecyclerView"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/swiperefresh"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/totalWaitingNum">
+                android:layout_marginTop="40dp">
 
-        </androidx.recyclerview.widget.RecyclerView>
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/myRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/totalWaitingNum">
+            </androidx.recyclerview.widget.RecyclerView>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </RelativeLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/addFab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_anchorGravity="bottom|end"
             android:layout_gravity="bottom|end"
             android:layout_margin="20dp"
             android:clickable="true"
             android:tint="#ffffff"
             app:backgroundTint="@color/colorPrimary"
+            app:layout_anchorGravity="bottom|end"
             app:srcCompat="@drawable/ic_add_black_24dp" />
 
 

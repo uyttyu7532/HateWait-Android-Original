@@ -5,8 +5,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
+import android.view.View.*
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -20,6 +19,7 @@ import com.example.hatewait.model.newClient
 import com.example.hatewait.socket.*
 import com.google.firebase.messaging.FirebaseMessaging
 import es.dmoral.toasty.Toasty
+import kotlinx.android.synthetic.main.activity_store_waiting_list.*
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -78,6 +78,30 @@ class StoreWaitingList : AppCompatActivity() {
         makeAddDialog()
         readFile()
 
+        refreshBtn.setOnClickListener {
+            refreshBtn.visibility = INVISIBLE
+            progressBar2.visibility = VISIBLE
+
+            StoreWaitingListAsyncTask().execute()
+
+            refreshBtn.visibility = VISIBLE
+            progressBar2.visibility = INVISIBLE
+        }
+
+        swiperefresh.setOnRefreshListener {
+            swiperefresh.isRefreshing = true // progress bar 돌아가는 작업
+
+            refreshBtn.visibility = INVISIBLE
+            progressBar2.visibility = VISIBLE
+
+            StoreWaitingListAsyncTask().execute()
+
+            refreshBtn.visibility = VISIBLE
+            progressBar2.visibility = INVISIBLE
+
+            // 비동기에서 작업이 끝날때 swiperefresh.isRefreshing = false해줘야함
+            swiperefresh.isRefreshing = false
+        }
 //
 //        autoCallSwitch.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
 //            if (isChecked) {
@@ -145,12 +169,7 @@ class StoreWaitingList : AppCompatActivity() {
 
                         AddCustomerAsyncTask().execute(newclient)
                         StoreWaitingListAsyncTask().execute()
-                        Toasty.success(
-                            listContext,
-                            addWaitingName.text.toString() + " 손님 추가 완료",
-                            Toast.LENGTH_SHORT,
-                            true
-                        ).show()
+
                         dismiss()
                     }
                 }

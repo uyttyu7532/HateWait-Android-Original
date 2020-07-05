@@ -33,7 +33,7 @@ class DelCustomerAsyncTask : AsyncTask<String, Unit, Unit>() {
             if (reader != null) {
                 try {
                     reader!!.close()
-                } catch (e: IOException) {
+                } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }
@@ -43,11 +43,11 @@ class DelCustomerAsyncTask : AsyncTask<String, Unit, Unit>() {
             if (clientSocket != null) {
                 try {
                     clientSocket!!.close()
-                } catch (e: IOException) {
+                } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }
-        } catch (e: IOException) {
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }

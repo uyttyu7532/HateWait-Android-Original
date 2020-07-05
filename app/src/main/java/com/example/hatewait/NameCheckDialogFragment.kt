@@ -22,10 +22,14 @@ class NameCheckDialogFragment : DialogFragment() {
         fun onDialogPositiveClick(dialog: DialogFragment)
         fun onDialogNegativeClick(dialog: DialogFragment)
     }
+    private var markedCustomerName = "문X훈"
 
 //    롤리팝 이하버전은 지원 X
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+
+             markedCustomerName = markCustomerName(arguments?.getString("CUSTOMER_NAME")!!)
+
 
         //                .setPositiveButtonIcon(R.drawable)
         return activity?.let {
@@ -35,8 +39,7 @@ class NameCheckDialogFragment : DialogFragment() {
             builder.setView(customView)
             builder.setTitle("회원 이름 확인")
 //                .setIcon(resources.getDrawable(R.drawable.main_logo, context!!.theme))
-                .setMessage("문X훈 회원님 맞나요?")
-
+                .setMessage("$markedCustomerName 님 이신가요?")
             val dialog = builder.create()
 //            커스터마이징 끝 return은 커스터마이징 된 dialog
             dialog
@@ -72,6 +75,7 @@ class NameCheckDialogFragment : DialogFragment() {
 //onCreateView에서 넘겨준 customView를 넘겨받음.
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         name_yes_button.setOnClickListener {
             Log.i("test", "이게 된다고?")
             nameChecklistener.onDialogPositiveClick(this)
@@ -87,5 +91,39 @@ class NameCheckDialogFragment : DialogFragment() {
         customView = null
         Log.i("onDestroyView", "this is dialog destroyed!!! without memory leak")
         super.onDestroyView()
+    }
+
+//    이름 모자이크 함수
+    private fun markCustomerName(customerName: String) : String {
+        //    한글/ 영어 구분해야함
+    //    한글 -> 2~4자 -> 2~3글자 : 가운데 1  4글자: 2글자 모자이크
+    //    영어 -> Last Name or First Name 모자이크
+        //    한글 2~4자 (공백 허용 X) or 영문 First name 2~10, Last name 2~10
+        val koreanNameRegex = Regex("^[가-힣]{2,4}$")
+        val englishNameRegex = Regex("^[a-zA-Z]{2,10}|\\s[a-zA-Z]{2,10}\$")
+        val nameLength = customerName.length
+        lateinit var resultName : String
+
+        resultName =
+        if (customerName.matches(koreanNameRegex)) {
+                if (nameLength <= 3) {
+        //                가운데 글자만 모자이크 처리
+//                    [start Index, end Index)
+                    customerName.replaceRange(nameLength/2, nameLength/2+1, "X")
+                } else {
+        //                4자 이름인 경우 가운데 2글자 모자이크 처리
+                    customerName.replaceRange(nameLength/2, nameLength, "X")
+                }
+        } else {
+    //            LastName 모자이크 처리
+            var markX = ""
+//          indices : index 를 취하고 싶을 때 사용 ==  i가 index property 를 가져옴.
+            for(i in customerName.split(" ")[1].indices) {
+                markX += "x"
+            }
+            customerName.replaceAfter(" ", markX)
+        }
+
+        return resultName
     }
 }

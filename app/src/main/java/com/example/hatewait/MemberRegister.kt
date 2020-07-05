@@ -107,8 +107,8 @@ class MemberRegister : Fragment() {
             MemberRegisterAsyncTask(this@MemberRegister).execute(userId, numOfGroup)
 
             if(customerName != null && customerTurn != null) {
-                customerInfoListener.registerCustomer(this)
-                showNameCheckDialog()
+//                customerInfoListener.registerCustomer(this)
+//                showNameCheckDialog()
             } else {
                 openMemberIdErrorDialog()
             }
@@ -197,16 +197,16 @@ class MemberRegister : Fragment() {
             val currentActivity = activityReference.get()
             val memberInfoArray = result.split(";")
             Log.i("response", "${memberInfoArray[0]}")
-            Log.i("response", "왜 안뜨누?")
 //            원래는 && 이여야하는데 지금 ... 한글 깨짐현상이있음.
-            if (memberInfoArray[0] == "ERROR" || memberInfoArray[1] == "NOTEXIST") {
+            if (memberInfoArray[0] == "ERROR" && memberInfoArray[1] == "NOTEXIST") {
                 currentActivity?.openMemberIdErrorDialog()
             } else {
-//                currentActivity?.customerName = memberInfoArray[2]
                 currentActivity?.customerName = memberInfoArray[2]
                 currentActivity?.customerTurn = memberInfoArray[3].toInt()
+                Log.i("response", "${memberInfoArray[2]} , ${memberInfoArray[3]}")
+                currentActivity?.customerInfoListener?.registerCustomer(currentActivity!!)
+                currentActivity?.showNameCheckDialog()
             }
-
             super.onPostExecute(result)
         }
 

@@ -38,7 +38,6 @@ class CustomerMenuAsyncTask : AsyncTask<Unit, Unit, Array<String>?>() {
                     reader!!.close()
                 } catch (e: IOException) {
                     e.printStackTrace()
-                    Log.i("로그", "reader: ${e}")
                 }
             }
             if (writer != null) {
@@ -49,7 +48,6 @@ class CustomerMenuAsyncTask : AsyncTask<Unit, Unit, Array<String>?>() {
                     clientSocket!!.close()
                 } catch (e: IOException) {
                     e.printStackTrace()
-                    Log.i("로그", " clientSocket: ${e}")
                 }
             }
         } catch (e: IOException) {

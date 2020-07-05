@@ -129,10 +129,10 @@ class NonMemberRegister : androidx.fragment.app.Fragment() {
 
                 Toast.makeText(context, "등록되었습니다!", Toast.LENGTH_SHORT).show()
             NonMemberRegisterAsyncTask(this@NonMemberRegister).execute(user_name_input_editText.text.toString(),user_phone_number_editText.text.toString(), people_number_editText.text.toString())
-//                startActivity<RegisterCheck>(
-//                    "USER_NAME" to user_name_input_editText.text.toString(),
-//                    "USER_PHONE_NUMBER" to user_phone_number_editText.toString()
-//                )
+                startActivity<RegisterCheck>(
+                    "CUSTOMER_NAME" to user_name_input_editText.text.toString(),
+                    "CUSTOMER_PHONE_NUMBER" to user_phone_number_editText.toString()
+                )
 
         }
 
@@ -182,7 +182,7 @@ class NonMemberRegister : androidx.fragment.app.Fragment() {
 
         }
 
-        override fun onPostExecute(result: Unit?) {
+        override fun onPostExecute(result: Unit) {
             super.onPostExecute(result)
         }
 

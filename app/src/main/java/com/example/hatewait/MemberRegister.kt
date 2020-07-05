@@ -6,6 +6,7 @@ import android.os.AsyncTask
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -168,34 +169,40 @@ class MemberRegister : Fragment() {
             val storeId= "s0000"
             val userId = params[0]
             val numOfGroup = params[1]
+
             try {
                 clientSocket = Socket(SERVERIP, PORT)
+                reader = BufferedReader(InputStreamReader(clientSocket.getInputStream(), "UTF-8"))
                 writer = PrintWriter(clientSocket.getOutputStream(), true)
                 writer.println("INSQUE;MEMBER;$storeId;$userId;$numOfGroup")
+                Log.i("request","INSQUE;MEMBER;$storeId;$userId;$numOfGroup")
             } catch (ioe: IOException) {
                 ioe.printStackTrace()
-            } finally {
-                writer.close()
             }
 
             try {
-                reader = BufferedReader(InputStreamReader(clientSocket.getInputStream(), "UTF-8"))
                 responseString = reader.readLine()
             } catch (ioe: IOException) {
                 ioe.printStackTrace()
             } finally {
+                writer.close()
                 reader.close()
                 clientSocket.close()
             }
+            Log.i("response", responseString)
             return responseString
         }
 
         override fun onPostExecute(result: String) {
             val currentActivity = activityReference.get()
             val memberInfoArray = result.split(";")
-            if (memberInfoArray[0] == "ERROR" && memberInfoArray[1] == "NOTEXIST") {
+            Log.i("response", "${memberInfoArray[0]}")
+            Log.i("response", "왜 안뜨누?")
+//            원래는 && 이여야하는데 지금 ... 한글 깨짐현상이있음.
+            if (memberInfoArray[0] == "ERROR" || memberInfoArray[1] == "NOTEXIST") {
                 currentActivity?.openMemberIdErrorDialog()
             } else {
+//                currentActivity?.customerName = memberInfoArray[2]
                 currentActivity?.customerName = memberInfoArray[2]
                 currentActivity?.customerTurn = memberInfoArray[3].toInt()
             }

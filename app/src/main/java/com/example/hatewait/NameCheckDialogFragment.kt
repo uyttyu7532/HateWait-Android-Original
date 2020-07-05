@@ -26,6 +26,7 @@ class NameCheckDialogFragment : DialogFragment() {
 //    롤리팝 이하버전은 지원 X
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+
         //                .setPositiveButtonIcon(R.drawable)
         return activity?.let {
             val builder = AlertDialog.Builder(it)

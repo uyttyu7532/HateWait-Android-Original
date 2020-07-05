@@ -5,7 +5,10 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +19,7 @@ import com.daimajia.swipe.util.Attributes
 import com.example.hatewait.model.newClient
 import com.example.hatewait.socket.*
 import com.google.firebase.messaging.FirebaseMessaging
+import es.dmoral.toasty.Toasty
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -26,9 +30,11 @@ var clientList = ArrayList<ClientData>()
 lateinit var mAdapter: SwipeRecyclerViewAdapter
 lateinit var listContext: Context
 lateinit var totalWaitingNumView: TextView
+
 //lateinit var autoCallSwitchView: Switch
 var called = HashMap<String, Boolean>()
-lateinit var pref:SharedPreferences
+lateinit var pref: SharedPreferences
+
 
 class StoreWaitingList : AppCompatActivity() {
 
@@ -124,7 +130,12 @@ class StoreWaitingList : AppCompatActivity() {
                             .equals("") || addWaitingPerson.text.toString()
                             .equals("") || addWaitingPhonenum.text.toString().equals("")
                     ) {
-
+                        Toasty.error(
+                            listContext,
+                            "대기 손님 정보를 모두 입력해주세요.",
+                            Toast.LENGTH_SHORT,
+                            true
+                        ).show()
                     } else {
                         var newclient = newClient(
                             name = addWaitingName.text.toString(),
@@ -132,8 +143,14 @@ class StoreWaitingList : AppCompatActivity() {
                             phoneNum = addWaitingPhonenum.text.toString()
                         )
 
-                        //TODO asynctask 실행하기
                         AddCustomerAsyncTask().execute(newclient)
+                        StoreWaitingListAsyncTask().execute()
+                        Toasty.success(
+                            listContext,
+                            addWaitingName.text.toString() + " 손님 추가 완료",
+                            Toast.LENGTH_SHORT,
+                            true
+                        ).show()
                         dismiss()
                     }
                 }
@@ -171,20 +188,20 @@ fun setRecyclerView() {
     mAdapter = SwipeRecyclerViewAdapter(clientList!!, called, clicked, pref, listContext)
     mAdapter.mode = Attributes.Mode.Single
 
-//        mAdapter.itemClickListener = object : SwipeRecyclerViewAdapter.onItemClickListener {
-//            override fun onItemClick(
-//                holder: SwipeRecyclerViewAdapter.SimpleViewHolder,
-//                view: View,
-//                position: Int
-//            ) {
-//                Log.d("position", position?.toString())
-//                if (holder.detailView.visibility == GONE) {
-//                    holder.detailView.visibility = VISIBLE
-//                } else {
-//                    holder.detailView.visibility = GONE
-//                }
-//            }
-//        }
+    mAdapter.itemClickListener = object : SwipeRecyclerViewAdapter.onItemClickListener {
+        override fun onItemClick(
+            holder: SwipeRecyclerViewAdapter.SimpleViewHolder,
+            view: View,
+            position: Int
+        ) {
+            Log.d("position", position?.toString())
+            if (holder.detailView.visibility == GONE) {
+                holder.detailView.visibility = VISIBLE
+            } else {
+                holder.detailView.visibility = GONE
+            }
+        }
+    }
     mRecyclerView.adapter = mAdapter
 }
 

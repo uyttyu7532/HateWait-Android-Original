@@ -22,9 +22,8 @@ class CancelAsyncTask : AsyncTask<String, Unit, Unit>() {
                     StandardCharsets.UTF_8
                 )
             )
-            // TODO 삭제할 명단 :::: DELQUE;가게 id;손님id
             Log.i("로그: 본인 대기열 삭제 요청", "DELQUE;MEMBER;${params[0]}")
-            writer!!.println("DELQUE;STORE;${STOREID};${params[0]}")
+            writer!!.println("DELQUE;MEMBER;${params[0]}")
 
             val addCustomerResponse: String = reader!!.readLine()
             Log.i("로그: del서버응답", addCustomerResponse)

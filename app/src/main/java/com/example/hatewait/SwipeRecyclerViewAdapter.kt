@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.row.view.*
 import org.jetbrains.anko.backgroundColorResource
 import java.util.*
 import android.content.Context
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.example.hatewait.fcm.FcmPush
 import com.example.hatewait.socket.*
 import kotlin.collections.ArrayList
@@ -70,35 +71,38 @@ class SwipeRecyclerViewAdapter(
             callBtn.setOnClickListener { v ->
                 val position = adapterPosition
                 if (called.containsKey(items[position].phone) && called[items[position].phone]!!) {
+                    //TODO 원래는 이 if의 내용이 없어야 함!!!
                     setShared(pref, items[position].phone, false)
                     called[items[position].phone] = false
                     this.bottom_wrapper_left.backgroundColorResource = R.color.white
-                    Toasty.error(itemView.context, items[position].phone, Toast.LENGTH_SHORT, true)
-                        .show()
                 } else {
                     setShared(pref, items[position].phone, true)
                     called[items[position].phone] = true
                     this.bottom_wrapper_left.backgroundColorResource = R.color.colorCall
                     Toasty.warning(
                         itemView.context,
-                        items[position].name+" 손님 호출 완료.",
+                        items[position].name + " 손님 호출 완료.",
                         Toast.LENGTH_SHORT,
                         true
                     ).show()
 
 
-                    callCustomer(items[position].phone,items[position].id, "${AUTONUM}번째 순서 전 입니다. 가게 앞으로 와주세요.")
+                    callCustomer(
+                        items[position].phone,
+                        items[position].id,
+                        "${AUTONUM}번째 순서 전 입니다. 가게 앞으로 와주세요."
+                    )
 
                 }
             }
 
             clientView.setOnClickListener { v ->
                 val position = adapterPosition
-                if (clicked.containsKey(items[position].phone) && clicked[items[position].phone]!! ) {
+                if (clicked.containsKey(items[position].phone) && clicked[items[position].phone]!!) {
                     clicked[items[position].phone] = false
                     detailView.visibility = View.GONE
 
-                }else{
+                } else {
 
                     clicked[items[position].phone] = true
 
@@ -107,7 +111,6 @@ class SwipeRecyclerViewAdapter(
             }
         }
     }
-
 
 
     override fun onBindViewHolder(
@@ -120,7 +123,7 @@ class SwipeRecyclerViewAdapter(
 
         viewHolder.clientNameView.text = item.name
         viewHolder.clientNumView.text = "(" + item.peopleNum + "명)"
-        viewHolder.clientPhoneView.text = "0"+item.phone
+        viewHolder.clientPhoneView.text = "0" + item.phone
 
         viewHolder.detailView1.text =
             "대기열에 추가된 시간: 2020-05-03-09:14:02"
@@ -142,17 +145,20 @@ class SwipeRecyclerViewAdapter(
         viewHolder.swipeLayout.addSwipeListener(object : SwipeLayout.SwipeListener {
             override fun onClose(layout: SwipeLayout) { //when the SurfaceView totally cover the BottomView.
             }
+
             override fun onUpdate(
                 layout: SwipeLayout,
                 leftOffset: Int,
                 topOffset: Int
             ) {
             }
+
             override fun onStartOpen(layout: SwipeLayout) {
             }
 
             override fun onOpen(layout: SwipeLayout) { //when the BottomView totally show.
             }
+
             override fun onStartClose(layout: SwipeLayout) {}
             override fun onHandRelease(
                 layout: SwipeLayout,
@@ -165,21 +171,43 @@ class SwipeRecyclerViewAdapter(
 
         // db목록에서 대기손님지우기?
         viewHolder.delBtn.setOnClickListener { view ->
-            DelCustomerAsyncTask().execute(items[position].id)
+            SweetAlertDialog(view.context, SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("${items[position].name} 손님을 정말로 리스트에서 삭제하시겠습니까?")
+                .setContentText("\n")
+                .setConfirmText("삭제")
+                .setConfirmClickListener { sDialog ->
 
-            mItemManger.removeShownLayouts(viewHolder.swipeLayout)
-            items.removeAt(position)
-            notifyItemRemoved(position)
-            notifyItemRangeChanged(position, items.size)
-            mItemManger.closeAllItems()
+                    Toasty.error(
+                        view.context,
+                        "${items[position].name} 손님 삭제 완료",
+                        Toast.LENGTH_SHORT,
+                        true
+                    ).show()
 
-            // 호출한 손님 목록에서도 지우기
-            if (called.containsKey(items[position].phone) && called[items[position].phone]!!) {
-                setShared(pref, items[position].phone, false)
-                called[items[position].phone] = false
-            }
+                    DelCustomerAsyncTask().execute(items[position].id)
 
-            Toasty.error(view.context, "삭제되었습니다", Toast.LENGTH_SHORT, true).show()
+
+                    mItemManger.removeShownLayouts(viewHolder.swipeLayout)
+                    items.removeAt(position)
+                    notifyItemRemoved(position)
+                    notifyItemRangeChanged(position, items.size)
+                    mItemManger.closeAllItems()
+
+                    // 호출한 손님 목록에서도 지우기
+                    if (called.containsKey(items[position].phone) && called[items[position].phone]!!) {
+                        setShared(pref, items[position].phone, false)
+                        called[items[position].phone] = false
+                    }
+
+                    StoreWaitingListAsyncTask().execute()
+                    sDialog.dismissWithAnimation()
+                }
+                .setCancelButton(
+                    "아니오"
+                ) { sDialog -> sDialog.dismissWithAnimation() }
+                .show()
+
+
         }
 
         if (called.containsKey(items[position].phone) && called[items[position].phone]!!) {
@@ -188,7 +216,7 @@ class SwipeRecyclerViewAdapter(
             viewHolder.bottom_wrapper_left.backgroundColorResource = R.color.white
         }
 
-        if (clicked.containsKey(items[position].phone) && clicked[items[position].phone]!! ) {
+        if (clicked.containsKey(items[position].phone) && clicked[items[position].phone]!!) {
             viewHolder.detailView.visibility = View.VISIBLE
         } else {
             viewHolder.detailView.visibility = View.GONE
@@ -206,10 +234,10 @@ class SwipeRecyclerViewAdapter(
 }
 
 
-fun callCustomer(phone:String, id:String, message:String){
+fun callCustomer(phone: String, id: String, message: String) {
     //푸시를 받을 유저의 UID가 담긴 destinationUid 값을 넣어준후 fcmPush클래스의 sendMessage 메소드 호출
     val fcmPush = FcmPush()
-    fcmPush?.sendMessage(phone,message)
+    fcmPush?.sendMessage(phone, message)
     // 서버쪽에서 문자메시지 보내기
     PushMessageAsyncTask().execute(id)
 }

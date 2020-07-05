@@ -4,7 +4,7 @@ import java.io.*
 import java.net.Socket
 
 
-const val SERVERIP: String = "192.168.0.3"
+const val SERVERIP: String = "192.168.35.244"
 const val PORT = 3000// port num
 var STOREID = "s0000"
 var CUSTOMERID = "m0001"

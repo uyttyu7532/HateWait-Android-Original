@@ -73,7 +73,6 @@ class AddCustomerAsyncTask : AsyncTask<newClient, Unit, Unit>() {
 
     override fun onPostExecute(result: Unit?) {
         super.onPostExecute(result)
-        Toasty.success(listContext, "추가되었습니다", Toast.LENGTH_SHORT, true).show()
         setRecyclerView()
     }
 

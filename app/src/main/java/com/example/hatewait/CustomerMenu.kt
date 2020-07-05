@@ -7,10 +7,14 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.example.hatewait.socket.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -21,6 +25,8 @@ lateinit var customerNameView: TextView
 lateinit var my_cancel_button: TextView
 lateinit var my_refresh_button: ImageView
 lateinit var recentRefreshTime: TextView
+lateinit var waitingNumText: TextView
+lateinit var customerWaiting: LinearLayout
 
 class CustomerMenu : AppCompatActivity() {
 
@@ -34,12 +40,9 @@ class CustomerMenu : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        var reservationTime = System.currentTimeMillis() + 1000*60*60*9
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
-        val curTime = dateFormat.format(Date(reservationTime))
-        recentRefreshTime.text = "최근 새로고침 시간: ${curTime}"
-        Log.i("로그","onresume 손님메뉴")
-        CustomerMenuAsyncTask().execute()
+
+        Log.i("로그", "onresume 손님메뉴")
+        CustomerMenuAsyncTask().execute(CUSTOMERID)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,28 +61,42 @@ class CustomerMenu : AppCompatActivity() {
 
     fun init() {
 
-        waitingStoreView = findViewById<TextView>(R.id.waitingStoreView)
-        customerWaitingNum = findViewById<TextView>(R.id.customerWaitingNum)
-        customerMarquee = findViewById<TextView>(R.id.customerMarquee)
-        customerNameView = findViewById<TextView>(R.id.customerNameView)
-        my_cancel_button = findViewById<TextView>(R.id.my_cancel_button)
-        my_refresh_button = findViewById<ImageView>(R.id.my_refresh_button)
-        recentRefreshTime = findViewById<TextView>(R.id.recentRefreshTime)
+        waitingStoreView = findViewById(R.id.waitingStoreView)
+        customerWaitingNum = findViewById(R.id.customerWaitingNum)
+        customerMarquee = findViewById(R.id.customerMarquee)
+        customerNameView = findViewById(R.id.customerNameView)
+        my_cancel_button = findViewById(R.id.my_cancel_button)
+        my_refresh_button = findViewById(R.id.my_refresh_button)
+        recentRefreshTime = findViewById(R.id.recentRefreshTime)
+        recentRefreshTime = findViewById(R.id.recentRefreshTime)
+        waitingNumText = findViewById(R.id.waitingNumText)
+        customerWaiting = findViewById(R.id.customerWaiting)
 
         my_cancel_button.setOnClickListener {
             // storeid, customerid
-            DelCustomerAsyncTask().execute()
+            SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("정말 대기를 그만두시겠습니까?")
+                .setContentText("\n")
+                .setConfirmText("예")
+                .setConfirmClickListener { sDialog ->
+                    CancelAsyncTask().execute(CUSTOMERID)
+                    CustomerMenuAsyncTask().execute(CUSTOMERID)
+                    sDialog.dismissWithAnimation()
+                }
+                .setCancelButton(
+                    "아니오"
+                ) { sDialog -> sDialog.dismissWithAnimation() }
+                .show()
         }
 
         my_refresh_button.setOnClickListener {
-            // 내 id
-            CustomerMenuAsyncTask().execute()
+            CustomerMenuAsyncTask().execute(CUSTOMERID)
         }
 
 
         customView = layoutInflater.inflate(R.layout.activity_name_check_dialog, null)
         if (intent.hasExtra("Notification")) {
-            val questionDialog = SweetAlertDialog(this,SweetAlertDialog.WARNING_TYPE)
+            val questionDialog = SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
                 .setTitleText("가게에 오셔서 직원에게 안내를 받으세요. 가게에 오실 건가요?")
                 .hideConfirmButton()
                 .setCustomView(customView)
@@ -89,14 +106,22 @@ class CustomerMenu : AppCompatActivity() {
                 questionDialog.dismissWithAnimation()
             }
             noButton.setOnClickListener {
-                CancelAsyncTask().execute()
+                CancelAsyncTask().execute(CUSTOMERID)
                 questionDialog.dismissWithAnimation()
             }
         }
+        customerMarquee.text = "내 차례가 되면 상태바 알림과 문자 알림이 발송됩니다. 취소 버튼을 눌러 대기를 취소할 수 있습니다."
+        customerMarquee.setSelected(true) // 마키 텍스트에 포커스
 
 
     }
 
+    override fun onDestroy() {
+//        메모리 누수 방지
+        customView = null
+        super.onDestroy()
+    }
+}
 
 //    private fun fcm() {
 //        // 현재 토큰을 db에 저장
@@ -110,11 +135,3 @@ class CustomerMenu : AppCompatActivity() {
 //        // 회원가입 or 회원 정보 수정시 본인 폰번호 subscribe하기.
 //        FirebaseMessaging.getInstance().subscribeToTopic("${customerPhoneNum}")
 //    }
-
-
-    override fun onDestroy() {
-//        메모리 누수 방지
-        customView = null
-        super.onDestroy()
-    }
-}

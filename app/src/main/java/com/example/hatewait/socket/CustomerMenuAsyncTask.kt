@@ -2,6 +2,8 @@ package com.example.hatewait.socket
 
 import android.os.AsyncTask
 import android.util.Log
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import com.example.hatewait.*
 import java.io.BufferedReader
 import java.io.IOException
@@ -12,11 +14,11 @@ import java.nio.charset.StandardCharsets
 import java.text.SimpleDateFormat
 import java.util.*
 
-class CustomerMenuAsyncTask : AsyncTask<Unit, Unit, Array<String>?>() {
+class CustomerMenuAsyncTask : AsyncTask<String?, Unit, Array<String>?>() {
 
     var CustomerMenuArray: Array<String>? = null
 
-    override fun doInBackground(vararg params: Unit?): Array<String>? { // 소켓 연결
+    override fun doInBackground(vararg params: String?): Array<String>? { // 소켓 연결
         try {
             clientSocket = Socket(SERVERIP, PORT)
             Log.i("로그", " customerMenuAsyncTask:: ok")
@@ -62,13 +64,18 @@ class CustomerMenuAsyncTask : AsyncTask<Unit, Unit, Array<String>?>() {
         Log.i("로그", " customerMenuAsyncTask-onPostExecute:: ok")
         //서버>앱: MAIN;MEMBER;customerName;waitingStoreName;waitingMyTurn
 
-        customerNameView.setText(result?.get(2) ?: "김손님")
-        waitingStoreView.setText(result?.get(3) ?: "대기중인 가게가 없습니다.")
-        customerWaitingNum.setText(result?.get(4) ?: "0")
-        customerMarquee.setText("내 차례가 되면 상태바 알림과 문자 알림이 발송됩니다. 취소 버튼을 눌러 대기를 취소할 수 있습니다. ")
-        customerMarquee.setSelected(true) // 마키 텍스트에 포커스
+        Log.i("로그 result?.get(3):", result?.get(3))
+        if(result?.get(3).equals("null")){
+            waitingStoreView.text = "대기중인 가게가 없습니다."
+            customerWaiting.visibility = GONE
+        }else{
+            waitingStoreView.text = result?.get(3)
+            customerWaitingNum.text = result?.get(4)
+            customerWaiting.visibility = VISIBLE
+        }
 
-        var reservationTime = System.currentTimeMillis() + 1000*60*60*9
+
+        var reservationTime = System.currentTimeMillis() + 1000 * 60 * 60 * 9
         val dateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
         val curTime = dateFormat.format(Date(reservationTime))
         recentRefreshTime.text = "최근 새로고침 시간: ${curTime}"

@@ -51,7 +51,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Add_waiting" />
+        <activity android:name=".AddWaiting" />
         <activity android:name=".StoreWaitingList" />
         <activity android:name=".BusinessHourPick" />
         <activity

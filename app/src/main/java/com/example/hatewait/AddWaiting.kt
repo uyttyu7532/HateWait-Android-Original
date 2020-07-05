@@ -3,7 +3,7 @@ package com.example.hatewait
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 
-class Add_waiting : AppCompatActivity() {
+class AddWaiting : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

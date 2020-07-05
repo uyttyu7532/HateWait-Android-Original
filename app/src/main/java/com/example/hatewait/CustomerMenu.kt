@@ -58,13 +58,13 @@ class CustomerMenu : AppCompatActivity() {
 
     fun init() {
 
-        waitingStoreView = findViewById(R.id.waitingStoreView) as TextView
-        customerWaitingNum = findViewById(R.id.customerWaitingNum) as TextView
-        customerMarquee = findViewById(R.id.customerMarquee) as TextView
-        customerNameView = findViewById(R.id.customerNameView) as TextView
-        my_cancel_button = findViewById(R.id.my_cancel_button) as TextView
-        my_refresh_button = findViewById(R.id.my_refresh_button) as ImageView
-        recentRefreshTime = findViewById(R.id.recentRefreshTime) as TextView
+        waitingStoreView = findViewById<TextView>(R.id.waitingStoreView)
+        customerWaitingNum = findViewById<TextView>(R.id.customerWaitingNum)
+        customerMarquee = findViewById<TextView>(R.id.customerMarquee)
+        customerNameView = findViewById<TextView>(R.id.customerNameView)
+        my_cancel_button = findViewById<TextView>(R.id.my_cancel_button)
+        my_refresh_button = findViewById<ImageView>(R.id.my_refresh_button)
+        recentRefreshTime = findViewById<TextView>(R.id.recentRefreshTime)
 
         my_cancel_button.setOnClickListener {
             // storeid, customerid

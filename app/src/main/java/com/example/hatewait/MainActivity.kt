@@ -45,10 +45,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-        autoLoginCheck()
         buttonInitialize()
         naverLoginInit()
         addTextChangeListener()
+    }
+
+    override fun onStart() {
+        autoLoginCheck()
+        super.onStart()
     }
 
     override fun onStop() {

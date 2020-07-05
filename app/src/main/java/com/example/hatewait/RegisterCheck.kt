@@ -24,12 +24,12 @@ class RegisterCheck : AppCompatActivity() {
 //        val customer_phone_number : String = intent.getStringExtra("USER_PHONE_NUMBER")
         val customer_turn : Int = intent.getIntExtra("CUSTOMER_TURN", 1)
         val spannableString_greetcustomer = SpannableString(String.format("%s 회원님 환영합니다.", customer_name))
-        spannableString_greetcustomer.setSpan(RelativeSizeSpan(1.5f), 0, customer_name.length, Spanned.SPAN_INTERMEDIATE)
-        spannableString_greetcustomer.setSpan(StyleSpan(Typeface.BOLD), 0, customer_name.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannableString_greetcustomer.setSpan(RelativeSizeSpan(1.5f), 0, customer_name.length + 1, Spanned.SPAN_INTERMEDIATE)
+        spannableString_greetcustomer.setSpan(StyleSpan(Typeface.BOLD), 0, customer_name.length + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 
         val spannableWaitingString = SpannableString(String.format("%d 번째 손님으로 등록되었습니다.", customer_turn))
-        spannableString_greetcustomer.setSpan(RelativeSizeSpan(1.5f), 0, customer_turn.toString().length, Spanned.SPAN_INTERMEDIATE)
-        spannableString_greetcustomer.setSpan(StyleSpan(Typeface.BOLD), 0, customer_name.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannableWaitingString.setSpan(RelativeSizeSpan(1.5f), 0, customer_turn.toString().length + 1, Spanned.SPAN_INTERMEDIATE)
+        spannableWaitingString.setSpan(StyleSpan(Typeface.BOLD), 0, customer_turn.toString().length + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 
         greeting_customer_message.text = spannableString_greetcustomer
         waiting_number_message.text = spannableWaitingString

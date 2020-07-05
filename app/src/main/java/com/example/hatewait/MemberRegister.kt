@@ -53,7 +53,7 @@ class MemberRegister : Fragment() {
         user_id_input_editText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 if (!verifyId(s.toString())) {
-                    user_id_input_layout.error = "특수문자나 공백은 허용되지 않습니다."
+                    user_id_input_layout.error = "특수문자나 공백은 허용되지 않습니다"
                     register_customer_button.isEnabled = false
                 } else {
                     user_id_input_layout.error = null
@@ -75,7 +75,7 @@ class MemberRegister : Fragment() {
         people_number_editText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 if (!verifyPeopleNumber(s.toString())) {
-                    people_number_layout.error = "단체 손님은 가게에 문의해주세요"
+                    people_number_layout.error = "단체 손님은 가게에 문의해주세요."
                     register_customer_button.isEnabled = false
                 } else {
                     people_number_layout.error = null

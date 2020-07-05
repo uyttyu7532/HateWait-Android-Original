@@ -62,19 +62,17 @@ class StoreMenuAsyncTask : AsyncTask<Unit, Unit, Array<String>?>() {
             super.onPostExecute(result)
             Log.i("로그", " storeMenuAsyncTask-onPostExecute:: ok")
             //서버>앱: MAIN;STORE;storeName;waitingNum;nextName;nextNum
-
-            storeNameView.setText(result?.get(2))
-            storeWaitingNum.setText(result?.get(3))
-            storeMarquee.setText(
-                String.format(
-                    "다음 순서 : %s 외 %d명 입니다. 호출 버튼을 눌러 다음 대기자에게 알림을 보내주세요. 다음 순서 : %s 외 %d명 입니다. 호출 버튼을 눌러 다음 대기자에게 알림을 보내주세요",
-                    result?.get(4),
-                    result?.get(5)?.toInt(),
-                    result?.get(4),
-                    result?.get(5)?.toInt()
-                )
+            STORENAME = result?.get(2) ?: "가게이름"
+            storeNameView.text = result?.get(2)
+            storeWaitingNum.text = result?.get(3)
+            storeMarquee.text = String.format(
+                "다음 순서 : %s 외 %d명 입니다. 호출 버튼을 눌러 다음 대기자에게 알림을 보내주세요. 다음 순서 : %s 외 %d명 입니다. 호출 버튼을 눌러 다음 대기자에게 알림을 보내주세요",
+                result?.get(4),
+                result?.get(5)?.toInt(),
+                result?.get(4),
+                result?.get(5)?.toInt()
             )
-            storeMarquee.setSelected(true) // 마키 텍스트에 포커스
+            storeMarquee.isSelected = true // 마키 텍스트에 포커스
         } catch (e: IOException) {
             e.printStackTrace()
             Log.i("로그", " storeMenuAsyncTask-onPostExecute:: ${e}")

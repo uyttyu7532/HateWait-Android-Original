@@ -10,7 +10,6 @@ import android.media.RingtoneManager
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.example.hatewait.CustomerMenu
-import com.example.hatewait.MainActivity
 import com.example.hatewait.R
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
@@ -38,10 +37,11 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         Log.d(TAG, "From: " + remoteMessage.from)
         Log.d(TAG, "Data: " + remoteMessage.data)
 
-        if(remoteMessage.notification != null) {
+        if (remoteMessage.notification != null) {
             Log.d(TAG, "Notification Message Body: ${remoteMessage.notification?.body}")
 
             sendNotification(remoteMessage.notification?.body)
+
         }
     }
 
@@ -49,39 +49,46 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     private fun sendNotification(body: String?) {
         val intent = Intent(this, CustomerMenu::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            Intent.FLAG_ACTIVITY_SINGLE_TOP
             putExtra("Notification", body)
         }
 
         val channelId = getString(R.string.default_notification_channel_id)
-        val description = "This is Colloc channel"
+//        val description = "This is Colloc channel"
         val importance = NotificationManager.IMPORTANCE_HIGH
 
-        var notificationManager: NotificationManager = this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        var notificationManager: NotificationManager =
+            this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        if( android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(channelId, "channelname", importance)
-            channel.description = description
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(channelId, "HateWait", importance)
+//            channel.description = description
             channel.enableLights(true)
-            channel.lightColor = Color.RED
+            channel.lightColor = Color.GREEN
             channel.enableVibration(true)
             channel.setShowBadge(false)
             notificationManager.createNotificationChannel(channel)
+
         }
 
-        var pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
+        var pendingIntent =
+            PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
         val notificationSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
-        var notificationBuilder = NotificationCompat.Builder(this,channelId)
+//        val fullScreenIntent = Intent(this, CustomerMenu::class.java)
+//        val fullScreenPendingIntent = PendingIntent.getActivity(this, 0,
+//            fullScreenIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        var notificationBuilder = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.drawable.main_logo)
-            .setContentTitle("HATEWAIT")
+            .setContentTitle("HateWait")
             .setContentText(body)
             .setAutoCancel(true)
             .setSound(notificationSound)
             .setContentIntent(pendingIntent)
+//            .setFullScreenIntent(fullScreenPendingIntent, true)
 
 
         notificationManager.notify(0, notificationBuilder.build())
-
-
     }
 }

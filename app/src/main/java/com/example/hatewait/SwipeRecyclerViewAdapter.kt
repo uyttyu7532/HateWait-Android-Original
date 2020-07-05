@@ -81,7 +81,7 @@ class SwipeRecyclerViewAdapter(
                     this.bottom_wrapper_left.backgroundColorResource = R.color.colorCall
                     Toasty.warning(
                         itemView.context,
-                        items[position].name + " 손님 호출 완료.",
+                        items[position].name + " 손님 호출 완료",
                         Toast.LENGTH_SHORT,
                         true
                     ).show()
@@ -90,7 +90,7 @@ class SwipeRecyclerViewAdapter(
                     callCustomer(
                         items[position].phone,
                         items[position].id,
-                        "${AUTONUM}번째 순서 전 입니다. 가게 앞으로 와주세요."
+                        "[${STORENAME}] ${AUTONUM}번째 순서 전 입니다. 가게 앞으로 와주세요."
                     )
 
                 }

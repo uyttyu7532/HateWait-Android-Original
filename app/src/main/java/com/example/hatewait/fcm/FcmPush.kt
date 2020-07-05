@@ -10,7 +10,7 @@ import java.io.IOException
 
 
 
-class FcmPush() {
+class FcmPush {
     val JSON = MediaType.parse("application/json; charset=utf-8")//Post전송 JSON Type
     val url = "https://fcm.googleapis.com/fcm/send" //FCM HTTP를 호출하는 URL
     val serverKey =
@@ -25,28 +25,29 @@ class FcmPush() {
         okHttpClient = OkHttpClient()
     }
 
-    fun test(context: Context) {
-        FirebaseInstanceId.getInstance().instanceId
-            .addOnCompleteListener(OnCompleteListener { task ->
-                if (!task.isSuccessful) {
-                    //Log.w(TAG, "getInstanceId failed", task.exception)
-                    return@OnCompleteListener
-                }
-
-                // Get new Instance ID token
-                val token = task.result?.token
-
-                // Log and toast
-                val msg = token
-                //Log.d(TAG, msg)
-                Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
-            })
-    }
+//    fun test(context: Context) {
+//        FirebaseInstanceId.getInstance().instanceId
+//            .addOnCompleteListener(OnCompleteListener { task ->
+//                if (!task.isSuccessful) {
+//                    //Log.w(TAG, "getInstanceId failed", task.exception)
+//                    return@OnCompleteListener
+//                }
+//
+//                // Get new Instance ID token
+//                val token = task.result?.token
+//
+//                // Log and toast
+//                val msg = token
+//                //Log.d(TAG, msg)
+//                Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+//            })
+//    }
 
     fun sendMessage(phoneNumber : String, message:String) {
    var pushDTO = PushDTO()
 //        pushDTO.to = token                   //푸시토큰 세팅
 //        pushDTO.to = "/topics/${phoneNumber}" // 토픽넣어주기(호출하는폰번호)
+        // TODO 주석
         pushDTO.to = "/topics/01093097866" // 토픽넣어주기(호출하는폰번호)
         pushDTO.notification?.title = "HateWait"  //푸시 타이틀 세팅
         pushDTO.notification?.body = "${message}" //푸시 메시지 세팅

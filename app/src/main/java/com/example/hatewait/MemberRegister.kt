@@ -185,16 +185,18 @@ class MemberRegister : Fragment() {
         override fun onPostExecute(result: String) {
             val currentActivity = activityReference.get()
             val memberInfoArray = result.split(";")
+//            Memory Leak 방지
+            if (currentActivity == null || currentActivity.isRemoving || currentActivity.isDetached) return
             Log.i("responseArray", "${memberInfoArray[0]}, ${memberInfoArray[1]}")
 //            ����ERROR 같이 앞에 이상한 기호가 붙기 때문에 contains 메소드 사용
             if (memberInfoArray[0].contains("ERROR") && memberInfoArray[1] == "NOTEXIST") {
-                currentActivity?.showMemberIdErrorDialog()
+                currentActivity.showMemberIdErrorDialog()
             } else {
-                currentActivity?.customerName = memberInfoArray[2]
-                currentActivity?.customerTurn = memberInfoArray[3].toInt()
+                currentActivity.customerName = memberInfoArray[2]
+                currentActivity.customerTurn = memberInfoArray[3].toInt()
                 Log.i("response", "${memberInfoArray[2]} , ${memberInfoArray[3]}")
-                currentActivity?.customerInfoListener?.registerCustomer(currentActivity)
-                currentActivity?.showNameCheckDialog()
+                currentActivity.customerInfoListener.registerCustomer(currentActivity)
+                currentActivity.showNameCheckDialog()
             }
             super.onPostExecute(result)
         }

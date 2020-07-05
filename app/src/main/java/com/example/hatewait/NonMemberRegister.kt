@@ -194,14 +194,16 @@ class NonMemberRegister : androidx.fragment.app.Fragment() {
 
         override fun onPostExecute(result: String) {
             val currentActivity = activityReference.get()
-            super.onPostExecute(result)
+            if (currentActivity == null || currentActivity.isRemoving || currentActivity.isDetached) return
+
 //            server response string : INSQUE;NONMEM;22
 //            마지막 delimeter ; 이후 '22'는 대기번호를 의미
             val customerTurnNumber = result.substringAfterLast(";").toInt()
-            currentActivity?.startActivity<RegisterCheck>(
+            currentActivity.startActivity<RegisterCheck>(
                 "CUSTOMER_NAME" to currentActivity.user_name_input_editText.text.toString(),
                 "CUSTOMER_TURN" to customerTurnNumber
             )
+            super.onPostExecute(result)
         }
 
     }

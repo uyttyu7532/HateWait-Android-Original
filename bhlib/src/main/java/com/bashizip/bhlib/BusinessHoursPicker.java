@@ -98,7 +98,6 @@ public class BusinessHoursPicker extends LinearLayout {
     public void setupActions(String day) {
 
         tv_dayOfWeek.setText(day);
-
         switch_open.setOnCheckedChangeListener((compoundButton, checked) ->
         {
             setOpenDay(checked);

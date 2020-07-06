@@ -40,24 +40,69 @@ class BusinessHourPick : AppCompatActivity() {
 //                Intent(this, MainActivity::class.java)
 //            intent.putExtra("BUSINESS_HOUR_LIST", bhs as Serializable?)
 //            startActivity(intent)
-            val result = parsingBusinessHour(bhs!!)
-            Log.i("HOUR", result)
+
+//            영업시간을 입력한 경우에만 영업시간 확인 다이얼로그 프래그먼트 출력
+            if (!bhs.isNullOrEmpty()) {
+                val result = parsingBusinessHour(bhs!!)
+//            result: 오전 1:00 - 오전 2:00 (휴무일 : 월요일, 목요일)
+                Toast.makeText(this, result, Toast.LENGTH_SHORT).show()
+                val businessTimeCheckFragment = BusinessHourCheckDialog()
+                val argumentBundle = Bundle()
+                argumentBundle.putString("NEW_BUSINESS_HOURS", result)
+                businessTimeCheckFragment.arguments = argumentBundle
+                businessTimeCheckFragment.show(this.supportFragmentManager, "BUSINESS_TIME_CHECK")
+            }
         }
 
     }
-    fun parsingBusinessHour(businessHourList : List<BusinessHours>) : String {
-        var businessTimeRange = ""
-        var holiday = ""
-//        var everyTimeHour = true
+    private fun parsingBusinessHour(businessHourList : List<BusinessHours>) : String {
+//        맨 첫번째 원소 시작-끝시간 담음
+        var businessTimeRange = "${businessHourList[0].from} - ${businessHourList[0].to}"
+        var holidays = arrayListOf("월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일")
+        var alwaysSameTimeBusiness = true
+//        첫 영업 시간 시작-끝시간으로 초기화
+        var businessTimeRangeArray : ArrayList<String> = arrayListOf(businessTimeRange)
+
+//      일주일 - 영업일 = 휴무일
         for (day in businessHourList) {
-//            휴무일인지 검사
-            if (!day.isOpenDay) {
-                holiday += day.dayOfWeek + " "
-                continue
-            } else {
-                businessTimeRange = "${day.from} ~ ${day.to}"
-            }
+            holidays.remove(day.dayOfWeek)
         }
-        return "$businessTimeRange ($holiday)"
+
+//        매일 영업시간이 같은지 체크
+        for (day in businessHourList) {
+                if (businessTimeRangeArray.contains("${day.from} - ${day.to}")) continue
+                else {
+                    alwaysSameTimeBusiness = false
+                    break
+                }
+        }
+//        매일 같은 영업시간이면
+        if (alwaysSameTimeBusiness) {
+            return if(holidays.isEmpty()) {
+//            휴일 없이 모든 날짜 영업시
+                "매일 $businessTimeRange"
+            } else {
+                val holiday = holidays.toString().removePrefix("[").removeSuffix("]")
+                "$businessTimeRange (휴무일 : ${holiday})"
+            }
+
+        } else {
+            //            하루라도 영업시간 다르면 영업요일별 근무시간 표시
+            var resultBusinessTimeString = ""
+            for (day in businessHourList) {
+                resultBusinessTimeString += "${day.dayOfWeek} : ${day.from} - ${day.to}\n"
+            }
+            return if (holidays.isEmpty()) {
+                resultBusinessTimeString
+            } else {
+                val holiday = holidays.toString().removePrefix("[").removeSuffix("]")
+                "$resultBusinessTimeString (휴무일 : ${holiday})"
+            }
+
+        }
+
+
+
+
     }
 }

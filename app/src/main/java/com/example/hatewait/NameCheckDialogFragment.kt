@@ -28,7 +28,8 @@ class NameCheckDialogFragment : DialogFragment() {
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
-             markedCustomerName = markCustomerName(arguments?.getString("CUSTOMER_NAME")!!)
+//    argument를 얻는 시점은 onCreateDialog (onCreate가 끝난 이후)
+     markedCustomerName = markCustomerName(arguments?.getString("CUSTOMER_NAME")!!)
 
 
         //                .setPositiveButtonIcon(R.drawable)

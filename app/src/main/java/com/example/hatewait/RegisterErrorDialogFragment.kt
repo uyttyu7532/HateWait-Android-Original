@@ -16,6 +16,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.fragment_register_error_dialog.*
 
 class RegisterErrorDialogFragment : DialogFragment() {
@@ -25,6 +26,10 @@ class RegisterErrorDialogFragment : DialogFragment() {
     private val customerIdEditText : TextInputEditText by lazy {
         customView?.findViewById<TextInputEditText>(R.id.member_id_editText)!!
     }
+    private val customerIdLayout : TextInputLayout by lazy {
+        customView?.findViewById<TextInputLayout>(R.id.member_id_layout)!!
+    }
+
 
     interface RegisterMemberDialogListener {
         fun applyText(memberId : String) : Unit
@@ -70,18 +75,19 @@ class RegisterErrorDialogFragment : DialogFragment() {
 
     //onCreateView에서 넘겨준 customView를 넘겨받음.
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val idRegex = Regex("^(?=.*[a-zA-Zㄱ-ㅎ가-힣0-9])[a-zA-Zㄱ-ㅎ가-힣0-9]{1,}$")
         fun verifyId(input_id : String) : Boolean = idRegex.matches(input_id)
 
         customerIdEditText.text = activity?.findViewById<TextInputEditText>(R.id.user_id_input_editText)?.text
-        super.onViewCreated(view, savedInstanceState)
+
         customerIdEditText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 if (!verifyId(s.toString())) {
-                    member_id_layout.error = "특수문자나 공백은 허용되지 않습니다."
+                    customerIdLayout.error = "특수문자나 공백은 허용되지 않습니다."
                 } else {
-                    member_id_layout.error = null
-                    member_id_layout.hint = null
+                    customerIdLayout.error = null
+                    customerIdLayout.hint = null
                 }
             }
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {

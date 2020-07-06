@@ -57,7 +57,7 @@ class StoreNameChangeDialog : AppCompatDialogFragment() {
             dialogListener = context as DialogListener
 
         } catch (e : ClassCastException) {
-            throw e
+            throw ClassCastException((context.toString() + "must implement Store Name Change Listener"))
         }
 
     }

@@ -177,35 +177,36 @@
                     android:layout_gravity="center"
                     android:text="전화번호"/>
 
-            <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/store_phone_number_editText_layout"
+            <!--    서버와 통신할 때는 반드시 하이픈을 제거해서 보내야한다. (시작숫자 0)   -->
+            <TextView
+                    android:id="@+id/store_phone_number_textView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:startIconDrawable="@drawable/phone_icon"
-                    app:startIconContentDescription="Name"
-                    app:counterMaxLength="11"
-                    app:endIconMode="clear_text">
-
-                <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/store_phone_number_editText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:enabled="true"
-                        android:text="02XXXXXXXX"
-                        android:inputType="phone"
-                        android:selectAllOnFocus="true"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-<!--            <EditText-->
-<!--                    android:id="@+id/store_phone_number_editText"-->
-<!--                    android:layout_width="wrap_content"-->
+                    android:textSize="20sp"
+                    android:layout_gravity="center"
+                    android:inputType="text"
+                    android:text="02-2257-5721"
+                    android:gravity="center"/>
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                    android:id="@+id/store_phone_number_editText_layout"-->
+<!--                    android:layout_width="match_parent"-->
 <!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginLeft="@dimen/store_input_left_margin"-->
-<!--                    android:enabled="false"-->
-<!--                    android:hint="가게 전화번호를 입력하세요"-->
-<!--                    android:text="02-XXXX-XXXX"-->
-<!--                    android:inputType="phone"/>-->
+<!--                    app:startIconDrawable="@drawable/phone_icon"-->
+<!--                    app:startIconContentDescription="Name"-->
+<!--                    app:counterMaxLength="11"-->
+<!--                    app:endIconMode="clear_text">-->
+
+<!--                <com.google.android.material.textfield.TextInputEditText-->
+<!--                        android:id="@+id/store_phone_number_editText"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:enabled="true"-->
+<!--                        android:text="02XXXXXXXX"-->
+<!--                        android:inputType="phone"-->
+<!--                        android:selectAllOnFocus="true"/>-->
+
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
+
         </LinearLayout>
 
         <LinearLayout
@@ -284,7 +285,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-
 
 
 

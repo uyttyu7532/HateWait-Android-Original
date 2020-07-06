@@ -56,8 +56,9 @@ dependencies {
 //    AppCompatButton library
     implementation 'com.android.support:appcompat-v7:28.0.0'
 
-    //    business hours time picker
-    implementation 'com.github.bashizip:business-hours-picker:v1.0.0-beta.2'
+    //    business hours time picker 7월 6일 업데이트 적용
+//    implementation 'com.github.bashizip:business-hours-picker:1.0.0-beta.2'
+    implementation project(path: ':bhlib')
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.android.support:gridlayout-v7:28.0.0'
 

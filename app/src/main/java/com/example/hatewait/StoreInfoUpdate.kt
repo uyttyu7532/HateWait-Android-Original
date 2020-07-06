@@ -63,7 +63,11 @@ class StoreInfoUpdate : AppCompatActivity(), StoreNameChangeDialog.DialogListene
                 }
 //                하나라도 공백이 있을 경우 or 입력 양식에 맞지 않을 경우 수정 완료 버튼 비활성화
                 update_store_info_button.isEnabled =
-                    (!store_address_editText.text.isNullOrBlank() && !store_capacity_number_editText.text.isNullOrBlank() && !store_phone_number_editText.text.isNullOrBlank() && !store_business_hours_text.text.isNullOrBlank() && store_phone_number_editText_layout.error == null)
+                    (!store_address_editText.text.isNullOrBlank()
+                            && !store_capacity_number_editText.text.isNullOrBlank()
+                            && !store_phone_number_editText.text.isNullOrBlank()
+                            && !store_business_hours_text.text.isNullOrBlank()
+                            && store_phone_number_editText_layout.error == null)
             }
 
             override fun beforeTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {

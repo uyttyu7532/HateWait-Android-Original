@@ -7,6 +7,7 @@ public class ValdationException extends Exception {
     }
 
     public ValdationException(String message,String day){
-        this(message.concat("\tfor day: "+day));
+//        this(message.concat("\tfor day: "+day));
+        this(message.concat(day));
     }
 }

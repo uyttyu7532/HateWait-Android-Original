@@ -2,6 +2,7 @@ package com.example.hatewait
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -39,6 +40,24 @@ class BusinessHourPick : AppCompatActivity() {
 //                Intent(this, MainActivity::class.java)
 //            intent.putExtra("BUSINESS_HOUR_LIST", bhs as Serializable?)
 //            startActivity(intent)
+            val result = parsingBusinessHour(bhs!!)
+            Log.i("HOUR", result)
         }
+
+    }
+    fun parsingBusinessHour(businessHourList : List<BusinessHours>) : String {
+        var businessTimeRange = ""
+        var holiday = ""
+//        var everyTimeHour = true
+        for (day in businessHourList) {
+//            휴무일인지 검사
+            if (!day.isOpenDay) {
+                holiday += day.dayOfWeek + " "
+                continue
+            } else {
+                businessTimeRange = "${day.from} ~ ${day.to}"
+            }
+        }
+        return "$businessTimeRange ($holiday)"
     }
 }

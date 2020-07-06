@@ -211,34 +211,35 @@ public class BusinessHoursPicker extends LinearLayout {
 
         if (from.length() < 1) {
             if (to.length() < 1) {
-                throw new ValdationException(getContext().getString(R.string.validation_exception_msg), dayOfWeek);
+//              throw new ValdationException(getContext().getString(R.string.validation_exception_msg), dayOfWeek);
+                throw new ValdationException(dayOfWeek, getContext().getString(R.string.validation_exception_msg));
             }
         }
 
+// 요일 수정 default: 일요일 setDayIndex 1 => 월요일 setDayIndex 1
 
-        if (dayOfWeek.equals(getContext().getString(R.string.bhv_sunday))) {
+        if (dayOfWeek.equals(getContext().getString(R.string.bhv_monday))) {
             businessHours.setDayIndex(1);
         }
 
-        if (dayOfWeek.equals(getContext().getString(R.string.bhv_monday))) {
+        if (dayOfWeek.equals(getContext().getString(R.string.bhv_tuesday))) {
             businessHours.setDayIndex(2);
         }
-
-        if (dayOfWeek.equals(getContext().getString(R.string.bhv_tuesday))) {
-            businessHours.setDayIndex(3);
-        }
         if (dayOfWeek.equals(getContext().getString(R.string.bhv_wednesday))) {
-            businessHours.setDayIndex(4);
+            businessHours.setDayIndex(3);
         }
 
         if (dayOfWeek.equals(getContext().getString(R.string.bhv_thursday))) {
-            businessHours.setDayIndex(5);
+            businessHours.setDayIndex(4);
         }
 
         if (dayOfWeek.equals(getContext().getString(R.string.bhv_friday))) {
-            businessHours.setDayIndex(6);
+            businessHours.setDayIndex(5);
         }
         if (dayOfWeek.equals(getContext().getString(R.string.bhv_saturday))) {
+            businessHours.setDayIndex(6);
+        }
+        if (dayOfWeek.equals(getContext().getString(R.string.bhv_sunday))) {
             businessHours.setDayIndex(7);
         }
         return businessHours;

@@ -17,5 +17,5 @@
     <string name="bh_choose_business_hours">영업시간을 설정해주세요!</string>
     <string name="apply">Appliquer</string>
     <string name="all_day">24h</string>
-    <string name="validation_exception_msg">Invalid business hours</string>
+    <string name="validation_exception_msg">의 영업시간을 설정해주세요</string>
 </resources>

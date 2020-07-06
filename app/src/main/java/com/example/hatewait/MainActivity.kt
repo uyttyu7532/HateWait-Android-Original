@@ -249,7 +249,6 @@ class MainActivity : AppCompatActivity() {
                 }
                 isCustomerMode = true
             }
-            else -> true
         }
     }
 

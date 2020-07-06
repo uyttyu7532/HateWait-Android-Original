@@ -60,7 +60,11 @@ class BusinessHourPick : AppCompatActivity(), BusinessHourCheckDialog.TimeCheckL
 
     private fun parsingBusinessHour(businessHourList : List<BusinessHours>) : String {
 //        맨 첫번째 원소 시작-끝시간 담음
-        var businessTimeRange = "${businessHourList[0].from} - ${businessHourList[0].to}"
+        var businessTimeRange = if (businessHourList[0].from != resources.getString(R.string.all_day)) {
+                                    "${businessHourList[0].from} - ${businessHourList[0].to}"
+                                    } else {
+                                        resources.getString(R.string.all_day)
+                                    }
         var holidays = arrayListOf("월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일")
         var alwaysSameTimeBusiness = true
 //        첫 영업 시간 시작-끝시간으로 초기화
@@ -73,6 +77,7 @@ class BusinessHourPick : AppCompatActivity(), BusinessHourCheckDialog.TimeCheckL
 
 //        매일 영업시간이 같은지 체크
         for (day in businessHourList) {
+//            24시간일 경우에..?
                 if (businessTimeRangeArray.contains("${day.from} - ${day.to}")) continue
                 else {
                     alwaysSameTimeBusiness = false
@@ -93,7 +98,14 @@ class BusinessHourPick : AppCompatActivity(), BusinessHourCheckDialog.TimeCheckL
             //            하루라도 영업시간 다르면 영업요일별 근무시간 표시
             var resultBusinessTimeString = ""
             for (day in businessHourList) {
-                resultBusinessTimeString += "${day.dayOfWeek} : ${day.from} - ${day.to}\n"
+//                24시가 아니면 from to 형식
+                resultBusinessTimeString +=
+                    if(day.from != resources.getString(R.string.all_day)) {
+                        "${day.dayOfWeek} : ${day.from} - ${day.to}\n"
+                    } else {
+//                    24시면 24시 표시
+                    "${day.dayOfWeek} : ${day.from}\n"
+                    }
             }
             return if (holidays.isEmpty()) {
                 resultBusinessTimeString

@@ -6,9 +6,11 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.View.*
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.materialdialogs.MaterialDialog
@@ -30,6 +32,9 @@ var clientList = ArrayList<ClientData>()
 lateinit var mAdapter: SwipeRecyclerViewAdapter
 lateinit var listContext: Context
 lateinit var totalWaitingNumView: TextView
+lateinit var autoCallBtn: CardView
+lateinit var autoCallBtnText: TextView
+
 
 //lateinit var autoCallSwitchView: Switch
 var called = HashMap<String, Boolean>()
@@ -47,7 +52,8 @@ class StoreWaitingList : AppCompatActivity() {
         pref = listContext.getSharedPreferences("myPref", Context.MODE_PRIVATE)
         mRecyclerView = findViewById<View>(R.id.myRecyclerView) as RecyclerView
         totalWaitingNumView = findViewById<View>(R.id.totalWaitingNum) as TextView
-//        autoCallSwitchView = findViewById<View>(R.id.autoCallSwitch) as Switch
+        autoCallBtn = findViewById<View>(R.id.auto_call_btn) as CardView
+        autoCallBtnText = findViewById<View>(R.id.auto_call_btn_text) as TextView
 
 //        // 임시로 여기에
 //        //Get Firebase FCM token
@@ -102,16 +108,12 @@ class StoreWaitingList : AppCompatActivity() {
             // 비동기에서 작업이 끝날때 swiperefresh.isRefreshing = false해줘야함
             swiperefresh.isRefreshing = false
         }
-//
-//        autoCallSwitch.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
-//            if (isChecked) {
-//                //자동호출 on
-//                AUTOCALL = true
-//            } else {
-//                //자동호출 off
-//                AUTOCALL = false
-//            }
-//        })
+
+        autoCallBtn.setOnClickListener{
+            AutoCallAysncTask().execute()
+        }
+
+
 
     }
 
@@ -184,7 +186,7 @@ class StoreWaitingList : AppCompatActivity() {
 
 // RecyclerView와 Adapter 연결
 fun setRecyclerView() {
-    totalWaitingNumView.text = "현재 ${clientList.size}팀 대기중"
+
 
     mRecyclerView!!.layoutManager =
         LinearLayoutManager(listContext, LinearLayoutManager.VERTICAL, false)
@@ -222,16 +224,7 @@ fun setRecyclerView() {
         }
     }
     mRecyclerView.adapter = mAdapter
+    totalWaitingNumView.text = "현재 ${clientList.size}팀 대기중"
 }
 
-//fun autocall(clientCallList: MutableList<ClientData>?) {
-//    if (clientCallList != null) {
-//        for (i in clientCallList) {
-//            callCustomer(i.phone, i.id)
-//            setShared(pref, i.phone, true)
-//            called[i.phone] = true
-//        }
-//    }
-//    setRecyclerView()
-//}
 

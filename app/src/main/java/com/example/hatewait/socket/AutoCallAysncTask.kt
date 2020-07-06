@@ -2,14 +2,18 @@ package com.example.hatewait.socket
 
 import android.os.AsyncTask
 import android.util.Log
+import android.widget.Toast
 import com.example.hatewait.*
+import es.dmoral.toasty.Toasty
 import hatewait.vo.QueueListSerializable
+import org.jetbrains.anko.backgroundColorResource
 import java.io.IOException
 import java.io.ObjectInputStream
 import java.io.PrintWriter
 import java.net.Socket
 
-class StoreWaitingListAsyncTask : AsyncTask<Unit, Unit, QueueListSerializable?>() {
+
+class AutoCallAysncTask : AsyncTask<Unit, Unit, QueueListSerializable?>() {
 
     var qls: QueueListSerializable? = null
 
@@ -17,7 +21,7 @@ class StoreWaitingListAsyncTask : AsyncTask<Unit, Unit, QueueListSerializable?>(
 
         try {
             clientSocket = Socket(SERVERIP, PORT)
-            Log.i("로그", "storeWaitingListAsyncTask:: ok")
+            Log.i("로그", "AutoCallAysncTask:: ok")
             writer = PrintWriter(clientSocket!!.getOutputStream(), true)
             writer!!.println("STRQUE;${STOREID}")
 
@@ -53,11 +57,10 @@ class StoreWaitingListAsyncTask : AsyncTask<Unit, Unit, QueueListSerializable?>(
         if (result != null) {
             try {
                 super.onPostExecute(result)
-                Log.i("로그", "storeWaitingListAsyncTask - onPostExecute :: ok")
+                Log.i("로그", "AutoCallAysncTask - onPostExecute :: ok")
                 Log.i("로그", "result ::" + result.toString() ?: "전달된 리스트가 없습니다.")
 
                 AUTONUM = result?.autonum
-                autoCallBtnText.text = "${AUTONUM}번째 팀까지 자동호출"
 
                 clientList.clear()
 
@@ -72,14 +75,35 @@ class StoreWaitingListAsyncTask : AsyncTask<Unit, Unit, QueueListSerializable?>(
                         )
                     clientList?.add(data_tmp)
                 }
-                totalWaitingNumView.text = "현재 ${clientList.size}팀 대기중"
+
+                var tempmessage = "손님 호출 완료:\n"
+                for (i in clientList) {
+                    if (i.turn.toInt() <= AUTONUM!!) {
+                        if (called[i.phone]!!) {
+                        } else {
+                            tempmessage += i.name + " "
+                            setShared(pref, i.phone, true)
+                            called[i.phone] = true
+
+                            callCustomer(
+                                i.phone,
+                                i.id,
+                                "[${STORENAME}] ${i.turn}번째 순서 전 입니다. 가게 앞으로 와주세요."
+                            )
+                        }
+//                        Toasty.success(
+//                            listContext,
+//                            tempmessage,
+//                            Toast.LENGTH_LONG,
+//                            true
+//                        ).show()
+                    }
+                }
                 setRecyclerView()
             } catch (e: Exception) {
                 e.printStackTrace()
                 Log.i("로그", " storeWaitingListAsyncTask-onPostExecute:: ${e}")
             }
-        } else {
-
         }
     }
 }

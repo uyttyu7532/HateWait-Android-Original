@@ -82,6 +82,7 @@ class SwipeRecyclerViewAdapter(
                     setShared(pref, items[position].phone, true)
                     called[items[position].phone] = true
                     this.bottomWrapperLeft.backgroundColorResource = R.color.colorCall
+                    Toasty.Config.getInstance().allowQueue(true).apply()
                     Toasty.warning(
                         itemView.context,
                         items[position].name + " 손님 호출 완료",
@@ -93,9 +94,8 @@ class SwipeRecyclerViewAdapter(
                     callCustomer(
                         items[position].phone,
                         items[position].id,
-                        "[${STORENAME}] ${AUTONUM}번째 순서 전 입니다. 가게 앞으로 와주세요."
+                        "[${STORENAME}] ${items[position].turn}번째 순서 전 입니다. 가게 앞으로 와주세요."
                     )
-
                 }
             }
 
@@ -183,6 +183,12 @@ class SwipeRecyclerViewAdapter(
                 .setConfirmText("삭제")
                 .setConfirmClickListener { sDialog ->
 
+                    // 호출한 손님 목록에서도 지우기 (제대로 동작하나 모르겠다.)
+                    if (called.containsKey(items[position].phone) && called[items[position].phone]!!) {
+                        setShared(pref, items[position].phone, false)
+                        called[items[position].phone] = false
+                    }
+
                     Toasty.error(
                         view.context,
                         "${items[position].name} 손님 삭제 완료",
@@ -199,13 +205,9 @@ class SwipeRecyclerViewAdapter(
                     notifyItemRangeChanged(position, items.size)
                     mItemManger.closeAllItems()
 
-                    // 호출한 손님 목록에서도 지우기
-                    if (called.containsKey(items[position].phone) && called[items[position].phone]!!) {
-                        setShared(pref, items[position].phone, false)
-                        called[items[position].phone] = false
-                    }
 
                     StoreWaitingListAsyncTask().execute()
+
                     sDialog.dismissWithAnimation()
                 }
                 .setCancelButton(

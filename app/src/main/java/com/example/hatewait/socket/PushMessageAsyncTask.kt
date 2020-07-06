@@ -3,7 +3,6 @@ package com.example.hatewait.socket
 import android.os.AsyncTask
 import android.util.Log
 import java.io.BufferedReader
-import java.io.IOException
 import java.io.InputStreamReader
 import java.io.PrintWriter
 import java.net.Socket
@@ -11,10 +10,6 @@ import java.nio.charset.StandardCharsets
 
 
 class PushMessageAsyncTask : AsyncTask<String, Unit, Unit>() {
-
-    private var clientSocket: Socket? = null
-    private var reader: BufferedReader? = null // 서버 < 앱
-    private var writer: PrintWriter? = null // 앱 > 서버
 
     override fun doInBackground(vararg params: String) { // 소켓 연결
         try {

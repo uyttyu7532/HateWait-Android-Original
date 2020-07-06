@@ -10,7 +10,6 @@ import android.view.*
 import android.widget.Toast
 import com.example.hatewait.socket.PORT
 import com.example.hatewait.socket.SERVERIP
-import com.twilio.rest.api.v2010.account.sip.ipaccesscontrollist.IpAddress
 import kotlinx.android.synthetic.main.activity_non_members_reigster.*
 import org.jetbrains.anko.support.v4.startActivity
 import java.io.BufferedReader

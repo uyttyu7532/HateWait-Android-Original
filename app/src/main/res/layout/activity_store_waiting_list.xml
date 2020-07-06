@@ -11,7 +11,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-
         <ImageView
                 android:id="@+id/refreshBtn"
                 android:layout_width="25dp"
@@ -32,17 +31,30 @@
                 android:layout_margin="10dp"
                 android:layout_marginRight="15dp"
                 android:visibility="invisible" />
-        <!--        <Switch-->
-        <!--                android:id="@+id/autoCallSwitch"-->
-        <!--                android:layout_width="wrap_content"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:layout_alignRight="@id/myRecyclerView"-->
-        <!--                android:layout_marginStart="10dp"-->
-        <!--                android:layout_marginTop="10dp"-->
-        <!--                android:layout_marginEnd="10dp"-->
-        <!--                android:layout_marginBottom="10dp"-->
-        <!--                android:checked="true"-->
-        <!--                android:text="0번째 팀까지 자동호출" />-->
+
+
+        <androidx.cardview.widget.CardView
+                android:id="@+id/auto_call_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_toLeftOf="@+id/refreshBtn"
+                android:backgroundTint="@color/colorAccent"
+                android:clickable="true"
+                android:elevation="5dp"
+                app:cardCornerRadius="5dp">
+
+            <TextView
+                    android:id="@+id/auto_call_btn_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="자동호출하기"
+                    android:textColor="#EFEFEF"
+                    android:visibility="gone">
+            </TextView>
+
+        </androidx.cardview.widget.CardView>
 
 
         <TextView
@@ -52,23 +64,24 @@
                 android:layout_alignLeft="@id/swiperefresh"
                 android:layout_margin="10dp"
                 android:text="현재 0팀 대기중"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="#000000" />
+                android:textColor="#000000"
+                android:textSize="20sp" />
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                 android:id="@+id/swiperefresh"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="40dp">
+                android:layout_marginTop="45dp">
 
             <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/myRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@+id/totalWaitingNum">
-            </androidx.recyclerview.widget.RecyclerView>
+                    android:layout_below="@+id/totalWaitingNum"/>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </RelativeLayout>
+
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/addFab"

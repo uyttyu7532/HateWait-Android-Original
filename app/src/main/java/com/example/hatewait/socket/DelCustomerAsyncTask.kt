@@ -2,6 +2,9 @@ package com.example.hatewait.socket
 
 import android.os.AsyncTask
 import android.util.Log
+import com.example.hatewait.ClientData
+import com.example.hatewait.clientList
+import com.example.hatewait.totalWaitingNumView
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -47,6 +50,14 @@ class DelCustomerAsyncTask : AsyncTask<String, Unit, Unit>() {
                     e.printStackTrace()
                 }
             }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    override fun onPostExecute(result: Unit?) {
+        try {
+            super.onPostExecute(result)
         } catch (e: Exception) {
             e.printStackTrace()
         }

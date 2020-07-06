@@ -6,17 +6,19 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.DialogFragment
 import com.bashizip.bhlib.BusinessHours
 import com.bashizip.bhlib.ValdationException
 import kotlinx.android.synthetic.main.activity_business_hour_pick.*
 import java.io.Serializable
 
-class BusinessHourPick : AppCompatActivity() {
+class BusinessHourPick : AppCompatActivity(), BusinessHourCheckDialog.TimeCheckListener {
+
+    private lateinit var updatedBusinessTime : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_business_hour_pick)
-
         init()
     }
 
@@ -43,18 +45,19 @@ class BusinessHourPick : AppCompatActivity() {
 
 //            영업시간을 입력한 경우에만 영업시간 확인 다이얼로그 프래그먼트 출력
             if (!bhs.isNullOrEmpty()) {
-                val result = parsingBusinessHour(bhs!!)
+                updatedBusinessTime = parsingBusinessHour(bhs!!)
 //            result: 오전 1:00 - 오전 2:00 (휴무일 : 월요일, 목요일)
-                Toast.makeText(this, result, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, updatedBusinessTime, Toast.LENGTH_SHORT).show()
                 val businessTimeCheckFragment = BusinessHourCheckDialog()
                 val argumentBundle = Bundle()
-                argumentBundle.putString("NEW_BUSINESS_HOURS", result)
+                argumentBundle.putString("NEW_BUSINESS_HOURS", updatedBusinessTime)
                 businessTimeCheckFragment.arguments = argumentBundle
                 businessTimeCheckFragment.show(this.supportFragmentManager, "BUSINESS_TIME_CHECK")
             }
         }
 
     }
+
     private fun parsingBusinessHour(businessHourList : List<BusinessHours>) : String {
 //        맨 첫번째 원소 시작-끝시간 담음
         var businessTimeRange = "${businessHourList[0].from} - ${businessHourList[0].to}"
@@ -100,9 +103,18 @@ class BusinessHourPick : AppCompatActivity() {
             }
 
         }
+    }
 
+    override fun onDialogPositiveClick(dialog: DialogFragment) {
+//        변경 버튼 클릭시 원래 액티비티에 결과 적용
+        dialog.dismiss()
+        val intent = Intent()
+        intent.putExtra("UPDATED_BUSINESS_TIME", updatedBusinessTime)
+        setResult(200, intent)
+        this@BusinessHourPick.finish()
+    }
 
-
-
+    override fun onDialogNegativeClick(dialog: DialogFragment) {
+//
     }
 }

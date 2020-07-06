@@ -1,6 +1,7 @@
 package com.example.hatewait
 
 import android.app.Dialog
+import android.content.Context
 import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
@@ -29,7 +30,7 @@ class BusinessHourCheckDialog : DialogFragment() {
                 .setIcon(resources.getDrawable(R.drawable.main_logo, context?.theme))
                 .setMessage("$updatedBusinessHours\n으로 변경하시겠어요?")
                 .setPositiveButton("변경", DialogInterface.OnClickListener { dialog, _ ->
-
+                    timeCheckListener.onDialogPositiveClick(this)
                 })
                 .setNegativeButton("취소", DialogInterface.OnClickListener { dialog, _ ->
                     dismiss()
@@ -39,14 +40,14 @@ class BusinessHourCheckDialog : DialogFragment() {
         } ?: throw IllegalStateException("Activity Can't be null")
     }
 
-//    override fun onAttach(context: Context) {
-//        super.onAttach(context)
-//        try {
-//            timeCheckListener = context as TimeCheckListener
-//        } catch (e: ClassCastException) {
-//            throw java.lang.ClassCastException((context.toString() + "must implement TimeCheckListener"))
-//        }
-//    }
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        try {
+            timeCheckListener = context as TimeCheckListener
+        } catch (e: ClassCastException) {
+            throw java.lang.ClassCastException((context.toString() + "must implement TimeCheckListener"))
+        }
+    }
 
 
 }

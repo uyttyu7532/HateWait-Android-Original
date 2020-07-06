@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import kotlinx.android.synthetic.main.activity_store_info_update.*
+import org.jetbrains.anko.startActivityForResult
 
 class StoreInfoUpdate : AppCompatActivity(), StoreNameChangeDialog.DialogListener, AutoCallNumberChangeDialog.DialogListener  {
 
@@ -13,7 +14,7 @@ class StoreInfoUpdate : AppCompatActivity(), StoreNameChangeDialog.DialogListene
     //    첫자리는 반드시 0으로 시작.
     private val storePhoneRegex = Regex("^[0](\\d{1,2})(\\d{3,4})(\\d{4})")
     fun verifyPhoneNumber (input_phone_number : String) : Boolean = input_phone_number.matches(storePhoneRegex)
-
+    private val REQUEST_CODE_BUSINESS_TIME = 2000
     private fun openStoreNameChangeDialog() {
 //            여기 아직 확실하지않음.
         val storeNameChangeDialog = StoreNameChangeDialog()
@@ -48,7 +49,7 @@ class StoreInfoUpdate : AppCompatActivity(), StoreNameChangeDialog.DialogListene
         }
         store_business_hours_text.setOnClickListener {
             val intent = Intent(this@StoreInfoUpdate, BusinessHourPick::class.java)
-            startActivity(intent)
+            startActivityForResult(intent, 2000)
         }
         auto_call_number.setOnClickListener {
             openAutoCallNumberChangeDialog()
@@ -79,6 +80,16 @@ class StoreInfoUpdate : AppCompatActivity(), StoreNameChangeDialog.DialogListene
 
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
 
-
+        if (requestCode == REQUEST_CODE_BUSINESS_TIME) {
+            if (resultCode == 200) {
+                store_business_hours_text.text = data?.getStringExtra("UPDATED_BUSINESS_TIME")
+            }
+            if (resultCode == 400) {
+//                nothing to do (failed to update business Time)
+            }
+        }
+    }
 }

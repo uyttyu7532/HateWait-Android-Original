@@ -149,14 +149,13 @@
                     android:layout_gravity="center"
                     android:text="수용인원"/>
 
-            <EditText
-                    android:id="@+id/store_capacity_number_editText"
-                    android:layout_width="wrap_content"
+            <TextView
+                    android:id="@+id/store_capacity_number_textView"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/store_input_left_margin"
                     android:gravity="center"
-                    android:enabled="true"
-                    android:hint="수용 가능한 인원수를 입력하세요"
+                    android:textSize="@dimen/store_item_text"
                     android:text="50"
                     android:inputType="number"/>
         </LinearLayout>
@@ -182,7 +181,7 @@
                     android:id="@+id/store_phone_number_textView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/store_item_text"
                     android:layout_gravity="center"
                     android:inputType="text"
                     android:text="02-2257-5721"

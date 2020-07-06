@@ -8,14 +8,15 @@ import android.text.TextWatcher
 import kotlinx.android.synthetic.main.activity_store_info_update.*
 import org.jetbrains.anko.startActivityForResult
 
-class StoreInfoUpdate : AppCompatActivity(), StoreNameChangeDialog.DialogListener, AutoCallNumberChangeDialog.DialogListener, StorePhoneNumberChgangeDialog.DialogListener  {
+class StoreInfoUpdate : AppCompatActivity(),
+    StoreNameChangeDialog.DialogListener, AutoCallNumberChangeDialog.DialogListener,
+    StorePhoneNumberChgangeDialog.DialogListener, StoreCapacityNumberChangeDialog.DialogListener  {
 
     //    3자리 - 3 or 4자리 - 4자리
     //    첫자리는 반드시 0으로 시작.
     private val storePhoneRegex = Regex("^[0](\\d{1,2})(\\d{3,4})(\\d{4})")
     fun verifyPhoneNumber (input_phone_number : String) : Boolean = input_phone_number.matches(storePhoneRegex)
     private val REQUEST_CODE_BUSINESS_TIME = 2000
-
 
 
 //    interface class (DialogListener) function implements
@@ -31,6 +32,10 @@ class StoreInfoUpdate : AppCompatActivity(), StoreNameChangeDialog.DialogListene
         auto_call_number.text = autoCallNumber
     }
 
+    override fun applyCapacityNumber(capacityNumber: String) {
+        store_capacity_number_textView.text = capacityNumber
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_store_info_update)
@@ -40,21 +45,22 @@ class StoreInfoUpdate : AppCompatActivity(), StoreNameChangeDialog.DialogListene
     fun init() {
 
         store_name_edit_button.setOnClickListener {
-            val storeNameChangeDialog = StoreNameChangeDialog()
-            storeNameChangeDialog.show(supportFragmentManager, "STORE_NAME_CHANGE")
+            StoreNameChangeDialog().show(supportFragmentManager, "STORE_NAME_CHANGE")
         }
         store_business_hours_text.setOnClickListener {
             val intent = Intent(this@StoreInfoUpdate, BusinessHourPick::class.java)
             startActivityForResult(intent, 2000)
         }
         auto_call_number.setOnClickListener {
-            val autoCallNumberChangeDialog = AutoCallNumberChangeDialog()
-            autoCallNumberChangeDialog.show(supportFragmentManager, "AUTO_CALL_NUMBER_CHANGE")
+            AutoCallNumberChangeDialog().show(supportFragmentManager, "AUTO_CALL_NUMBER_CHANGE")
+        }
+        store_capacity_number_textView.setOnClickListener {
+            StoreCapacityNumberChangeDialog().show(supportFragmentManager, "STORE_CAPACITY_CHANGE")
         }
         store_phone_number_textView.setOnClickListener {
-            val storePhoneNumberChangeDialog = StorePhoneNumberChgangeDialog()
-            storePhoneNumberChangeDialog.show(supportFragmentManager, "STORE_PHONE_CHANGE")
+            StorePhoneNumberChgangeDialog().show(supportFragmentManager, "STORE_PHONE_CHANGE")
         }
+
 //        store_phone_number_editText.addTextChangedListener(object : TextWatcher {
 //            override fun afterTextChanged(s: Editable?) {
 //                if (!verifyPhoneNumber(s.toString())) {

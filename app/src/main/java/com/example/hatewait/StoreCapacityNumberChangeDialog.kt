@@ -15,32 +15,32 @@ import kotlinx.android.synthetic.main.activity_store_info_update.*
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
-class StorePhoneNumberChgangeDialog : DialogFragment() {
+class StoreCapacityNumberChangeDialog : DialogFragment() {
     var customView : View? = null
     private lateinit var dialogListener : DialogListener
 
-    val storePhoneLayout : TextInputLayout by lazy {
-    customView?.findViewById<TextInputLayout>(R.id.store_phone_layout)!!
+    val storeCapacityLayout : TextInputLayout by lazy {
+        customView?.findViewById<TextInputLayout>(R.id.store_capacity_layout)!!
     }
-    private val storePhoneEditText : TextInputEditText by lazy {
-        customView?.findViewById<TextInputEditText>(R.id.store_phone_editText)!!
+    val storeCapacityEditText : TextInputEditText by lazy {
+        customView?.findViewById<TextInputEditText>(R.id.store_capacity_editText)!!
+    }
+    interface DialogListener {
+        fun applyCapacityNumber(capacityNumber : String) : Unit
     }
 
-    interface DialogListener {
-        fun applyPhoneNumber(storePhoneNumber : String) : Unit
-    }
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
             val builder = AlertDialog.Builder(it)
             val inflater = requireActivity().layoutInflater
-            customView = inflater.inflate(R.layout.fragment_store_phone_change_dialog, null)
+            customView = inflater.inflate(R.layout.fragmet_store_capacity_change_dialog, null)
             builder.setView(customView)
-                .setTitle("가게 전화번호 수정")
+                .setTitle("가게 수용인원 수정")
                 .setNegativeButton("취소", DialogInterface.OnClickListener { dialog, _ ->
                     dismiss()
                 })
                 .setPositiveButton("변경", DialogInterface.OnClickListener { dialog, _ ->
-                    dialogListener.applyPhoneNumber(storePhoneEditText.text.toString())
+                    dialogListener.applyCapacityNumber(storeCapacityEditText.text.toString())
                 })
             builder.create()
         } ?: throw IllegalStateException("Activity Can't be null")
@@ -51,10 +51,8 @@ class StorePhoneNumberChgangeDialog : DialogFragment() {
         try {
             dialogListener = context as DialogListener
         } catch (e: ClassCastException) {
-            throw ClassCastException((context.toString() + "must implement Store Phone Number Change Listener"))
+             throw ClassCastException((context.toString() + "must implement Store Capacity Number Change Listener"))
         }
-
-
     }
 
     override fun onCreateView(
@@ -74,21 +72,17 @@ class StorePhoneNumberChgangeDialog : DialogFragment() {
         customView = null
         super.onDestroyView()
     }
-
     private fun init() {
-        val phoneRegex = Regex("^[0](\\d{2})(\\d{3,4})(\\d{3,4})")
-
-//        추후 PhoneNumberTextWatcher() 추가 고려
-//        Auto Hyphen로 유저 배려
-//        or Spinner를 통해 지역번호 선택할 수 있게
-        storePhoneEditText.setText(activity?.store_phone_number_textView?.text)
-        storePhoneEditText.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(storePhoneNumber: Editable?) {
-                if (!storePhoneNumber.toString().matches(phoneRegex)) {
-                    storePhoneLayout.error = "9~11자리 전화번호를 입력해주세요"
+//        첫자리 0으로 시작 불가 총 4자리수까지 입력가능.
+        val capacityRegex = Regex("^[1-9](\\d{1,3})")
+        storeCapacityEditText.setText(activity?.store_capacity_number_textView?.text)
+        storeCapacityEditText.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(storeCapacityNumber: Editable?) {
+                if (!storeCapacityNumber.toString().matches(capacityRegex)) {
+                    storeCapacityLayout.error = "4자리 이하 손님 수를 입력해주세요."
                 } else {
-                    storePhoneLayout.error = null
-                    storePhoneLayout.hint = null
+                    storeCapacityLayout.error = null
+                    storeCapacityLayout.hint = null
                 }
             }
 

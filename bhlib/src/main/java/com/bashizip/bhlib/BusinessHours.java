@@ -68,10 +68,10 @@ public class BusinessHours extends BasePojo implements Comparable<BusinessHours>
         this.to = to;
     }
 
-
+// , -  >> : ~
     @Override
     public String toString() {
-        return dayOfWeek + ", " + from + " - " + to;
+        return dayOfWeek + " : " + from + " ~ " + to;
     }
 
     @Override

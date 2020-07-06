@@ -64,7 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:entries="@array/busines_hours"
+            android:entries="@array/business_hours"
             android:spinnerMode="dropdown"
             tools:listitem="@layout/spinner_item_hours" />
 
@@ -89,7 +89,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:entries="@array/busines_hours"
+            android:entries="@array/business_hours"
             android:spinnerMode="dropdown"
             tools:listitem="@layout/spinner_item_hours" />
 

@@ -81,7 +81,7 @@
             android:textColor="@color/colorAccent"
             android:layout_marginTop="5dp"
             android:textSize="12sp"
-            android:text="*자동 호출번호가 몇 번째 팀에게 대기 알림 문자를 보낼지 결정합니다.\n번호를 눌러 설정하세요!"
+            android:text="*자동 호출번호가 몇 번째 팀에게 대기 알림 문자를 보낼지 결정합니다. 번호를 눌러 설정하세요!"
             android:layout_marginHorizontal="24dp"
             app:layout_constraintStart_toStartOf="@id/auto_call_number_layout"
             app:layout_constraintEnd_toEndOf="@id/auto_call_number_layout"
@@ -124,9 +124,10 @@
                 android:background="@drawable/textview_like_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingVertical="5dp"
                 android:gravity="center"
                 android:clickable="true"
-                android:text="매일 오전 11:00 - 오후 8:00 (휴무일: 토요일, 일요일)"
+                android:text="매일 오전 11:00 - 오후 8:00 \n(휴무일: 토요일, 일요일)"
                 android:textSize="15sp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
     </LinearLayout>

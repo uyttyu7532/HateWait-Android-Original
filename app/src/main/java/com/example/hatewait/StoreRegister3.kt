@@ -36,12 +36,6 @@ class StoreRegister3 : AppCompatActivity() {
         addTextChangeListener()
         button_continue.setOnClickListener {
 
-            var result = ""
-            result += intent.getStringExtra("STORE_NAME")
-            result += intent.getStringExtra("STORE_DESCRIPTION")
-            result += intent.getStringExtra("STORE_ID")
-            result += intent.getStringExtra("STORE_PASSWORD")
-            Toast.makeText(this, result, Toast.LENGTH_SHORT).show()
 //            마지막 4단계로 모두 넘겨버리기
             val intent = Intent(this, StoreRegister4::class.java)
             intent.putExtra("STORE_ID", intent.getStringExtra("STORE_ID"))

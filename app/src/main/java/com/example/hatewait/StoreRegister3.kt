@@ -1,14 +1,13 @@
 package com.example.hatewait
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
-import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_store_register3.*
 
 class StoreRegister3 : AppCompatActivity() {
@@ -16,8 +15,10 @@ class StoreRegister3 : AppCompatActivity() {
 //    한글로 시작하고 한글,영문,숫자,공백(띄어쓰기) 허용, 특수문자 X
     private val storeAddressRegex = Regex("^[가-힣]+[가-힣a-zA-Z0-9|\\-|,|\\s]{1,50}$")
     private val storePhoneRegex = Regex("^[0](\\d{2})(\\d{3,4})(\\d{3,4})")
-    fun verifyPhone(storePhone : String) : Boolean = storePhoneRegex.matches(storePhone)
-    fun verifyAddres(storeAddress : String) : Boolean = storeAddressRegex.matches(storeAddress)
+    private val storeCapacityRegex = Regex("[^0](\\d{0,3})")
+    fun verifyPhone (storePhone : String) : Boolean = storePhoneRegex.matches(storePhone)
+    fun verifyAddress (storeAddress : String) : Boolean = storeAddressRegex.matches(storeAddress)
+    fun verifyCapacity (capacityNumber : String) : Boolean = storeCapacityRegex.matches(capacityNumber)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +42,16 @@ class StoreRegister3 : AppCompatActivity() {
             result += intent.getStringExtra("STORE_ID")
             result += intent.getStringExtra("STORE_PASSWORD")
             Toast.makeText(this, result, Toast.LENGTH_SHORT).show()
+//            마지막 4단계로 모두 넘겨버리기
+            val intent = Intent(this, StoreRegister4::class.java)
+            intent.putExtra("STORE_ID", intent.getStringExtra("STORE_ID"))
+            intent.putExtra("STORE_PASSWORD", intent.getStringExtra("STORE_PASSWORD"))
+            intent.putExtra("STORE_NAME", intent.getStringExtra("STORE_NAME"))
+            intent.putExtra("STORE_DESCRIPTION", intent.getStringExtra("STORE_DESCRIPTION"))
+            intent.putExtra("STORE_ADDRESS", store_address_input_editText.text.toString())
+            intent.putExtra("STORE_PHONE", store_phone_editText.text.toString())
+            intent.putExtra("STORE_CAPACITY", store_capacity_editText.text.toString())
+            startActivity(intent)
         }
     }
 
@@ -68,7 +79,7 @@ class StoreRegister3 : AppCompatActivity() {
     private fun addTextChangeListener() {
         store_address_input_editText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(storeAddress: Editable?) {
-                if (!verifyAddres(storeAddress.toString())) {
+                if (!verifyAddress(storeAddress.toString())) {
                     store_address_input_layout.error = "하이픈(-)과 콤마(,) 제외한 특수문자는 허용되지않습니다."
                     button_continue.isEnabled = false
                 } else {
@@ -78,7 +89,9 @@ class StoreRegister3 : AppCompatActivity() {
                 button_continue.isEnabled =
                         store_address_input_layout.error == null
                         && store_phone_layout.error == null
+                        && store_capacity_layout.error == null
                         && !store_phone_editText.text.isNullOrBlank()
+                        && !store_capacity_editText.text.isNullOrBlank()
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -98,8 +111,33 @@ class StoreRegister3 : AppCompatActivity() {
                 }
                 button_continue.isEnabled =
                             store_phone_layout.error == null
-                                    && store_address_input_layout.error == null
-                                    && !store_address_input_editText.text.isNullOrBlank()
+                            && store_address_input_layout.error == null
+                            && store_capacity_layout.error == null
+                            && !store_address_input_editText.text.isNullOrBlank()
+                            && !store_capacity_editText.text.isNullOrBlank()
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+        })
+        store_capacity_editText.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(capacityNumber: Editable?) {
+                if (!verifyCapacity(capacityNumber.toString())) {
+                    store_capacity_layout.error = "9999명까지 입력 가능합니다."
+                    button_continue.isEnabled = false
+                } else {
+                    store_capacity_layout.error = null
+                    store_capacity_layout.hint = null
+                }
+                button_continue.isEnabled =
+                        store_capacity_layout.error == null
+                        && store_address_input_layout.error == null
+                        && store_phone_layout.error == null
+                        && !store_address_input_editText.text.isNullOrBlank()
+                        && !store_phone_editText.text.isNullOrBlank()
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {

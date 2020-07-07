@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".StoreRegister4">
+
+
+    <androidx.appcompat.widget.Toolbar
+            android:id="@+id/register_toolbar4"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:minHeight="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:elevation="4dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:popupTheme="@style/Theme.AppCompat.Light">
+
+        <TextView
+                android:id="@+id/register_toolbar_title_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="회원가입"
+                android:textSize="18sp"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/white" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+            android:id="@+id/auto_call_number_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginHorizontal="24dp"
+            android:focusable="true"
+            android:clickable="true"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/register_toolbar4">
+
+    <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            app:cardBackgroundColor="@color/colorPrimary"
+            app:cardCornerRadius="0dp"
+            app:cardElevation="2dp">
+
+        <TextView
+                android:id="@+id/auto_call_number_introduction_text"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:gravity="center"
+                android:paddingHorizontal="5dp"
+                android:textSize="15sp"
+                android:text="자동 호출 번호"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="#ffffff" />
+    </androidx.cardview.widget.CardView>
+    <TextView
+            android:id="@+id/auto_call_number_textView"
+            android:background="@drawable/textview_like_button"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center"
+            android:clickable="true"
+            android:text="5"
+            android:textSize="25sp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+    </LinearLayout>
+
+    <TextView
+            android:id="@+id/auto_call_description_textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:layout_marginTop="5dp"
+            android:textSize="12sp"
+            android:text="*자동 호출번호가 몇 번째 팀에게 대기 알림 문자를 보낼지 결정합니다.\n번호를 눌러 설정하세요!"
+            android:layout_marginHorizontal="24dp"
+            app:layout_constraintStart_toStartOf="@id/auto_call_number_layout"
+            app:layout_constraintEnd_toEndOf="@id/auto_call_number_layout"
+            app:layout_constraintTop_toBottomOf="@id/auto_call_number_layout"/>
+
+    <LinearLayout
+            android:id="@+id/store_business_linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_marginHorizontal="24dp"
+            android:focusable="true"
+            android:clickable="true"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/auto_call_description_textView">
+
+        <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                app:cardBackgroundColor="@color/colorPrimary"
+                app:cardCornerRadius="0dp"
+                app:cardElevation="2dp">
+
+            <TextView
+                    android:id="@+id/store_business_hour_description_textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:gravity="center"
+                    android:paddingHorizontal="5dp"
+                    android:textSize="15sp"
+                    android:text="영업 시간"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="#ffffff" />
+        </androidx.cardview.widget.CardView>
+        <TextView
+                android:id="@+id/store_business_hours_textView"
+                android:background="@drawable/textview_like_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:clickable="true"
+                android:text="매일 오전 11:00 - 오후 8:00 (휴무일: 토요일, 일요일)"
+                android:textSize="15sp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+    </LinearLayout>
+
+
+
+
+    <TextView
+            android:id="@+id/register_progress_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/store_business_linearLayout"
+            app:layout_constraintEnd_toEndOf="@id/store_business_linearLayout"
+            android:text="4/4"
+            android:textColor="@color/colorAccent"
+            android:textSize="15sp"/>
+    <ProgressBar
+            android:id="@+id/register_progressbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:progress="4"
+            android:max="4"
+            app:layout_constraintStart_toStartOf="@id/store_business_linearLayout"
+            app:layout_constraintEnd_toEndOf="@id/store_business_linearLayout"
+            app:layout_constraintTop_toBottomOf="@id/register_progress_textView"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
+
+    <Button
+            android:id="@+id/button_finish"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            app:layout_constraintStart_toStartOf="@id/store_business_linearLayout"
+            app:layout_constraintEnd_toEndOf="@id/store_business_linearLayout"
+            app:layout_constraintTop_toBottomOf="@id/register_progressbar"
+            android:enabled="false"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:text="가입완료"
+            android:textSize="25dp"
+            android:textColor="@color/white"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

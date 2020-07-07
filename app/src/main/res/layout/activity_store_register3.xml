@@ -74,12 +74,34 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/store_capacity_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:startIconDrawable="@drawable/store_table"
+            app:startIconContentDescription="Name"
+            app:counterMaxLength="4"
+            app:endIconMode="clear_text"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@id/store_phone_layout"
+            app:layout_constraintEnd_toEndOf="@id/store_phone_layout"
+            app:layout_constraintTop_toBottomOf="@id/store_phone_layout">
+        <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/store_capacity_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="수용가능한 인원수를 입력해주세요"
+                android:inputType="number"
+                android:selectAllOnFocus="true"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
     <TextView
             android:id="@+id/register_progress_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/store_phone_layout"
-            app:layout_constraintEnd_toEndOf="@id/store_phone_layout"
+            app:layout_constraintTop_toBottomOf="@id/store_capacity_layout"
+            app:layout_constraintEnd_toEndOf="@id/store_capacity_layout"
             android:text="3/4"
             android:textColor="@color/colorAccent"
             android:textSize="15sp"/>

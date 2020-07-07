@@ -44,77 +44,83 @@
                 android:padding="0dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--    visibility gone 잠시만!-->
-    <LinearLayout
-            android:id="@+id/auto_call_number_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:focusable="true"
-            android:clickable="true"
-            android:orientation="horizontal"
-            android:layout_marginHorizontal="50dp"
-            app:layout_constraintStart_toStartOf="@id/scrollView"
-            app:layout_constraintEnd_toEndOf="@id/scrollView"
-            app:layout_constraintTop_toBottomOf="@id/store_name_layout"
-            app:layout_constraintBottom_toTopOf="@id/scrollView">
-
-    <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="2dp"
-            app:cardBackgroundColor="@color/colorPrimary"
-            app:cardCornerRadius="0dp"
-            app:cardElevation="2dp">
-
-        <TextView
-                android:id="@+id/auto_call_number_introduction_text"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:gravity="center"
-                android:text="자동 호출 번호"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="#ffffff" />
-    </androidx.cardview.widget.CardView>
-        <TextView
-                android:id="@+id/auto_call_number"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:gravity="center"
-                android:text="5"
-                android:textSize="30sp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-<!--        <NumberPicker-->
-<!--                android:id="@+id/auto_call_number_picker"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content" />-->
-    </LinearLayout>
 
 
-    <ScrollView
+
+
+    <androidx.core.widget.NestedScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="70dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="5dp"
+            android:fillViewport="true"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/store_name_layout">
+            app:layout_constraintTop_toBottomOf="@+id/store_name_layout"
+            app:layout_constraintBottom_toBottomOf="parent">
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/store_info_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="50dp"
                 app:layout_constraintTop_toBottomOf="@id/store_name_layout">
+            <!--    visibility gone 잠시만!-->
+            <LinearLayout
+                    android:id="@+id/auto_call_number_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:focusable="true"
+                    android:clickable="true"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
+                <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        app:cardBackgroundColor="@color/colorPrimary"
+                        app:cardCornerRadius="0dp"
+                        app:cardElevation="2dp">
+
+                    <TextView
+                            android:id="@+id/auto_call_number_introduction_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="45dp"
+                            android:gravity="center"
+                            android:paddingHorizontal="5dp"
+                            android:textSize="18sp"
+                            android:text="자동 호출 번호"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            android:textColor="#ffffff" />
+                </androidx.cardview.widget.CardView>
+                <TextView
+                        android:id="@+id/auto_call_number"
+                        android:background="@drawable/textview_like_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:gravity="center"
+                        android:clickable="true"
+                        android:text="5"
+                        android:textSize="25sp"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                <!--        <NumberPicker-->
+                <!--                android:id="@+id/auto_call_number_picker"-->
+                <!--                android:layout_width="wrap_content"-->
+                <!--                android:layout_height="wrap_content" />-->
+            </LinearLayout>
 
         <LinearLayout
                 android:id="@+id/store_address_layout"
+                android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:orientation="horizontal"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@id/auto_call_number_layout">
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -124,9 +130,9 @@
 
             <EditText
                     android:id="@+id/store_address_editText"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/store_input_left_margin"
+                    android:layout_marginLeft="@dimen/store_input_margin_left"
                     android:maxLines="2"
                     android:enabled="false"
                     android:text="서울특별시 광진구 화양1동 487-2"
@@ -149,13 +155,15 @@
                     android:layout_gravity="center"
                     android:text="수용인원"/>
 
-            <EditText
-                    android:id="@+id/store_capacity_number_editText"
-                    android:layout_width="wrap_content"
+            <TextView
+                    android:id="@+id/store_capacity_number_textView"
+                    android:background="@drawable/textview_like_button"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/store_input_left_margin"
-                    android:enabled="true"
-                    android:hint="수용 가능한 인원수를 입력하세요"
+                    android:layout_marginLeft="@dimen/store_input_margin_left"
+                    android:gravity="center"
+                    android:textSize="@dimen/store_item_text"
+                    android:clickable="true"
                     android:text="50"
                     android:inputType="number"/>
         </LinearLayout>
@@ -176,62 +184,80 @@
                     android:layout_gravity="center"
                     android:text="전화번호"/>
 
-            <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/store_phone_number_editText_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:startIconDrawable="@drawable/phone_icon"
-                    app:startIconContentDescription="Name"
-                    app:counterMaxLength="11"
-                    app:endIconMode="clear_text">
-
-                <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/store_phone_number_editText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:enabled="true"
-                        android:text="02XXXXXXXX"
-                        android:inputType="phone"
-                        android:selectAllOnFocus="true"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-<!--            <EditText-->
-<!--                    android:id="@+id/store_phone_number_editText"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginLeft="@dimen/store_input_left_margin"-->
-<!--                    android:enabled="false"-->
-<!--                    android:hint="가게 전화번호를 입력하세요"-->
-<!--                    android:text="02-XXXX-XXXX"-->
-<!--                    android:inputType="phone"/>-->
-        </LinearLayout>
-
-        <LinearLayout
-                android:id="@+id/store_business_hours_layout"
-                android:layout_marginTop="15dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="bottom"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:orientation="horizontal"
-                android:baselineAligned="true"
-                app:layout_constraintTop_toBottomOf="@+id/store_phone_number_layout">
+            <!--    서버와 통신할 때는 반드시 하이픈을 제거해서 보내야한다. (시작숫자 0)   -->
             <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/store_phone_number_textView"
+                    android:background="@drawable/textview_like_button"
+                    android:layout_marginLeft="@dimen/store_input_margin_left"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/store_item_text"
                     android:layout_gravity="center"
-                    android:text="영업시간"/>
+                    android:inputType="text"
+                    android:clickable="true"
+                    android:text="02-2257-5721"
+                    android:gravity="center"/>
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                    android:id="@+id/store_phone_number_editText_layout"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    app:startIconDrawable="@drawable/phone_icon"-->
+<!--                    app:startIconContentDescription="Name"-->
+<!--                    app:counterMaxLength="11"-->
+<!--                    app:endIconMode="clear_text">-->
 
-            <TextView
-                    android:id="@+id/store_business_hours_text"
+<!--                <com.google.android.material.textfield.TextInputEditText-->
+<!--                        android:id="@+id/store_phone_number_editText"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:enabled="true"-->
+<!--                        android:text="02XXXXXXXX"-->
+<!--                        android:inputType="phone"-->
+<!--                        android:selectAllOnFocus="true"/>-->
+
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/store_business_linearlayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:orientation="vertical"
+                android:baselineAligned="true"
+                app:layout_constraintTop_toBottomOf="@+id/store_phone_number_layout">
+            <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/store_input_left_margin"
-                    android:text="매일 08:00 ~ 22:00 (휴무일: X)" />
+                    android:layout_marginBottom="2dp"
+                    app:cardBackgroundColor="@color/colorPrimary"
+                    app:cardCornerRadius="0dp"
+                    app:cardElevation="2dp">
+
+                <TextView
+                        android:id="@+id/store_business_hour_description_textView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingHorizontal="5dp"
+                        android:textSize="20sp"
+                        android:text="영업 시간"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="#ffffff" />
+            </androidx.cardview.widget.CardView>
+            <TextView
+                    android:id="@+id/store_business_hours_text"
+                    android:background="@drawable/textview_like_button"
+                    android:layout_marginTop="@dimen/store_input_margin_top"
+                    android:paddingVertical="5dp"
+                    android:paddingLeft="3dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="매일 오전 11:00 - 오후 8:00\n (휴무일: 토요일, 일요일)" />
 
             <!--            <EditText-->
             <!--                    android:id="@+id/store_phone_number_editText"-->
@@ -249,17 +275,28 @@
                 android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/store_business_hours_layout">
+                app:layout_constraintTop_toBottomOf="@id/store_business_linearlayout">
+            <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    app:cardBackgroundColor="@color/colorPrimary"
+                    app:cardCornerRadius="0dp"
+                    app:cardElevation="2dp">
             <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
-                    android:text="메뉴판"/>
+                    android:gravity="center"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="#ffffff"
+                    android:text="메뉴 정보"/>
+            </androidx.cardview.widget.CardView>
             <ImageView
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="@dimen/store_input_margin_top"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
@@ -282,8 +319,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/store_menu_picture_layout" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
-
+    </androidx.core.widget.NestedScrollView>
 
 
 

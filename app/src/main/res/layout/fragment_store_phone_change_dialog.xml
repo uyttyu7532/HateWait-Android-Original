@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        tools:context=".RegisterErrorDialogFragment">
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
             android:layout_width="match_parent"
@@ -16,15 +14,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
         <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/member_id_layout"
+                android:id="@+id/store_phone_layout"
+                app:startIconDrawable="@drawable/phone_icon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/member_id_editText"
+                    android:id="@+id/store_phone_editText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:hint="아이디를 다시 입력해주세요"/>
+                    android:inputType="phone"
+                    android:hint="가게 전화번호를 입력해주세요"/>
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

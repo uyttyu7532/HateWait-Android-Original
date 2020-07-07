@@ -61,7 +61,6 @@ class CustomerRegister : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.back_front_button_menu, menu)
         return true
-
     }
 
 
@@ -75,13 +74,7 @@ class CustomerRegister : AppCompatActivity() {
 //            알맞게 ID/Password가 입력되지 않은경우 다음 액티비티로 넘어갈 수 없음.
                     return false
                 } else {
-                    //                입력완료 or 앞서 입력했던 이름, 주소 액티비티 상태로 이동.
-                    val intent = Intent(this, CustomerRegister2::class.java)
-                    intent.putExtra("USER_ID", id_input_editText.text.toString())
-                    intent.putExtra("USER_PASSWORD", password_input_editText.text.toString())
-//                시작 중인 활동이 현재 활동(백 스택의 맨 위에 있는)이면 활동의 새 인스턴스가 생성되는 대신 기존 인스턴스가 onNewIntent() 호출을 수신합니다.
-                    intent.flags = FLAG_ACTIVITY_REORDER_TO_FRONT
-                    startActivity(intent)
+                    button_continue.performClick()
                 }
             }
             android.R.id.home -> {

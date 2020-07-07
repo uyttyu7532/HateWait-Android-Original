@@ -31,11 +31,11 @@ lateinit var customerWaiting: LinearLayout
 class CustomerMenu : AppCompatActivity() {
 
     var customView: View? = null
-    val yesButton: ImageButton by lazy {
-        customView?.findViewById(R.id.name_yes_button) as ImageButton
+    private val yesButton: ImageButton by lazy {
+        customView?.findViewById<ImageButton>(R.id.name_yes_button)!!
     }
-    val noButton: ImageButton by lazy {
-        customView?.findViewById(R.id.name_no_button) as ImageButton
+    private val noButton: ImageButton by lazy {
+        customView?.findViewById<ImageButton>(R.id.name_no_button)!!
     }
 
     override fun onResume() {
@@ -111,7 +111,7 @@ class CustomerMenu : AppCompatActivity() {
             }
         }
         customerMarquee.text = "내 차례가 되면 상태바 알림과 문자 알림이 발송됩니다. 취소 버튼을 눌러 대기를 취소할 수 있습니다."
-        customerMarquee.setSelected(true) // 마키 텍스트에 포커스
+        customerMarquee.isSelected = true // 마키 텍스트에 포커스
 
 
     }

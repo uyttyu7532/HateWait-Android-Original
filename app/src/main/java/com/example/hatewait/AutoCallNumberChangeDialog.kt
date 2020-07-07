@@ -92,7 +92,7 @@ class AutoCallNumberChangeDialog : AppCompatDialogFragment() {
     private fun init() {
         number_picker.apply {
             minValue = 1
-            maxValue = 30
+            maxValue = 20
         }
     }
 }

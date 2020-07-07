@@ -90,17 +90,21 @@
                             android:layout_width="match_parent"
                             android:layout_height="45dp"
                             android:gravity="center"
+                            android:paddingHorizontal="5dp"
+                            android:textSize="15sp"
                             android:text="자동 호출 번호"
                             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                             android:textColor="#ffffff" />
                 </androidx.cardview.widget.CardView>
                 <TextView
                         android:id="@+id/auto_call_number"
+                        android:background="@drawable/textview_like_button"
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:gravity="center"
+                        android:clickable="true"
                         android:text="5"
-                        android:textSize="30sp"
+                        android:textSize="25sp"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
                 <!--        <NumberPicker-->
                 <!--                android:id="@+id/auto_call_number_picker"-->
@@ -126,7 +130,7 @@
 
             <EditText
                     android:id="@+id/store_address_editText"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/store_input_margin_left"
                     android:maxLines="2"
@@ -153,11 +157,13 @@
 
             <TextView
                     android:id="@+id/store_capacity_number_textView"
+                    android:background="@drawable/textview_like_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/store_input_margin_left"
                     android:gravity="center"
                     android:textSize="@dimen/store_item_text"
+                    android:clickable="true"
                     android:text="50"
                     android:inputType="number"/>
         </LinearLayout>
@@ -181,11 +187,14 @@
             <!--    서버와 통신할 때는 반드시 하이픈을 제거해서 보내야한다. (시작숫자 0)   -->
             <TextView
                     android:id="@+id/store_phone_number_textView"
+                    android:background="@drawable/textview_like_button"
+                    android:layout_marginLeft="@dimen/store_input_margin_left"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/store_item_text"
                     android:layout_gravity="center"
                     android:inputType="text"
+                    android:clickable="true"
                     android:text="02-2257-5721"
                     android:gravity="center"/>
 <!--            <com.google.android.material.textfield.TextInputLayout-->
@@ -228,7 +237,9 @@
 
             <TextView
                     android:id="@+id/store_business_hours_text"
+                    android:background="@drawable/textview_like_button"
                     android:layout_marginTop="@dimen/store_input_margin_top"
+                    android:paddingLeft="3dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="매일 8:00 - 22:00 (휴무일: 일요일)" />

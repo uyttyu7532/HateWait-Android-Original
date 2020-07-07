@@ -23,6 +23,7 @@ class StoreInfoUpdate : AppCompatActivity(),
 //    interface class (DialogListener) function implements
     override fun applyText(storeName: String) {
         store_name.text = storeName
+
     }
 
     override fun applyPhoneNumber(storePhoneNumber: String) {

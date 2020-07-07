@@ -20,9 +20,14 @@
     <string name="title_activity_splash">SplashActivity</string>
     <string name="default_notification_channel_id">HATEWAIT</string>
 
+<!--    Customer / Store 공통 -->
     <string name="id_input_hint">아이디를 입력해주세요</string>
     <string name="password_input_hint">비밀번호를 입력해주세요</string>
     <string name="password_reinput_hint">비밀번호를 다시 입력해주세요</string>
+
+<!--    Store -->
+    <string name="store_phone_error_message">"9~11자리 전화번호를 입력해주세요"</string>
+    <string name="store_name_error_message">특수문자는 허용되지 않습니다.</string>
 
     <string-array name="user_info_hint">
         <item>@string/id_input_hint</item>

@@ -98,7 +98,7 @@ class StoreNameChangeDialog : AppCompatDialogFragment() {
         editStoreNameText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(str: Editable?) {
                 if (!verifyName(str.toString())) {
-                    editStoreNameLayout.error = "특수문자는 허용되지 않습니다."
+                    editStoreNameLayout.error = resources.getString(R.string.store_name_error_message)
                 } else {
                     editStoreNameLayout.error = null
                     editStoreNameLayout.hint = null

@@ -85,7 +85,7 @@ class StorePhoneNumberChgangeDialog : DialogFragment() {
         storePhoneEditText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(storePhoneNumber: Editable?) {
                 if (!storePhoneNumber.toString().matches(phoneRegex)) {
-                    storePhoneLayout.error = "9~11자리 전화번호를 입력해주세요"
+                    storePhoneLayout.error = resources.getString(R.string.store_phone_error_message)
                 } else {
                     storePhoneLayout.error = null
                     storePhoneLayout.hint = null

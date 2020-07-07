@@ -24,7 +24,6 @@ class CustomerRegister2 : AppCompatActivity() {
     //    3자리 - 3 or 4자리 - 4자리
     //    첫자리는 반드시 0으로 시작.
     private val phoneRegex = Regex("^[0](\\d{2})(\\d{3,4})(\\d{4})")
-
     fun verifyName (input_name : String) : Boolean = input_name.matches(nameRegex)
     fun verifyPhoneNumber (input_phone_number : String) : Boolean = input_phone_number.matches(phoneRegex)
 

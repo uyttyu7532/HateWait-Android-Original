@@ -2,11 +2,10 @@ package com.example.hatewait.socket
 
 import android.os.AsyncTask
 import android.util.Log
-import android.widget.Toast
 import com.example.hatewait.*
-import es.dmoral.toasty.Toasty
+import com.example.hatewait.model.ClientData
+import com.example.hatewait.model.setShared
 import hatewait.vo.QueueListSerializable
-import org.jetbrains.anko.backgroundColorResource
 import java.io.IOException
 import java.io.ObjectInputStream
 import java.io.PrintWriter
@@ -82,7 +81,11 @@ class AutoCallAysncTask : AsyncTask<Unit, Unit, QueueListSerializable?>() {
                         if (called[i.phone]!!) {
                         } else {
                             tempmessage += i.name + " "
-                            setShared(pref, i.phone, true)
+                            setShared(
+                                pref,
+                                i.phone,
+                                true
+                            )
                             called[i.phone] = true
 
                             callCustomer(

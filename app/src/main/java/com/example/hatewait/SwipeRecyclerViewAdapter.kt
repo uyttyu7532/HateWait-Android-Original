@@ -18,6 +18,8 @@ import cn.pedant.SweetAlert.SweetAlertDialog
 import com.daimajia.swipe.SwipeLayout
 import com.daimajia.swipe.adapters.RecyclerSwipeAdapter
 import com.example.hatewait.fcm.FcmPush
+import com.example.hatewait.model.ClientData
+import com.example.hatewait.model.setShared
 import com.example.hatewait.socket.*
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.row.view.*
@@ -75,11 +77,19 @@ class SwipeRecyclerViewAdapter(
                 val position = adapterPosition
                 if (called.containsKey(items[position].phone) && called[items[position].phone]!!) {
                     //TODO 원래는 이 if의 내용이 없어야 함!!!
-                    setShared(pref, items[position].phone, false)
+                    setShared(
+                        pref,
+                        items[position].phone,
+                        false
+                    )
                     called[items[position].phone] = false
                     this.bottomWrapperLeft.backgroundColorResource = R.color.white
                 } else {
-                    setShared(pref, items[position].phone, true)
+                    setShared(
+                        pref,
+                        items[position].phone,
+                        true
+                    )
                     called[items[position].phone] = true
                     this.bottomWrapperLeft.backgroundColorResource = R.color.colorCall
                     Toasty.Config.getInstance().allowQueue(true).apply()
@@ -185,7 +195,11 @@ class SwipeRecyclerViewAdapter(
 
                     // 호출한 손님 목록에서도 지우기 (제대로 동작하나 모르겠다.)
                     if (called.containsKey(items[position].phone) && called[items[position].phone]!!) {
-                        setShared(pref, items[position].phone, false)
+                        setShared(
+                            pref,
+                            items[position].phone,
+                            false
+                        )
                         called[items[position].phone] = false
                     }
 

@@ -1,4 +1,4 @@
-package com.example.hatewait
+package com.example.hatewait.model
 
 import android.content.SharedPreferences
 

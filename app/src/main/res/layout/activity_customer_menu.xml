@@ -26,7 +26,7 @@
                     android:id="@+id/customerNameView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="조예린"
+                    android:text="서버를 확인해주세요."
                     android:textColor="#000000"
                     android:textSize="20sp" />
 

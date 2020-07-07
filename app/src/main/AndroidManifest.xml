@@ -6,7 +6,6 @@
     <uses-permission android:name="android.permission.INTERNET " />
     <uses-permission android:name="android.permission.VIBRATE " />
     <uses-permission android:name="android.permission.WAKE_LOCK " />
-//    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
 
     <application
             android:allowBackup="true"
@@ -50,11 +49,6 @@
         <activity android:name=".LoginRegisterViewPagerActivity" />
         <activity android:name=".RegisterCheck" />
         <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".AddWaiting" />
         <activity android:name=".StoreWaitingList" />

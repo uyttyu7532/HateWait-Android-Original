@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.View.*
-import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -17,7 +16,9 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.daimajia.swipe.util.Attributes
-import com.example.hatewait.model.newClient
+import com.example.hatewait.model.ClientData
+import com.example.hatewait.model.NewClient
+import com.example.hatewait.model.getShared
 import com.example.hatewait.socket.*
 import com.google.firebase.messaging.FirebaseMessaging
 import es.dmoral.toasty.Toasty
@@ -129,7 +130,13 @@ class StoreWaitingList : AppCompatActivity() {
             var people_num_tmp = client.split(",")[3]
             var is_member_tmp = client.split(",")[4]
             var data_tmp =
-                ClientData(id_tmp, phone_tmp, name_tmp, people_num_tmp, is_member_tmp)
+                ClientData(
+                    id_tmp,
+                    phone_tmp,
+                    name_tmp,
+                    people_num_tmp,
+                    is_member_tmp
+                )
             clientList?.add(data_tmp)
         }
         totalWaitingNumView.text = "현재 ${clientList.size}팀 대기중"
@@ -163,7 +170,7 @@ class StoreWaitingList : AppCompatActivity() {
                             true
                         ).show()
                     } else {
-                        var newclient = newClient(
+                        var newclient = NewClient(
                             name = addWaitingName.text.toString(),
                             peopleNum = addWaitingPerson.text.toString(),
                             phoneNum = addWaitingPhonenum.text.toString()
@@ -186,7 +193,6 @@ class StoreWaitingList : AppCompatActivity() {
 
 // RecyclerView와 Adapter 연결
 fun setRecyclerView() {
-
 
     mRecyclerView!!.layoutManager =
         LinearLayoutManager(listContext, LinearLayoutManager.VERTICAL, false)

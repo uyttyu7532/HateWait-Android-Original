@@ -7,11 +7,13 @@ import android.os.Handler
 
 class Splash : Activity(){
 
-    val TIME_OUT : Long = 2000
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+
+        val TIME_OUT : Long = 2000
 
         Handler().postDelayed(Runnable {
             kotlin.run {

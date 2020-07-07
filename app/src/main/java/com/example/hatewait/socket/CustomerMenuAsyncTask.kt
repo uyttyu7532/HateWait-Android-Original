@@ -71,6 +71,7 @@ class CustomerMenuAsyncTask : AsyncTask<String?, Unit, Array<String>?>() {
                     waitingStoreView.text = "대기중인 가게가 없습니다."
                     customerWaiting.visibility = GONE
                 } else {
+                    customerNameView.text = result?.get(2)
                     waitingStoreView.text = result?.get(3)
                     customerWaitingNum.text = result?.get(4)
                     customerWaiting.visibility = VISIBLE

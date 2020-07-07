@@ -1,12 +1,15 @@
 package com.example.hatewait
 
 
+import android.net.sip.SipErrorCode.TIME_OUT
 import android.os.AsyncTask
 import android.os.Bundle
+import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import com.example.hatewait.socket.PORT
 import com.example.hatewait.socket.SERVERIP
@@ -30,14 +33,19 @@ class NonMemberRegister : androidx.fragment.app.Fragment() {
 //   첫자리는 반드시 0이 아닌 숫자 총 2자리까지 입력가능 (1~99 입력 가능)
     private val peopleNumberRegex = Regex("^[1-9](\\d?)")
 
+
+
     fun verifyName (input_name : String) : Boolean = input_name.matches(nameRegex)
     fun verifyPhoneNumber (input_phone_number : String) : Boolean = input_phone_number.matches(phoneRegex)
     fun verifyPeopleNumber (input_people_number : String) : Boolean = input_people_number.matches(peopleNumberRegex)
 
 // non_member 페이지를 열어줌
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View ? {
+
         return inflater.inflate(R.layout.activity_non_members_reigster, container, false)
     }
+
+
 
     override fun onStop() {
         //   editText Form Initialize
@@ -206,6 +214,7 @@ class NonMemberRegister : androidx.fragment.app.Fragment() {
         }
 
     }
+
 }
 
 

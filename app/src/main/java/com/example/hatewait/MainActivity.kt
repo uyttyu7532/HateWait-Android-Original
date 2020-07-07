@@ -13,11 +13,16 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.nhn.android.naverlogin.OAuthLogin
 import com.nhn.android.naverlogin.OAuthLoginHandler
+import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.startActivity
 import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
+    var mLastBackPress: Long = 0
+    val mBackPressThreshold:Long = 3500
+
+
     private val idRegex = Regex("^(?=.*[a-zA-Zㄱ-ㅎ가-힣0-9])[a-zA-Zㄱ-ㅎ가-힣0-9]{1,}$")
     private val passwordRegex =
         Regex("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,}$")
@@ -261,5 +266,18 @@ class MainActivity : AppCompatActivity() {
         password_input_layout.clearFocus()
         password_input_layout.error = null
         password_input_layout.hint = "비밀번호를 입력해주세요"
+    }
+
+    override fun onBackPressed() {
+        val pressBackToast = Toasty.normal(this, "한번 더 뒤로가기 키를 누르면 종료됩니다.", Toasty.LENGTH_SHORT)
+
+        val currentTime = System.currentTimeMillis()
+        if (Math.abs(currentTime - mLastBackPress) > mBackPressThreshold) {
+            mLastBackPress = currentTime
+            pressBackToast.show()
+        } else {
+            pressBackToast.cancel()
+            super.onBackPressed()
+        }
     }
 }

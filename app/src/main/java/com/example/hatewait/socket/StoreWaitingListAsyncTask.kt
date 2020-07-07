@@ -3,6 +3,7 @@ package com.example.hatewait.socket
 import android.os.AsyncTask
 import android.util.Log
 import com.example.hatewait.*
+import com.example.hatewait.model.ClientData
 import hatewait.vo.QueueListSerializable
 import java.io.IOException
 import java.io.ObjectInputStream

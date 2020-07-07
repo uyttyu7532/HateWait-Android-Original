@@ -1,4 +1,4 @@
-package com.example.hatewait.serialize
+package com.example.hatewait.model
 
 import java.io.Serializable
 

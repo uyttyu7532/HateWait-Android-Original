@@ -15,7 +15,8 @@
             android:roundIcon="@mipmap/ic_launcher"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".StoreRegister2"></activity>
+        <activity android:name=".StoreRegister3"></activity>
+        <activity android:name=".StoreRegister2" />
         <activity android:name=".CustomerRegister2" />
         <activity android:name=".StoreRegister" />
         <activity android:name=".CustomerRegister" />

@@ -8,13 +8,21 @@ import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_store_register2.*
-
+//
+// 1단계 아이디 + 비번
+//
+// 2단계 가게이름 + 가게설명 O
+//->
+// 3단계 가게 도로명주소+  가게전화번호
+//->
+// 4단계 수용 가능인원 + 가게 설명 + 영업시간(버튼)
+//->
+//가입완료 환영 메시지 액티비티 or 로그인바로됨
 class StoreRegister2 : AppCompatActivity() {
-    private val storePhoneRegex = Regex("^[0](\\d{2})(\\d{3,4})(\\d{3,4})")
+
     private val storeNameRegex = Regex("^(?=.*[a-zA-Z가-힣0-9])[a-zA-Z가-힣0-9|\\s|,]{1,}$")
     fun verifyName(storeName : String) : Boolean = storeNameRegex.matches(storeName)
-    fun verifyPhone(storePhone : String) : Boolean = storePhoneRegex.matches(storePhone)
-
+// 가게 간단한 설명은 형식제한 X
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_store_register2)
@@ -24,12 +32,17 @@ class StoreRegister2 : AppCompatActivity() {
             setDisplayHomeAsUpEnabled(true)
 //            you should also call setHomeActionContentDescription() to provide a correct description of the action for accessibility support.
             setHomeAsUpIndicator(R.drawable.back_icon)
-            setHomeActionContentDescription("아이디 패스워드 설정")
+            setHomeActionContentDescription("아이디 & 비밀번호")
             setDisplayShowTitleEnabled(false)
         }
         addTextChangeListener()
         button_continue.setOnClickListener {
-
+            val intent = Intent(this, StoreRegister3::class.java)
+            intent.putExtra("STORE_NAME", store_name_input_editText.text.toString())
+            intent.putExtra("STORE_DESCRIPTION", store_info_description_editText.text.toString())
+            intent.putExtra("STORE_ID", getIntent().getStringExtra("USER_ID"))
+            intent.putExtra("STORE_PASSWORD", getIntent().getStringExtra("USER_PASSWORD"))
+            startActivity(intent)
         }
     }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -37,7 +50,6 @@ class StoreRegister2 : AppCompatActivity() {
         return true
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
         when (item.itemId) {
             R.id.forward_button -> {
                 if (!button_continue.isEnabled) {
@@ -66,8 +78,8 @@ class StoreRegister2 : AppCompatActivity() {
 
                 button_continue.isEnabled =
                     (store_name_input_layout.error == null
-                            && store_phone_number_layout.error == null
-                            && !store_phone_number_editText.text.isNullOrBlank())
+                            && store_info_description_layout.error == null
+                            && !store_info_description_editText.text.isNullOrBlank())
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -77,18 +89,18 @@ class StoreRegister2 : AppCompatActivity() {
             }
         })
 
-        store_phone_number_editText.addTextChangedListener(object : TextWatcher {
+        store_info_description_editText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                if (!verifyPhone(s.toString())) {
-                    store_phone_number_layout.error = resources.getString(R.string.store_phone_error_message)
+                if (s.isNullOrBlank()) {
+                    store_info_description_layout.error = resources.getString(R.string.store_description_error_message)
                     button_continue.isEnabled = false
                 } else {
-                    store_phone_number_layout.error = null
-                    store_phone_number_layout.hint = null
+                    store_info_description_layout.error = null
+                    store_info_description_layout.hint = null
                 }
                     button_continue.isEnabled =
                     (store_name_input_layout.error == null
-                            && store_phone_number_layout.error == null
+                            && store_info_description_layout.error == null
                             && !store_name_input_editText.text.isNullOrBlank())
             }
 

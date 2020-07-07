@@ -22,7 +22,7 @@ class StoreCapacityNumberChangeDialog : DialogFragment() {
     val storeCapacityLayout : TextInputLayout by lazy {
         customView?.findViewById<TextInputLayout>(R.id.store_capacity_layout)!!
     }
-    val storeCapacityEditText : TextInputEditText by lazy {
+    private val storeCapacityEditText : TextInputEditText by lazy {
         customView?.findViewById<TextInputEditText>(R.id.store_capacity_editText)!!
     }
     interface DialogListener {

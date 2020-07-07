@@ -1,7 +1,8 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="store_item_text">20sp</dimen>
-    <dimen name="store_input_left_margin">5dp</dimen>
+    <dimen name="store_input_margin_left">5dp</dimen>
+    <dimen name="store_input_margin_top">3dp</dimen>
     <dimen name="login_margin_top">40dp</dimen>
     <dimen name="register_button_padding_horizontal">20dp</dimen>
     <dimen name="dialog_fragment_width">400dp</dimen>

@@ -77,12 +77,20 @@ class BusinessHourPick : AppCompatActivity(), BusinessHourCheckDialog.TimeCheckL
 
 //        매일 영업시간이 같은지 체크
         for (day in businessHourList) {
-//            24시간일 경우에..?
-                if (businessTimeRangeArray.contains("${day.from} - ${day.to}")) continue
-                else {
+//            24시간이 아닌 경우
+            if (day.from != resources.getString(R.string.all_day)) {
+                if (!businessTimeRangeArray.contains("${day.from} - ${day.to}")) {
                     alwaysSameTimeBusiness = false
                     break
                 }
+            }
+//            24시간인 경우
+            else {
+                if (!businessTimeRangeArray.contains(day.from)) {
+                    alwaysSameTimeBusiness = false
+                    break
+                }
+            }
         }
 //        매일 같은 영업시간이면
         if (alwaysSameTimeBusiness) {
@@ -107,9 +115,12 @@ class BusinessHourPick : AppCompatActivity(), BusinessHourCheckDialog.TimeCheckL
                     "${day.dayOfWeek} : ${day.from}\n"
                     }
             }
+
+//            휴무일 없는 경우 영업시간만 표시
             return if (holidays.isEmpty()) {
                 resultBusinessTimeString
             } else {
+//                휴무일 있는경우 요일별 영업시간 (휴무일: 토요일, 일요일) 형식 표시
                 val holiday = holidays.toString().removePrefix("[").removeSuffix("]")
                 "$resultBusinessTimeString (휴무일 : ${holiday})"
             }

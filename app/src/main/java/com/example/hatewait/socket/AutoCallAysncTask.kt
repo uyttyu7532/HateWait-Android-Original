@@ -91,7 +91,7 @@ class AutoCallAysncTask : AsyncTask<Unit, Unit, QueueListSerializable?>() {
                             callCustomer(
                                 i.phone,
                                 i.id,
-                                "[${STORENAME}] ${i.turn}번째 순서 전 입니다. 가게 앞으로 와주세요."
+                                "[${STORENAME}] ${i.turn.toInt()}번째 순서 전 입니다. 가게 앞으로 와주세요."
                             )
                         }
 //                        Toasty.success(

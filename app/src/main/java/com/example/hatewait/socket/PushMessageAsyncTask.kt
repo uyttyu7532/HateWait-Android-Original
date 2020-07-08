@@ -24,7 +24,7 @@ class PushMessageAsyncTask : AsyncTask<String, Unit, Unit>() {
             )
 
             // TODO 문자를 받을 손님 id 주석 풀기
-             writer!!.println("PUSHMSG;${params[0]}")
+//             writer!!.println("PUSHMSG;${params[0]}")
             Log.i("로그:서버에게 정보 달라고 보냄", "PUSHMSG;${params[0]}")
             val storeMenuResponse: String = reader!!.readLine()
             Log.i("로그:서버응답", storeMenuResponse)

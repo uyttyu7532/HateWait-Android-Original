@@ -11,6 +11,7 @@ import android.view.MenuItem
 import androidx.fragment.app.FragmentManager
 import com.example.hatewait.socket.PORT
 import com.example.hatewait.socket.SERVERIP
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.activity_custom_register2.*
 import java.io.BufferedReader
 import java.io.IOException
@@ -200,6 +201,7 @@ class CustomerRegister2 : AppCompatActivity() {
                 writer.close()
                 clientSocket.close()
             }
+            FirebaseMessaging.getInstance().subscribeToTopic(userPhone)
         }
 
         override fun onPostExecute(result: Unit?) {

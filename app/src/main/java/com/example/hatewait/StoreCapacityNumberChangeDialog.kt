@@ -19,6 +19,8 @@ class StoreCapacityNumberChangeDialog : DialogFragment() {
     var customView : View? = null
     private lateinit var dialogListener : DialogListener
 
+
+
     val storeCapacityLayout : TextInputLayout by lazy {
         customView?.findViewById<TextInputLayout>(R.id.store_capacity_layout)!!
     }
@@ -74,12 +76,12 @@ class StoreCapacityNumberChangeDialog : DialogFragment() {
     }
     private fun init() {
 //        첫자리 0으로 시작 불가 총 4자리수까지 입력가능.
-        val capacityRegex = Regex("^[1-9](\\d{1,3})")
+        val storeCapacityRegex = Regex("[^0](\\d{0,3})")
         storeCapacityEditText.setText(activity?.store_capacity_number_textView?.text)
         storeCapacityEditText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(storeCapacityNumber: Editable?) {
-                if (!storeCapacityNumber.toString().matches(capacityRegex)) {
-                    storeCapacityLayout.error = "4자리 이하 손님 수를 입력해주세요."
+                if (!storeCapacityNumber.toString().matches(storeCapacityRegex)) {
+                    storeCapacityLayout.error = "9999명까지 입력 가능합니다."
                 } else {
                     storeCapacityLayout.error = null
                     storeCapacityLayout.hint = null

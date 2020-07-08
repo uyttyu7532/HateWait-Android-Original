@@ -97,7 +97,7 @@ class CustomerRegister : AppCompatActivity() {
         id_input_editText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 if (!verifyId(s.toString())) {
-                    id_input_layout.error = "특수문자나 공백은 허용되지 않습니다."
+                    id_input_layout.error = resources.getString(R.string.id_input_error)
                     button_continue.isEnabled = false
                 } else {
                     id_input_layout.error = null
@@ -121,7 +121,7 @@ class CustomerRegister : AppCompatActivity() {
         password_input_editText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 if (!verifyPassword(s.toString())) {
-                    password_input_layout.error = "영문, 숫자, 특수문자 포함 8자 이상 입력해주세요"
+                    password_input_layout.error = resources.getString(R.string.password_input_error)
                     button_continue.isEnabled = false
                 } else {
                     password_input_layout.error = null
@@ -146,7 +146,7 @@ class CustomerRegister : AppCompatActivity() {
         password_reinput_editText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(reinputText: Editable?) {
                 if (reinputText.toString() != password_input_editText.text.toString()) {
-                    password_reinput_layout.error = "비밀번호가 일치하지 않아요"
+                    password_reinput_layout.error = resources.getString(R.string.password_reinput_error)
                     button_continue.isEnabled = false
                 } else {
                     password_reinput_layout.error = null

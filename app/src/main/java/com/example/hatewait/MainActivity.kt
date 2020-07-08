@@ -199,7 +199,7 @@ class MainActivity : AppCompatActivity() {
         id_input_editText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 if (!verifyId(s.toString())) {
-                    id_input_layout.error = "특수문자나 공백은 허용되지 않습니다."
+                    id_input_layout.error = resources.getString(R.string.id_input_error)
                     button_login.isEnabled = false
                 } else {
                     id_input_layout.error = null
@@ -219,7 +219,7 @@ class MainActivity : AppCompatActivity() {
         password_input_editText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 if (!verifyPassword(s.toString())) {
-                    password_input_layout.error = "영문, 숫자, 특수문자 포함 8자 이상 입력해주세요"
+                    password_input_layout.error = resources.getString(R.string.password_input_error)
                     button_login.isEnabled = false
                 } else {
                     password_input_layout.error = null

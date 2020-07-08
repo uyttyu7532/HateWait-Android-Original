@@ -22,12 +22,14 @@
 
     <!--    Customer / Store 공통 -->
     <string name="id_input_hint">아이디를 입력해주세요</string>
+    <string name="id_input_error">특수문자나 공백은 허용되지 않아요.</string>
     <string name="password_input_hint">비밀번호를 입력해주세요</string>
     <string name="password_reinput_hint">비밀번호를 다시 입력해주세요</string>
-
+    <string name="password_input_error">영문, 숫자, 특수문자 포함 8자 이상 입력해주세요</string>
+    <string name="password_reinput_error">비밀번호가 일치하지 않아요</string>
     <!--    Store -->
-    <string name="store_phone_error_message">"9~11자리 전화번호를 입력해주세요"</string>
-    <string name="store_name_error_message">특수문자는 허용되지 않습니다.</string>
+    <string name="store_phone_error_message">9~11자리 전화번호를 입력해주세요</string>
+    <string name="store_name_error_message">특수문자는 허용되지 않아요.</string>
     <string name="store_description_error_message">반드시 1글자 이상 입력해주세요</string>
     <string-array name="user_info_hint">
         <item>@string/id_input_hint</item>

@@ -48,7 +48,6 @@ class NonMemberRegister : androidx.fragment.app.Fragment() {
 
 
     override fun onStop() {
-        //   editText Form Initialize
         inputLayoutInitialize()
         super.onStop()
     }
@@ -136,7 +135,6 @@ class NonMemberRegister : androidx.fragment.app.Fragment() {
         register_customer_button.setOnClickListener{
 //            둘다 입력되어있으면 code flow는 첫줄에서 반환됨.
 
-            Toast.makeText(context, "등록되었습니다!", Toast.LENGTH_SHORT).show()
             NonMemberRegisterAsyncTask(this@NonMemberRegister)
                 .execute(user_name_input_editText.text.toString()
                     , user_phone_number_editText.text.toString()
@@ -188,14 +186,6 @@ class NonMemberRegister : androidx.fragment.app.Fragment() {
                 reader.close()
                 clientSocket.close()
             }
-//            try {
-//
-//                Log.i("nonMember", resultString)
-//            } catch (ioe : IOException) {
-//                ioe.printStackTrace()
-//            } finally {
-//
-//            }
             return resultString
         }
 

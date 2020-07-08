@@ -47,7 +47,6 @@ class BusinessHourPick : AppCompatActivity(), BusinessHourCheckDialog.TimeCheckL
             if (!bhs.isNullOrEmpty()) {
                 updatedBusinessTime = parsingBusinessHour(bhs!!)
 //            result: 오전 1:00 - 오전 2:00 (휴무일 : 월요일, 목요일)
-                Toast.makeText(this, updatedBusinessTime, Toast.LENGTH_SHORT).show()
                 val businessTimeCheckFragment = BusinessHourCheckDialog()
                 val argumentBundle = Bundle()
                 argumentBundle.putString("NEW_BUSINESS_HOURS", updatedBusinessTime)

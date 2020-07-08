@@ -53,7 +53,7 @@ class MemberRegister : Fragment() {
         user_id_input_editText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 if (!verifyId(s.toString())) {
-                    user_id_input_layout.error = "특수문자나 공백은 허용되지 않습니다"
+                    user_id_input_layout.error = resources.getString(R.string.id_input_error)
                     register_customer_button.isEnabled = false
                 } else {
                     user_id_input_layout.error = null
@@ -95,9 +95,6 @@ class MemberRegister : Fragment() {
         })
 
         register_customer_button.setOnClickListener {
-//            등록이 끝났다면 지워줌!
-//            Toast.makeText(context, "등록되었어요!", Toast.LENGTH_SHORT).show()
-//            DialogActivity (이름 3자중 가운데 모자이크 ex. 문X훈 회원님 맞으신가요?)
             val userId = user_id_input_editText.text.toString()
             val numOfGroup =  people_number_editText.text.toString()
             MemberRegisterAsyncTask(this@MemberRegister).execute(userId, numOfGroup)
@@ -124,7 +121,7 @@ class MemberRegister : Fragment() {
     }
 
     private fun inputLayoutInitialize() {
-        user_id_input_editText.error = null
+        user_id_input_layout.error = null
         user_id_input_editText.clearFocus()
         user_id_input_editText.text?.clear()
         user_id_input_layout.hint = "헤잇웨잇의 아이디를 입력해주세요"

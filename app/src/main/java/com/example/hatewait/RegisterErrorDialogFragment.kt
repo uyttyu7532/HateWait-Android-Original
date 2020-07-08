@@ -84,7 +84,7 @@ class RegisterErrorDialogFragment : DialogFragment() {
         customerIdEditText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 if (!verifyId(s.toString())) {
-                    customerIdLayout.error = "특수문자나 공백은 허용되지 않습니다."
+                    customerIdLayout.error = resources.getString(R.string.id_input_error)
                 } else {
                     customerIdLayout.error = null
                     customerIdLayout.hint = null

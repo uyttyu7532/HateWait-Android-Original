@@ -188,7 +188,7 @@ class MemberRegister : Fragment() {
 //            Memory Leak 방지
             if (currentActivity == null || currentActivity.isRemoving || currentActivity.isDetached) return
             Log.i("responseArray", "${memberInfoArray[0]}, ${memberInfoArray[1]}")
-//            ����ERROR 같이 앞에 이상한 기호가 붙기 때문에 contains 메소드 사용
+//            ERROR 앞에 이상한 기호가 붙기 때문에 contains 메소드 사용
             if (memberInfoArray[0].contains("ERROR") && memberInfoArray[1] == "NOTEXIST") {
                 currentActivity.showMemberIdErrorDialog()
             } else {

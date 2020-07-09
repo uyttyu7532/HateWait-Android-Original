@@ -1,10 +1,12 @@
 package com.example.hatewait
 
 import android.content.Intent
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
+import com.example.hatewait.socket.StoreRegisterAsyncTask
 
 import kotlinx.android.synthetic.main.activity_store_register4.*
 
@@ -38,15 +40,17 @@ class StoreRegister4 : AppCompatActivity(), AutoCallNumberChangeDialog.DialogLis
         }
 
         button_finish.setOnClickListener {
-            val storeId = intent.getStringExtra("STORE_ID")
-            val storePassword = intent.getStringExtra("STORE_PASSWORD")
-            val storeName = intent.getStringExtra("STORE_NAME")
-            val storeDescription = intent.getStringExtra("STORE_DESCRIPTION")
-            val storeAddress = intent.getStringExtra("STORE_ADDRESS")
-            val storePhone = intent.getStringExtra("STORE_PHONE")
-            val storeCapacity = intent.getStringExtra("STORE_CAPACITY")
-            val storeAutoCallNumber = auto_call_number_textView.text.toString()
-            val storeBusinessHours = store_business_hours_textView.text.toString()
+            val newStoreInfo = mapOf(Pair("ID", intent.getStringExtra("STORE_ID")),
+                                Pair("PASSWORD", intent.getStringExtra("STORE_PASSWORD")),
+                                Pair("NAME", intent.getStringExtra("STORE_NAME")),
+                                Pair("DESCRIPTION", intent.getStringExtra("STORE_DESCRIPTION")),
+                                Pair("ADDRESS", intent.getStringExtra("STORE_ADDRESS")),
+                                Pair("PHONE", intent.getStringExtra("STORE_PHONE")),
+                                Pair("CAPACITY", intent.getStringExtra("STORE_CAPACITY")),
+                                Pair("AUTO_CALL", auto_call_number_textView.text.toString()),
+                                Pair("BUSINESS_HOURS", store_business_hours_textView.text.toString())
+                                )
+            StoreRegisterAsyncTask(this@StoreRegister4).execute(newStoreInfo)
             Toast.makeText(this, "성공!", Toast.LENGTH_SHORT).show()
         }
 

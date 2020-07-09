@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.example.hatewait.socket.NonMemberRegisterAsyncTask
 import com.example.hatewait.socket.PORT
 import com.example.hatewait.socket.SERVERIP
 import kotlinx.android.synthetic.main.activity_non_members_reigster.*
@@ -53,8 +54,6 @@ class NonMemberRegister : androidx.fragment.app.Fragment() {
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
-        var user_name_not_empty = false
-        var user_phone_number_not_empty = false
 
         user_name_input_editText.addTextChangedListener(object : TextWatcher {
             //            text에 변화가 있을 때마다
@@ -159,50 +158,6 @@ class NonMemberRegister : androidx.fragment.app.Fragment() {
         people_number_editText.clearFocus()
         people_number_layout.error = null
         people_number_layout.hint = "총 몇 분이 오셨나요?"
-    }
-
-    class NonMemberRegisterAsyncTask(context: NonMemberRegister) : AsyncTask<String, Unit, String>() {
-        val activityReference = WeakReference(context)
-        private lateinit var clientSocket: Socket
-        private lateinit var reader: BufferedReader
-        private lateinit var writer: PrintWriter
-        private var resultString = ""
-
-        override fun doInBackground(vararg params: String) : String { // 소켓 연결
-            val storeId= "s0000"
-            val userName = params[0]
-            val userPhone = params[1]
-            val numOfGroup = params[2]
-            try {
-                clientSocket = Socket(SERVERIP, PORT)
-                writer = PrintWriter(clientSocket.getOutputStream(), true)
-                reader = BufferedReader(InputStreamReader(clientSocket.getInputStream(), "UTF-8"))
-                writer.println("INSQUE;NONMEM;$storeId;$userName;$userPhone;$numOfGroup")
-                resultString = reader.readLine()
-            } catch (ioe: IOException) {
-                ioe.printStackTrace()
-            } finally {
-                writer.close()
-                reader.close()
-                clientSocket.close()
-            }
-            return resultString
-        }
-
-        override fun onPostExecute(result: String) {
-            val currentActivity = activityReference.get()
-            if (currentActivity == null || currentActivity.isRemoving || currentActivity.isDetached) return
-
-//            server response string : INSQUE;NONMEM;22
-//            마지막 delimeter ; 이후 '22'는 대기번호를 의미
-            val customerTurnNumber = result.substringAfterLast(";").toInt()
-            currentActivity.startActivity<RegisterCheck>(
-                "CUSTOMER_NAME" to currentActivity.user_name_input_editText.text.toString(),
-                "CUSTOMER_TURN" to customerTurnNumber
-            )
-            super.onPostExecute(result)
-        }
-
     }
 
 }

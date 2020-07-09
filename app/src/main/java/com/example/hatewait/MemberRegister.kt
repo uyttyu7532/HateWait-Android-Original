@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.hatewait.socket.MemberRegisterAsyncTask
 import com.example.hatewait.socket.PORT
 import com.example.hatewait.socket.SERVERIP
 import kotlinx.android.synthetic.main.activity_members_register.*
@@ -33,7 +34,7 @@ class MemberRegister : Fragment() {
 //    LoginRegisterViewPagerAdapter <->MemberRegister Communication?
 //    Bundle? Interface Listener?
 
-    private lateinit var customerInfoListener: CustomerInfoListener
+    lateinit var customerInfoListener: CustomerInfoListener
     interface CustomerInfoListener {
         fun registerCustomer(memberRegister: MemberRegister)
     }
@@ -132,7 +133,7 @@ class MemberRegister : Fragment() {
     }
 
 
-    private fun showNameCheckDialog() {
+    fun showNameCheckDialog() {
         val nameCheckFragment = NameCheckDialogFragment()
         val argumentBundle = Bundle()
         argumentBundle.putString("CUSTOMER_NAME", customerName)
@@ -140,65 +141,8 @@ class MemberRegister : Fragment() {
         nameCheckFragment.show(activity!!.supportFragmentManager, "MEMBER_NAME_CHECK")
     }
 
-    private fun showMemberIdErrorDialog() {
+    fun showMemberIdErrorDialog() {
         val memberIdCheckFragment = RegisterErrorDialogFragment()
         memberIdCheckFragment.show(activity!!.supportFragmentManager, "MEMBER_ID_CHECK")
     }
-    class MemberRegisterAsyncTask(context: MemberRegister) : AsyncTask<String, Unit, String>() {
-        private val activityReference = WeakReference(context)
-        private lateinit var clientSocket: Socket
-        private lateinit var reader: BufferedReader
-        private lateinit var writer: PrintWriter
-        private var responseString = ""
-
-        override fun doInBackground(vararg params: String): String { // 소켓 연결
-            val storeId= "s0000"
-            val userId = params[0]
-            val numOfGroup = params[1]
-
-            try {
-                clientSocket = Socket(SERVERIP, PORT)
-                reader = BufferedReader(InputStreamReader(clientSocket.getInputStream(), "UTF-8"))
-                writer = PrintWriter(clientSocket.getOutputStream(), true)
-                writer.println("INSQUE;MEMBER;$storeId;$userId;$numOfGroup")
-                Log.i("request","INSQUE;MEMBER;$storeId;$userId;$numOfGroup")
-            } catch (ioe: IOException) {
-                ioe.printStackTrace()
-            }
-
-            try {
-                responseString = reader.readLine()
-            } catch (ioe: IOException) {
-                ioe.printStackTrace()
-            } finally {
-                writer.close()
-                reader.close()
-                clientSocket.close()
-            }
-            Log.i("responseString", responseString)
-            return responseString
-        }
-
-        override fun onPostExecute(result: String) {
-            val currentActivity = activityReference.get()
-            val memberInfoArray = result.split(";")
-//            Memory Leak 방지
-            if (currentActivity == null || currentActivity.isRemoving || currentActivity.isDetached) return
-            Log.i("responseArray", "${memberInfoArray[0]}, ${memberInfoArray[1]}")
-//            ERROR 앞에 이상한 기호가 붙기 때문에 contains 메소드 사용
-            if (memberInfoArray[0].contains("ERROR") && memberInfoArray[1] == "NOTEXIST") {
-                currentActivity.showMemberIdErrorDialog()
-            } else {
-                currentActivity.customerName = memberInfoArray[2]
-                currentActivity.customerTurn = memberInfoArray[3].toInt()
-                Log.i("response", "${memberInfoArray[2]} , ${memberInfoArray[3]}")
-                currentActivity.customerInfoListener.registerCustomer(currentActivity)
-                currentActivity.showNameCheckDialog()
-            }
-            super.onPostExecute(result)
-        }
-
-    }
-
-
 }

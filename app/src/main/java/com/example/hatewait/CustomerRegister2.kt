@@ -9,6 +9,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.MenuItem
 import androidx.fragment.app.FragmentManager
+import com.example.hatewait.socket.CustomerRegisterAsyncTask
 import com.example.hatewait.socket.PORT
 import com.example.hatewait.socket.SERVERIP
 import com.google.firebase.messaging.FirebaseMessaging
@@ -47,7 +48,6 @@ class CustomerRegister2 : AppCompatActivity() {
             val userName = user_name_input_editText.text.toString()
             val userPhone = user_phone_number_editText.text.toString()
             CustomerRegisterAsyncTask(this@CustomerRegister2).execute(userId, userPassword, userName, userPhone)
-
         }
         setSupportActionBar(register_toolbar)
         supportActionBar?.apply {
@@ -177,36 +177,4 @@ class CustomerRegister2 : AppCompatActivity() {
         super.onStop()
     }
 
-
-    class CustomerRegisterAsyncTask(context: CustomerRegister2) : AsyncTask<String, Unit, Unit>() {
-
-                private lateinit var clientSocket: Socket
-                private lateinit var reader: BufferedReader
-                private lateinit var writer: PrintWriter
-
-                override fun doInBackground(vararg params: String) { // 소켓 연결
-                    val userId= params[0]
-                    val userPassword = params[1]
-                    val userName = params[2]
-                    val userPhone = params[3]
-            try {
-                clientSocket = Socket(SERVERIP, PORT)
-                writer = PrintWriter(clientSocket!!.getOutputStream(), true)
-                reader = BufferedReader(InputStreamReader(clientSocket!!.getInputStream(), "UTF-8"))
-                writer!!.println("SIGNUP;MEMBER;$userId;$userName;$userPhone;$userPassword")
-            } catch (ioe: IOException) {
-                ioe.printStackTrace()
-            } finally {
-                reader.close()
-                writer.close()
-                clientSocket.close()
-            }
-            FirebaseMessaging.getInstance().subscribeToTopic(userPhone)
-        }
-
-        override fun onPostExecute(result: Unit?) {
-            super.onPostExecute(result)
-        }
-
-    }
 }

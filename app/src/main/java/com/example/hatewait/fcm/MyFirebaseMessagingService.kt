@@ -41,7 +41,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             Log.d(TAG, "Notification Message Body: ${remoteMessage.notification?.body}")
 
             sendNotification(remoteMessage.notification?.body)
-
         }
     }
 

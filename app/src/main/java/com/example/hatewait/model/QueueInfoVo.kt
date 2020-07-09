@@ -12,5 +12,4 @@ class QueueInfoVo : Serializable {
         return ("QueueInfoVo [id=" + id + ", phone=" + phone + ", name=" + name + ", peopleNum=" + peopleNum + ", turn="
                 + turn + "]")
     }
-
 }

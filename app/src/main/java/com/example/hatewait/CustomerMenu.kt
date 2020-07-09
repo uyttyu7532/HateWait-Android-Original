@@ -79,6 +79,7 @@ class CustomerMenu : AppCompatActivity() {
                 .setContentText("\n")
                 .setConfirmText("예")
                 .setConfirmClickListener { sDialog ->
+                    Log.i("로그",CUSTOMERID.toString())
                     CancelAsyncTask().execute(CUSTOMERID)
                     CustomerMenuAsyncTask().execute(CUSTOMERID)
                     sDialog.dismissWithAnimation()

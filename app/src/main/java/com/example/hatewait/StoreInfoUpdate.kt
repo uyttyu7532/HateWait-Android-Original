@@ -6,6 +6,9 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import com.example.hatewait.socket.STOREID
+import com.example.hatewait.socket.STORENAME
+import com.example.hatewait.socket.StoreInfoUpdateAsyncTask
 import kotlinx.android.synthetic.main.activity_store_info_update.*
 import org.jetbrains.anko.startActivityForResult
 
@@ -46,7 +49,8 @@ class StoreInfoUpdate : AppCompatActivity(),
 
 
     fun init() {
-
+//        임시
+        store_name.text = STORENAME
 //        DB로부터 불러온 변경 전 가게정보
         val initialStoreInfoMap : Map<String, String>
                 = mapOf(Pair("AUTO_CALL", auto_call_number.text.toString()),
@@ -55,6 +59,21 @@ class StoreInfoUpdate : AppCompatActivity(),
                     Pair("PHONE", store_phone_number_textView.text.toString()),
                     Pair("TIME", store_business_hours_text.text.toString())
                 )
+        update_store_info_button.setOnClickListener {
+//            헛점: DB 쿼리가 MODIFY로 지정되어있어 모든 것들을.. 동기화해야함.
+            val updatedStoreInfoMap : Map<String, String> =
+                            mapOf(Pair("ID", STOREID),
+                                Pair("PASSWORD", "updated12!@"),
+                                Pair("NAME", store_name.text.toString()),
+                                Pair("DESCRIPTION", "짱짱 맛있는 집"),
+                                Pair("CAPACITY", store_capacity_number_textView.text.toString()),
+                                Pair("BUSINESS_HOURS", store_business_hours_text.text.toString()),
+                                Pair("ADDRESS", store_address_editText.text.toString()),
+                                Pair("PHONE", store_phone_number_textView.text.toString()),
+                                Pair("AUTO_CALL", auto_call_number.text.toString())
+                            )
+            StoreInfoUpdateAsyncTask(this@StoreInfoUpdate).execute(updatedStoreInfoMap)
+        }
         store_name_edit_button.setOnClickListener {
             StoreNameChangeDialog().show(supportFragmentManager, "STORE_NAME_CHANGE")
         }

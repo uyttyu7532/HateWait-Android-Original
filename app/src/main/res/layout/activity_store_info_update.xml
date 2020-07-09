@@ -195,7 +195,7 @@
                     android:layout_gravity="center"
                     android:inputType="text"
                     android:clickable="true"
-                    android:text="02-2257-5721"
+                    android:text="0222575721"
                     android:gravity="center"/>
 <!--            <com.google.android.material.textfield.TextInputLayout-->
 <!--                    android:id="@+id/store_phone_number_editText_layout"-->
@@ -257,7 +257,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="매일 오전 11:00 - 오후 8:00\n (휴무일: 토요일, 일요일)" />
+                    android:text="오전 11:00 - 오후 8:00 (휴무일: 일요일)" />
 
             <!--            <EditText-->
             <!--                    android:id="@+id/store_phone_number_editText"-->

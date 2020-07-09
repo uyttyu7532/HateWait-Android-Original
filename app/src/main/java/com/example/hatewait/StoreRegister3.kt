@@ -38,10 +38,10 @@ class StoreRegister3 : AppCompatActivity() {
 
 //            마지막 4단계로 모두 넘겨버리기
             val intent = Intent(this, StoreRegister4::class.java)
-            intent.putExtra("STORE_ID", intent.getStringExtra("STORE_ID"))
-            intent.putExtra("STORE_PASSWORD", intent.getStringExtra("STORE_PASSWORD"))
-            intent.putExtra("STORE_NAME", intent.getStringExtra("STORE_NAME"))
-            intent.putExtra("STORE_DESCRIPTION", intent.getStringExtra("STORE_DESCRIPTION"))
+            intent.putExtra("STORE_ID", getIntent().getStringExtra("STORE_ID"))
+            intent.putExtra("STORE_PASSWORD", getIntent().getStringExtra("STORE_PASSWORD"))
+            intent.putExtra("STORE_NAME", getIntent().getStringExtra("STORE_NAME"))
+            intent.putExtra("STORE_DESCRIPTION", getIntent().getStringExtra("STORE_DESCRIPTION"))
             intent.putExtra("STORE_ADDRESS", store_address_input_editText.text.toString())
             intent.putExtra("STORE_PHONE", store_phone_editText.text.toString())
             intent.putExtra("STORE_CAPACITY", store_capacity_editText.text.toString())

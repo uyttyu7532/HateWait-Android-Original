@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.content.SharedPreferences
 import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -102,7 +103,6 @@ class SwipeRecyclerViewAdapter(
 
 
                     callCustomer(
-                        items[position].phone,
                         items[position].id,
                         "[${STORENAME}] ${items[position].turn}번째 순서 전 입니다. 가게 앞으로 와주세요."
                     )
@@ -255,10 +255,11 @@ class SwipeRecyclerViewAdapter(
 }
 
 
-fun callCustomer(phone: String, id: String, message: String) {
+fun callCustomer(customerId: String, message: String) {
     //푸시를 받을 유저의 UID가 담긴 destinationUid 값을 넣어준후 fcmPush클래스의 sendMessage 메소드 호출
     val fcmPush = FcmPush()
-    fcmPush?.sendMessage("0$phone", message)
+    fcmPush?.sendMessage(customerId, message)
     // 서버쪽에서 문자메시지 보내기
-    PushMessageAsyncTask().execute(id)
+    PushMessageAsyncTask().execute(customerId)
+    Log.i("로그","callCustomer 호출하는손님id:${customerId}")
 }

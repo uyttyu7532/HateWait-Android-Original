@@ -12,6 +12,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.example.hatewait.socket.*
+import com.google.firebase.messaging.FirebaseMessaging
 
 
 lateinit var waitingStoreView: TextView
@@ -37,18 +38,24 @@ class CustomerMenu : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        Log.i("로그", "onresume 손님메뉴")
+        // customer mode
+        val customerReference =
+            getSharedPreferences(resources.getString(R.string.customer_mode), Context.MODE_PRIVATE)
+        CUSTOMERID = customerReference.getString("CUSTOMER_ID", "")
+
+        FirebaseMessaging.getInstance().subscribeToTopic(CUSTOMERID)
+
+        Log.i("로그", "onresume 손님메뉴, customerID=${CUSTOMERID}")
         CustomerMenuAsyncTask().execute(CUSTOMERID)
+
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_customer_menu)
 
-        // customer mode
-        val customerReference =
-            getSharedPreferences(resources.getString(R.string.customer_mode), Context.MODE_PRIVATE)
-        CUSTOMERID = customerReference.getString("CUSTOMER_ID", "")
+
 
         init()
 

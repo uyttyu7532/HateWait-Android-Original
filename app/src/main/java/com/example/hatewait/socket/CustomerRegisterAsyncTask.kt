@@ -40,8 +40,6 @@ class CustomerRegisterAsyncTask(context: CustomerRegister2) : AsyncTask<String, 
             writer.close()
             clientSocket.close()
         }
-        Log.i("로그","subscribeToTopic(${userPhone})")
-        FirebaseMessaging.getInstance().subscribeToTopic(userPhone)
     }
 
     override fun onPostExecute(result: Unit?) {

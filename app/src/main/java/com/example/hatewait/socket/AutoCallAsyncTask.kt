@@ -89,7 +89,6 @@ class AutoCallAsyncTask : AsyncTask<Unit, Unit, QueueListSerializable?>() {
                             called[i.phone] = true
 
                             callCustomer(
-                                i.phone,
                                 i.id,
                                 "[${STORENAME}] ${i.turn.toInt()}번째 순서 전 입니다. 가게 앞으로 와주세요."
                             )

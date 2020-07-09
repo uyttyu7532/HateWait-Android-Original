@@ -11,8 +11,6 @@ import androidx.fragment.app.Fragment
 import com.example.hatewait.socket.MemberRegisterAsyncTask
 import kotlinx.android.synthetic.main.activity_members_register.*
 
-
-
 class MemberRegister : Fragment() {
     private val idRegex = Regex("^(?=.*[a-zA-Zㄱ-ㅎ가-힣0-9])[a-zA-Zㄱ-ㅎ가-힣0-9]{1,}$")
     private val peopleNumberRegex = Regex("^[1-9](\\d?)")
@@ -107,19 +105,18 @@ class MemberRegister : Fragment() {
 
     override fun onStop() {
         inputLayoutInitialize()
-        customerName = null
-        customerTurn = null
         super.onStop()
     }
 
     private fun inputLayoutInitialize() {
-        user_id_input_layout.error = null
-        user_id_input_editText.clearFocus()
         user_id_input_editText.text?.clear()
+        user_id_input_editText.clearFocus()
+        user_id_input_layout.error = null
         user_id_input_layout.hint = "헤잇웨잇의 아이디를 입력해주세요"
-        people_number_layout.error = null
-        people_number_editText.clearFocus()
+
         people_number_editText.text?.clear()
+        people_number_editText.clearFocus()
+        people_number_layout.error = null
         people_number_layout.hint = "총 몇 분이 오셨나요?"
     }
 

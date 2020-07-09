@@ -1,7 +1,5 @@
 package com.example.hatewait
 
-
-
 import android.os.Bundle
 import android.os.Handler
 import android.text.Editable
@@ -149,10 +147,12 @@ class NonMemberRegister : androidx.fragment.app.Fragment() {
         user_name_input_editText.clearFocus()
         user_name_input_layout.error = null
         user_name_input_layout.hint = "이름을 입력해주세요"
+
         user_phone_number_editText.text?.clear()
         user_phone_number_editText.clearFocus()
         user_phone_number_layout.error = null
         user_phone_number_layout.hint = "전화번호를 입력해주세요"
+
         people_number_editText.text?.clear()
         people_number_editText.clearFocus()
         people_number_layout.error = null

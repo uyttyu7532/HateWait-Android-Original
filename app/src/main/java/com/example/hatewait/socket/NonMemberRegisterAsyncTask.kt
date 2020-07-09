@@ -20,7 +20,7 @@ class NonMemberRegisterAsyncTask(context: NonMemberRegister) : AsyncTask<String,
     private var resultString = ""
 
     override fun doInBackground(vararg params: String) : String { // 소켓 연결
-        val storeId= "s0000"
+        val storeId= STOREID
         val userName = params[0]
         val userPhone = params[1]
         val numOfGroup = params[2]

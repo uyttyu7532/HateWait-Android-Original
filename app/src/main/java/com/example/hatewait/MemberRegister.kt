@@ -1,25 +1,16 @@
 package com.example.hatewait
 
 import android.content.Context
-import android.os.AsyncTask
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.hatewait.socket.MemberRegisterAsyncTask
-import com.example.hatewait.socket.PORT
-import com.example.hatewait.socket.SERVERIP
 import kotlinx.android.synthetic.main.activity_members_register.*
-import java.io.BufferedReader
-import java.io.IOException
-import java.io.InputStreamReader
-import java.io.PrintWriter
-import java.lang.ref.WeakReference
-import java.net.Socket
+
 
 
 class MemberRegister : Fragment() {

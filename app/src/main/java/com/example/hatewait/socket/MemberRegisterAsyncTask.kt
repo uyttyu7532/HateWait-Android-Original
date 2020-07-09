@@ -18,7 +18,7 @@ class MemberRegisterAsyncTask(context: MemberRegister) : AsyncTask<String, Unit,
     private var responseString = ""
 
     override fun doInBackground(vararg params: String): String { // 소켓 연결
-        val storeId= "s0000"
+        val storeId= STOREID
         val userId = params[0]
         val numOfGroup = params[1]
 

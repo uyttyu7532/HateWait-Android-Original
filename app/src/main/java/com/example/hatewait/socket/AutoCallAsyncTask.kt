@@ -12,7 +12,7 @@ import java.io.PrintWriter
 import java.net.Socket
 
 
-class AutoCallAysncTask : AsyncTask<Unit, Unit, QueueListSerializable?>() {
+class AutoCallAsyncTask : AsyncTask<Unit, Unit, QueueListSerializable?>() {
 
     var qls: QueueListSerializable? = null
 
@@ -20,7 +20,7 @@ class AutoCallAysncTask : AsyncTask<Unit, Unit, QueueListSerializable?>() {
 
         try {
             clientSocket = Socket(SERVERIP, PORT)
-            Log.i("로그", "AutoCallAysncTask:: ok")
+            Log.i("로그", "AutoCallAsyncTask:: ok")
             writer = PrintWriter(clientSocket!!.getOutputStream(), true)
             writer!!.println("STRQUE;${STOREID}")
 

@@ -111,7 +111,7 @@ class StoreWaitingList : AppCompatActivity() {
         }
 
         autoCallBtn.setOnClickListener{
-            AutoCallAysncTask().execute()
+            AutoCallAsyncTask().execute()
         }
 
 

@@ -12,11 +12,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.example.hatewait.socket.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.*
+
 
 lateinit var waitingStoreView: TextView
 lateinit var customerWaitingNum: TextView
@@ -98,7 +94,7 @@ class CustomerMenu : AppCompatActivity() {
         customView = layoutInflater.inflate(R.layout.activity_name_check_dialog, null)
         if (intent.hasExtra("Notification")) {
             val questionDialog = SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
-                .setTitleText("가게에 오셔서 직원에게 안내를 받으세요. 가게에 오실 건가요?")
+                .setTitleText(resources.getString(R.string.notification_dialog_message))
                 .hideConfirmButton()
                 .setCustomView(customView)
             questionDialog.show()
@@ -111,7 +107,7 @@ class CustomerMenu : AppCompatActivity() {
                 questionDialog.dismissWithAnimation()
             }
         }
-        customerMarquee.text = "내 차례가 되면 상태바 알림과 문자 알림이 발송됩니다. 취소 버튼을 눌러 대기를 취소할 수 있습니다."
+        customerMarquee.text = resources.getString(R.string.customer_marquee)
         customerMarquee.isSelected = true // 마키 텍스트에 포커스
 
 

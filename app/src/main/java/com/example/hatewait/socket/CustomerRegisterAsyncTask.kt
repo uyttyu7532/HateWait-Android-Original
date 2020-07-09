@@ -2,6 +2,7 @@ package com.example.hatewait.socket
 
 import android.content.Context
 import android.os.AsyncTask
+import android.util.Log
 import com.example.hatewait.CustomerMenu
 import com.example.hatewait.CustomerRegister2
 import com.example.hatewait.R
@@ -39,6 +40,7 @@ class CustomerRegisterAsyncTask(context: CustomerRegister2) : AsyncTask<String, 
             writer.close()
             clientSocket.close()
         }
+        Log.i("로그","subscribeToTopic(${userPhone})")
         FirebaseMessaging.getInstance().subscribeToTopic(userPhone)
     }
 

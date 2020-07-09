@@ -258,7 +258,7 @@ class SwipeRecyclerViewAdapter(
 fun callCustomer(phone: String, id: String, message: String) {
     //푸시를 받을 유저의 UID가 담긴 destinationUid 값을 넣어준후 fcmPush클래스의 sendMessage 메소드 호출
     val fcmPush = FcmPush()
-    fcmPush?.sendMessage(phone, message)
+    fcmPush?.sendMessage("0$phone", message)
     // 서버쪽에서 문자메시지 보내기
     PushMessageAsyncTask().execute(id)
 }

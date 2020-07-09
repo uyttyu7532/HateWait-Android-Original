@@ -1,20 +1,15 @@
 package com.example.hatewait.fcm
 
-import android.content.Context
-import android.widget.Toast
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.iid.FirebaseInstanceId
+import com.example.hatewait.R
 import com.google.gson.Gson
 import okhttp3.*
 import java.io.IOException
 
 
-
 class FcmPush {
     val JSON = MediaType.parse("application/json; charset=utf-8")//Post전송 JSON Type
     val url = "https://fcm.googleapis.com/fcm/send" //FCM HTTP를 호출하는 URL
-    val serverKey =
-        "AAAADFuBNLs:APA91bFIXgmQdl1BI8uySmcALicDNbrgQwD8Y576IyrRAKe-BdYZDLmon5J4BKeUxMYzcFEBay8cJ1ntNDnmZ7QKCX1z-ldyZJKkiQSk4qdm3sBXLfVvwoyFv6JSgA8oI12pdgyELc_d"
+    val serverKey = R.string.fcm_server_key
 
     //Firebase에서 복사한 서버키
     var okHttpClient: OkHttpClient
@@ -43,12 +38,10 @@ class FcmPush {
 //            })
 //    }
 
-    fun sendMessage(phoneNumber : String, message:String) {
-   var pushDTO = PushDTO()
+    fun sendMessage(phoneNumber: String, message: String) {
+        var pushDTO = PushDTO()
 //        pushDTO.to = token                   //푸시토큰 세팅
         pushDTO.to = "/topics/${phoneNumber}" // 토픽넣어주기(호출하는폰번호)
-        // TODO 주석
-//        pushDTO.to = "/topics/01093097866" // 토픽넣어주기(호출하는폰번호)
         pushDTO.notification?.title = "HateWait"  //푸시 타이틀 세팅
         pushDTO.notification?.body = "${message}" //푸시 메시지 세팅
 
@@ -64,6 +57,7 @@ class FcmPush {
             //푸시 전송
             override fun onFailure(call: Call?, e: IOException?) {
             }
+
             override fun onResponse(call: Call?, response: Response?) {
 
             }

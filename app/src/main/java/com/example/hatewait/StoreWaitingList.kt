@@ -64,8 +64,6 @@ class StoreWaitingList : AppCompatActivity() {
 //                    Log.i("현재 토큰: ", instanceIdResult.token)
 //                })
 
-        // TODO 자기 폰번호 subscribe하면 됨!!!
-//        FirebaseMessaging.getInstance().subscribeToTopic("01093097866")
 
         init()
     }

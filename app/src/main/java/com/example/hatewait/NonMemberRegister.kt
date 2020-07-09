@@ -1,8 +1,7 @@
 package com.example.hatewait
 
 
-import android.net.sip.SipErrorCode.TIME_OUT
-import android.os.AsyncTask
+
 import android.os.Bundle
 import android.os.Handler
 import android.text.Editable

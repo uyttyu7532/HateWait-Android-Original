@@ -19,7 +19,7 @@ class CustomerRegisterAsyncTask(context: CustomerRegister2) : AsyncTask<String, 
     private lateinit var clientSocket: Socket
     private lateinit var reader: BufferedReader
     private lateinit var writer: PrintWriter
-    private lateinit var newCustomerName : String
+    private lateinit var newCustomerId : String
 
     override fun doInBackground(vararg params: String) { // 소켓 연결
         val userId= params[0]
@@ -31,7 +31,7 @@ class CustomerRegisterAsyncTask(context: CustomerRegister2) : AsyncTask<String, 
             writer = PrintWriter(clientSocket!!.getOutputStream(), true)
             reader = BufferedReader(InputStreamReader(clientSocket!!.getInputStream(), "UTF-8"))
             writer!!.println("SIGNUP;MEMBER;$userId;$userName;$userPhone;$userPassword")
-            newCustomerName = userName
+            newCustomerId = userId
         } catch (ioe: IOException) {
             ioe.printStackTrace()
         } finally {
@@ -46,7 +46,7 @@ class CustomerRegisterAsyncTask(context: CustomerRegister2) : AsyncTask<String, 
         val currentActivity = activityReference.get()
         if (currentActivity == null || currentActivity.isFinishing) return
         val customerReference = currentActivity.getSharedPreferences(currentActivity.resources.getString(R.string.customer_mode), Context.MODE_PRIVATE)
-        customerReference.edit().putString("CUSTOMER_ID", newCustomerName).commit()
+        customerReference.edit().putString("CUSTOMER_ID", newCustomerId).commit()
         currentActivity.startActivity<CustomerMenu>()
         currentActivity.finishAffinity()
         super.onPostExecute(result)

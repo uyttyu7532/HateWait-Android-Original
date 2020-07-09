@@ -16,7 +16,7 @@ import java.util.*
 
 class CustomerMenuAsyncTask : AsyncTask<String?, Unit, Array<String>?>() {
 
-    var CustomerMenuArray: Array<String>? = null
+    private var CustomerMenuArray: Array<String>? = null
 
     override fun doInBackground(vararg params: String?): Array<String>? { // 소켓 연결
         try {
@@ -67,7 +67,7 @@ class CustomerMenuAsyncTask : AsyncTask<String?, Unit, Array<String>?>() {
                 //서버>앱: MAIN;MEMBER;customerName;waitingStoreName;waitingMyTurn
 
                 Log.i("로그 result?.get(3):", result?.get(3))
-                if (result?.get(3).equals("null")) {
+                if (result?.get(3) == "null") {
                     waitingStoreView.text = "대기중인 가게가 없습니다."
                     customerWaiting.visibility = GONE
                 } else {

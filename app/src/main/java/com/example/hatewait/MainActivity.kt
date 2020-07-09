@@ -22,8 +22,9 @@ class MainActivity : AppCompatActivity() {
     var mLastBackPress: Long = 0
     val mBackPressThreshold:Long = 3500
 
-
+// 영문,한글,숫자 1자 이상 입력 가능
     private val idRegex = Regex("^(?=.*[a-zA-Zㄱ-ㅎ가-힣0-9])[a-zA-Zㄱ-ㅎ가-힣0-9]{1,}$")
+//    영문, 숫자, 특수문자 포함 8자 이상
     private val passwordRegex =
         Regex("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,}$")
 

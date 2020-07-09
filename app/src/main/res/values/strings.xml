@@ -28,6 +28,7 @@
     <string name="password_input_error">영문, 숫자, 특수문자 포함 8자 이상 입력해주세요</string>
     <string name="password_reinput_error">비밀번호가 일치하지 않아요</string>
     <!--    Store -->
+    <string name="store_register_menu_title">가게 회원가입</string>
     <string name="store_phone_error_message">9~11자리 전화번호를 입력해주세요</string>
     <string name="store_name_error_message">특수문자는 허용되지 않아요.</string>
     <string name="store_description_error_message">반드시 1글자 이상 입력해주세요</string>

@@ -7,6 +7,9 @@
     <uses-permission android:name="android.permission.VIBRATE " />
     <uses-permission android:name="android.permission.WAKE_LOCK " />
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <application
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
@@ -14,12 +17,19 @@
             android:roundIcon="@mipmap/ic_launcher"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".StoreRegister4"/>
-        <activity android:name=".StoreRegister3"/>
-        <activity android:name=".StoreRegister2"/>
-        <activity android:name=".CustomerRegister2"/>
-        <activity android:name=".StoreRegister"/>
-        <activity android:name=".CustomerRegister"/>
+        <activity android:name=".MapViewActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".StoreRegister4" />
+        <activity android:name=".StoreRegister3" />
+        <activity android:name=".StoreRegister2" />
+        <activity android:name=".CustomerRegister2" />
+        <activity android:name=".StoreRegister" />
+        <activity android:name=".CustomerRegister" />
 
         <meta-data
                 android:name="com.google.firebase.messaging.default_notification_icon"
@@ -30,6 +40,9 @@
         <meta-data
                 android:name="com.google.firebase.messaging.default_notification_channel_id"
                 android:value="@string/default_notification_channel_id" />
+        <meta-data
+                android:name="com.naver.maps.map.CLIENT_ID"
+                android:value="4vosrez4z5" />
 
         <service android:name=".fcm.MyFirebaseMessagingService">
             <intent-filter>
@@ -48,8 +61,7 @@
         <activity android:name=".StoreMenu" />
         <activity android:name=".LoginRegisterViewPagerActivity" />
         <activity android:name=".RegisterCheck" />
-        <activity android:name=".MainActivity">
-        </activity>
+        <activity android:name=".MainActivity" />
         <activity android:name=".AddWaiting" />
         <activity android:name=".StoreWaitingList" />
         <activity android:name=".BusinessHourPick" />
@@ -59,11 +71,11 @@
                 android:screenOrientation="portrait"
                 android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
                 tools:ignore="LockedOrientationActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
     </application>
 

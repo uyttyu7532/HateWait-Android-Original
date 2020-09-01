@@ -26,7 +26,8 @@ allprojects {
         google()
         jcenter()
 //        business hour time picker + SegmentedButton
-        maven { url 'https://jitpack.io' }
+        maven {url 'https://jitpack.io'}
+        maven {url 'https://navercorp.bintray.com/maps'}
 
         mavenLocal()
     }

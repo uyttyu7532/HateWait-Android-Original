@@ -95,12 +95,11 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.5'
 
 
-    //twilio
-//    implementation group: "com.twilio.sdk", name: "twilio", version: "7.52.0"
-//    implementation 'com.github.hihi-dev:twiliosms:0.1.1'
-
     implementation 'com.android.support:customtabs:28.0.0'
     implementation 'com.github.f0ris.sweetalert:library:1.5.6'
 
+    // 네이버 map
+    implementation 'com.naver.maps:map-sdk:3.9.1'
+    implementation("com.google.android.gms:play-services-location:16.0.0")
 
 }

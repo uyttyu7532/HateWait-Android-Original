@@ -28,10 +28,12 @@ allprojects {
 //        business hour time picker + SegmentedButton
         maven {url 'https://jitpack.io'}
         maven {url 'https://navercorp.bintray.com/maps'}
+        maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/' }
 
         mavenLocal()
     }
 }
+
 
 task clean(type: Delete) {
     delete rootProject.buildDir

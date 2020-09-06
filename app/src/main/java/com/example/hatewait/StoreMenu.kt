@@ -25,13 +25,12 @@ class StoreMenu : AppCompatActivity() {
 
         storeContext = this.applicationContext
 
-        //store mode
-
+        // store mode
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         storeNameView = findViewById<TextView>(R.id.store_name_view)
         storeWaitingNum = findViewById<TextView>(R.id.store_waiting_num)
         storeMarquee = findViewById<TextView>(R.id.store_marquee)
-//      임시 로그인 이후 ID와 이름만 받아옴.
+        // 임시 로그인 이후 ID와 이름만 받아옴.
         val storeReference = getSharedPreferences(resources.getString(R.string.store_mode), Context.MODE_PRIVATE)
         STOREID = storeReference.getString("STORE_ID","")
         STORENAME = storeNameView.text.toString()

@@ -49,7 +49,7 @@ class MapViewActivity : AppCompatActivity(), OnMapReadyCallback {
         this.naverMap = naverMap
         naverMap.locationSource = locationSource
         val UiSettings = naverMap.uiSettings
-        UiSettings.setLocationButtonEnabled(true)
+        UiSettings.isLocationButtonEnabled = true
     }
 
     companion object {

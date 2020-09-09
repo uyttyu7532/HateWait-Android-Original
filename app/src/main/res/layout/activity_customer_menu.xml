@@ -196,7 +196,6 @@
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:clickable="true"
                 android:gravity="center"
                 android:orientation="vertical"
                 app:layout_gravity="center">
@@ -207,29 +206,24 @@
                     android:layout_marginBottom="2dp"
                     app:cardBackgroundColor="@color/colorPrimary"
                     app:cardCornerRadius="0dp"
-                    app:cardElevation="2dp"
-                    android:clickable="true">
+                    app:cardElevation="2dp">
 
                 <TextView
-                        android:id="@+id/textView2"
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
                         android:gravity="center"
                         android:text="다른 가게 줄 확인하기"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:textColor="#ffffff"
-                        android:clickable="true"/>
+                        android:textColor="#ffffff" />
             </androidx.cardview.widget.CardView>
 
 
             <ImageButton
-                    android:id="@+id/imageButton2"
                     android:layout_width="70dp"
                     android:layout_height="60dp"
                     android:layout_gravity="center"
                     android:layout_margin="25dp"
                     android:background="@drawable/retail"
-                    android:clickable="true"
                     android:scaleType="centerInside" />
 
         </LinearLayout>

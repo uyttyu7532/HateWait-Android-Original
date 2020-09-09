@@ -2,6 +2,7 @@ package com.example.hatewait
 
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -11,18 +12,17 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import cn.pedant.SweetAlert.SweetAlertDialog
-import com.example.hatewait.socket.*
+import com.example.hatewait.socket.CUSTOMERID
+import com.example.hatewait.socket.CancelAsyncTask
+import com.example.hatewait.socket.CustomerMenuAsyncTask
 import com.google.firebase.messaging.FirebaseMessaging
+import kotlinx.android.synthetic.main.activity_customer_menu.*
 
 
 lateinit var waitingStoreView: TextView
 lateinit var customerWaitingNum: TextView
-lateinit var customerMarquee: TextView
 lateinit var customerNameView: TextView
-lateinit var my_cancel_button: TextView
-lateinit var my_refresh_button: ImageView
 lateinit var recentRefreshTime: TextView
-lateinit var waitingNumText: TextView
 lateinit var customerWaiting: LinearLayout
 
 class CustomerMenu : AppCompatActivity() {
@@ -55,8 +55,6 @@ class CustomerMenu : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_customer_menu)
 
-
-
         init()
 
     }
@@ -64,19 +62,13 @@ class CustomerMenu : AppCompatActivity() {
 
     fun init() {
 
-        waitingStoreView = findViewById(R.id.waitingStoreView)
-        customerWaitingNum = findViewById(R.id.customerWaitingNum)
-        customerMarquee = findViewById(R.id.customerMarquee)
-        customerNameView = findViewById(R.id.customerNameView)
-        my_cancel_button = findViewById(R.id.my_cancel_button)
-        my_refresh_button = findViewById(R.id.my_refresh_button)
-        recentRefreshTime = findViewById(R.id.recentRefreshTime)
-        recentRefreshTime = findViewById(R.id.recentRefreshTime)
-        waitingNumText = findViewById(R.id.waitingNumText)
-        customerWaiting = findViewById(R.id.customerWaiting)
+
+        otherStoreBtn.setOnClickListener {
+            val intent = Intent(this, KakaoMapActivity::class.java)
+            startActivity(intent)
+        }
 
         my_cancel_button.setOnClickListener {
-            // storeid, customerid
             SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
                 .setTitleText("정말 대기를 그만두시겠습니까?")
                 .setContentText("\n")

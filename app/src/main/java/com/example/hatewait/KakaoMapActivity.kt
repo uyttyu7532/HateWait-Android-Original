@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
@@ -13,14 +12,16 @@ import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_kakao_map.*
+import net.daum.mf.map.api.CalloutBalloonAdapter
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
-import net.daum.mf.map.api.MapPolyline
 import net.daum.mf.map.api.MapView
 import net.daum.mf.map.api.MapView.CurrentLocationEventListener
 import org.jetbrains.anko.locationManager
@@ -37,14 +38,11 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
         arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
     private var mapPointGeo: MapPoint.GeoCoordinate? = null
     lateinit var location: Location
-
-    //    private var centerLocationX: Double? = null
-//    private var centerLocationY: Double? = null
     private var bottom: String? = null
     private var left: String? = null
     private var top: String? = null
     private var right: String? = null
-    private var currentZoom: Int? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -299,10 +297,12 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
         mapView: MapView,
         mapPoint: MapPoint
     ) {
+
         left = mapView.mapPointBounds.bottomLeft.mapPointGeoCoord.latitude.toString()
         bottom = mapView.mapPointBounds.bottomLeft.mapPointGeoCoord.longitude.toString()
         right = mapView.mapPointBounds.topRight.mapPointGeoCoord.latitude.toString()
         top = mapView.mapPointBounds.topRight.mapPointGeoCoord.longitude.toString()
+
 
         SearchRetrofit.getService().requestSearchRestaurant(
             rect = "${bottom},${left},${top},${right}"
@@ -317,6 +317,9 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
                     val restaurants = response.body()!!.documents
 
                     val restaurantsIterator = restaurants.listIterator()
+
+                    mapView!!.removeAllPOIItems()
+
                     while (restaurantsIterator.hasNext()) {
                         val restaurant = restaurantsIterator.next()
 
@@ -328,17 +331,41 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
                         marker.tag = 0
                         marker.mapPoint = mapPoint
                         marker.markerType =
-                            MapPOIItem.MarkerType.BluePin // 기본으로 제공하는 BluePin 마커 모양.
+                            MapPOIItem.MarkerType.CustomImage // 기본으로 제공하는 BluePin 마커 모양.
 
-                        marker.selectedMarkerType =
-                            MapPOIItem.MarkerType.RedPin // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+                        marker.selectedMarkerType = MapPOIItem.MarkerType.CustomImage
+                        marker.customImageResourceId = R.drawable.pin
+//                        marker.isCustomImageAutoscale = false; // hdpi, xhdpi 등 안드로이드 플랫폼의 스케일을 사용할 경우 지도 라이브러리의 스케일 기능을 꺼줌.
+                        marker.setCustomImageAnchor(
+                            0.5f,
+                            1.0f
+                        ); // 마커 이미지중 기준이 되는 위치(앵커포인트) 지정 - 마커 이미지 좌측 상단 기준 x(0.0f ~ 1.0f), y(0.0f ~ 1.0f) 값.
 
                         mapView!!.addPOIItem(marker)
                     }
                 }
             }
+
         })
     }
+
+//    internal class CustomCalloutBalloonAdapter : CalloutBalloonAdapter {
+//        private val mCalloutBalloon: View
+//        override fun getCalloutBalloon(poiItem: MapPOIItem): View {
+//            (mCalloutBalloon.findViewById(R.id.badge) as ImageView).setImageResource(R.drawable.ic_launcher)
+//            (mCalloutBalloon.findViewById(R.id.title) as TextView).text = poiItem.itemName
+//            (mCalloutBalloon.findViewById(R.id.desc) as TextView).text("Custom CalloutBalloon")
+//            return mCalloutBalloon
+//        }
+//
+//        override fun getPressedCalloutBalloon(poiItem: MapPOIItem): View {
+//            return null
+//        }
+//
+//        init {
+//            mCalloutBalloon = getLayoutInflater().inflate(R.layout.custom_callout_balloon, null)
+//        }
+//    }
 
     companion object {
         private const val LOG_TAG = "KakaoMapActivity"

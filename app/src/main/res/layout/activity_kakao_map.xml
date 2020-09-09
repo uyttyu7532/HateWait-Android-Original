@@ -42,7 +42,7 @@
                 android:clickable="true"
                 android:tint="#FFFFFF"
                 app:backgroundTint="@color/colorPrimary"
-                app:srcCompat="@drawable/ic_baseline_location_on_24" />
+                app:srcCompat="@drawable/target" />
     </FrameLayout>
 
 </FrameLayout>

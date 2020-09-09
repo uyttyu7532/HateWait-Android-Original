@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -11,10 +10,28 @@
             android:id="@+id/kakaoMapView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+<!--        <androidx.cardview.widget.CardView-->
+<!--                android:id="@+id/searchBtn"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:clickable="true"-->
+<!--                app:cardCornerRadius="5dp"-->
+<!--                app:cardElevation="2dp"-->
+<!--                android:backgroundTint="@color/colorPrimary">-->
+
+<!--            <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:text="음식점 검색하기"-->
+<!--                android:textColor="#ffffff"-->
+<!--                    />-->
+<!--        </androidx.cardview.widget.CardView>-->
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/myLocationFAB"
@@ -23,9 +40,9 @@
                 android:layout_gravity="bottom|right"
                 android:layout_margin="10dp"
                 android:clickable="true"
-                app:srcCompat="@drawable/ic_baseline_location_on_24"
                 android:tint="#FFFFFF"
-                app:backgroundTint="@color/colorPrimary" />
+                app:backgroundTint="@color/colorPrimary"
+                app:srcCompat="@drawable/ic_baseline_location_on_24" />
     </FrameLayout>
 
 </FrameLayout>

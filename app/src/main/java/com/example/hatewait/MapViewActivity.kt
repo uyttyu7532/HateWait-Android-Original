@@ -3,7 +3,6 @@ package com.example.hatewait
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.annotation.UiThread
-import androidx.lifecycle.Transformations.map
 import com.naver.maps.map.*
 import com.naver.maps.map.util.FusedLocationSource
 

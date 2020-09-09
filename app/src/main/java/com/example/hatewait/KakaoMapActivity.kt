@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
@@ -18,17 +20,31 @@ import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_kakao_map.*
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
+import net.daum.mf.map.api.MapPolyline
 import net.daum.mf.map.api.MapView
 import net.daum.mf.map.api.MapView.CurrentLocationEventListener
+import org.jetbrains.anko.locationManager
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
-class KakaoMapActivity  : AppCompatActivity(), CurrentLocationEventListener,
+class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
     MapView.MapViewEventListener {
     private var mapView: MapView? = null
     private var mapViewContainer: ViewGroup? = null
-    var REQUIRED_PERMISSIONS =
+    private var REQUIRED_PERMISSIONS =
         arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
-    private var mapPointGeo:MapPoint.GeoCoordinate? = null
+    private var mapPointGeo: MapPoint.GeoCoordinate? = null
+    lateinit var location: Location
+
+    //    private var centerLocationX: Double? = null
+//    private var centerLocationY: Double? = null
+    private var bottom: String? = null
+    private var left: String? = null
+    private var top: String? = null
+    private var right: String? = null
+    private var currentZoom: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,20 +58,6 @@ class KakaoMapActivity  : AppCompatActivity(), CurrentLocationEventListener,
         mapView!!.currentLocationTrackingMode =
             MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeadingWithoutMapMoving
 
-        val marker = MapPOIItem()
-
-        //맵 포인트 위도경도 설정
-        val mapPoint = MapPoint.mapPointWithGeoCoord(35.898054, 128.544296)
-        marker.itemName = "Default Marker"
-        marker.tag = 0
-        marker.mapPoint = mapPoint
-        marker.markerType = MapPOIItem.MarkerType.BluePin // 기본으로 제공하는 BluePin 마커 모양.
-
-        marker.selectedMarkerType =
-            MapPOIItem.MarkerType.RedPin // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
-
-
-        mapView!!.addPOIItem(marker)
 
         if (!checkLocationServicesStatus()) {
             showDialogForLocationServiceSetting()
@@ -65,8 +67,16 @@ class KakaoMapActivity  : AppCompatActivity(), CurrentLocationEventListener,
 
         // 현재 위치로 이동하게 해야함
         myLocationFAB.setOnClickListener {
-            mapView!!.setMapCenterPointAndZoomLevel(MapPoint.mapPointWithGeoCoord(mapPointGeo!!.latitude, mapPointGeo!!.longitude), 14, true);
+            location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            mapView!!.setMapCenterPointAndZoomLevel(
+                MapPoint.mapPointWithGeoCoord(
+                    location.latitude,
+                    location.longitude
+                ), 1, true
+            );
         }
+
+
     }
 
     override fun onDestroy() {
@@ -79,6 +89,7 @@ class KakaoMapActivity  : AppCompatActivity(), CurrentLocationEventListener,
         currentLocation: MapPoint,
         accuracyInMeters: Float
     ) {
+
         mapPointGeo = currentLocation.mapPointGeoCoord
         Log.i(
             LOG_TAG,
@@ -132,14 +143,14 @@ class KakaoMapActivity  : AppCompatActivity(), CurrentLocationEventListener,
                     )
                 ) {
                     Toast.makeText(
-                        this@KakaoMapActivity ,
+                        this@KakaoMapActivity,
                         "퍼미션이 거부되었습니다. 앱을 다시 실행하여 퍼미션을 허용해주세요.",
                         Toast.LENGTH_LONG
                     ).show()
                     finish()
                 } else {
                     Toast.makeText(
-                        this@KakaoMapActivity ,
+                        this@KakaoMapActivity,
                         "퍼미션이 거부되었습니다. 설정(앱 정보)에서 퍼미션을 허용해야 합니다. ",
                         Toast.LENGTH_LONG
                     ).show()
@@ -154,7 +165,7 @@ class KakaoMapActivity  : AppCompatActivity(), CurrentLocationEventListener,
         // 1. 위치 퍼미션을 가지고 있는지 체크합니다.
         val hasFineLocationPermission =
             ContextCompat.checkSelfPermission(
-                this@KakaoMapActivity ,
+                this@KakaoMapActivity,
                 Manifest.permission.ACCESS_FINE_LOCATION
             )
         if (hasFineLocationPermission == PackageManager.PERMISSION_GRANTED) {
@@ -164,26 +175,26 @@ class KakaoMapActivity  : AppCompatActivity(), CurrentLocationEventListener,
         } else {  //2. 퍼미션 요청을 허용한 적이 없다면 퍼미션 요청이 필요합니다. 2가지 경우(3-1, 4-1)가 있습니다.
             // 3-1. 사용자가 퍼미션 거부를 한 적이 있는 경우에는
             if (ActivityCompat.shouldShowRequestPermissionRationale(
-                    this@KakaoMapActivity ,
+                    this@KakaoMapActivity,
                     REQUIRED_PERMISSIONS[0]
                 )
             ) {
                 // 3-2. 요청을 진행하기 전에 사용자가에게 퍼미션이 필요한 이유를 설명해줄 필요가 있습니다.
                 Toast.makeText(
-                    this@KakaoMapActivity ,
+                    this@KakaoMapActivity,
                     "이 앱을 실행하려면 위치 접근 권한이 필요합니다.",
                     Toast.LENGTH_LONG
                 ).show()
                 // 3-3. 사용자게에 퍼미션 요청을 합니다. 요청 결과는 onRequestPermissionResult에서 수신됩니다.
                 ActivityCompat.requestPermissions(
-                    this@KakaoMapActivity , REQUIRED_PERMISSIONS,
+                    this@KakaoMapActivity, REQUIRED_PERMISSIONS,
                     PERMISSIONS_REQUEST_CODE
                 )
             } else {
                 // 4-1. 사용자가 퍼미션 거부를 한 적이 없는 경우에는 퍼미션 요청을 바로 합니다.
                 // 요청 결과는 onRequestPermissionResult에서 수신됩니다.
                 ActivityCompat.requestPermissions(
-                    this@KakaoMapActivity , REQUIRED_PERMISSIONS,
+                    this@KakaoMapActivity, REQUIRED_PERMISSIONS,
                     PERMISSIONS_REQUEST_CODE
                 )
             }
@@ -192,7 +203,8 @@ class KakaoMapActivity  : AppCompatActivity(), CurrentLocationEventListener,
 
     //여기부터는 GPS 활성화를 위한 메소드들
     private fun showDialogForLocationServiceSetting() {
-        val builder: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(this@KakaoMapActivity)
+        val builder: android.app.AlertDialog.Builder =
+            android.app.AlertDialog.Builder(this@KakaoMapActivity)
         builder.setTitle("위치 서비스 비활성화")
         builder.setMessage(
             """
@@ -287,6 +299,45 @@ class KakaoMapActivity  : AppCompatActivity(), CurrentLocationEventListener,
         mapView: MapView,
         mapPoint: MapPoint
     ) {
+        left = mapView.mapPointBounds.bottomLeft.mapPointGeoCoord.latitude.toString()
+        bottom = mapView.mapPointBounds.bottomLeft.mapPointGeoCoord.longitude.toString()
+        right = mapView.mapPointBounds.topRight.mapPointGeoCoord.latitude.toString()
+        top = mapView.mapPointBounds.topRight.mapPointGeoCoord.longitude.toString()
+
+        SearchRetrofit.getService().requestSearchRestaurant(
+            rect = "${bottom},${left},${top},${right}"
+        ).enqueue(object :
+            Callback<Restaurant> {
+            override fun onFailure(call: Call<Restaurant>, t: Throwable) {
+            }
+
+            override fun onResponse(call: Call<Restaurant>, response: Response<Restaurant>) {
+                if (response.body() != null) {
+                    Toast.makeText(this@KakaoMapActivity, "성공", Toast.LENGTH_SHORT)
+                    val restaurants = response.body()!!.documents
+
+                    val restaurantsIterator = restaurants.listIterator()
+                    while (restaurantsIterator.hasNext()) {
+                        val restaurant = restaurantsIterator.next()
+
+                        val marker = MapPOIItem()
+
+                        //맵 포인트 위도경도 설정
+                        val mapPoint = MapPoint.mapPointWithGeoCoord(restaurant.y, restaurant.x)
+                        marker.itemName = restaurant.place_name
+                        marker.tag = 0
+                        marker.mapPoint = mapPoint
+                        marker.markerType =
+                            MapPOIItem.MarkerType.BluePin // 기본으로 제공하는 BluePin 마커 모양.
+
+                        marker.selectedMarkerType =
+                            MapPOIItem.MarkerType.RedPin // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+
+                        mapView!!.addPOIItem(marker)
+                    }
+                }
+            }
+        })
     }
 
     companion object {

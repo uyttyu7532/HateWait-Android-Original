@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+    <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="15dp"
+            app:cardBackgroundColor="@color/bgColor"
+            app:cardCornerRadius="10dp"
+            app:contentPadding="10dp">
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:orientation="vertical">
+
+            <TextView
+                    android:id="@+id/balloon_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="음식점>한식>곰탕"
+                    android:textColor="#000000" />
+
+            <TextView
+                    android:textSize="20sp"
+                    android:id="@+id/balloon_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="가게 이름"
+                    android:textColor="#000000" />
+
+            <TextView
+                    android:id="@+id/balloon_phonenum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="02-0000-0000"
+                    android:textColor="#000000" />
+            <TextView
+                    android:id="@+id/balloon_url"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="웹사이트로 이동"
+                    android:textColor="#000000"
+                    android:clickable="true"/>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
+</FrameLayout>

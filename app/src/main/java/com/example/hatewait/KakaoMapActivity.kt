@@ -10,9 +10,9 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -29,6 +29,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+
+lateinit var mcontext: Context
 
 class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
     MapView.MapViewEventListener {
@@ -48,6 +50,8 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_kakao_map)
 
+        mcontext = this.applicationContext
+
         mapView = MapView(this)
         mapViewContainer =
             findViewById<View>(R.id.kakaoMapView) as ViewGroup
@@ -55,6 +59,7 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
         mapView!!.setMapViewEventListener(this)
         mapView!!.currentLocationTrackingMode =
             MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeadingWithoutMapMoving
+        mapView!!.setCalloutBalloonAdapter(CustomCalloutBalloonAdapter())
 
 
         if (!checkLocationServicesStatus()) {
@@ -131,7 +136,7 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
                 }
             }
             if (check_result) {
-                Log.d("@@@", "start")
+                Log.d(LOG_TAG, "start")
                 //위치 값을 가져올 수 있음
             } else {
                 // 거부한 퍼미션이 있다면 앱을 사용할 수 없는 이유를 설명해주고 앱을 종료합니다.2 가지 경우가 있다
@@ -235,7 +240,7 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
             GPS_ENABLE_REQUEST_CODE ->                 //사용자가 GPS 활성 시켰는지 검사
                 if (checkLocationServicesStatus()) {
                     if (checkLocationServicesStatus()) {
-                        Log.d("@@@", "onActivityResult : GPS 활성화 되있음")
+                        Log.d(LOG_TAG, "onActivityResult : GPS 활성화 되있음")
                         checkRunTimePermission()
                         return
                     }
@@ -250,7 +255,9 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
                 || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER))
     }
 
-    override fun onMapViewInitialized(mapView: MapView) {}
+    override fun onMapViewInitialized(mapView: MapView) {
+    }
+
     override fun onMapViewCenterPointMoved(
         mapView: MapView,
         mapPoint: MapPoint
@@ -291,12 +298,6 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
         mapView: MapView,
         mapPoint: MapPoint
     ) {
-    }
-
-    override fun onMapViewMoveFinished(
-        mapView: MapView,
-        mapPoint: MapPoint
-    ) {
 
         left = mapView.mapPointBounds.bottomLeft.mapPointGeoCoord.latitude.toString()
         bottom = mapView.mapPointBounds.bottomLeft.mapPointGeoCoord.longitude.toString()
@@ -315,7 +316,7 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
                 if (response.body() != null) {
                     Toast.makeText(this@KakaoMapActivity, "성공", Toast.LENGTH_SHORT)
                     val restaurants = response.body()!!.documents
-
+                    Log.i(LOG_TAG, restaurants.toString())
                     val restaurantsIterator = restaurants.listIterator()
 
                     mapView!!.removeAllPOIItems()
@@ -328,11 +329,11 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
                         //맵 포인트 위도경도 설정
                         val mapPoint = MapPoint.mapPointWithGeoCoord(restaurant.y, restaurant.x)
                         marker.itemName = restaurant.place_name
-                        marker.tag = 0
+                        marker.userObject =
+                            restaurant.category_name + "," + restaurant.phone + "," + restaurant.place_url
                         marker.mapPoint = mapPoint
                         marker.markerType =
                             MapPOIItem.MarkerType.CustomImage // 기본으로 제공하는 BluePin 마커 모양.
-
                         marker.selectedMarkerType = MapPOIItem.MarkerType.CustomImage
                         marker.customImageResourceId = R.drawable.pin
 //                        marker.isCustomImageAutoscale = false; // hdpi, xhdpi 등 안드로이드 플랫폼의 스케일을 사용할 경우 지도 라이브러리의 스케일 기능을 꺼줌.
@@ -349,23 +350,36 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
         })
     }
 
-//    internal class CustomCalloutBalloonAdapter : CalloutBalloonAdapter {
-//        private val mCalloutBalloon: View
-//        override fun getCalloutBalloon(poiItem: MapPOIItem): View {
-//            (mCalloutBalloon.findViewById(R.id.badge) as ImageView).setImageResource(R.drawable.ic_launcher)
-//            (mCalloutBalloon.findViewById(R.id.title) as TextView).text = poiItem.itemName
-//            (mCalloutBalloon.findViewById(R.id.desc) as TextView).text("Custom CalloutBalloon")
-//            return mCalloutBalloon
-//        }
-//
-//        override fun getPressedCalloutBalloon(poiItem: MapPOIItem): View {
-//            return null
-//        }
-//
-//        init {
-//            mCalloutBalloon = getLayoutInflater().inflate(R.layout.custom_callout_balloon, null)
-//        }
-//    }
+    override fun onMapViewMoveFinished(
+        mapView: MapView,
+        mapPoint: MapPoint
+    ) {
+
+
+    }
+
+    internal class CustomCalloutBalloonAdapter : CalloutBalloonAdapter {
+        private val mCalloutBalloon: View =
+            LayoutInflater.from(mcontext).inflate(R.layout.custom_callout_balloon, null)
+
+        override fun getCalloutBalloon(poiItem: MapPOIItem): View {
+            (mCalloutBalloon.findViewById(R.id.balloon_category) as TextView).text =
+                poiItem.userObject.toString().split(",")[0]
+            (mCalloutBalloon.findViewById(R.id.balloon_title) as TextView).text = poiItem.itemName
+            (mCalloutBalloon.findViewById(R.id.balloon_phonenum) as TextView).text =
+                poiItem.userObject.toString().split(",")[1]
+            (mCalloutBalloon.findViewById(R.id.balloon_url) as TextView).text =
+                poiItem.userObject.toString().split(",")[2]
+
+
+            return mCalloutBalloon
+        }
+
+        override fun getPressedCalloutBalloon(poiItem: MapPOIItem): View? {
+            return mCalloutBalloon
+        }
+
+    }
 
     companion object {
         private const val LOG_TAG = "KakaoMapActivity"

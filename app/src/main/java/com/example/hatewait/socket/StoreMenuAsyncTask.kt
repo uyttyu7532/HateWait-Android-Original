@@ -2,9 +2,9 @@ package com.example.hatewait.socket
 
 import android.os.AsyncTask
 import android.util.Log
-import com.example.hatewait.storeMarquee
-import com.example.hatewait.storeNameView
-import com.example.hatewait.storeWaitingNum
+import com.example.hatewait.store.storeMarquee
+import com.example.hatewait.store.storeNameView
+import com.example.hatewait.store.storeWaitingNum
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader

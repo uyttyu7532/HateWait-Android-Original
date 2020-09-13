@@ -3,8 +3,8 @@ package com.example.hatewait.socket
 import android.content.Context
 import android.os.AsyncTask
 import android.util.Log
-import com.example.hatewait.StoreMenu
-import com.example.hatewait.StoreRegister4
+import com.example.hatewait.store.StoreMenu
+import com.example.hatewait.storeinfo.StoreSignUp4
 import org.jetbrains.anko.startActivity
 import java.io.BufferedReader
 import java.io.IOException
@@ -13,7 +13,7 @@ import java.io.PrintWriter
 import java.lang.ref.WeakReference
 import java.net.Socket
 
-class StoreRegisterAsyncTask(context: StoreRegister4) : AsyncTask<Map<String, String>, Unit, String>() {
+class StoreRegisterAsyncTask(context: StoreSignUp4) : AsyncTask<Map<String, String>, Unit, String>() {
     private val activityReference = WeakReference(context)
     private lateinit var clientSocket: Socket
     private lateinit var reader: BufferedReader

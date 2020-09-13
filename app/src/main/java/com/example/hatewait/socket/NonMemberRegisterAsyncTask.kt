@@ -1,8 +1,8 @@
 package com.example.hatewait.socket
 
 import android.os.AsyncTask
-import com.example.hatewait.NonMemberRegister
-import com.example.hatewait.RegisterCheck
+import com.example.hatewait.register.NonMemberRegister
+import com.example.hatewait.register.RegisterCheck
 import kotlinx.android.synthetic.main.activity_non_members_reigster.*
 import org.jetbrains.anko.support.v4.startActivity
 import java.io.BufferedReader

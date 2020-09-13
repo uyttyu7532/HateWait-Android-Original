@@ -19,13 +19,13 @@
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true"
             android:networkSecurityConfig="@xml/network_security_config">
-        <activity android:name=".KakaoMapActivity"/>
-        <activity android:name=".StoreRegister4" />
-        <activity android:name=".StoreRegister3" />
-        <activity android:name=".StoreRegister2" />
-        <activity android:name=".CustomerRegister2" />
-        <activity android:name=".StoreRegister" />
-        <activity android:name=".CustomerRegister" />
+        <activity android:name=".map.KakaoMapActivity"/>
+        <activity android:name=".storeinfo.StoreSignUp4" />
+        <activity android:name=".storeinfo.StoreSignUp3" />
+        <activity android:name=".storeinfo.StoreSignUp2" />
+        <activity android:name=".customerinfo.CustomerSignUp2" />
+        <activity android:name=".storeinfo.StoreSignUp1" />
+        <activity android:name=".customerinfo.CustomerSignUp1" />
 
         <meta-data
                 android:name="com.google.firebase.messaging.default_notification_icon"
@@ -50,20 +50,19 @@
         </service>
 
         <activity
-                android:name=".AutoCallNumberChangeDialog"
+                android:name=".storeinfo.AutoCallNumberChangeDialog"
                 tools:ignore="Instantiatable" />
         <activity
-                android:name=".StoreNameChangeDialog"
+                android:name=".storeinfo.StoreNameChangeDialog"
                 tools:ignore="Instantiatable" />
-        <activity android:name=".StoreInfoUpdate" />
-        <activity android:name=".CustomerMenu" />
-        <activity android:name=".StoreMenu" />
-        <activity android:name=".LoginRegisterViewPagerActivity" />
-        <activity android:name=".RegisterCheck" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".AddWaiting" />
-        <activity android:name=".StoreWaitingList" />
-        <activity android:name=".BusinessHourPick" />
+        <activity android:name=".storeinfo.StoreInfoUpdate" />
+        <activity android:name=".client.CustomerMenu" />
+        <activity android:name=".store.StoreMenu" />
+        <activity android:name=".login.LoginRegisterViewPagerActivity" />
+        <activity android:name=".register.RegisterCheck" />
+        <activity android:name=".login.MainActivity" />
+        <activity android:name=".store.StoreWaitingList" />
+        <activity android:name=".storeinfo.BusinessHourPick" />
         <activity
                 android:name=".Splash"
                 android:noHistory="true"

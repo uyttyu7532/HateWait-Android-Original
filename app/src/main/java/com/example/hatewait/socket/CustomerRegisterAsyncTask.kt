@@ -2,11 +2,9 @@ package com.example.hatewait.socket
 
 import android.content.Context
 import android.os.AsyncTask
-import android.util.Log
-import com.example.hatewait.CustomerMenu
-import com.example.hatewait.CustomerRegister2
+import com.example.hatewait.client.CustomerMenu
+import com.example.hatewait.customerinfo.CustomerSignUp2
 import com.example.hatewait.R
-import com.google.firebase.messaging.FirebaseMessaging
 import org.jetbrains.anko.startActivity
 import java.io.BufferedReader
 import java.io.IOException
@@ -15,7 +13,7 @@ import java.io.PrintWriter
 import java.lang.ref.WeakReference
 import java.net.Socket
 
-class CustomerRegisterAsyncTask(context: CustomerRegister2) : AsyncTask<String, Unit, Unit>() {
+class CustomerRegisterAsyncTask(context: CustomerSignUp2) : AsyncTask<String, Unit, Unit>() {
     private val activityReference = WeakReference(context)
     private lateinit var clientSocket: Socket
     private lateinit var reader: BufferedReader

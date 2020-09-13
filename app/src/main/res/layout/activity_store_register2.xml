@@ -4,7 +4,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".StoreRegister2">
+        tools:context=".storeinfo.StoreSignUp2">
 
     <androidx.appcompat.widget.Toolbar
             android:id="@+id/register_toolbar2"

@@ -2,7 +2,7 @@ package com.example.hatewait.socket
 
 import android.os.AsyncTask
 import android.util.Log
-import com.example.hatewait.MemberRegister
+import com.example.hatewait.register.MemberRegister
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader

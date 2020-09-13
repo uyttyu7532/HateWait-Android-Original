@@ -6,7 +6,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:background="@color/bgColor"
         android:visibility="visible"
-        tools:context=".StoreMenu">
+        tools:context=".store.StoreMenu">
 
     <androidx.cardview.widget.CardView
             android:id="@+id/nextClientCard"

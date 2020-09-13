@@ -4,8 +4,7 @@ import android.content.Context
 import android.os.AsyncTask
 import android.util.Log
 import android.widget.Toast
-import com.example.hatewait.StoreInfoUpdate
-import com.example.hatewait.listContext
+import com.example.hatewait.storeinfo.StoreInfoUpdate
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_store_info_update.*
 import java.io.BufferedReader

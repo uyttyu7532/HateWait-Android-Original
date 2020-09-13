@@ -4,7 +4,7 @@ import android.os.AsyncTask
 import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import com.example.hatewait.*
+import com.example.hatewait.client.*
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader

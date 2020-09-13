@@ -5,7 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        tools:context=".CustomerRegister">
+        tools:context=".customerinfo.CustomerSignUp1">
 
 <!--    https://developer.android.com/training/appbar/setting-up -->
 <!--    Android Version 따라 Native ActionBar가 다르게 동작하므로

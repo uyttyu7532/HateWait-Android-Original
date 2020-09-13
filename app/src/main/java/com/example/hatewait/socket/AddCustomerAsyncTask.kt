@@ -4,10 +4,10 @@ import android.os.AsyncTask
 import android.util.Log
 import android.widget.Toast
 import com.example.hatewait.model.ClientData
-import com.example.hatewait.clientList
-import com.example.hatewait.listContext
+import com.example.hatewait.store.clientList
+import com.example.hatewait.store.listContext
 import com.example.hatewait.model.NewClient
-import com.example.hatewait.setRecyclerView
+import com.example.hatewait.store.setRecyclerView
 import es.dmoral.toasty.Toasty
 import java.io.BufferedReader
 import java.io.InputStreamReader

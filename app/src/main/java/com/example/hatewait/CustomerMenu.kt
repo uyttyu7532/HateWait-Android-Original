@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -45,7 +44,7 @@ class CustomerMenu : AppCompatActivity() {
 
         FirebaseMessaging.getInstance().subscribeToTopic(CUSTOMERID)
 
-        Log.i("로그", "onresume 손님메뉴, customerID=${CUSTOMERID}")
+        Log.i("LOG_TAG", "onresume 손님메뉴, customerID=${CUSTOMERID}")
         CustomerMenuAsyncTask().execute(CUSTOMERID)
 
 
@@ -74,7 +73,7 @@ class CustomerMenu : AppCompatActivity() {
                 .setContentText("\n")
                 .setConfirmText("예")
                 .setConfirmClickListener { sDialog ->
-                    Log.i("로그",CUSTOMERID.toString())
+                    Log.i("로그", CUSTOMERID.toString())
                     CancelAsyncTask().execute(CUSTOMERID)
                     CustomerMenuAsyncTask().execute(CUSTOMERID)
                     sDialog.dismissWithAnimation()
@@ -116,6 +115,11 @@ class CustomerMenu : AppCompatActivity() {
 //        메모리 누수 방지
         customView = null
         super.onDestroy()
+    }
+
+
+    companion object {
+        private const val LOG_TAG = "CustomerMenu"
     }
 }
 

@@ -4,9 +4,12 @@ import android.Manifest
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.Intent.ACTION_CALL
+import android.content.Intent.ACTION_VIEW
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
+import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
@@ -18,7 +21,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import kotlinx.android.synthetic.main.activity_kakao_map.*
+import kotlinx.android.synthetic.main.custom_callout_balloon.*
+import kotlinx.android.synthetic.main.custom_callout_balloon.view.*
 import net.daum.mf.map.api.CalloutBalloonAdapter
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
@@ -46,6 +52,7 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
     private var right: String? = null
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_kakao_map)
@@ -60,6 +67,8 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
         mapView!!.currentLocationTrackingMode =
             MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeadingWithoutMapMoving
         mapView!!.setCalloutBalloonAdapter(CustomCalloutBalloonAdapter())
+
+
 
 
         if (!checkLocationServicesStatus()) {
@@ -354,8 +363,6 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
         mapView: MapView,
         mapPoint: MapPoint
     ) {
-
-
     }
 
     internal class CustomCalloutBalloonAdapter : CalloutBalloonAdapter {
@@ -371,6 +378,13 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
             (mCalloutBalloon.findViewById(R.id.balloon_url) as TextView).text =
                 poiItem.userObject.toString().split(",")[2]
 
+//            mCalloutBalloon.setOnClickListener{
+//                Toast.makeText(mcontext, "클릭", Toast.LENGTH_SHORT)
+//                Log.d(LOG_TAG, "click")
+//            }
+
+
+
 
             return mCalloutBalloon
         }
@@ -379,7 +393,11 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
             return mCalloutBalloon
         }
 
+
+
     }
+
+
 
     companion object {
         private const val LOG_TAG = "KakaoMapActivity"

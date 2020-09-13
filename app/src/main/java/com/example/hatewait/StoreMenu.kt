@@ -59,6 +59,9 @@ class StoreMenu : AppCompatActivity() {
     }
 
 
+    companion object {
+        private const val LOG_TAG = "StoreMenu"
+    }
 }
 
 

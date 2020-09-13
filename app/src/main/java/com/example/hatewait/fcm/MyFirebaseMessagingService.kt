@@ -16,16 +16,13 @@ import com.google.firebase.messaging.RemoteMessage
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
-    private val TAG = "FirebaseService"
-
-
     /**
      * FirebaseInstanceIdService is deprecated.
      * this is new on firebase-messaging:17.1.0
      */
     //앱이 재설치되거나 유효기간이 만료되면 자동으로 토큰을 새로 생성해 줍니다.
     override fun onNewToken(token: String?) {
-        Log.d(TAG, "Refreshed Token: $token")
+        Log.d(LOG_TAG, "Refreshed Token: $token")
     }
     // 가상기기 현재 토큰 : fiARZ0G9lxs:APA91bENjxB-zasfoMSaD3cfUl-d5wWFS9E50NcuSv6c91WWDXxLJl5-SV_tDEu8aHP3AgR_gTPmQVhW_k6yW73wxd2aVK_bn2n1h-8e-27qp7OiN-qcIKOkJZk94Hwuvqfs_KaKZSRj
     // 노트9 현재 토큰: c1cacBQUc2Q:APA91bFt3MUoTGGaapIjrDj1aFVe_R5zvBAuZNDrPG7VVMsED0IS-lDTwHbDxbSWGG7kfLTTPDMsR2JR_Hb1M0bHMUC3kHOmVw5QclUyympAbz2jAAJUU1oEHutcg4r3T63Cld35p-Lb
@@ -34,11 +31,11 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
      * this method will be triggered every time there is new FCM Message.
      */
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
-        Log.d(TAG, "From: " + remoteMessage.from)
-        Log.d(TAG, "Data: " + remoteMessage.data)
+        Log.d(LOG_TAG, "From: " + remoteMessage.from)
+        Log.d(LOG_TAG, "Data: " + remoteMessage.data)
 
         if (remoteMessage.notification != null) {
-            Log.d(TAG, "Notification Message Body: ${remoteMessage.notification?.body}")
+            Log.d(LOG_TAG, "Notification Message Body: ${remoteMessage.notification?.body}")
 
             sendNotification(remoteMessage.notification?.body)
         }
@@ -89,5 +86,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
 
         notificationManager.notify(0, notificationBuilder.build())
+    }
+
+    companion object {
+        private const val LOG_TAG = "MyFirebaseMessaging"
     }
 }

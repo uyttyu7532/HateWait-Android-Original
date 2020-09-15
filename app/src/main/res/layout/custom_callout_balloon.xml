@@ -2,7 +2,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:clickable="true">
 
     <LinearLayout
             android:layout_width="wrap_content"
@@ -15,12 +16,27 @@
                 android:elevation="15dp"
                 app:cardBackgroundColor="#E6424242"
                 app:cardCornerRadius="10dp"
-                app:contentPadding="10dp">
+>
+
+<!--            <ImageView-->
+<!--                    android:layout_width="80dip"-->
+<!--                    android:layout_height="80dip"-->
+<!--                    android:layout_gravity="end"-->
+<!--                    android:src="@drawable/balloonbutton" />-->
+
+            <ImageView
+                    android:layout_margin="5dp"
+                    android:layout_width="25dip"
+                    android:layout_height="25dip"
+                    android:layout_gravity="end"
+                    android:src="@drawable/ic_info_outline_white_24dp" />
 
             <LinearLayout
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
+                    android:layout_margin="30dp"
+
                     android:orientation="vertical">
 
                 <TextView
@@ -34,27 +50,30 @@
                         android:id="@+id/balloon_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:clickable="true"
                         android:text="가게 이름"
                         android:textColor="#ffffff"
                         android:textSize="20sp" />
 
-                <TextView
-                        android:id="@+id/balloon_phonenum"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="02-0000-0000"
-                        android:textColor="#ffffff" />
+<!--                <TextView-->
+<!--                        android:id="@+id/balloon_phonenum"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="02-0000-0000"-->
+<!--                        android:textColor="#ffffff" />-->
 
-                <TextView
-                        android:id="@+id/balloon_url"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:clickable="true"
-                        android:text="웹사이트로 이동"
-                        android:textColor="#ffffff" />
+<!--                <TextView-->
+<!--                        android:id="@+id/balloon_url"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:clickable="true"-->
+<!--                        android:text="웹사이트로 이동"-->
+<!--                        android:textColor="#ffffff" />-->
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
+
+
 
         <ImageView
                 android:layout_width="50dip"

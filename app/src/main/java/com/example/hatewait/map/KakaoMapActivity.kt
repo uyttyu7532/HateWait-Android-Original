@@ -1,12 +1,15 @@
 package com.example.hatewait.map
 
 import android.Manifest
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
+import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
@@ -23,9 +26,11 @@ import com.example.hatewait.model.Restaurant
 import kotlinx.android.synthetic.main.activity_kakao_map.*
 import net.daum.mf.map.api.CalloutBalloonAdapter
 import net.daum.mf.map.api.MapPOIItem
+import net.daum.mf.map.api.MapPOIItem.CalloutBalloonButtonType
 import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapView
 import net.daum.mf.map.api.MapView.CurrentLocationEventListener
+import net.daum.mf.map.api.MapView.POIItemEventListener
 import org.jetbrains.anko.locationManager
 import retrofit2.Call
 import retrofit2.Callback
@@ -48,7 +53,6 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
     private var right: String? = null
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_kakao_map)
@@ -63,7 +67,7 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
         mapView!!.currentLocationTrackingMode =
             MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeadingWithoutMapMoving
         mapView!!.setCalloutBalloonAdapter(CustomCalloutBalloonAdapter())
-
+        mapView!!.setPOIItemEventListener(poiItemEventListener);
 
 
 
@@ -260,6 +264,7 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
                 || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER))
     }
 
+
     override fun onMapViewInitialized(mapView: MapView) {
     }
 
@@ -347,8 +352,8 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
                             0.5f,
                             1.0f
                         ); // 마커 이미지중 기준이 되는 위치(앵커포인트) 지정 - 마커 이미지 좌측 상단 기준 x(0.0f ~ 1.0f), y(0.0f ~ 1.0f) 값.
-
                         mapView!!.addPOIItem(marker)
+
                     }
                 }
             }
@@ -360,41 +365,107 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
         mapView: MapView,
         mapPoint: MapPoint
     ) {
+
     }
 
+    private val poiItemEventListener: POIItemEventListener = object : POIItemEventListener { // 클릭 이벤트
+        override fun onPOIItemSelected(
+            mapView: MapView,
+            mapPOIItem: MapPOIItem
+        ) { // // 마커 클릭 후 info window 띄워졌을 때
+            //sample code 없음
+//            Log.i("LOG_TAG", "onPOIItemSelected")
+        }
+
+        override fun onCalloutBalloonOfPOIItemTouched(
+            mapView: MapView,
+            mapPOIItem: MapPOIItem
+        ) { // info window 클릭했을 때
+
+//            Log.i("LOG_TAG", "onCalloutBalloonOfPOIItemTouched")
+//            Log.i("LOG_TAG", mapPOIItem.userObject.toString().split(",")[1])
+//            Log.i("LOG_TAG", mapPOIItem.userObject.toString().split(",")[2])
+
+
+//            try {
+//                var intent = Intent(
+//                    Intent.ACTION_DIAL,
+//                    Uri.parse("tel:"+mapPOIItem.userObject.toString().split(",")[1])
+//                )
+//                intent.flags = FLAG_ACTIVITY_NEW_TASK
+//                startActivity(intent)
+//            }
+//            catch(e: ActivityNotFoundException){
+//                Log.i(LOG_TAG, e.toString());
+//            }
+
+            var intent = Intent(Intent.ACTION_VIEW, Uri.parse(mapPOIItem.userObject.toString().split(",")[2]))
+            intent.flags= FLAG_ACTIVITY_NEW_TASK
+            mcontext.startActivity(intent)
+        }
+
+        override fun onCalloutBalloonOfPOIItemTouched(
+            mapView: MapView,
+            mapPOIItem: MapPOIItem,
+            calloutBalloonButtonType: CalloutBalloonButtonType
+        ) {
+            //sample code 없음
+//            Log.i("LOG_TAG", "onCalloutBalloonOfPOIItemTouched")
+        }
+
+        override fun onDraggablePOIItemMoved(
+            mapView: MapView,
+            mapPOIItem: MapPOIItem,
+            mapPoint: MapPoint
+        ) {
+            //sample code 없음
+//            Log.i("LOG_TAG", "onDraggablePOIItemMoved")
+        }
+    }
+
+
     internal class CustomCalloutBalloonAdapter : CalloutBalloonAdapter {
+
+
         private val mCalloutBalloon: View =
             LayoutInflater.from(mcontext).inflate(
-                R.layout.custom_callout_balloon, null)
+                R.layout.custom_callout_balloon, null
+            )
+
+
+//        val balloonPhonenum = mCalloutBalloon.findViewById(R.id.balloon_phonenum) as TextView
+//
+//        // 클릭이벤트 왜 안돼
+//        init {
+//            mCalloutBalloon.setOnClickListener {
+//                Log.i("click", "클릭이벤트")
+//                val intent = Intent(Intent.ACTION_DIAL, Uri.parse(balloonPhonenum.text.toString()))
+//                intent.flags = FLAG_ACTIVITY_NEW_TASK
+//                mcontext.startActivity(intent)
+//            }
+//
+//        }
+
 
         override fun getCalloutBalloon(poiItem: MapPOIItem): View {
             (mCalloutBalloon.findViewById(R.id.balloon_category) as TextView).text =
                 poiItem.userObject.toString().split(",")[0]
             (mCalloutBalloon.findViewById(R.id.balloon_title) as TextView).text = poiItem.itemName
-            (mCalloutBalloon.findViewById(R.id.balloon_phonenum) as TextView).text =
-                poiItem.userObject.toString().split(",")[1]
-            (mCalloutBalloon.findViewById(R.id.balloon_url) as TextView).text =
-                poiItem.userObject.toString().split(",")[2]
-
-//            mCalloutBalloon.setOnClickListener{
-//                Toast.makeText(mcontext, "클릭", Toast.LENGTH_SHORT)
-//                Log.d(LOG_TAG, "click")
-//            }
-
-
+//            (mCalloutBalloon.findViewById(R.id.balloon_phonenum) as TextView).text =
+//                poiItem.userObject.toString().split(",")[1]
+//            (mCalloutBalloon.findViewById(R.id.balloon_url) as TextView).text =
+//                poiItem.userObject.toString().split(",")[2]
 
 
             return mCalloutBalloon
         }
 
         override fun getPressedCalloutBalloon(poiItem: MapPOIItem): View? {
+
             return mCalloutBalloon
         }
 
-
-
     }
-
 
 
     companion object {

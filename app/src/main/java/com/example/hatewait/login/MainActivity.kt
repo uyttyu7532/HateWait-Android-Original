@@ -279,7 +279,7 @@ class MainActivity : AppCompatActivity() {
         id_input_editText.text?.clear()
         id_input_layout.error = null
         id_input_layout.clearFocus()
-        id_input_layout.hint = "아이디를 입력해주세요"
+        id_input_layout.hint = "이메일 아이디를 입력해주세요"
         password_input_editText.text?.clear()
         password_input_layout.clearFocus()
         password_input_layout.error = null

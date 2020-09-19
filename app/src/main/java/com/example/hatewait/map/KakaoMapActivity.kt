@@ -64,8 +64,7 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
             findViewById<View>(R.id.kakaoMapView) as ViewGroup
         mapViewContainer!!.addView(mapView)
         mapView!!.setMapViewEventListener(this)
-        mapView!!.currentLocationTrackingMode =
-            MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeadingWithoutMapMoving
+//        mapView!!.currentLocationTrackingMode = MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeadingWithoutMapMoving
         mapView!!.setCalloutBalloonAdapter(CustomCalloutBalloonAdapter())
         mapView!!.setPOIItemEventListener(poiItemEventListener);
 

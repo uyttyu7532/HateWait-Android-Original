@@ -20,7 +20,7 @@
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true">
         <activity android:name=".map.KakaoMapActivity"/>
-        <activity android:name=".storeinfo.StoreSignUp4" />
+        <activity android:name=".storeinfo.StoreSignUp3" />
         <activity android:name=".storeinfo.StoreSignUp3" />
         <activity android:name=".storeinfo.StoreSignUp2" />
         <activity android:name=".customerinfo.CustomerSignUp2" />

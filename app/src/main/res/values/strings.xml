@@ -28,8 +28,9 @@
     <string name="default_notification_channel_id">HATEWAIT</string>
 
     <!--    Customer / Store 공통 -->
-    <string name="id_input_hint">아이디를 입력해주세요</string>
-    <string name="id_input_error">특수문자나 공백은 허용되지 않아요.</string>
+    <string name="id_input_hint">이메일 아이디를 입력해주세요</string>
+    <string name="id_check_hint">전송된 인증번호를 입력해주세요.</string>
+    <string name="id_input_error">이메일 형식으로 입력해주세요.</string>
     <string name="password_input_hint">비밀번호를 입력해주세요</string>
     <string name="password_reinput_hint">비밀번호를 다시 입력해주세요</string>
     <string name="password_input_error">영문, 숫자, 특수문자 포함 8자 이상 입력해주세요</string>

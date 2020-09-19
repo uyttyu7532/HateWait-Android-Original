@@ -15,15 +15,17 @@ import kotlinx.android.synthetic.main.activity_customer_register.id_input_layout
 import kotlinx.android.synthetic.main.activity_customer_register.password_input_editText
 import kotlinx.android.synthetic.main.activity_customer_register.password_input_layout
 
-
-// App Bar 추가
 class CustomerSignUp1 : AppCompatActivity() {
-    private val idRegex = Regex("^(?=.*[a-zA-Zㄱ-ㅎ가-힣0-9])[a-zA-Zㄱ-ㅎ가-힣0-9]{1,}$")
+    private val idRegex = Regex(
+        ("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"))
     private val passwordRegex =
         Regex("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,}$")
 
     fun verifyId(input_id: String): Boolean = idRegex.matches(input_id)
     fun verifyPassword(input_password: String): Boolean = passwordRegex.matches(input_password)
+
+    private var checkPassword = false // 패스워드가 같은지 확인
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,14 +42,11 @@ class CustomerSignUp1 : AppCompatActivity() {
             intent.flags = FLAG_ACTIVITY_REORDER_TO_FRONT
             startActivity(intent)
         }
-//        Set a Toolbar to act as the ActionBar for this Activity window
+
         setSupportActionBar(register_toolbar)
 // Default Task : App Name + 더보기 // Option Menu has only a'settings'
         supportActionBar?.apply {
-//            Set whether home should be displayed as an "up" affordance.
-//            Set this to true if selecting "home" returns up by a single level in your UI rather than back to the top level or front page.
             setDisplayHomeAsUpEnabled(true)
-//            you should also call setHomeActionContentDescription() to provide a correct description of the action for accessibility support.
             setHomeAsUpIndicator(R.drawable.back_icon)
             setHomeActionContentDescription("로그인 화면 이동")
             setDisplayShowTitleEnabled(false)
@@ -111,6 +110,7 @@ class CustomerSignUp1 : AppCompatActivity() {
                             && password_reinput_layout.error == null
                             && !password_input_editText.text.isNullOrBlank()
                             && !password_reinput_editText.text.isNullOrBlank())
+                            && checkPassword
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -135,6 +135,7 @@ class CustomerSignUp1 : AppCompatActivity() {
                             && password_reinput_layout.error == null
                             && !id_input_editText.text.isNullOrBlank()
                             && !password_reinput_editText.text.isNullOrBlank())
+                            && checkPassword
 // enabled 상태에 따라 button 색상 ColorPrimary 로 설정할 수 있어야함. (selector 사용 or app Compat Button)
             }
 
@@ -148,10 +149,12 @@ class CustomerSignUp1 : AppCompatActivity() {
         password_reinput_editText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(reinputText: Editable?) {
                 if (reinputText.toString() != password_input_editText.text.toString()) {
+                    checkPassword = false
                     password_reinput_layout.error =
                         resources.getString(R.string.password_reinput_error)
                     button_continue.isEnabled = false
                 } else {
+                    checkPassword = true
                     password_reinput_layout.error = null
                     password_reinput_layout.hint = null
                 }
@@ -160,8 +163,8 @@ class CustomerSignUp1 : AppCompatActivity() {
                             && password_input_layout.error == null
                             && password_reinput_layout.error == null
                             && !id_input_editText.text.isNullOrBlank()
-                            && !password_input_editText.text.isNullOrBlank())
-
+                            && !password_input_editText.text.isNullOrBlank()
+                            && checkPassword)
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -170,26 +173,6 @@ class CustomerSignUp1 : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             }
         })
-    }
-
-    private fun inputLayoutInitialize() {
-        id_input_editText.text?.clear()
-        id_input_layout.error = null
-        id_input_layout.clearFocus()
-        id_input_layout.hint = resources.getString(R.string.id_input_hint)
-        password_input_editText.text?.clear()
-        password_input_layout.clearFocus()
-        password_input_layout.error = null
-        password_input_layout.hint = resources.getString(R.string.password_input_hint)
-        password_reinput_editText.text?.clear()
-        password_reinput_layout.error = null
-        password_reinput_layout.clearFocus()
-        password_reinput_layout.hint = resources.getString(R.string.password_reinput_hint)
-    }
-
-    override fun onStop() {
-//        inputLayoutInitialize()
-        super.onStop()
     }
 
 }

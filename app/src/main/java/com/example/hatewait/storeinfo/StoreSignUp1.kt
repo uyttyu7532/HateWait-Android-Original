@@ -1,18 +1,25 @@
 package com.example.hatewait.storeinfo
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import com.example.hatewait.R
 import kotlinx.android.synthetic.main.activity_store_register.*
 
+// 1단계 이메일 , 인증번호, 비번, 비번확인
+// 2단계 가게이름, 전화번호, 도로명주소
+// 3단계 가게 영업시간, 인원 수, 문구
+// 가입완료 환영 메시지 액티비티 or 로그인바로됨
 
 class StoreSignUp1 : AppCompatActivity() {
-    private val idRegex = Regex("^(?=.*[a-zA-Zㄱ-ㅎ가-힣0-9])[a-zA-Zㄱ-ㅎ가-힣0-9]{1,}$")
+
+    private val idRegex = Regex(
+        ("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"))
     private val passwordRegex =
         Regex("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,}$")
 
@@ -65,6 +72,8 @@ class StoreSignUp1 : AppCompatActivity() {
     }
 
     private fun addTextChangeListener() {
+
+        // 아이디
         id_input_editText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 if (!verifyId(s.toString())) {
@@ -89,6 +98,7 @@ class StoreSignUp1 : AppCompatActivity() {
             }
         })
 
+        // 비밀번호
         password_input_editText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 if (!verifyPassword(s.toString())) {
@@ -104,7 +114,7 @@ class StoreSignUp1 : AppCompatActivity() {
                             && password_reinput_layout.error == null
                             && !id_input_editText.text.isNullOrBlank()
                             && !password_reinput_editText.text.isNullOrBlank())
-// enabled 상태에 따라 button 색상 ColorPrimary 로 설정할 수 있어야함. (selector 사용 or app Compat Button)
+                // enabled 상태에 따라 button 색상 ColorPrimary 로 설정할 수 있어야함. (selector 사용 or app Compat Button)
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -114,6 +124,7 @@ class StoreSignUp1 : AppCompatActivity() {
             }
         })
 
+        // 비밀번호 재입력
         password_reinput_editText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(reinputText: Editable?) {
                 if (reinputText.toString() != password_input_editText.text.toString()) {

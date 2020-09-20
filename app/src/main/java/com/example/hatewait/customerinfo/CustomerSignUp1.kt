@@ -1,50 +1,66 @@
 package com.example.hatewait.customerinfo
 
+import android.content.Context
 import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.StrictMode
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.Menu
+import android.view.LayoutInflater
 import android.view.MenuItem
+import android.view.View
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import com.example.hatewait.R
-import kotlinx.android.synthetic.main.activity_customer_register.*
-import kotlinx.android.synthetic.main.activity_customer_register.id_input_editText
-import kotlinx.android.synthetic.main.activity_customer_register.id_input_layout
-import kotlinx.android.synthetic.main.activity_customer_register.password_input_editText
-import kotlinx.android.synthetic.main.activity_customer_register.password_input_layout
+import com.example.hatewait.mail.SendMail
+import com.example.hatewait.mail.countDown
+import com.example.hatewait.mail.emailCode
+import es.dmoral.toasty.Toasty
+import kotlinx.android.synthetic.main.activity_customer_register1.*
+
+
+// 1단계 이메일 , 인증번호 (네아로면 생략)
+// 2단계 비번, 비번확인
+// 3단계 이름(네아로 생략), 전화번호
+// 가입완료 환영 메시지 액티비티 or 로그인바로됨
+
+private lateinit var mcontext: Context
+private lateinit var senderTo: String
 
 class CustomerSignUp1 : AppCompatActivity() {
+
+    var customView: View? = null
     private val idRegex = Regex(
         ("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"))
-    private val passwordRegex =
-        Regex("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,}$")
+                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")
+    )
 
     fun verifyId(input_id: String): Boolean = idRegex.matches(input_id)
-    fun verifyPassword(input_password: String): Boolean = passwordRegex.matches(input_password)
-
-    private var checkPassword = false // 패스워드가 같은지 확인
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_customer_register)
+        setContentView(R.layout.activity_customer_register1)
+        mcontext = this.applicationContext
         addTextChangeListener()
-        button_continue.setOnClickListener {
-//            startActivity<CustomRegister2>()
-            val intent = Intent(this, CustomerSignUp2::class.java)
-            intent.putExtra("USER_ID", id_input_editText.text.toString())
-            intent.putExtra("USER_PASSWORD", password_input_editText.text.toString())
+        checkEmailButton.setOnClickListener {
+            //인터넷 사용권한 허가
+            StrictMode.setThreadPolicy(
+                StrictMode.ThreadPolicy.Builder()
+                    .permitDiskReads()
+                    .permitDiskWrites()
+                    .permitNetwork().build()
+            )
 
-//            이 플래그를 이용하게 되면 호출하려는 Activity가 스택에 존재할 경우에, 최상위로 올려주는 효과를 가지게 됩니다.
-//  예를 들어 ABCDE가 있을 경우 C를 호출하게 되면 ABDEC순서로 정렬이 변경되게 됩니다.
-            intent.flags = FLAG_ACTIVITY_REORDER_TO_FRONT
-            startActivity(intent)
+            senderTo = id_input_editText.text.toString()
+            SendMail().sendSecurityCode(mcontext, senderTo)
+
+            showSettingPopup()
         }
 
         setSupportActionBar(register_toolbar)
-// Default Task : App Name + 더보기 // Option Menu has only a'settings'
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
             setHomeAsUpIndicator(R.drawable.back_icon)
@@ -53,31 +69,21 @@ class CustomerSignUp1 : AppCompatActivity() {
         }
     }
 
-//    앱내의 여러 액티비티가 같은 포멧의 옵션 메뉴를 제공할 경우
-//    onCreateOptionsMenu, onOptionItemSelected Method만 구현해놓은 액티비티를 만들어두는것도 좋음.
+//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+//        menuInflater.inflate(R.menu.back_front_button_menu, menu)
+//        return true
+//    }
 
-    //     Menu 추가 콜백 메소드
-//    Initialize the contents of the Activity's standard options menu.
-//    메뉴를 생성하는 최초 1번만 호출함.
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.back_front_button_menu, menu)
-        return true
-    }
-
-
-    //    메뉴에서 선택된 아이템 클릭 리스너 역할
-//    When you add items to the menu, you can implement the Activity's onOptionsItemSelected method to handle them there.
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
-            R.id.forward_button -> {
-                if (!button_continue.isEnabled) {
-//            알맞게 ID/Password가 입력되지 않은경우 다음 액티비티로 넘어갈 수 없음.
-                    return false
-                } else {
-                    button_continue.performClick()
-                }
-            }
+//            R.id.forward_button -> {
+//                if (!button_continue.isEnabled) {
+//                    return false
+//                } else {
+//                    button_continue.performClick()
+//                }
+//            }
             android.R.id.home -> {
                 onBackPressed()
             }
@@ -85,32 +91,23 @@ class CustomerSignUp1 : AppCompatActivity() {
         return true
     }
 
-//    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-//        return if (button_continue.isEnabled) {
-//            menuInflater.inflate(R.menu.back_front_button_menu, menu)
-//            true
-//        } else {
-//            false
-//        }
-//    }
-
     private fun addTextChangeListener() {
+
+        // 아이디
         id_input_editText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 if (!verifyId(s.toString())) {
                     id_input_layout.error = resources.getString(R.string.id_input_error)
-                    button_continue.isEnabled = false
+//                    button_continue.isEnabled = false
                 } else {
                     id_input_layout.error = null
                     id_input_layout.hint = null
                 }
-                button_continue.isEnabled =
-                    (id_input_layout.error == null
-                            && password_input_layout.error == null
-                            && password_reinput_layout.error == null
-                            && !password_input_editText.text.isNullOrBlank()
-                            && !password_reinput_editText.text.isNullOrBlank())
-                            && checkPassword
+
+
+                checkEmailButton.isEnabled =
+                    id_input_layout.error == null
+
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -120,59 +117,42 @@ class CustomerSignUp1 : AppCompatActivity() {
             }
         })
 
-        password_input_editText.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                if (!verifyPassword(s.toString())) {
-                    password_input_layout.error = resources.getString(R.string.password_input_error)
-                    button_continue.isEnabled = false
-                } else {
-                    password_input_layout.error = null
-                    password_input_layout.hint = null
-                }
-                button_continue.isEnabled =
-                    (id_input_layout.error == null
-                            && password_input_layout.error == null
-                            && password_reinput_layout.error == null
-                            && !id_input_editText.text.isNullOrBlank()
-                            && !password_reinput_editText.text.isNullOrBlank())
-                            && checkPassword
-// enabled 상태에 따라 button 색상 ColorPrimary 로 설정할 수 있어야함. (selector 사용 or app Compat Button)
-            }
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-        })
-
-        password_reinput_editText.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(reinputText: Editable?) {
-                if (reinputText.toString() != password_input_editText.text.toString()) {
-                    checkPassword = false
-                    password_reinput_layout.error =
-                        resources.getString(R.string.password_reinput_error)
-                    button_continue.isEnabled = false
-                } else {
-                    checkPassword = true
-                    password_reinput_layout.error = null
-                    password_reinput_layout.hint = null
-                }
-                button_continue.isEnabled =
-                    (id_input_layout.error == null
-                            && password_input_layout.error == null
-                            && password_reinput_layout.error == null
-                            && !id_input_editText.text.isNullOrBlank()
-                            && !password_input_editText.text.isNullOrBlank()
-                            && checkPassword)
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-        })
     }
 
+    private fun showSettingPopup() {
+        val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val view = inflater.inflate(R.layout.check_email_dialog, null)
+        val idCheckEditText: EditText = view.findViewById(R.id.id_check_editText)
+        val emailCheckTimer: TextView = view.findViewById(R.id.email_check_timer)
+        val checkEmailButton2 = view.findViewById<Button>(R.id.checkEmailButton2)
+        val conversionTime = "000500" // 5분 타이머
+
+        val alertDialog = AlertDialog.Builder(this)
+            .setTitle("이메일 인증번호 확인")
+            .create()
+
+        // 카운트 다운 시작
+        countDown(conversionTime,emailCheckTimer,alertDialog)
+
+        checkEmailButton2.setOnClickListener {
+            if (idCheckEditText.text.toString() == emailCode) {
+                Toasty.normal(mcontext, "인증번호가 확인되었습니다.", Toasty.LENGTH_SHORT)
+                val intent = Intent(this, CustomerSignUp2::class.java)
+                intent.putExtra("USER_ID", id_input_editText.text.toString())
+                intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
+                startActivity(intent)
+                alertDialog.dismiss()
+            } else {
+                Toasty.normal(mcontext, "인증번호를 다시 확인해주세요.", Toasty.LENGTH_SHORT)
+            }
+
+        }
+
+        alertDialog.setView(view)
+        alertDialog.show()
+    }
+
+
 }
+

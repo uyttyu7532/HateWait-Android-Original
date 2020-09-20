@@ -1,72 +1,75 @@
 package com.example.hatewait.customerinfo
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import com.example.hatewait.R
-import com.example.hatewait.socket.CustomerRegisterAsyncTask
-import kotlinx.android.synthetic.main.activity_custom_register2.*
+import kotlinx.android.synthetic.main.activity_store_register1.register_toolbar
+import kotlinx.android.synthetic.main.activity_store_register2.*
+
+
+
+// 1단계 이메일 , 인증번호 (네아로면 생략)
+// 2단계 비번, 비번확인
+// 3단계 이름(네아로 생략), 전화번호
+// 가입완료 환영 메시지 액티비티 or 로그인바로됨
+
+
+private lateinit var mcontext: Context
 
 class CustomerSignUp2 : AppCompatActivity() {
-    //    한글 2~4자 (공백 허용 X) or 영문 First name 2~10, Last name 2~10
-    private val nameRegex = Regex("^[가-힣]{2,4}|[a-zA-Z]{2,10}\\s[a-zA-Z]{2,10}$")
 
-    //    3자리 - 3 or 4자리 - 4자리
-    //    첫자리는 반드시 0으로 시작.
-    private val phoneRegex = Regex("^[0](\\d{2})(\\d{3,4})(\\d{4})")
-    fun verifyName(input_name: String): Boolean = input_name.matches(nameRegex)
-    fun verifyPhoneNumber(input_phone_number: String): Boolean =
-        input_phone_number.matches(phoneRegex)
+    private var checkMailCode = false;
+    private val passwordRegex =
+        Regex("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,}$")
+
+    fun verifyPassword(input_password: String): Boolean = passwordRegex.matches(input_password)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_custom_register2)
-        if (savedInstanceState != null) {
-            with(savedInstanceState) {
-                Log.i("State", "onCreate Restore Instance")
-                user_name_input_editText.setText(savedInstanceState.getString("USER_NAME"))
-                user_phone_number_editText.setText(savedInstanceState.getString("USER_PHONE"))
-            }
-
-        }
+        setContentView(R.layout.activity_customer_register2)
+        mcontext = this.applicationContext
         addTextChangeListener()
 
-        button_finish.setOnClickListener {
-            val userId = intent.getStringExtra("USER_ID")
-            val userPassword = intent.getStringExtra("USER_PASSWORD")
-            val userName = user_name_input_editText.text.toString()
-            val userPhone = user_phone_number_editText.text.toString()
-            CustomerRegisterAsyncTask(this@CustomerSignUp2).execute(
-                userId,
-                userPassword,
-                userName,
-                userPhone
-            )
+
+        button_continue.setOnClickListener {
+            checkMailCode = false
+            val intent = Intent(this, CustomerSignUp3::class.java)
+            intent.putExtra("USER_ID", getIntent().getStringExtra("USER_ID"))
+            intent.putExtra("USER_PASSWORD", password_input_editText.text.toString())
+            intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
+            startActivity(intent)
         }
+
         setSupportActionBar(register_toolbar)
         supportActionBar?.apply {
-            //            Set this to true if selecting "home" returns up by a single level in your UI rather than back to the top level or front page.
             setDisplayHomeAsUpEnabled(true)
-//            you should also call setHomeActionContentDescription() to provide a correct description of the action for accessibility support.
             setHomeAsUpIndicator(R.drawable.back_icon)
-            setHomeActionContentDescription("아이디 패스워드 설정")
+            setHomeActionContentDescription("로그인 화면 이동")
             setDisplayShowTitleEnabled(false)
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.back_front_button_menu, menu)
+        return true
+    }
 
-//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        return true
-//    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-    //    뒤로가기 (onBackPressed)는 해당 Activity를 완전히 BackStack에서 제거하기 때문에
-//    되살릴 수 있는 방법이없음.
-//    살리고싶다면 Fragment 단위로 붙였다 떼어내야함.
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
+        when (item.itemId) {
+            R.id.forward_button -> {
+                if (!button_continue.isEnabled) {
+                    return false
+                } else {
+                    button_continue.performClick()
+                }
+            }
             android.R.id.home -> {
                 onBackPressed()
             }
@@ -74,102 +77,64 @@ class CustomerSignUp2 : AppCompatActivity() {
         return true
     }
 
-    //    뒤로 가기 버튼을 누르면 번들을 생성하며 기존 입력된
-//    유저 이름과 전화번호를 번들에 저장함.
-    override fun onBackPressed() {
-        val bundle = Bundle()
-//        bundle.putString("USER_NAME", user_name_input_editText.text.toString())
-//        bundle.putString("USER_PHONE", user_phone_number_editText.text.toString())
-        onSaveInstanceState(bundle)
-
-        super.onBackPressed()
-    }
-
     private fun addTextChangeListener() {
-        user_name_input_editText.addTextChangedListener(object : TextWatcher {
-            //            text에 변화가 있을 때마다
+
+
+        // 비밀번호
+        password_input_editText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                if (!verifyName(s.toString())) {
-                    user_name_input_layout.error = "2~4자 한글 또는 영문이름을 입력해주세요"
-                    button_finish.isEnabled = false
+                if (!verifyPassword(s.toString())) {
+                    password_input_layout.error = resources.getString(R.string.password_input_error)
+                    button_continue.isEnabled = false
                 } else {
-                    user_name_input_layout.error = null
-                    user_name_input_layout.hint = null
+                    password_input_layout.error = null
+                    password_input_layout.hint = null
                 }
-
-                //    둘다 에러가 없을 때 등록 버튼 활성화
-                button_finish.isEnabled =
-                    (user_name_input_layout.error == null
-                            && user_phone_number_layout.error == null
-                            && !user_phone_number_editText.text.isNullOrBlank())
+                if (password_input_editText.text.toString() != password_reinput_editText.text.toString()) {
+                    password_reinput_layout.error =
+                        resources.getString(R.string.password_reinput_error)
+                    button_continue.isEnabled = false
+                } else {
+                    password_reinput_layout.error = null
+                    password_reinput_layout.hint = null
+                }
+                button_continue.isEnabled =
+                    (password_input_layout.error == null
+                            && password_reinput_layout.error == null
+                            && !password_reinput_editText.text.isNullOrBlank())
+                // enabled 상태에 따라 button 색상 ColorPrimary 로 설정할 수 있어야함. (selector 사용 or app Compat Button)
             }
 
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             }
         })
 
-        user_phone_number_editText.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                if (!verifyPhoneNumber(s.toString())) {
-                    user_phone_number_layout.error = "10~11자리 전화번호를 입력해주세요"
-                    button_finish.isEnabled = false
+        // 비밀번호 재입력
+        password_reinput_editText.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(reinputText: Editable?) {
+                if (reinputText.toString() != password_input_editText.text.toString()) {
+                    password_reinput_layout.error =
+                        resources.getString(R.string.password_reinput_error)
+                    button_continue.isEnabled = false
                 } else {
-                    user_phone_number_layout.error = null
-                    user_phone_number_layout.hint = null
+                    password_reinput_layout.error = null
+                    password_reinput_layout.hint = null
                 }
-                button_finish.isEnabled =
-                    (user_name_input_layout.error == null
-                            && user_phone_number_layout.error == null
-                            && !user_name_input_editText.text.isNullOrBlank())
+                button_continue.isEnabled =
+                    (password_input_layout.error == null
+                            && password_reinput_layout.error == null
+                            && !password_reinput_editText.text.isNullOrBlank())
+
             }
 
-            override fun beforeTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
-            override fun onTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             }
         })
     }
-
-    private fun inputLayoutInitialize() {
-        user_name_input_editText.text?.clear()
-        user_name_input_editText.clearFocus()
-        user_name_input_layout.error = null
-        user_name_input_layout.hint = "이름을 입력해주세요"
-        user_phone_number_editText.text?.clear()
-        user_phone_number_editText.clearFocus()
-        user_phone_number_layout.error = null
-        user_phone_number_layout.hint = "전화번호를 입력해주세요"
-    }
-
-    //outState – Bundle in which to place your saved state.
-//    명시적으로 activity를 닫거나(ex. 뒤로가기) finish()호출시 다음 메소드는 호출되지않음.
-//    onPause ~ onStop
-    override fun onSaveInstanceState(outState: Bundle) {
-//    입력했던것 저장
-        Log.i("State", "save Instance")
-        outState.putString("USER_NAME", user_name_input_editText.text.toString())
-        outState.putString("USER_PHONE", user_phone_number_editText.text.toString())
-        super.onSaveInstanceState(outState)
-    }
-
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
-        Log.i("State", "Restore Instance")
-        super.onRestoreInstanceState(savedInstanceState)
-        savedInstanceState?.run {
-            user_name_input_editText.setText(savedInstanceState.getString("USER_NAME"))
-            user_phone_number_editText.setText(savedInstanceState.getString("USER_PHONE"))
-        }
-    }
-
-    override fun onStop() {
-//        inputLayoutInitialize()
-        Log.i("state", "onStop!")
-        super.onStop()
-    }
-
 }

@@ -186,11 +186,11 @@ class MainActivity : AppCompatActivity() {
                 } else {
                     val errorCode = loginModule.getLastErrorCode(this@MainActivity).code
                     val errorDescription = loginModule.getLastErrorDesc(this@MainActivity)
-                    Toast.makeText(
-                        this@MainActivity,
-                        "errorCode : $errorCode\nerrorMessage : $errorDescription",
-                        Toast.LENGTH_SHORT
-                    ).show()
+//                    Toast.makeText(
+//                        this@MainActivity,
+//                        "errorCode : $errorCode\nerrorMessage : $errorDescription",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
                 }
             }
         }

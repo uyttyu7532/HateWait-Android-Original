@@ -23,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="@string/store_register_menu_title"
+                android:text="회원가입"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
     </androidx.appcompat.widget.Toolbar>
@@ -33,7 +33,7 @@
             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:max="4"
+            android:max="3"
             android:progress="2"
             android:progressTint="@color/colorAccent" />
 

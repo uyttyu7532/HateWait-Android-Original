@@ -27,6 +27,7 @@
         <activity android:name=".storeinfo.StoreSignUp4" />
         <activity android:name=".customerinfo.CustomerSignUp1" />
         <activity android:name=".customerinfo.CustomerSignUp2" />
+        <activity android:name=".customerinfo.CustomerSignUp3" />
 
         <meta-data
                 android:name="com.google.firebase.messaging.default_notification_icon"

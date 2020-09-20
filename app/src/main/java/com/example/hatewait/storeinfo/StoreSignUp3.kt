@@ -1,63 +1,66 @@
 package com.example.hatewait.storeinfo
 
 import android.content.Intent
-
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import com.example.hatewait.R
-import com.example.hatewait.socket.StoreRegisterAsyncTask
 import kotlinx.android.synthetic.main.activity_store_register3.*
 
-import kotlinx.android.synthetic.main.activity_store_register4.button_finish
-import kotlinx.android.synthetic.main.activity_store_register4.store_business_hours_textView
+// 1단계 이메일 , 인증번호 (네아로면 생략)
+// 2단계 비번, 비번확인
+// 3단계 가게이름, 전화번호, 도로명주소
+// 4단계 가게 영업시간, 인원 수, 문구
+// 가입완료 환영 메시지 액티비티 or 로그인바로됨
 
-class StoreSignUp3 : AppCompatActivity(){
+class StoreSignUp3 : AppCompatActivity() {
 
-    private val storeCapacityRegex = Regex("[^0](\\d{0,3})")
-
-    fun verifyCapacity(capacityNumber: String): Boolean = storeCapacityRegex.matches(capacityNumber)
-    private val REQUEST_CODE_BUSINESS_TIME = 2000
-    private var isBusinessHours = false;
+    private val storeNameRegex = Regex("^(?=.*[a-zA-Z가-힣0-9])[a-zA-Z가-힣0-9|\\s|,]{1,}$")
+    private val storePhoneRegex = Regex("^[0](\\d{2})(\\d{3,4})(\\d{3,4})")
+    private val storeAddressRegex = Regex("^[가-힣]+[가-힣a-zA-Z0-9|\\-|,|\\s]{1,50}$")
+    fun verifyName(storeName: String): Boolean = storeNameRegex.matches(storeName)
+    fun verifyPhone(storePhone: String): Boolean = storePhoneRegex.matches(storePhone)
+    fun verifyAddress(storeAddress: String): Boolean = storeAddressRegex.matches(storeAddress)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_store_register3)
-        setSupportActionBar(register_toolbar3)
+        setSupportActionBar(register_toolbar2)
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
             setHomeAsUpIndicator(R.drawable.back_icon)
-            setHomeActionContentDescription("가게 주소 & 전화번호 & 수용인원 설정")
+            setHomeActionContentDescription("아이디 & 비밀번호")
             setDisplayShowTitleEnabled(false)
         }
-
-        store_business_hours_textView.setOnClickListener {
-            val intent = Intent(this@StoreSignUp3, BusinessHourPick::class.java)
-            startActivityForResult(intent, 2000)
+        addTextChangeListener()
+        button_continue.setOnClickListener {
+            val intent = Intent(this, StoreSignUp4::class.java)
+            intent.putExtra("STORE_ID", getIntent().getStringExtra("USER_ID"))
+            intent.putExtra("STORE_PASSWORD", getIntent().getStringExtra("USER_PASSWORD"))
+            intent.putExtra("STORE_NAME", store_name_input_editText.text.toString())
+            intent.putExtra("STORE_PHONE", store_phone_editText.text.toString())
+            intent.putExtra("STORE_ADDRESS", store_address_input_editText.text.toString())
+            startActivity(intent)
         }
-
-        button_finish.setOnClickListener {
-            val newStoreInfo = mapOf(
-                Pair("ID", intent.getStringExtra("STORE_ID")),
-                Pair("PASSWORD", intent.getStringExtra("STORE_PASSWORD")),
-                Pair("NAME", intent.getStringExtra("STORE_NAME")),
-                Pair("PHONE", intent.getStringExtra("STORE_PHONE")),
-                Pair("ADDRESS", intent.getStringExtra("STORE_ADDRESS")),
-                Pair("BUSINESS_HOURS", store_business_hours_textView.text.toString()),
-                Pair("CAPACITY", intent.getStringExtra("STORE_CAPACITY")),
-                Pair("DESCRIPTION", intent.getStringExtra("STORE_DESCRIPTION"))
-            )
-            StoreRegisterAsyncTask(this@StoreSignUp3).execute(newStoreInfo)
-            Toast.makeText(this, "성공!", Toast.LENGTH_SHORT).show()
-        }
-
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.back_front_button_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.forward_button -> {
+                if (!button_continue.isEnabled) {
+                    return false
+                } else {
+                    button_continue.performClick()
+                }
+            }
             android.R.id.home -> {
                 onBackPressed()
             }
@@ -65,45 +68,51 @@ class StoreSignUp3 : AppCompatActivity(){
         return true
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == REQUEST_CODE_BUSINESS_TIME) {
-            if (resultCode == 200) {
-                store_business_hours_textView.text = data?.getStringExtra("UPDATED_BUSINESS_TIME")
-                isBusinessHours = true
-                button_finish.isEnabled =
-                    store_capacity_layout.error == null
-                            && store_info_description_layout.error == null
-                            && !store_info_description_editText.text.isNullOrBlank()
-                            && !store_capacity_editText.text.isNullOrBlank()
-                            && !store_capacity_editText.text.isNullOrBlank()
-                            && isBusinessHours
-            }
-            if (resultCode == 400) {
-//                nothing to do (failed to update business Time)
-            }
-        }
-    }
-
     private fun addTextChangeListener() {
-
-        // 수용 인원
-        store_capacity_editText.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(capacityNumber: Editable?) {
-                if (!verifyCapacity(capacityNumber.toString())) {
-                    store_capacity_layout.error = "9999명까지 입력 가능합니다."
-                    button_finish.isEnabled = false
+        // 가게명
+        store_name_input_editText.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                if (!verifyName(s.toString())) {
+                    store_name_input_layout.error =
+                        resources.getString(R.string.store_name_error_message)
+                    button_continue.isEnabled = false
                 } else {
-                    store_capacity_layout.error = null
-                    store_capacity_layout.hint = null
+                    store_name_input_layout.error = null
+                    store_name_input_layout.hint = null
                 }
-                button_finish.isEnabled =
-                    store_capacity_layout.error == null
-                            && store_info_description_layout.error == null
-                            && !store_info_description_editText.text.isNullOrBlank()
-                            && !store_capacity_editText.text.isNullOrBlank()
-                            && isBusinessHours
+
+                button_continue.isEnabled =
+                    (store_name_input_layout.error == null
+                            && store_phone_layout.error == null
+                            && !store_phone_editText.text.isNullOrBlank()
+                            && store_address_input_editText.error == null
+                            && !store_address_input_editText.text.isNullOrBlank())
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+        })
+
+        // 전화번호
+        store_phone_editText.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(storePhone: Editable?) {
+                if (!verifyPhone(storePhone.toString())) {
+                    store_phone_layout.error =
+                        resources.getString(R.string.store_phone_error_message)
+                    button_continue.isEnabled = false
+                } else {
+                    store_phone_layout.error = null
+                    store_phone_layout.hint = null
+                }
+                button_continue.isEnabled =
+                    (store_name_input_layout.error == null
+                            && store_phone_layout.error == null
+                            && !store_phone_editText.text.isNullOrBlank()
+                            && store_address_input_editText.error == null
+                            && !store_address_input_editText.text.isNullOrBlank())
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -113,23 +122,22 @@ class StoreSignUp3 : AppCompatActivity(){
             }
         })
 
-        // 가게 소개
-        store_info_description_editText.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(capacityNumber: Editable?) {
-                if (!verifyCapacity(capacityNumber.toString())) {
-                    store_capacity_layout.error = "9999명까지 입력 가능합니다."
-                    button_finish.isEnabled = false
+        // 도로명주소
+        store_address_input_editText.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(storeAddress: Editable?) {
+                if (!verifyAddress(storeAddress.toString())) {
+                    store_address_input_layout.error = "하이픈(-)과 콤마(,) 제외한 특수문자는 허용되지않습니다."
+                    button_continue.isEnabled = false
                 } else {
-                    store_capacity_layout.error = null
-                    store_capacity_layout.hint = null
+                    store_address_input_layout.error = null
+                    store_address_input_layout.hint = null
                 }
-                button_finish.isEnabled =
-                    store_capacity_layout.error == null
-                            && store_info_description_layout.error == null
-                            && !store_info_description_editText.text.isNullOrBlank()
-                            && !store_capacity_editText.text.isNullOrBlank()
-                            && !store_capacity_editText.text.isNullOrBlank()
-                            && isBusinessHours
+                button_continue.isEnabled =
+                    (store_name_input_layout.error == null
+                            && store_phone_layout.error == null
+                            && !store_phone_editText.text.isNullOrBlank()
+                            && store_address_input_editText.error == null
+                            && !store_address_input_editText.text.isNullOrBlank())
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -138,6 +146,7 @@ class StoreSignUp3 : AppCompatActivity(){
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             }
         })
+
     }
 
 }

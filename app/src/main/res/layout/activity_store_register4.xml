@@ -1,110 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".storeinfo.StoreSignUp3">
-
-    
+        android:orientation="vertical"
+        tools:context=".storeinfo.StoreSignUp4">
 
     <androidx.appcompat.widget.Toolbar
-            android:id="@+id/register_toolbar4"
+            android:id="@+id/register_toolbar3"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:minHeight="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             android:elevation="4dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:minHeight="?attr/actionBarSize"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:popupTheme="@style/Theme.AppCompat.Light">
 
         <TextView
                 android:id="@+id/register_toolbar_title_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/store_register_menu_title"
-                android:textSize="18sp"
                 android:layout_gravity="center_horizontal"
-                android:textColor="@color/white" />
+                android:text="@string/store_register_menu_title"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
     </androidx.appcompat.widget.Toolbar>
 
-<!--    <LinearLayout-->
-<!--            android:id="@+id/auto_call_number_layout"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="25dp"-->
-<!--            android:layout_marginHorizontal="24dp"-->
-<!--            android:focusable="true"-->
-<!--            android:clickable="true"-->
-<!--            android:orientation="horizontal"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/register_toolbar4">-->
 
-<!--    <androidx.cardview.widget.CardView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginBottom="2dp"-->
-<!--            app:cardBackgroundColor="@color/colorPrimary"-->
-<!--            app:cardCornerRadius="0dp"-->
-<!--            app:cardElevation="2dp">-->
+    <ProgressBar
+            android:id="@+id/register_progressbar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="4"
+            android:progress="4"
+            android:progressTint="@color/colorAccent" />
 
-<!--        <TextView-->
-<!--                android:id="@+id/auto_call_number_introduction_text"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="45dp"-->
-<!--                android:gravity="center"-->
-<!--                android:paddingHorizontal="5dp"-->
-<!--                android:textSize="15sp"-->
-<!--                android:text="자동 호출 번호"-->
-<!--                android:textAppearance="@style/TextAppearance.AppCompat.Medium"-->
-<!--                android:textColor="#ffffff" />-->
-<!--    </androidx.cardview.widget.CardView>-->
-<!--    <TextView-->
-<!--            android:id="@+id/auto_call_number_textView"-->
-<!--            android:background="@drawable/textview_like_button"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="45dp"-->
-<!--            android:gravity="center"-->
-<!--            android:clickable="true"-->
-<!--            android:text="5"-->
-<!--            android:textSize="25sp"-->
-<!--            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />-->
-<!--    </LinearLayout>-->
-
-<!--    <TextView-->
-<!--            android:id="@+id/auto_call_description_textView"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:textColor="@color/colorAccent"-->
-<!--            android:layout_marginTop="5dp"-->
-<!--            android:textSize="12sp"-->
-<!--            android:text="*자동 호출번호가 몇 번째 팀에게 대기 알림 문자를 보낼지 결정합니다. 번호를 눌러 설정하세요!"-->
-<!--            android:layout_marginHorizontal="24dp"-->
-<!--            app:layout_constraintStart_toStartOf="@id/auto_call_number_layout"-->
-<!--            app:layout_constraintEnd_toEndOf="@id/auto_call_number_layout"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/auto_call_number_layout"/>-->
 
     <LinearLayout
             android:id="@+id/store_business_linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:layout_marginHorizontal="24dp"
-            android:focusable="true"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="8dp"
             android:clickable="true"
-            android:orientation="vertical"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/register_toolbar4">
+            android:focusable="true"
+            android:orientation="vertical">
 
         <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="2dp"
+
                 app:cardBackgroundColor="@color/colorPrimary"
                 app:cardCornerRadius="0dp"
                 app:cardElevation="2dp">
@@ -115,61 +66,76 @@
                     android:layout_height="45dp"
                     android:gravity="center"
                     android:paddingHorizontal="5dp"
-                    android:textSize="15sp"
                     android:text="영업 시간"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textColor="#ffffff" />
+                    android:textColor="#ffffff"
+                    android:textSize="15sp" />
         </androidx.cardview.widget.CardView>
+
         <TextView
                 android:id="@+id/store_business_hours_textView"
-                android:background="@drawable/textview_like_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingVertical="5dp"
-                android:gravity="center"
+                android:background="@drawable/textview_like_button"
                 android:clickable="true"
+                android:gravity="center"
+                android:paddingVertical="5dp"
                 android:text="매일 오전 11:00 - 오후 8:00 \n(휴무일: 토요일, 일요일)"
-                android:textSize="15sp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textSize="15sp" />
     </LinearLayout>
 
-
-
-
-    <TextView
-            android:id="@+id/register_progress_textView"
-            android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/store_capacity_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/store_business_linearLayout"
-            app:layout_constraintEnd_toEndOf="@id/store_business_linearLayout"
-            android:text="4/4"
-            android:textColor="@color/colorAccent"
-            android:textSize="15sp"/>
-    <ProgressBar
-            android:id="@+id/register_progressbar"
-            android:layout_width="0dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="8dp"
+            app:counterMaxLength="4"
+            app:endIconMode="clear_text"
+            app:startIconContentDescription="Name"
+            app:startIconDrawable="@drawable/store_table">
+
+        <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/store_capacity_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="수용가능한 인원수를 입력해주세요"
+                android:inputType="number"
+                android:selectAllOnFocus="true" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/store_info_description_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:progress="4"
-            android:max="4"
-            app:layout_constraintStart_toStartOf="@id/store_business_linearLayout"
-            app:layout_constraintEnd_toEndOf="@id/store_business_linearLayout"
-            app:layout_constraintTop_toBottomOf="@id/register_progress_textView"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="8dp"
+            app:counterMaxLength="11"
+            app:endIconMode="clear_text"
+            app:startIconContentDescription="Name"
+            app:startIconDrawable="@drawable/store_info_icon">
+
+        <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/store_info_description_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="가게를 소개하는 문구를 적어주세요"
+                android:inputType="textMultiLine"
+                android:selectAllOnFocus="true" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
             android:id="@+id/button_finish"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            app:layout_constraintStart_toStartOf="@id/store_business_linearLayout"
-            app:layout_constraintEnd_toEndOf="@id/store_business_linearLayout"
-            app:layout_constraintTop_toBottomOf="@id/register_progressbar"
-            android:enabled="false"
             style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="15dp"
+            android:enabled="false"
             android:text="가입완료"
-            android:textSize="25dp"
-            android:textColor="@color/white"/>
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+            android:textColor="@color/white"
+            android:textSize="25dp" />
+</LinearLayout>

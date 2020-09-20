@@ -105,6 +105,7 @@ android {
         implementation 'com.squareup.retrofit2:retrofit:2.6.0'
         implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
 
-
+        implementation 'com.sun.mail:android-mail:1.5.5'
+        implementation 'com.sun.mail:android-activation:1.5.5'
     }
 }

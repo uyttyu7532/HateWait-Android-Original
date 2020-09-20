@@ -37,7 +37,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-lateinit var mcontext: Context
+private lateinit var mcontext: Context
 
 class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
     MapView.MapViewEventListener {

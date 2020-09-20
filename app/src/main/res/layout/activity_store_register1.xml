@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".storeinfo.StoreSignUp1">
+
+
+    <androidx.appcompat.widget.Toolbar
+            android:id="@+id/register_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:elevation="4dp"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:popupTheme="@style/Theme.AppCompat.Light">
+
+        <TextView
+                android:id="@+id/register_toolbar_title_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/store_register_menu_title"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <ProgressBar
+            android:id="@+id/register_progressbar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="4"
+            android:progress="1"
+            android:progressTint="@color/colorAccent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/id_input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="25dp"
+            app:endIconMode="clear_text"
+            app:startIconContentDescription="ID"
+            app:startIconDrawable="@drawable/custom_id_icon">
+
+        <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/id_input_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/id_input_hint"
+                android:inputType="text"
+                android:selectAllOnFocus="true" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <Button
+            android:id="@+id/checkEmailButton"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="8dp"
+            android:enabled="false"
+            android:text="인증번호 전송"
+            android:textColor="@color/white"
+            android:textSize="25dp" />
+
+<!--    <com.google.android.material.textfield.TextInputLayout-->
+<!--            android:id="@+id/id_check_layout"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginHorizontal="20dp"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            app:endIconMode="clear_text"-->
+<!--            app:startIconContentDescription="ID"-->
+<!--            app:startIconDrawable="@drawable/custom_id_icon">-->
+
+<!--        <com.google.android.material.textfield.TextInputEditText-->
+<!--                android:id="@+id/id_check_editText"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:hint="@string/id_check_hint"-->
+<!--                android:inputType="text"-->
+<!--                android:selectAllOnFocus="true" />-->
+<!--    </com.google.android.material.textfield.TextInputLayout>-->
+<!--    <Button-->
+<!--            android:id="@+id/checkEmailButton2"-->
+<!--            style="@style/Widget.AppCompat.Button.Colored"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginHorizontal="20dp"-->
+<!--            android:enabled="false"-->
+<!--            android:text="인증번호 확인"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textSize="25dp" />-->
+
+<!--    <Button-->
+<!--            android:id="@+id/button_continue"-->
+<!--            style="@style/Widget.AppCompat.Button.Colored"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginHorizontal="20dp"-->
+<!--            android:layout_marginTop="25dp"-->
+<!--            android:enabled="false"-->
+<!--            android:text="계속하기"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textSize="25dp" />-->
+
+</LinearLayout>

@@ -118,7 +118,7 @@ class MainActivity : AppCompatActivity() {
                 startActivity<StoreMenu>()
             }
         }
-        account_register_textButton.setOnClickListener {
+        sign_up_button.setOnClickListener {
             if (isCustomerMode) {
                 startActivity<CustomerSignUp1>()
             } else {

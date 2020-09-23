@@ -163,9 +163,8 @@
             android:adjustViewBounds="true"
             android:background="#fcfcfc"
             android:elevation="1dp"
-            android:foreground="@drawable/ripple_effect"
-            android:scaleType="fitStart"
-            android:src="@drawable/naver_login_photoshop7" />
+            android:scaleType="fitCenter"
+            android:src="@drawable/naver_login_green_photoshop2" />
 
     <!--    <Button-->
     <!--            android:id="@+id/sign_up_button"-->

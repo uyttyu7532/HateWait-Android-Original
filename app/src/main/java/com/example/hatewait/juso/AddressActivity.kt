@@ -40,14 +40,14 @@ class AddressActivity : AppCompatActivity() {
         webView.settings.loadWithOverviewMode = true // 웹뷰가 html 컨텐츠가 웹뷰보다 클 경우 스크린 크기에 맞게 조정되도록 한다.
         webView.isHorizontalScrollBarEnabled = false
         webView.isVerticalScrollBarEnabled = false
+        webView.setInitialScale(1)
 //        webView.settings.builtInZoomControls = true
 //        webView.settings.displayZoomControls = false
 //		webView.setInitialScale(100)
 
 
 //        webView.zoomOut()
-//        webView.settings.useWideViewPort = true // meta tag
-
+        webView.settings.useWideViewPort = true // meta tag
 
 
         // JavaScript이벤트에 대응할 함수를 정의 한 클래스를 붙여줌

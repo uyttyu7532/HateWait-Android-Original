@@ -4,27 +4,25 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clipToPadding="false"
         android:orientation="vertical"
         tools:context=".login.MainActivity">
 
-    <ImageView
-            android:id="@+id/idView"
-            android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="10dp"
-            android:src="@drawable/main_logo"
-            app:layout_constraintHorizontal_bias="0.5" />
+<!--    <ImageView-->
+<!--            android:id="@+id/idView"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="100dp"-->
+<!--            android:layout_marginTop="50dp"-->
+<!--            android:layout_marginBottom="20dp"-->
+<!--            android:src="@drawable/main_logo" />-->
 
     <com.addisonelliott.segmentedbutton.SegmentedButtonGroup
             android:id="@+id/user_kind_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginHorizontal="20dp"
             android:background="@color/white"
-            android:elevation="2dp"
-            app:borderWidth="1dp"
+            android:elevation="1dp"
             app:dividerPadding="10dp"
             app:dividerWidth="1dp"
             app:position="1"
@@ -35,11 +33,10 @@
 
         <com.addisonelliott.segmentedbutton.SegmentedButton
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_weight="1"
-                android:padding="10dp"
-                app:drawable="@drawable/ic_shop"
-                app:drawableGravity="top"
+                app:textStyle="bold"
+                app:drawableGravity="left"
                 app:drawableTint="@color/black_overlay"
                 app:selectedDrawableTint="@color/white"
                 app:selectedTextColor="@color/white"
@@ -48,28 +45,36 @@
 
         <com.addisonelliott.segmentedbutton.SegmentedButton
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_weight="1"
-                android:padding="10dp"
-                app:drawable="@drawable/ic_baseline_person_outline_24"
-                app:drawableGravity="top"
+                android:padding="5dp"
+                app:drawableGravity="left"
                 app:drawableTint="@color/black_overlay"
                 app:selectedDrawableTint="@color/white"
                 app:selectedTextColor="@color/white"
                 app:text="Customer"
+                app:textStyle="bold"
                 app:textColor="@color/black_overlay" />
 
     </com.addisonelliott.segmentedbutton.SegmentedButtonGroup>
+
+
+    <ImageView
+            android:id="@+id/idView"
+            android:layout_width="match_parent"
+            android:layout_height="85dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="30dp"
+            android:src="@drawable/main_logo" />
 
     <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/id_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="8dp"
+            style="@style/marginHorizontal"
             app:endIconMode="clear_text"
             app:startIconContentDescription="ID"
-            app:startIconDrawable="@drawable/custom_id_icon">
+>
 
         <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/id_input_editText"
@@ -86,11 +91,10 @@
             android:id="@+id/password_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
+            style="@style/marginHorizontal"
             android:layout_marginTop="8dp"
             app:endIconMode="password_toggle"
-            app:startIconContentDescription="Name"
-            app:startIconDrawable="@drawable/custom_password_icon">
+            app:startIconContentDescription="Name">
 
         <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/password_input_editText"
@@ -104,69 +108,86 @@
 
 
     <CheckBox
+            android:textColor="#2E2E2E"
             android:id="@+id/auto_login_checkBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="30dp"
             android:text="ID/PW 저장" />
 
 
-    <Button
+    <!--    <Button-->
+    <!--            android:id="@+id/button_login"-->
+    <!--            style="@style/Widget.AppCompat.Button.Colored"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="55dp"-->
+    <!--            android:layout_marginHorizontal="20dp"-->
+    <!--            android:layout_marginTop="20dp"-->
+    <!--            android:enabled="false"-->
+    <!--            android:text="로그인"-->
+    <!--            android:textColor="@color/white"-->
+    <!--            android:textSize="20dp"-->
+    <!--            android:textStyle="bold" />-->
+
+    <ImageButton
             android:id="@+id/button_login"
-            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="20dp"
-            android:enabled="false"
-            android:text="로그인"
-            android:textColor="@color/white"
-            android:textSize="25dp"
-            android:textStyle="bold" />
-
-
-
-
-<!--    &lt;!&ndash;  네이버 버튼 크기 조정하기  &ndash;&gt;-->
-<!--    <ImageButton-->
-<!--            android:id="@+id/naver_login_button"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="60dp"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:layout_marginHorizontal="20dp"-->
-<!--            android:layout_marginTop="8dp"-->
-<!--            android:adjustViewBounds="true"-->
-<!--            android:padding="0dp"-->
-<!--            android:scaleType="fitCenter"-->
-<!--            android:src="@drawable/naver_login_green" />-->
-    <Button
-            android:id="@+id/naver_login_button"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginHorizontal="20dp"
-            android:text="네이버로 로그인"
-            android:textColor="@color/white"
-            android:textSize="25dp"
-            android:textStyle="bold" />
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            style="@style/marginHorizontal"
+            android:layout_marginTop="16dp"
+            android:adjustViewBounds="true"
+            android:background="#fcfcfc"
+            android:elevation="1dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/login_button_no_border" />
 
 
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:gravity="center"
-            android:text="───────     OR     ───────"/>
+            android:text="───────     OR     ───────" />
 
-    <Button
-            android:id="@+id/sign_up_button"
+    <!--  네이버 버튼 크기 조정하기  -->
+    <ImageButton
+            android:id="@+id/naver_login_button"
+            style="@style/marginHorizontal"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginHorizontal="20dp"
-            android:text="회원가입"
-            android:textColor="@color/white"
-            android:textSize="25dp"
-            android:textStyle="bold" />
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:adjustViewBounds="true"
+            android:background="#fcfcfc"
+            android:elevation="1dp"
+            android:foreground="@drawable/ripple_effect"
+            android:scaleType="fitStart"
+            android:src="@drawable/naver_login_photoshop7" />
+
+    <!--    <Button-->
+    <!--            android:id="@+id/sign_up_button"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="55dp"-->
+    <!--            android:layout_marginHorizontal="20dp"-->
+    <!--            android:text="회원가입"-->
+    <!--            android:textColor="@color/white"-->
+    <!--            android:textSize="20sp"-->
+    <!--            android:textStyle="bold" />-->
+
+    <!--    <ImageButton-->
+    <!--            android:id="@+id/sign_up_button"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_gravity="center"-->
+    <!--            android:layout_marginHorizontal="20dp"-->
+    <!--            android:layout_marginTop="8dp"-->
+    <!--            android:adjustViewBounds="true"-->
+    <!--            android:background="#fcfcfc"-->
+    <!--            android:scaleType="fitCenter"-->
+    <!--            android:src="@drawable/sign_up_button" />-->
 
     <RelativeLayout
             android:layout_width="match_parent"
@@ -180,45 +201,47 @@
                 android:layout_alignParentBottom="true"
                 android:orientation="vertical">
 
-<!--            <LinearLayout-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_gravity="center"-->
-<!--                    android:orientation="horizontal">-->
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
 
-<!--                <TextView-->
+                <TextView
 
-<!--                        android:id="@+id/account_introduction_textView"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="계정이 없으신가요?"-->
-<!--                        app:layout_constraintHorizontal_chainStyle="packed" />-->
+                        android:id="@+id/account_introduction_textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="아직 계정이 없으신가요?"
+                        app:layout_constraintHorizontal_chainStyle="packed" />
 
-<!--                <TextView-->
-<!--                        android:id="@+id/account_register_textButton"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginLeft="8dp"-->
-<!--                        android:clickable="true"-->
-<!--                        android:text="회원가입"-->
-<!--                        android:textColor="@color/colorPrimary"-->
-<!--                        android:textStyle="bold" />-->
-<!--            </LinearLayout>-->
+                <TextView
+                        android:id="@+id/account_register_textButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:clickable="true"
+                        android:text="가입하기"
+                        android:textColor="@color/colorPrimary"
+                        android:textStyle="bold" />
+            </LinearLayout>
 
             <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|bottom"
+                    android:layout_marginTop="8dp"
                     android:orientation="horizontal">
 
                 <TextView
 
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="비밀번호를 잊으셨나요?"
+                        android:text="비밀번호를 잊어버리셨나요?"
                         app:layout_constraintHorizontal_chainStyle="packed" />
 
                 <TextView
+                        android:id="@+id/find_password_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"

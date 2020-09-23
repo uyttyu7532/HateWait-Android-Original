@@ -1,7 +1,6 @@
-package com.example.hatewait.customerinfo
+package com.example.hatewait.signup
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -9,20 +8,13 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hatewait.R
-import kotlinx.android.synthetic.main.activity_store_register1.register_toolbar
-import kotlinx.android.synthetic.main.activity_store_register2.*
-
-
-
-// 1단계 이메일 , 인증번호 (네아로면 생략)
-// 2단계 비번, 비번확인
-// 3단계 이름(네아로 생략), 전화번호
-// 가입완료 환영 메시지 액티비티 or 로그인바로됨
+import es.dmoral.toasty.Toasty
+import kotlinx.android.synthetic.main.activity_register2.*
 
 
 private lateinit var mcontext: Context
 
-class CustomerSignUp2 : AppCompatActivity() {
+class ChangePasswordActivity : AppCompatActivity() {
 
     private var checkMailCode = false;
     private val passwordRegex =
@@ -32,18 +24,20 @@ class CustomerSignUp2 : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_customer_register2)
+        setContentView(R.layout.activity_register2)
         mcontext = this.applicationContext
         addTextChangeListener()
 
+        register_toolbar_title_textView.text = "비밀번호 변경"
+        button_continue.text = "비밀번호 변경"
 
         button_continue.setOnClickListener {
             checkMailCode = false
-            val intent = Intent(this, CustomerSignUp3::class.java)
-            intent.putExtra("USER_ID", getIntent().getStringExtra("USER_ID"))
-            intent.putExtra("USER_PASSWORD", password_input_editText.text.toString())
-            intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
-            startActivity(intent)
+
+            // TODO 아이디 비밀번호를 이용해서 DB에서 회원정보 수정 => 완료하면 Toasty
+            //intent.getStringExtra("USER_ID")
+            //password_input_editText.text.toString()
+            Toasty.normal(mcontext, "비밀번호가 성공적으로 변경되었습니다.", Toasty.LENGTH_SHORT)
         }
 
         setSupportActionBar(register_toolbar)

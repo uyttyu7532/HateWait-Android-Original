@@ -9,12 +9,12 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hatewait.R
 import com.example.hatewait.client.CustomerMenu
-import com.example.hatewait.customerinfo.CustomerSignUp1
-import com.example.hatewait.storeinfo.StoreSignUp1
+import com.example.hatewait.signup.CustomerSignUp1
+import com.example.hatewait.signup.FindPassWordActivity
+import com.example.hatewait.signup.StoreSignUp1
 import com.example.hatewait.store.StoreMenu
 import com.nhn.android.naverlogin.OAuthLogin
 import com.nhn.android.naverlogin.OAuthLoginHandler
@@ -118,14 +118,17 @@ class MainActivity : AppCompatActivity() {
                 startActivity<StoreMenu>()
             }
         }
-        sign_up_button.setOnClickListener {
+        account_register_textButton.setOnClickListener {
             if (isCustomerMode) {
                 startActivity<CustomerSignUp1>()
             } else {
                 startActivity<StoreSignUp1>()
             }
         }
-    }
+        find_password_button.setOnClickListener {
+            startActivity<FindPassWordActivity>()
+        }
+}
 
 
     //    Naver Login Initilization

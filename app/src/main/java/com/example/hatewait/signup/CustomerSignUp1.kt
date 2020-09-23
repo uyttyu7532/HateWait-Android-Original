@@ -1,10 +1,8 @@
-package com.example.hatewait.storeinfo
+package com.example.hatewait.signup
 
-import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.os.StrictMode
 import android.text.Editable
 import android.text.TextWatcher
@@ -21,20 +19,18 @@ import com.example.hatewait.mail.SendMail
 import com.example.hatewait.mail.countDown
 import com.example.hatewait.mail.emailCode
 import es.dmoral.toasty.Toasty
-import kotlinx.android.synthetic.main.activity_store_register1.*
+import kotlinx.android.synthetic.main.activity_register1.*
 
 
 // 1단계 이메일 , 인증번호 (네아로면 생략)
 // 2단계 비번, 비번확인
-// 3단계 가게이름, 전화번호, 도로명주소
-// 4단계 가게 영업시간, 인원 수, 문구
+// 3단계 이름(네아로 생략), 전화번호
 // 가입완료 환영 메시지 액티비티 or 로그인바로됨
-
 
 private lateinit var mcontext: Context
 private lateinit var senderTo: String
 
-class StoreSignUp1 : AppCompatActivity() {
+class CustomerSignUp1 : AppCompatActivity() {
 
     var customView: View? = null
     private val idRegex = Regex(
@@ -46,10 +42,14 @@ class StoreSignUp1 : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_store_register1)
+        setContentView(R.layout.activity_register1)
         mcontext = this.applicationContext
         addTextChangeListener()
+
+
         checkEmailButton.setOnClickListener {
+            // TODO 디비에서 존재하는 아이디인지 확인 후
+
             //인터넷 사용권한 허가
             StrictMode.setThreadPolicy(
                 StrictMode.ThreadPolicy.Builder()
@@ -142,7 +142,7 @@ class StoreSignUp1 : AppCompatActivity() {
         checkEmailButton2.setOnClickListener {
             if (idCheckEditText.text.toString() == emailCode) {
                 Toasty.normal(mcontext, "인증번호가 확인되었습니다.", Toasty.LENGTH_SHORT)
-                val intent = Intent(this, StoreSignUp2::class.java)
+                val intent = Intent(this, CustomerSignUp2::class.java)
                 intent.putExtra("USER_ID", id_input_editText.text.toString())
                 intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
                 startActivity(intent)

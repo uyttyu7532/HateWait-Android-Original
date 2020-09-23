@@ -1,4 +1,4 @@
-package com.example.hatewait.customerinfo
+package com.example.hatewait.signup
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -45,6 +45,8 @@ class CustomerSignUp3 : AppCompatActivity() {
             val userPassword = intent.getStringExtra("USER_PASSWORD")
             val userName = user_name_input_editText.text.toString()
             val userPhone = user_phone_number_editText.text.toString()
+
+            // TODO 디비에 회원정보(손님) 저장
             CustomerRegisterAsyncTask(this@CustomerSignUp3).execute(
                 userId,
                 userPassword,

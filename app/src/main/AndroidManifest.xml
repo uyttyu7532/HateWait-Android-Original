@@ -9,7 +9,6 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
-
     <application
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
@@ -19,15 +18,16 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true">
+        <activity android:name=".signup.ChangePasswordActivity"></activity>
+        <activity android:name=".signup.FindPassWordActivity" />
         <activity android:name=".map.KakaoMapActivity" />
-
-        <activity android:name=".storeinfo.StoreSignUp1" />
-        <activity android:name=".storeinfo.StoreSignUp2" />
-        <activity android:name=".storeinfo.StoreSignUp3" />
-        <activity android:name=".storeinfo.StoreSignUp4" />
-        <activity android:name=".customerinfo.CustomerSignUp1" />
-        <activity android:name=".customerinfo.CustomerSignUp2" />
-        <activity android:name=".customerinfo.CustomerSignUp3" />
+        <activity android:name=".signup.StoreSignUp1" />
+        <activity android:name=".signup.StoreSignUp2" />
+        <activity android:name=".signup.StoreSignUp3" />
+        <activity android:name=".signup.StoreSignUp4" />
+        <activity android:name=".signup.CustomerSignUp1" />
+        <activity android:name=".signup.CustomerSignUp2" />
+        <activity android:name=".signup.CustomerSignUp3" />
 
         <meta-data
                 android:name="com.google.firebase.messaging.default_notification_icon"
@@ -73,10 +73,10 @@
                 tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>
-
 
 </manifest>

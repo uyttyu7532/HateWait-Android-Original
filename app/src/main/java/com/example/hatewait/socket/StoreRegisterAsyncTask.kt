@@ -4,7 +4,7 @@ import android.content.Context
 import android.os.AsyncTask
 import android.util.Log
 import com.example.hatewait.store.StoreMenu
-import com.example.hatewait.storeinfo.StoreSignUp4
+import com.example.hatewait.signup.StoreSignUp4
 import org.jetbrains.anko.startActivity
 import java.io.BufferedReader
 import java.io.IOException

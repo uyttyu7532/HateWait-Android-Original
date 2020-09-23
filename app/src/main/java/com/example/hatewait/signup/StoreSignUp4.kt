@@ -1,4 +1,4 @@
-package com.example.hatewait.storeinfo
+package com.example.hatewait.signup
 
 import android.content.Intent
 
@@ -10,6 +10,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import com.example.hatewait.R
 import com.example.hatewait.socket.StoreRegisterAsyncTask
+import com.example.hatewait.storeinfo.BusinessHourPick
 import kotlinx.android.synthetic.main.activity_store_register4.*
 
 import kotlinx.android.synthetic.main.activity_store_register4.button_finish
@@ -56,6 +57,8 @@ class StoreSignUp4 : AppCompatActivity(){
                 Pair("CAPACITY", intent.getStringExtra("STORE_CAPACITY")),
                 Pair("DESCRIPTION", intent.getStringExtra("STORE_DESCRIPTION"))
             )
+
+            // TODO 디비에 회원정보(가게) 저장
             StoreRegisterAsyncTask(this@StoreSignUp4).execute(newStoreInfo)
             Toast.makeText(this, "성공!", Toast.LENGTH_SHORT).show()
         }

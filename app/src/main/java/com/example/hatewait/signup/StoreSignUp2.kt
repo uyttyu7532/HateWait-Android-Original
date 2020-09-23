@@ -1,4 +1,4 @@
-package com.example.hatewait.storeinfo
+package com.example.hatewait.signup
 
 import android.content.Context
 import android.content.Intent
@@ -9,8 +9,8 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hatewait.R
-import kotlinx.android.synthetic.main.activity_store_register1.register_toolbar
-import kotlinx.android.synthetic.main.activity_store_register2.*
+import kotlinx.android.synthetic.main.activity_register1.register_toolbar
+import kotlinx.android.synthetic.main.activity_register2.*
 
 
 // 1단계 이메일 , 인증번호 (네아로면 생략)
@@ -32,7 +32,7 @@ class StoreSignUp2 : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_store_register2)
+        setContentView(R.layout.activity_register2)
         mcontext = this.applicationContext
         addTextChangeListener()
 

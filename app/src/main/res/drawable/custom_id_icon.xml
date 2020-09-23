@@ -3,7 +3,7 @@
 
     <item
             android:drawable="@drawable/id_form_embedded_image"
-            android:width="30dp"
+            android:width="25dp"
             android:height="25dp"
             android:bottom="5dp"
             />

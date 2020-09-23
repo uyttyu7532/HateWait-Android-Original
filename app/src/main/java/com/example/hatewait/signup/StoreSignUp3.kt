@@ -1,4 +1,4 @@
-package com.example.hatewait.storeinfo
+package com.example.hatewait.signup
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

@@ -5,7 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".customerinfo.CustomerSignUp3">
+        tools:context=".signup.CustomerSignUp3">
 
     <androidx.appcompat.widget.Toolbar
             android:id="@+id/register_toolbar"

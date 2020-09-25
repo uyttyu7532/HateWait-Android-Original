@@ -9,7 +9,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hatewait.R
 import es.dmoral.toasty.Toasty
-import kotlinx.android.synthetic.main.activity_register2.*
+import kotlinx.android.synthetic.main.activity_signup2.*
 
 
 private lateinit var mcontext: Context
@@ -24,7 +24,7 @@ class ChangePasswordActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_register2)
+        setContentView(R.layout.activity_signup2)
         mcontext = this.applicationContext
         addTextChangeListener()
 

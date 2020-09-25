@@ -19,7 +19,7 @@ import com.example.hatewait.mail.SendMail
 import com.example.hatewait.mail.countDown
 import com.example.hatewait.mail.emailCode
 import es.dmoral.toasty.Toasty
-import kotlinx.android.synthetic.main.activity_register1.*
+import kotlinx.android.synthetic.main.activity_signup1.*
 
 
 // 1단계 이메일 , 인증번호 (네아로면 생략)
@@ -42,7 +42,7 @@ class CustomerSignUp1 : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_register1)
+        setContentView(R.layout.activity_signup1)
         mcontext = this.applicationContext
         addTextChangeListener()
 

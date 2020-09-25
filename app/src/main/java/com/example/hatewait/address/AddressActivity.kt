@@ -1,5 +1,6 @@
-package com.example.hatewait.juso
+package com.example.hatewait.address
 
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.webkit.*
@@ -71,3 +72,4 @@ class AddressActivity : AppCompatActivity() {
         }
     }
 }
+

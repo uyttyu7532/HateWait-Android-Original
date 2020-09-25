@@ -19,7 +19,7 @@ import com.example.hatewait.mail.SendMail
 import com.example.hatewait.mail.countDown
 import com.example.hatewait.mail.emailCode
 import es.dmoral.toasty.Toasty
-import kotlinx.android.synthetic.main.activity_register1.*
+import kotlinx.android.synthetic.main.activity_signup1.*
 
 
 private lateinit var mcontext: Context
@@ -37,7 +37,7 @@ class FindPassWordActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_register1)
+        setContentView(R.layout.activity_signup1)
         mcontext = this.applicationContext
 
         register_toolbar_title_textView.text = "비밀번호 변경"

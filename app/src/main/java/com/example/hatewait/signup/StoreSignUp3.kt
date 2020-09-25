@@ -1,14 +1,18 @@
 package com.example.hatewait.signup
 
+import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
+import android.view.ViewGroup
+import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import com.example.hatewait.R
-import kotlinx.android.synthetic.main.activity_store_register3.*
+import com.example.hatewait.address.AddressDialogFragment
+import kotlinx.android.synthetic.main.activity_store_signup3.*
 
 // 1단계 이메일 , 인증번호 (네아로면 생략)
 // 2단계 비번, 비번확인
@@ -16,7 +20,10 @@ import kotlinx.android.synthetic.main.activity_store_register3.*
 // 4단계 가게 영업시간, 인원 수, 문구
 // 가입완료 환영 메시지 액티비티 or 로그인바로됨
 
+private lateinit var mContext: Context
+
 class StoreSignUp3 : AppCompatActivity() {
+
 
     private val storeNameRegex = Regex("^(?=.*[a-zA-Z가-힣0-9])[a-zA-Z가-힣0-9|\\s|,]{1,}$")
     private val storePhoneRegex = Regex("^[0](\\d{2})(\\d{3,4})(\\d{3,4})")
@@ -27,8 +34,11 @@ class StoreSignUp3 : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_store_register3)
+        setContentView(R.layout.activity_store_signup3)
         setSupportActionBar(register_toolbar2)
+        mContext = this.applicationContext
+
+
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
             setHomeAsUpIndicator(R.drawable.back_icon)
@@ -36,16 +46,31 @@ class StoreSignUp3 : AppCompatActivity() {
             setDisplayShowTitleEnabled(false)
         }
         addTextChangeListener()
+
+
         button_continue.setOnClickListener {
             val intent = Intent(this, StoreSignUp4::class.java)
             intent.putExtra("STORE_ID", getIntent().getStringExtra("USER_ID"))
             intent.putExtra("STORE_PASSWORD", getIntent().getStringExtra("USER_PASSWORD"))
             intent.putExtra("STORE_NAME", store_name_input_editText.text.toString())
             intent.putExtra("STORE_PHONE", store_phone_editText.text.toString())
-            intent.putExtra("STORE_ADDRESS", store_address_input_editText.text.toString())
+//            intent.putExtra("STORE_ADDRESS", store_address_input_editText.text.toString())
             startActivity(intent)
         }
+
+        address_start.setOnClickListener {
+            val bundle = Bundle()
+            val dialog: AddressDialogFragment = AddressDialogFragment().getInstance()
+            dialog.arguments = bundle
+            supportFragmentManager?.let { fragmentManager ->
+                dialog.show(
+                    fragmentManager,
+                    "SELECT_ADDRESS"
+                )
+            }
+        }
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.back_front_button_menu, menu)
@@ -82,11 +107,11 @@ class StoreSignUp3 : AppCompatActivity() {
                 }
 
                 button_continue.isEnabled =
-                    (store_name_input_layout.error == null
+                    store_name_input_layout.error == null
                             && store_phone_layout.error == null
                             && !store_phone_editText.text.isNullOrBlank()
-                            && store_address_input_editText.error == null
-                            && !store_address_input_editText.text.isNullOrBlank())
+//                            && store_address_input_editText.error == null
+//                            && !store_address_input_editText.text.isNullOrBlank()
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -108,11 +133,11 @@ class StoreSignUp3 : AppCompatActivity() {
                     store_phone_layout.hint = null
                 }
                 button_continue.isEnabled =
-                    (store_name_input_layout.error == null
+                    store_name_input_layout.error == null
                             && store_phone_layout.error == null
                             && !store_phone_editText.text.isNullOrBlank()
-                            && store_address_input_editText.error == null
-                            && !store_address_input_editText.text.isNullOrBlank())
+//                            && store_address_input_editText.error == null
+//                            && !store_address_input_editText.text.isNullOrBlank()
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -123,30 +148,35 @@ class StoreSignUp3 : AppCompatActivity() {
         })
 
         // 도로명주소
-        store_address_input_editText.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(storeAddress: Editable?) {
-                if (!verifyAddress(storeAddress.toString())) {
-                    store_address_input_layout.error = "하이픈(-)과 콤마(,) 제외한 특수문자는 허용되지않습니다."
-                    button_continue.isEnabled = false
-                } else {
-                    store_address_input_layout.error = null
-                    store_address_input_layout.hint = null
-                }
-                button_continue.isEnabled =
-                    (store_name_input_layout.error == null
-                            && store_phone_layout.error == null
-                            && !store_phone_editText.text.isNullOrBlank()
-                            && store_address_input_editText.error == null
-                            && !store_address_input_editText.text.isNullOrBlank())
-            }
+//        store_address_input_editText.addTextChangedListener(object : TextWatcher {
+//            override fun afterTextChanged(storeAddress: Editable?) {
+//                if (!verifyAddress(storeAddress.toString())) {
+//                    store_address_input_layout.error = "하이픈(-)과 콤마(,) 제외한 특수문자는 허용되지않습니다."
+//                    button_continue.isEnabled = false
+//                } else {
+//                    store_address_input_layout.error = null
+//                    store_address_input_layout.hint = null
+//                }
+//                button_continue.isEnabled =
+//                    (store_name_input_layout.error == null
+//                            && store_phone_layout.error == null
+//                            && !store_phone_editText.text.isNullOrBlank()
+//                            && store_address_input_editText.error == null
+//                            && !store_address_input_editText.text.isNullOrBlank())
+//            }
+//
+//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+//            }
+//
+//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+//            }
+//        })
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
+    }
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-        })
-
+    fun showAddressDialog() {
+        val AddressFragment = AddressDialogFragment()
+        AddressFragment.show(supportFragmentManager, "SELECT_ADDRESS")
     }
 
 }

@@ -11,10 +11,10 @@ import android.widget.Toast
 import com.example.hatewait.R
 import com.example.hatewait.socket.StoreRegisterAsyncTask
 import com.example.hatewait.storeinfo.BusinessHourPick
-import kotlinx.android.synthetic.main.activity_store_register4.*
+import kotlinx.android.synthetic.main.activity_store_signup4.*
 
-import kotlinx.android.synthetic.main.activity_store_register4.button_finish
-import kotlinx.android.synthetic.main.activity_store_register4.store_business_hours_textView
+import kotlinx.android.synthetic.main.activity_store_signup4.button_finish
+import kotlinx.android.synthetic.main.activity_store_signup4.store_business_hours_textView
 
 // 1단계 이메일 , 인증번호 (네아로면 생략)
 // 2단계 비번, 비번확인
@@ -32,7 +32,7 @@ class StoreSignUp4 : AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_store_register4)
+        setContentView(R.layout.activity_store_signup4)
         setSupportActionBar(register_toolbar3)
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)

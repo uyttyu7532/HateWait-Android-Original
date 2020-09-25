@@ -19,7 +19,7 @@ import com.example.hatewait.mail.SendMail
 import com.example.hatewait.mail.countDown
 import com.example.hatewait.mail.emailCode
 import es.dmoral.toasty.Toasty
-import kotlinx.android.synthetic.main.activity_register1.*
+import kotlinx.android.synthetic.main.activity_signup1.*
 
 
 // 1단계 이메일 , 인증번호 (네아로면 생략)
@@ -29,10 +29,10 @@ import kotlinx.android.synthetic.main.activity_register1.*
 // 가입완료 환영 메시지 액티비티 or 로그인바로됨
 
 
-private lateinit var mcontext: Context
-private lateinit var senderTo: String
-
 class StoreSignUp1 : AppCompatActivity() {
+
+    private lateinit var mcontext: Context
+    private lateinit var senderTo: String
 
     var customView: View? = null
     private val idRegex = Regex(
@@ -44,7 +44,7 @@ class StoreSignUp1 : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_register1)
+        setContentView(R.layout.activity_signup1)
         mcontext = this.applicationContext
         addTextChangeListener()
         checkEmailButton.setOnClickListener {
@@ -137,7 +137,7 @@ class StoreSignUp1 : AppCompatActivity() {
             .create()
 
         // 카운트 다운 시작
-        countDown(conversionTime,emailCheckTimer,alertDialog)
+        countDown(conversionTime, emailCheckTimer, alertDialog)
 
         checkEmailButton2.setOnClickListener {
             if (idCheckEditText.text.toString() == emailCode) {

@@ -3,7 +3,8 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@drawable/bg_dialog_radius">
 
 
     <TextView
@@ -47,7 +48,5 @@
             android:textSize="25dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="40dp"/>
-
-
 
 </LinearLayout>

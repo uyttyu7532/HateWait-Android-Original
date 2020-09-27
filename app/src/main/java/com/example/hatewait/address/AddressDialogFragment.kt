@@ -33,10 +33,10 @@ class AddressDialogFragment : DialogFragment() {
     var customView: View? = null
     private lateinit var addressDialogListener: AddressDialogListener
     lateinit var webView: WebView
-    lateinit var result: TextView
-    private val closeButton: Button by lazy {
-        customView?.findViewById<Button>(R.id.closeButton)!!
-    }
+//    lateinit var result: TextView
+//    private val closeButton: Button by lazy {
+//        customView?.findViewById<Button>(R.id.closeButton)!!
+//    }
 
 
 
@@ -51,7 +51,7 @@ class AddressDialogFragment : DialogFragment() {
             val builder = AlertDialog.Builder(it)
             val inflater = requireActivity().layoutInflater
             customView = inflater.inflate(R.layout.activity_address, null)
-            result = customView?.findViewById<TextView>(R.id.result)!!
+//            result = customView?.findViewById<TextView>(R.id.result)!!
             builder.setView(customView)
 
             mDialog = builder.create()
@@ -84,9 +84,9 @@ class AddressDialogFragment : DialogFragment() {
 
         initWebView()
 
-        closeButton.setOnClickListener{
-            addressDialogListener.dismissDialog(this@AddressDialogFragment)
-        }
+//        closeButton.setOnClickListener{
+//            addressDialogListener.dismissDialog(this@AddressDialogFragment)
+//        }
     }
 
     override fun onDestroyView() {
@@ -144,14 +144,14 @@ class AddressDialogFragment : DialogFragment() {
 
     }
 
-    var test: String
-        get() {
-            TODO()
-        }
-        set(value){
-            result.text = value
-            addressDialog.dismiss()
-        }
+//    var test: String
+//        get() {
+//            TODO()
+//        }
+//        set(value){
+//            result.text = value
+//            addressDialog.dismiss()
+//        }
 
     fun aa(){
         addressDialog.dismiss()
@@ -162,9 +162,7 @@ class AddressDialogFragment : DialogFragment() {
     private inner class AndroidBridge {
         @JavascriptInterface
         fun setAddress(arg1: String, arg2: String, arg3: String) {
-            // WebView를 초기화 하지않으면 재사용할 수 없음
-            test = String.format("(%s) %s %s", arg1, arg2, arg3)
-            //result.text = String.format("(%s) %s %s", arg1, arg2, arg3)
+            mDialog.dismiss()
 
             val storesignup3 = activity as StoreSignUp3
             storesignup3.doroname.text = String.format("(%s) %s %s", arg1, arg2, arg3)

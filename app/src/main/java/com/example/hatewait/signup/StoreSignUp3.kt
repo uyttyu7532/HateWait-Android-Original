@@ -7,12 +7,12 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
-import android.view.ViewGroup
-import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hatewait.R
 import com.example.hatewait.address.AddressDialogFragment
 import kotlinx.android.synthetic.main.activity_store_signup3.*
+import org.w3c.dom.Text
 
 // 1단계 이메일 , 인증번호 (네아로면 생략)
 // 2단계 비번, 비번확인
@@ -21,6 +21,7 @@ import kotlinx.android.synthetic.main.activity_store_signup3.*
 // 가입완료 환영 메시지 액티비티 or 로그인바로됨
 
 private lateinit var mContext: Context
+lateinit var kakaoAddressText: TextView
 
 class StoreSignUp3 : AppCompatActivity() {
 
@@ -38,6 +39,7 @@ class StoreSignUp3 : AppCompatActivity() {
         setSupportActionBar(register_toolbar2)
         mContext = this.applicationContext
 
+        kakaoAddressText = findViewById(R.id.doroname)
 
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
@@ -174,9 +176,5 @@ class StoreSignUp3 : AppCompatActivity() {
 
     }
 
-    fun showAddressDialog() {
-        val AddressFragment = AddressDialogFragment()
-        AddressFragment.show(supportFragmentManager, "SELECT_ADDRESS")
-    }
 
 }

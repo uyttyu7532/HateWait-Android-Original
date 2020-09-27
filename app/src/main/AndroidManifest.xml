@@ -27,7 +27,8 @@
         <activity android:name=".signup.StoreSignUp1" />
         <activity android:name=".signup.StoreSignUp2" />
         <activity
-                android:name=".signup.StoreSignUp3">
+                android:name=".signup.StoreSignUp3"
+                android:windowSoftInputMode="stateVisible">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

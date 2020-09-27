@@ -4,6 +4,7 @@ package com.example.hatewait.address
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context.INPUT_METHOD_SERVICE
+import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -19,10 +20,13 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
 import com.example.hatewait.R
+import com.example.hatewait.signup.kakaoAddressText
+import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_address.*
-import kotlinx.android.synthetic.main.activity_store_signup3.*
 
+lateinit var mDialog: Dialog
 
 class AddressDialogFragment : DialogFragment() {
     private val mHandler: Handler = Handler()
@@ -30,9 +34,7 @@ class AddressDialogFragment : DialogFragment() {
 
     lateinit var webView: WebView
 
-    private val result: TextView by lazy {
-        customView?.findViewById<TextView>(R.id.result)!!
-    }
+    lateinit var result: TextView
 
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -41,11 +43,13 @@ class AddressDialogFragment : DialogFragment() {
             val builder = AlertDialog.Builder(it)
             val inflater = requireActivity().layoutInflater
             customView = inflater.inflate(R.layout.activity_address, null)
+            result = customView?.findViewById<TextView>(R.id.result)!!
             builder.setView(customView)
-            val dialog = builder.create()
-            dialog
+            mDialog = builder.create()
+            mDialog
         } ?: throw IllegalStateException("Activity Can't be null")
     }
+
 
 
     override fun onCreateView(
@@ -53,7 +57,6 @@ class AddressDialogFragment : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         return customView
     }
 
@@ -76,7 +79,6 @@ class AddressDialogFragment : DialogFragment() {
     private fun initWebView() {
 
         webView = view!!.findViewById(R.id.webView)
-
         webView.settings.javaScriptEnabled = true
         webView.settings.javaScriptCanOpenWindowsAutomatically = true
         webView.settings.setSupportMultipleWindows(true)
@@ -87,13 +89,12 @@ class AddressDialogFragment : DialogFragment() {
         webView.settings.useWideViewPort = true // meta tag
 
 
+        // onTouch --> onClick --> onLongClick까지 전달하고 싶다면 false 반환
         webView.setOnTouchListener { v, event ->
-
             when (event.action) {
                 MotionEvent.ACTION_DOWN, MotionEvent.ACTION_UP -> if (!v.hasFocus()) {
-
                     mHandler.post {
-                        val inputMethodManager =
+                        var inputMethodManager =
                             context!!.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager?
                         inputMethodManager!!.toggleSoftInputFromWindow(
                             edit.applicationWindowToken,
@@ -124,12 +125,35 @@ class AddressDialogFragment : DialogFragment() {
     private inner class AndroidBridge {
         @JavascriptInterface
         fun setAddress(arg1: String, arg2: String, arg3: String) {
-            result.text = String.format("(%s) %s %s", arg1, arg2, arg3)
-            store_address_input_text.text = String.format("(%s) %s %s", arg1, arg2, arg3)
             // WebView를 초기화 하지않으면 재사용할 수 없음
+            result.text = String.format("(%s) %s %s", arg1, arg2, arg3)
+            kakaoAddressText.text = String.format("(%s) %s %s", arg1, arg2, arg3)
+
+
+            // TODO 주소 선택하면 다이얼로그 닫히면 좋겠음 or 클릭 여러번 가능하든지
+//            dismiss()
+//            mDialog.dismiss()
+//            onDismiss(mDialog)
+//            onDestroyView()
+//            onDestroy()
+//            onDetach()
+//            dismissAllowingStateLoss()
+//            (fragmentManager!!.findFragmentByTag("SELECT_ADDRESS") as? DialogFragment)?.dismiss()
+//            this@AddressDialogFragment.dismissAllowingStateLoss()
+//            getInstance().dismiss()
+//            dialog!!.dismiss()
+
             initWebView()
+        }
+
+        @JavascriptInterface
+        fun dialogDismiss(){
 
         }
+
     }
+
+
 }
+
 

@@ -11,6 +11,7 @@ import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.DialogFragment
 import com.example.hatewait.R
 import com.example.hatewait.address.AddressDialogFragment
 import kotlinx.android.synthetic.main.activity_store_signup3.*
@@ -22,7 +23,6 @@ import kotlinx.android.synthetic.main.activity_store_signup3.*
 // 가입완료 환영 메시지 액티비티 or 로그인바로됨
 
 private lateinit var mContext: Context
-lateinit var kakaoAddressText: TextView
 lateinit var addressDialog: AddressDialogFragment
 
 class StoreSignUp3 : AppCompatActivity(), AddressDialogFragment.AddressDialogListener {
@@ -41,7 +41,6 @@ class StoreSignUp3 : AppCompatActivity(), AddressDialogFragment.AddressDialogLis
         setSupportActionBar(register_toolbar2)
         mContext = this.applicationContext
 
-        kakaoAddressText = findViewById(R.id.doroname)
 
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
@@ -73,6 +72,7 @@ class StoreSignUp3 : AppCompatActivity(), AddressDialogFragment.AddressDialogLis
                 )
 
             }
+
         }
     }
 
@@ -179,7 +179,7 @@ class StoreSignUp3 : AppCompatActivity(), AddressDialogFragment.AddressDialogLis
 
     }
 
-    override fun dismissDialog(dialog: Dialog) {
+    override fun dismissDialog(dialog: DialogFragment) {
         Toast.makeText(mContext, "다이얼로그 닫고싶어요", Toast.LENGTH_SHORT).show()
         dialog.dismiss()
     }

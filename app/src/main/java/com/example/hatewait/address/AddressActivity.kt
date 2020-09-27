@@ -17,7 +17,7 @@ class AddressActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_address)
 
-        result = findViewById(R.id.result)
+//        result = findViewById(R.id.result)
 
         // WebView 초기화
         initWebView()

@@ -1,6 +1,5 @@
 package com.example.hatewait.address
 
-
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
@@ -16,14 +15,16 @@ import android.view.inputmethod.InputMethodManager
 import android.webkit.JavascriptInterface
 import android.webkit.WebChromeClient
 import android.webkit.WebView
+import android.widget.Button
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.example.hatewait.R
 import com.example.hatewait.signup.StoreSignUp3
-import com.example.hatewait.signup.kakaoAddressText
+import com.example.hatewait.signup.addressDialog
 import kotlinx.android.synthetic.main.activity_address.*
+import kotlinx.android.synthetic.main.activity_store_signup3.*
 
 lateinit var mDialog: Dialog
 
@@ -32,12 +33,16 @@ class AddressDialogFragment : DialogFragment() {
     var customView: View? = null
     private lateinit var addressDialogListener: AddressDialogListener
     lateinit var webView: WebView
-
     lateinit var result: TextView
+    private val closeButton: Button by lazy {
+        customView?.findViewById<Button>(R.id.closeButton)!!
+    }
+
+
 
 
     interface AddressDialogListener {
-        fun dismissDialog(dialog: Dialog)
+        fun dismissDialog(dialog: DialogFragment)
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -48,6 +53,7 @@ class AddressDialogFragment : DialogFragment() {
             customView = inflater.inflate(R.layout.activity_address, null)
             result = customView?.findViewById<TextView>(R.id.result)!!
             builder.setView(customView)
+
             mDialog = builder.create()
             mDialog
         } ?: throw IllegalStateException("Activity Can't be null")
@@ -55,6 +61,7 @@ class AddressDialogFragment : DialogFragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+
         try {
             addressDialogListener = context as AddressDialogListener
         } catch (e: ClassCastException) {
@@ -67,13 +74,19 @@ class AddressDialogFragment : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         return customView
     }
 
     //onCreateView에서 넘겨준 customView를 넘겨받음.
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         initWebView()
+
+        closeButton.setOnClickListener{
+            addressDialogListener.dismissDialog(this@AddressDialogFragment)
+        }
     }
 
     override fun onDestroyView() {
@@ -131,35 +144,52 @@ class AddressDialogFragment : DialogFragment() {
 
     }
 
+    var test: String
+        get() {
+            TODO()
+        }
+        set(value){
+            result.text = value
+            addressDialog.dismiss()
+        }
+
+    fun aa(){
+        addressDialog.dismiss()
+    }
+
+
 
     private inner class AndroidBridge {
         @JavascriptInterface
         fun setAddress(arg1: String, arg2: String, arg3: String) {
             // WebView를 초기화 하지않으면 재사용할 수 없음
-            result.text = String.format("(%s) %s %s", arg1, arg2, arg3)
-            kakaoAddressText.text = String.format("(%s) %s %s", arg1, arg2, arg3)
+            test = String.format("(%s) %s %s", arg1, arg2, arg3)
+            //result.text = String.format("(%s) %s %s", arg1, arg2, arg3)
+
+            val storesignup3 = activity as StoreSignUp3
+            storesignup3.doroname.text = String.format("(%s) %s %s", arg1, arg2, arg3)
 
 
             // TODO 주소 선택하면 다이얼로그 닫히면 좋겠음 or 클릭 여러번 가능하든지
-            dismiss()
-            mDialog.dismiss()
-            onDismiss(mDialog)
-            onDestroyView()
-            onDestroy()
-            onDetach()
-            dismissAllowingStateLoss()
-            (fragmentManager!!.findFragmentByTag("SELECT_ADDRESS") as? DialogFragment)?.dismiss()
-            this@AddressDialogFragment.dismissAllowingStateLoss()
-            getInstance().dismiss()
-            dialog!!.dismiss()
+//            dismiss()
+//            mDialog.dismiss()
+//            onDismiss(mDialog)
+//            onDestroyView()
+//            onDestroy()
+//            onDetach()
+//            dismissAllowingStateLoss()
+//            (fragmentManager!!.findFragmentByTag("SELECT_ADDRESS") as? DialogFragment)?.dismiss()
+//            this@AddressDialogFragment.dismissAllowingStateLoss()
+//            getInstance().dismiss()
+//            dialog!!.dismiss()
 
 
             initWebView()
         }
 
         @JavascriptInterface
-        fun dismissdialogFragment(){
-            (activity as StoreSignUp3).dismissDialog(mDialog)
+        fun dismissDialogFragment(){
+            //addressDialogListener.dismissDialog(dialog = this@AddressDialogFragment)
         }
 
     }

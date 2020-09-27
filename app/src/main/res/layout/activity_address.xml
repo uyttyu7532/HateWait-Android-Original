@@ -16,11 +16,7 @@
             android:gravity="center"
             android:text="Result" />
 
-    <Button
-            android:id="@+id/closeplease"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="다이얼르그 닫기"></Button>
+
 
     <WebView
             android:id="@+id/webView"

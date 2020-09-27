@@ -1,5 +1,6 @@
 package com.example.hatewait.signup
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -8,11 +9,11 @@ import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hatewait.R
 import com.example.hatewait.address.AddressDialogFragment
 import kotlinx.android.synthetic.main.activity_store_signup3.*
-import org.w3c.dom.Text
 
 // 1단계 이메일 , 인증번호 (네아로면 생략)
 // 2단계 비번, 비번확인
@@ -22,8 +23,9 @@ import org.w3c.dom.Text
 
 private lateinit var mContext: Context
 lateinit var kakaoAddressText: TextView
+lateinit var addressDialog: AddressDialogFragment
 
-class StoreSignUp3 : AppCompatActivity() {
+class StoreSignUp3 : AppCompatActivity(), AddressDialogFragment.AddressDialogListener {
 
 
     private val storeNameRegex = Regex("^(?=.*[a-zA-Z가-힣0-9])[a-zA-Z가-힣0-9|\\s|,]{1,}$")
@@ -62,13 +64,14 @@ class StoreSignUp3 : AppCompatActivity() {
 
         address_start.setOnClickListener {
             val bundle = Bundle()
-            val dialog: AddressDialogFragment = AddressDialogFragment().getInstance()
-            dialog.arguments = bundle
+            addressDialog = AddressDialogFragment().getInstance()
+            addressDialog.arguments = bundle
             supportFragmentManager?.let { fragmentManager ->
-                dialog.show(
+                addressDialog.show(
                     fragmentManager,
                     "SELECT_ADDRESS"
                 )
+
             }
         }
     }
@@ -176,5 +179,10 @@ class StoreSignUp3 : AppCompatActivity() {
 
     }
 
+    override fun dismissDialog(dialog: Dialog) {
+        Toast.makeText(mContext, "다이얼로그 닫고싶어요", Toast.LENGTH_SHORT).show()
+        dialog.dismiss()
+    }
 
 }
+

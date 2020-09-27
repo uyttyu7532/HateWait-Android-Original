@@ -1,5 +1,6 @@
 package com.example.hatewait.register
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.os.Build
@@ -50,6 +51,7 @@ class NameCheckDialogFragment : DialogFragment() {
 //           if builder fails to create Activity ->  Elvis Operator null check
         } ?: throw IllegalStateException("Activity Can't be null")
     }
+
 
     override fun onResume() {
         val width = resources.getDimensionPixelSize(R.dimen.dialog_fragment_width)

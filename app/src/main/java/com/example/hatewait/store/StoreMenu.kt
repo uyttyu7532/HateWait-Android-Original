@@ -16,7 +16,7 @@ import org.jetbrains.anko.startActivity
 
 lateinit var storeNameView: TextView
 lateinit var storeWaitingNum: TextView
-lateinit var storeMarquee: TextView
+//lateinit var storeMarquee: TextView
 lateinit var storeContext: Context
 
 class StoreMenu : AppCompatActivity() {
@@ -36,9 +36,9 @@ class StoreMenu : AppCompatActivity() {
         storeWaitingNum = findViewById<TextView>(
             R.id.store_waiting_num
         )
-        storeMarquee = findViewById<TextView>(
-            R.id.store_marquee
-        )
+//        storeMarquee = findViewById<TextView>(
+//            R.id.store_marquee
+//        )
         // 임시 로그인 이후 ID와 이름만 받아옴.
         val storeReference =
             getSharedPreferences(resources.getString(R.string.store_mode), Context.MODE_PRIVATE)
@@ -65,6 +65,10 @@ class StoreMenu : AppCompatActivity() {
 
         store_info_update_button2.setOnClickListener {
             startActivity<StoreInfoUpdate>()
+        }
+
+        customer_list_button2.setOnClickListener{
+            startActivity<CustomerListActivity>()
         }
     }
 

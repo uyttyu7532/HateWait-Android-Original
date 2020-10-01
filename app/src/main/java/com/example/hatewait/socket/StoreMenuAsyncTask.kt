@@ -2,7 +2,6 @@ package com.example.hatewait.socket
 
 import android.os.AsyncTask
 import android.util.Log
-import com.example.hatewait.store.storeMarquee
 import com.example.hatewait.store.storeNameView
 import com.example.hatewait.store.storeWaitingNum
 import java.io.BufferedReader
@@ -66,14 +65,14 @@ class StoreMenuAsyncTask : AsyncTask<Unit, Unit, Array<String>?>() {
                 STORENAME = result?.get(2)
                 storeNameView.text = result?.get(2)
                 storeWaitingNum.text = result?.get(3)
-                storeMarquee.text = String.format(
-                    "다음 순서 : %s 외 %d명 입니다. 호출 버튼을 눌러 다음 대기자에게 알림을 보내주세요. 다음 순서 : %s 외 %d명 입니다. 호출 버튼을 눌러 다음 대기자에게 알림을 보내주세요",
-                    result?.get(4),
-                    result?.get(5)?.toInt(),
-                    result?.get(4),
-                    result?.get(5)?.toInt()
-                )
-                storeMarquee.isSelected = true // 마키 텍스트에 포커스
+//                storeMarquee.text = String.format(
+//                    "다음 순서 : %s 외 %d명 입니다. 호출 버튼을 눌러 다음 대기자에게 알림을 보내주세요. 다음 순서 : %s 외 %d명 입니다. 호출 버튼을 눌러 다음 대기자에게 알림을 보내주세요",
+//                    result?.get(4),
+//                    result?.get(5)?.toInt(),
+//                    result?.get(4),
+//                    result?.get(5)?.toInt()
+//                )
+//                storeMarquee.isSelected = true // 마키 텍스트에 포커스
             } catch (e: Exception) {
                 e.printStackTrace()
                 Log.i("로그", " storeMenuAsyncTask-onPostExecute:: ${e}")
@@ -81,8 +80,8 @@ class StoreMenuAsyncTask : AsyncTask<Unit, Unit, Array<String>?>() {
         } else {
             storeNameView.text = STORENAME
             storeWaitingNum.text = "0"
-            storeMarquee.text = "서버 연결을 확인해주세요."
-            storeMarquee.isSelected = true // 마키 텍스트에 포커스
+//            storeMarquee.text = "서버 연결을 확인해주세요."
+//            storeMarquee.isSelected = true // 마키 텍스트에 포커스
         }
     }
 }

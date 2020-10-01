@@ -14,13 +14,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-                android:id="@+id/store_logo"
-                android:layout_width="65dp"
-                android:layout_height="65dp"
-                android:src="@drawable/restaurant_ex"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+<!--        <ImageView-->
+<!--                android:id="@+id/store_logo"-->
+<!--                android:layout_width="65dp"-->
+<!--                android:layout_height="65dp"-->
+<!--                android:src="@drawable/restaurant_ex"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"/>-->
         <TextView
                 android:id="@+id/store_name"
                 android:layout_width="wrap_content"
@@ -295,12 +295,12 @@
                     android:textColor="#ffffff"
                     android:text="메뉴 정보"/>
             </androidx.cardview.widget.CardView>
-            <ImageView
-                    android:layout_marginTop="@dimen/store_input_margin_top"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/startbucks_menu"/>
+<!--            <ImageView-->
+<!--                    android:layout_marginTop="@dimen/store_input_margin_top"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:adjustViewBounds="true"-->
+<!--                    android:src="@drawable/startbucks_menu"/>-->
 
         </LinearLayout>
 

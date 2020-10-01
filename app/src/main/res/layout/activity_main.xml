@@ -33,7 +33,7 @@
 
         <com.addisonelliott.segmentedbutton.SegmentedButton
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="60dp"
                 android:layout_weight="1"
                 app:textStyle="bold"
                 app:drawableGravity="left"
@@ -45,7 +45,7 @@
 
         <com.addisonelliott.segmentedbutton.SegmentedButton
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="60dp"
                 android:layout_weight="1"
                 android:padding="5dp"
                 app:drawableGravity="left"
@@ -62,9 +62,9 @@
     <ImageView
             android:id="@+id/idView"
             android:layout_width="match_parent"
-            android:layout_height="85dp"
+            android:layout_height="100dp"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="40dp"
             android:src="@drawable/main_logo" />
 
     <com.google.android.material.textfield.TextInputLayout

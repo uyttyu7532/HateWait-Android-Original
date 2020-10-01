@@ -8,6 +8,8 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
+import android.view.MotionEvent
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -61,7 +63,8 @@ class StoreSignUp3 : AppCompatActivity(), AddressDialogFragment.AddressDialogLis
             startActivity(intent)
         }
 
-        address_start.setOnClickListener {
+
+        store_address_input_editText.setOnClickListener {
             val bundle = Bundle()
             addressDialog = AddressDialogFragment().getInstance()
             addressDialog.arguments = bundle
@@ -72,7 +75,6 @@ class StoreSignUp3 : AppCompatActivity(), AddressDialogFragment.AddressDialogLis
                 )
 
             }
-
         }
     }
 

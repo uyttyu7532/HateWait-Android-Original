@@ -18,23 +18,12 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true">
-        <activity
-                android:name=".address.AddressActivity"
-                android:theme="@style/Theme.AppCompat" />
         <activity android:name=".signup.ChangePasswordActivity" />
         <activity android:name=".signup.FindPassWordActivity" />
         <activity android:name=".map.KakaoMapActivity" />
         <activity android:name=".signup.StoreSignUp1" />
         <activity android:name=".signup.StoreSignUp2" />
-        <activity
-                android:name=".signup.StoreSignUp3"
-                android:windowSoftInputMode="stateHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".signup.StoreSignUp3" />
         <activity android:name=".signup.StoreSignUp4" />
         <activity android:name=".signup.CustomerSignUp1" />
         <activity android:name=".signup.CustomerSignUp2" />
@@ -82,7 +71,11 @@
                 android:screenOrientation="portrait"
                 android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
                 tools:ignore="LockedOrientationActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

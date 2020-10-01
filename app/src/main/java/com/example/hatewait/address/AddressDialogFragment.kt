@@ -21,10 +21,12 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.example.hatewait.R
+import com.example.hatewait.R.string.common_signin_button_text
 import com.example.hatewait.signup.StoreSignUp3
 import com.example.hatewait.signup.addressDialog
 import kotlinx.android.synthetic.main.activity_address.*
 import kotlinx.android.synthetic.main.activity_store_signup3.*
+import kotlin.text.format as format
 
 lateinit var mDialog: Dialog
 
@@ -33,12 +35,6 @@ class AddressDialogFragment : DialogFragment() {
     var customView: View? = null
     private lateinit var addressDialogListener: AddressDialogListener
     lateinit var webView: WebView
-//    lateinit var result: TextView
-//    private val closeButton: Button by lazy {
-//        customView?.findViewById<Button>(R.id.closeButton)!!
-//    }
-
-
 
 
     interface AddressDialogListener {
@@ -144,20 +140,6 @@ class AddressDialogFragment : DialogFragment() {
 
     }
 
-//    var test: String
-//        get() {
-//            TODO()
-//        }
-//        set(value){
-//            result.text = value
-//            addressDialog.dismiss()
-//        }
-
-    fun aa(){
-        addressDialog.dismiss()
-    }
-
-
 
     private inner class AndroidBridge {
         @JavascriptInterface
@@ -165,28 +147,13 @@ class AddressDialogFragment : DialogFragment() {
             mDialog.dismiss()
 
             val storesignup3 = activity as StoreSignUp3
-            storesignup3.doroname.text = String.format("(%s) %s %s", arg1, arg2, arg3)
-
-
-            // TODO 주소 선택하면 다이얼로그 닫히면 좋겠음 or 클릭 여러번 가능하든지
-//            dismiss()
-//            mDialog.dismiss()
-//            onDismiss(mDialog)
-//            onDestroyView()
-//            onDestroy()
-//            onDetach()
-//            dismissAllowingStateLoss()
-//            (fragmentManager!!.findFragmentByTag("SELECT_ADDRESS") as? DialogFragment)?.dismiss()
-//            this@AddressDialogFragment.dismissAllowingStateLoss()
-//            getInstance().dismiss()
-//            dialog!!.dismiss()
-
+            storesignup3.store_address_input_editText.setText(String.format("(%s) %s %s", arg1, arg2, arg3))
 
             initWebView()
         }
 
         @JavascriptInterface
-        fun dismissDialogFragment(){
+        fun dismissDialogFragment() {
             //addressDialogListener.dismissDialog(dialog = this@AddressDialogFragment)
         }
 

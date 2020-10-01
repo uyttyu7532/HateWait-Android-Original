@@ -38,14 +38,6 @@
             android:progressTint="@color/colorAccent" />
 
 
-
-    <TextView
-            android:text="도로명주소"
-            android:id="@+id/doroname"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="40sp" />
-
     <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/store_name_input_layout"
             style="@style/marginHorizontal"
@@ -84,36 +76,39 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!--    <com.google.android.material.textfield.TextInputLayout-->
-    <!--            android:id="@+id/store_address_input_layout"-->
+    <!--    <TextView-->
+    <!--            android:text="도로명주소"-->
+    <!--            android:id="@+id/doroname"-->
+    <!--            android:layout_marginHorizontal="30dp"-->
     <!--            android:layout_width="match_parent"-->
     <!--            android:layout_height="wrap_content"-->
-    <!--            style="@style/marginHorizontal"-->
     <!--            android:layout_marginTop="8dp"-->
-    <!--            app:endIconMode="clear_text">-->
+    <!--            android:textSize="20sp" />-->
 
-    <!--        <com.google.android.material.textfield.TextInputEditText-->
-    <!--                android:id="@+id/store_address_input_editText"-->
-    <!--                android:layout_width="match_parent"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:hint="가게 도로명 주소를 입력해주세요"-->
-    <!--                android:inputType="text"-->
-    <!--                android:selectAllOnFocus="true" />-->
-
-    <!--    </com.google.android.material.textfield.TextInputLayout>-->
-
-
-
-    <Button
-            android:id="@+id/address_start"
-            style="@style/Widget.AppCompat.Button.Colored"
+    <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/store_address_input_layout"
+            style="@style/marginHorizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="15dp"
-            android:text="도로명주소테스트"
-            android:textColor="@color/white"
-            android:textSize="25dp" />
+            android:layout_marginTop="8dp"
+            android:enabled="true"
+            android:clickable="true"
+            android:focusable="false"
+            app:endIconMode="clear_text">
+
+        <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/store_address_input_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="false"
+                android:focusableInTouchMode="true"
+                android:hint="가게 도로명 주소를 입력해주세요"
+                android:inputType="none"
+                android:selectAllOnFocus="true" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <Button
             android:id="@+id/button_continue"

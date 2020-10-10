@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hatewait.R
 import java.util.*
@@ -54,9 +55,9 @@ class VisitorRecyclerViewAdapter(
 //        holder.meaningView.text = words.getValue(itemsFilterList[position])
 
 //        if (mSelectedItems.get(position, false)) {
-//            holder.meaningView.visibility =VISIBLE
+//            holder.visitorListDetailView.visibility =VISIBLE
 //        } else {
-//            holder.meaningView.visibility = GONE
+//            holder.visitorListDetailView.visibility = GONE
 //        }
 
     }
@@ -64,7 +65,8 @@ class VisitorRecyclerViewAdapter(
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val visitorNameView: TextView = itemView.findViewById(R.id.visitor_name_view)
-//        val meaningView: TextView = itemView.findViewById(R.id.meaningView)
+        val visitorListDetailView: CardView = itemView.findViewById(R.id.visitor_list_detail_view)
+
 
 
         init {
@@ -76,15 +78,15 @@ class VisitorRecyclerViewAdapter(
 //                meaningView.visibility = GONE
 //            }
 
-//            itemView.setOnClickListener {
+            itemView.setOnClickListener {
 //                if (mSelectedItems.get(adapterPosition, false)) {
 //                    mSelectedItems.put(adapterPosition, false)
 //                }
 //                else{
 //                    mSelectedItems.put(adapterPosition, true)
 //                }
-//                itemClickListener?.onItemClick(this, it, items[adapterPosition], adapterPosition)
-//            }
+                itemClickListener?.onItemClick(this, it, items[adapterPosition], adapterPosition)
+            }
 
 
 

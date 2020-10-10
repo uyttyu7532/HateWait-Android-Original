@@ -128,6 +128,11 @@ class VisitorListFragment : Fragment() {
         visitorList.add("조예린4")
         visitorList.add("조예린5")
         visitorList.add("조예린6")
+        visitorList.add("조예린7")
+        visitorList.add("조예린8")
+        visitorList.add("조예린9")
+        visitorList.add("조예린10")
+        visitorList.add("조예린11")
 
 
 
@@ -182,16 +187,12 @@ class VisitorListFragment : Fragment() {
                 data: String,
                 position: Int
             ) {
-                if (isTtsReady) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        tts.speak(data, TextToSpeech.QUEUE_FLUSH, null, null)
-                    }
+
+                if (holder.visitorListDetailView.visibility == View.GONE) {
+                    holder.visitorListDetailView.visibility = View.VISIBLE
+                } else {
+                    holder.visitorListDetailView.visibility = View.GONE
                 }
-//                if (holder.meaningView.visibility == View.GONE) {
-//                    holder.meaningView.visibility = View.VISIBLE
-//                } else {
-//                    holder.meaningView.visibility = View.GONE
-//                }
             }
         }
         visitorRecyclerView.adapter = adapter

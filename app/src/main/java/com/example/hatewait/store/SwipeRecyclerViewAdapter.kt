@@ -61,9 +61,9 @@ class SwipeRecyclerViewAdapter(
 
     inner class SimpleViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
-        val swipeLayout = itemView.findViewById(R.id.swipeLayout) as SwipeLayout
+        val waitingListSwipeLayout = itemView.findViewById(R.id.waiting_list_swipe_layout) as SwipeLayout
         val waitingListCardView= itemView.findViewById(R.id.waiting_list_card_View) as CardView
-        val waitingListDetailView = itemView.findViewById(R.id.detailView) as CardView
+        val waitingListDetailView = itemView.findViewById(R.id.waiting_list_detail_view) as CardView
         val waitingNameTextView = itemView.findViewById(R.id.waiting_name_text_view) as TextView
         val waitingNumTextView = itemView.findViewById(R.id.waiting_num_text_view) as TextView
         val waitingPhoneTextView = itemView.findViewById(R.id.waiting_phone_text_view) as TextView
@@ -149,19 +149,19 @@ class SwipeRecyclerViewAdapter(
 //        viewHolder.detailView2.text =
 //            "최근에 알림 보낸시간: 2020-00-00-00:00:00"
 
-        viewHolder.swipeLayout.showMode = SwipeLayout.ShowMode.PullOut
+        viewHolder.waitingListSwipeLayout.showMode = SwipeLayout.ShowMode.PullOut
         // Drag From Left
 //        viewHolder.swipeLayout.addDrag(
 //            SwipeLayout.DragEdge.Left,
 //            viewHolder.swipeLayout.findViewById(R.id.bottom_wrapper_left)
 //        )
         // Drag From Right
-        viewHolder.swipeLayout.addDrag(
+        viewHolder.waitingListSwipeLayout.addDrag(
             SwipeLayout.DragEdge.Right,
-            viewHolder.swipeLayout.findViewById(R.id.bottom_wrapper_right)
+            viewHolder.waitingListSwipeLayout.findViewById(R.id.bottom_wrapper_right)
         )
         // Handling different events when swiping
-        viewHolder.swipeLayout.addSwipeListener(object : SwipeLayout.SwipeListener {
+        viewHolder.waitingListSwipeLayout.addSwipeListener(object : SwipeLayout.SwipeListener {
             override fun onClose(layout: SwipeLayout) { //when the SurfaceView totally cover the BottomView.
             }
 
@@ -216,7 +216,7 @@ class SwipeRecyclerViewAdapter(
                     DelCustomerAsyncTask().execute(items[position].id)
 
 
-                    mItemManger.removeShownLayouts(viewHolder.swipeLayout)
+                    mItemManger.removeShownLayouts(viewHolder.waitingListSwipeLayout)
                     items.removeAt(position)
                     notifyItemRemoved(position)
                     notifyItemRangeChanged(position, items.size)
@@ -255,7 +255,7 @@ class SwipeRecyclerViewAdapter(
 
 
     override fun getSwipeLayoutResourceId(position: Int): Int {
-        return R.id.swipeLayout
+        return R.id.waiting_list_swipe_layout
     }
 }
 

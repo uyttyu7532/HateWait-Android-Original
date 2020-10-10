@@ -82,11 +82,11 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-            android:id="@+id/detailView"
+            android:id="@+id/visitor_list_detail_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#EFEFEF"
-            android:visibility="visible">
+            android:visibility="gone">
 
         <LinearLayout
                 android:layout_width="wrap_content"

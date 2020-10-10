@@ -11,7 +11,7 @@ import android.text.TextWatcher
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hatewait.R
-import com.example.hatewait.client.CustomerMenu
+import com.example.hatewait.customer.CustomerMenu
 import com.example.hatewait.signup.CustomerSignUp1
 import com.example.hatewait.signup.FindPassWordActivity
 import com.example.hatewait.signup.StoreSignUp1

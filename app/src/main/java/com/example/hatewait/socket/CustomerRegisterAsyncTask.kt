@@ -2,7 +2,7 @@ package com.example.hatewait.socket
 
 import android.content.Context
 import android.os.AsyncTask
-import com.example.hatewait.client.CustomerMenu
+import com.example.hatewait.customer.CustomerMenu
 import com.example.hatewait.signup.CustomerSignUp3
 import com.example.hatewait.R
 import org.jetbrains.anko.startActivity

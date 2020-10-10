@@ -18,7 +18,11 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true">
-        <activity android:name=".store.VisitorListActivity"></activity>
+        <activity
+                android:name=".customer.ManageStampCouponActivity"
+                android:label="@string/title_activity_manage_stamp_coupon"
+                android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".store.VisitorListActivity" />
         <activity android:name=".store.ClientList" />
         <activity android:name=".customerinfo.SettingPassword2" />
         <activity android:name=".customerinfo.SettingPassword" />
@@ -65,7 +69,7 @@
                 android:name=".storeinfo.StoreNameChangeDialog"
                 tools:ignore="Instantiatable" />
         <activity android:name=".storeinfo.StoreInfoUpdate" />
-        <activity android:name=".client.CustomerMenu" />
+        <activity android:name=".customer.CustomerMenu" />
         <activity android:name=".store.StoreMenu" />
         <activity android:name=".login.LoginRegisterViewPagerActivity" />
         <activity android:name=".register.RegisterCheck" />

@@ -1,4 +1,4 @@
-package com.example.hatewait.client
+package com.example.hatewait.customer
 
 
 import android.content.Context
@@ -64,6 +64,10 @@ class CustomerMenu : AppCompatActivity() {
 
 
     fun init() {
+
+        myCoupon.setOnClickListener{
+            startActivity<ManageStampCouponActivity>()
+        }
 
         editcustomerinfo.setOnClickListener{
             startActivity<CustomerInfoUpdate>()

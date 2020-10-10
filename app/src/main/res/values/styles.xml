@@ -38,9 +38,8 @@
         <!--Display textSize-->
         <item name="android:textSize">50sp</item>
         <!--Display textColor-->
-<!--        <item name="android:editTextColor">@color/colorTime</item>-->
+        <!--        <item name="android:editTextColor">@color/colorTime</item>-->
     </style>
-
 
 
 </resources>

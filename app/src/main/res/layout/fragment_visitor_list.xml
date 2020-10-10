@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+        <!--        <TextView-->
+        <!--                android:id="@+id/sortByRecent"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_below="@+id/title"-->
+        <!--                android:layout_alignParentStart="true"-->
+        <!--                android:layout_margin="5dp"-->
+        <!--                android:clickable="true"-->
+        <!--                android:text="기본순"-->
+        <!--                android:textColor="#000000" />-->
+
+        <!--        <TextView-->
+        <!--                android:id="@+id/sortByABC"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_below="@+id/title"-->
+        <!--                android:layout_margin="5dp"-->
+        <!--                android:layout_toRightOf="@+id/sortByRecent"-->
+        <!--                android:clickable="true"-->
+        <!--                android:text="abc순" />-->
+
+        <!--        <Switch-->
+        <!--                android:id="@+id/meaningSwitch"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_below="@+id/title"-->
+        <!--                android:layout_alignParentRight="true" />-->
+
+
+        <SearchView
+                android:id="@+id/searchView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/visitor_list_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/searchView" />
+
+        <xyz.danoz.recyclerviewfastscroller.vertical.VerticalRecyclerViewFastScroller
+                android:id="@+id/visitor_list_fast_scroller"
+                android:layout_width="15dp"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/searchView"
+                android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+
+
+</FrameLayout>

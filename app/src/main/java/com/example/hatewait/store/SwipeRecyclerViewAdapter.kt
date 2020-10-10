@@ -24,7 +24,7 @@ import com.example.hatewait.model.ClientData
 import com.example.hatewait.model.setShared
 import com.example.hatewait.socket.*
 import es.dmoral.toasty.Toasty
-import kotlinx.android.synthetic.main.row.view.*
+import kotlinx.android.synthetic.main.waiting_list_row.view.*
 import org.jetbrains.anko.backgroundColorResource
 import java.util.*
 
@@ -50,7 +50,7 @@ class SwipeRecyclerViewAdapter(
         viewType: Int
     ): SimpleViewHolder {
         val v: View =
-            LayoutInflater.from(parent.context).inflate(R.layout.row, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.waiting_list_row, parent, false)
         return SimpleViewHolder(v)
     }
 
@@ -62,20 +62,20 @@ class SwipeRecyclerViewAdapter(
     inner class SimpleViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
         val swipeLayout = itemView.findViewById(R.id.swipeLayout) as SwipeLayout
-        val clientView = itemView.findViewById(R.id.clientView) as CardView
-        val detailView = itemView.findViewById(R.id.detailView) as CardView
-        val clientNameView = itemView.findViewById(R.id.clientNameView) as TextView
-        val clientNumView = itemView.findViewById(R.id.clientNumView) as TextView
-        val clientPhoneView = itemView.findViewById(R.id.clientPhoneView) as TextView
-        val detailView1 = itemView.findViewById(R.id.detailView1) as TextView
-        val detailView2 = itemView.findViewById(R.id.detailView2) as TextView
+        val waitingListCardView= itemView.findViewById(R.id.waiting_list_card_View) as CardView
+        val waitingListDetailView = itemView.findViewById(R.id.detailView) as CardView
+        val waitingNameTextView = itemView.findViewById(R.id.waiting_name_text_view) as TextView
+        val waitingNumTextView = itemView.findViewById(R.id.waiting_num_text_view) as TextView
+        val waitingPhoneTextView = itemView.findViewById(R.id.waiting_phone_text_view) as TextView
+        val waitingListDetailTextView = itemView.findViewById(R.id.waiting_list_detail_text_view) as TextView
+        val waitingListDetailTextView2 = itemView.findViewById(R.id.waiting_list_detail_text_view2) as TextView
         val delBtn = itemView.findViewById(R.id.delBtn) as ImageButton
         val bottomWrapperLeft = itemView.findViewById(R.id.bottom_wrapper_left) as FrameLayout
-        val callBtn = itemView.callBtn
+        val waitingListCallButton = itemView.waiting_list_call_button
 
 
         init {
-            callBtn.setOnClickListener {
+            waitingListCallButton.setOnClickListener {
                 val position = adapterPosition
                 if (called.containsKey(items[position].phone) && called[items[position].phone]!!) {
                     //TODO 원래는 이 if의 내용이 없어야 함!!!
@@ -112,7 +112,7 @@ class SwipeRecyclerViewAdapter(
                 }
             }
 
-            clientView.setOnClickListener {
+            waitingListCardView.setOnClickListener {
                 val position = adapterPosition
 
 //                if (clicked.containsKey(items[position].phone) && clicked[items[position].phone]!!) {
@@ -140,9 +140,9 @@ class SwipeRecyclerViewAdapter(
         val item: ClientData = items[position]
 
 
-        viewHolder.clientNameView.text = item.name
-        viewHolder.clientNumView.text = "(" + item.peopleNum + "명)"
-        viewHolder.clientPhoneView.text = "0" + item.phone
+        viewHolder.waitingNameTextView.text = item.name
+        viewHolder.waitingNumTextView.text = "(" + item.peopleNum + "명)"
+        viewHolder.waitingPhoneTextView.text = "0" + item.phone
 
 //        viewHolder.detailView1.text =
 //            "대기열에 추가된 시간: 2020-00-00-00:00:00"
@@ -243,9 +243,9 @@ class SwipeRecyclerViewAdapter(
         }
 
         if (clicked.containsKey(items[position].phone) && clicked[items[position].phone]!!) {
-            viewHolder.detailView.visibility = View.VISIBLE
+            viewHolder.waitingListDetailTextView.visibility = View.VISIBLE
         } else {
-            viewHolder.detailView.visibility = View.GONE
+            viewHolder.waitingListDetailTextView.visibility = View.GONE
         }
 
 

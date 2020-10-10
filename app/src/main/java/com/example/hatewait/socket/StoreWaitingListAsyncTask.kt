@@ -3,10 +3,9 @@ package com.example.hatewait.socket
 import android.os.AsyncTask
 import android.util.Log
 import com.example.hatewait.model.ClientData
-import com.example.hatewait.store.autoCallBtnText
-import com.example.hatewait.store.clientList
 import com.example.hatewait.store.setRecyclerView
-import com.example.hatewait.store.totalWaitingNumView
+import com.example.hatewait.store.totalWaitingNumTextView
+import com.example.hatewait.store.waitingList
 import hatewait.vo.QueueListSerializable
 import java.io.IOException
 import java.io.ObjectInputStream
@@ -60,10 +59,10 @@ class StoreWaitingListAsyncTask : AsyncTask<Unit, Unit, QueueListSerializable?>(
                 Log.i("로그", "storeWaitingListAsyncTask - onPostExecute :: ok")
                 Log.i("로그", "result ::" + result.toString() ?: "전달된 리스트가 없습니다.")
 
-                AUTONUM = result?.autonum
-                autoCallBtnText.text = "${AUTONUM}번째 팀까지 자동호출"
+//                AUTONUM = result?.autonum
+//                autoCallBtnText.text = "${AUTONUM}번째 팀까지 자동호출"
 
-                clientList.clear()
+                waitingList.clear()
 
                 for (i in 0..(result?.qivo?.size?.minus(1) ?: 0)) {
                     var data_tmp =
@@ -74,9 +73,9 @@ class StoreWaitingListAsyncTask : AsyncTask<Unit, Unit, QueueListSerializable?>(
                             result?.qivo?.get(i)?.peopleNum.toString(),
                             result?.qivo?.get(i)?.turn.toString()
                         )
-                    clientList?.add(data_tmp)
+                    waitingList?.add(data_tmp)
                 }
-                totalWaitingNumView.text = "현재 ${clientList.size}팀 대기중"
+                totalWaitingNumTextView.text = "현재 ${waitingList.size}팀 대기중"
                 setRecyclerView()
             } catch (e: Exception) {
                 e.printStackTrace()

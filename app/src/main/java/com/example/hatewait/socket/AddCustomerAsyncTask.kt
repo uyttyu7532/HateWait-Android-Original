@@ -4,10 +4,8 @@ import android.os.AsyncTask
 import android.util.Log
 import android.widget.Toast
 import com.example.hatewait.model.ClientData
-import com.example.hatewait.store.clientList
-import com.example.hatewait.store.listContext
 import com.example.hatewait.model.NewClient
-import com.example.hatewait.store.setRecyclerView
+import com.example.hatewait.store.*
 import es.dmoral.toasty.Toasty
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -49,7 +47,7 @@ class AddCustomerAsyncTask : AsyncTask<NewClient, Unit, String?>() {
                     params[0].peopleNum,
                     ""
                 )
-            clientList?.add(data_tmp)
+            waitingList?.add(data_tmp)
 
             if (reader != null) {
                 try {
@@ -82,7 +80,7 @@ class AddCustomerAsyncTask : AsyncTask<NewClient, Unit, String?>() {
             super.onPostExecute(result)
             if (result != null) {
                 Toasty.success(
-                    listContext,
+                    waitingListContext,
                     tempClientName + " 손님 추가 완료",
                     Toast.LENGTH_SHORT,
                     true
@@ -91,7 +89,7 @@ class AddCustomerAsyncTask : AsyncTask<NewClient, Unit, String?>() {
                 setRecyclerView()
             }else{
                 Toasty.normal(
-                    listContext,
+                    waitingListContext,
                     "서버 연결을 확인해주세요.",
                     Toast.LENGTH_SHORT
                 ).show()

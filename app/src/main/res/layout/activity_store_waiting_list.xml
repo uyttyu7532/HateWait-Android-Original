@@ -12,7 +12,7 @@
             android:layout_height="match_parent">
 
         <ImageView
-                android:id="@+id/refreshBtn"
+                android:id="@+id/waiting_list_refresh_button"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_alignParentRight="true"
@@ -22,8 +22,7 @@
                 app:srcCompat="@drawable/ic_baseline_autorenew_24" />
 
         <ProgressBar
-
-                android:id="@+id/progressBar2"
+                android:id="@+id/waiting_list_progress_bar"
                 style="?android:attr/progressBarStyle"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
@@ -33,48 +32,48 @@
                 android:visibility="invisible" />
 
 
-        <androidx.cardview.widget.CardView
-                android:id="@+id/auto_call_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_toLeftOf="@+id/refreshBtn"
-                android:backgroundTint="@color/colorAccent"
-                android:clickable="true"
-                android:elevation="5dp"
-                app:cardCornerRadius="5dp">
+<!--        <androidx.cardview.widget.CardView-->
+<!--                android:id="@+id/auto_call_button"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:layout_toLeftOf="@+id/refresh_button"-->
+<!--                android:backgroundTint="@color/colorAccent"-->
+<!--                android:clickable="true"-->
+<!--                android:elevation="5dp"-->
+<!--                app:cardCornerRadius="5dp">-->
 
-            <TextView
-                    android:id="@+id/auto_call_btn_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="자동호출하기"
-                    android:textColor="#EFEFEF"
-                    android:visibility="gone">
-            </TextView>
+<!--            <TextView-->
+<!--                    android:id="@+id/auto_call_btn_text"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_margin="5dp"-->
+<!--                    android:text="자동호출하기"-->
+<!--                    android:textColor="#EFEFEF"-->
+<!--                    android:visibility="gone">-->
+<!--            </TextView>-->
 
-        </androidx.cardview.widget.CardView>
+<!--        </androidx.cardview.widget.CardView>-->
 
 
         <TextView
-                android:id="@+id/totalWaitingNum"
+                android:id="@+id/total_waiting_num_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@id/swiperefresh"
+                android:layout_alignLeft="@id/waiting_swipe_refresh"
                 android:layout_margin="10dp"
                 android:text="현재 0팀 대기중"
                 android:textColor="#000000"
                 android:textSize="20sp" />
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                android:id="@+id/swiperefresh"
+                android:id="@+id/waiting_swipe_refresh"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="45dp">
 
             <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/myRecyclerView"
+                    android:id="@+id/waiting_list_recycler_view"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@+id/totalWaitingNum"/>
@@ -84,7 +83,7 @@
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/addFab"
+            android:id="@+id/add_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"

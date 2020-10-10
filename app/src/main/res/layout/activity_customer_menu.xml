@@ -26,7 +26,7 @@
                     android:id="@+id/customerNameView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="서버를 확인해주세요."
+                    android:text="조예린"
                     android:textColor="#000000"
                     android:textSize="20sp" />
 
@@ -52,7 +52,7 @@
             android:id="@+id/mywaiting"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@id/otherStoreBtn"
+            android:layout_above="@id/myCoupon"
             android:layout_below="@id/greeting"
             android:layout_margin="20dp">
 
@@ -62,24 +62,24 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-            <TextView
-                    android:id="@+id/customerMarquee"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_margin="5dp"
-                    android:ellipsize="marquee"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
-                    android:marqueeRepeatLimit="marquee_forever"
-                    android:singleLine="true"
-                    android:text="대기 순서 전에 상태바 알림과 문자 알림이 발송됩니다. 취소 버튼을 눌러 대기를 취소할 수 있습니다. " />
+<!--            <TextView-->
+<!--                    android:id="@+id/customerMarquee"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_alignParentTop="true"-->
+<!--                    android:layout_margin="5dp"-->
+<!--                    android:ellipsize="marquee"-->
+<!--                    android:focusable="true"-->
+<!--                    android:focusableInTouchMode="true"-->
+<!--                    android:marqueeRepeatLimit="marquee_forever"-->
+<!--                    android:singleLine="true"-->
+<!--                    android:text="대기 순서 전에 상태바 알림과 문자 알림이 발송됩니다. 취소 버튼을 눌러 대기를 취소할 수 있습니다. " />-->
 
             <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_above="@id/recentRefreshTime"
-                    android:layout_below="@id/customerMarquee">
+                    android:layout_above="@id/recentRefreshTime">
+<!--                    android:layout_below="@id/customerMarquee">-->
 
 
                 <LinearLayout
@@ -94,9 +94,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="현재 대기중인 \n음식점이 없습니다."
+                            android:text="맛있는 가게"
                             android:textColor="#000000"
-                            android:textSize="40sp" />
+                            android:textSize="30sp" />
 
                     <LinearLayout
                             android:id="@+id/customerWaiting"
@@ -112,14 +112,14 @@
                                 android:layout_height="wrap_content"
                                 android:text="0"
                                 android:textColor="#000000"
-                                android:textSize="40sp" />
+                                android:textSize="30sp" />
 
                         <TextView
                                 android:id="@+id/waitingNumText"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="번째 전 순서입니다."
-                                android:textSize="30sp" />
+                                android:textSize="25sp" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -180,13 +180,62 @@
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
+    <androidx.cardview.widget.CardView
+            android:id="@+id/myCoupon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/otherStoreBtn"
+            android:layout_margin="20dp"
+            android:clickable="true"
+            android:gravity="center"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="2dp"
+            app:layout_gravity="center">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_gravity="center">
+
+            <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    app:cardBackgroundColor="@color/colorPrimary"
+                    app:cardCornerRadius="0dp"
+                    app:cardElevation="2dp">
+
+                <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:gravity="center"
+                        android:text="쿠폰현황 확인하기"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="#ffffff" />
+            </androidx.cardview.widget.CardView>
+
+
+            <ImageButton
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="25dp"
+                    android:background="@drawable/coupons"
+                    android:scaleType="centerInside" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
             android:id="@+id/otherStoreBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_margin="20dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="20dp"
             android:clickable="true"
             android:gravity="center"
             app:cardCornerRadius="10dp"
@@ -219,7 +268,7 @@
 
 
             <ImageButton
-                    android:layout_width="70dp"
+                    android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_gravity="center"
                     android:layout_margin="25dp"

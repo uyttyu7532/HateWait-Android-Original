@@ -28,13 +28,11 @@ import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 
-lateinit var mRecyclerView: RecyclerView
-var clientList = ArrayList<ClientData>()
-lateinit var mAdapter: SwipeRecyclerViewAdapter
-lateinit var listContext: Context
-lateinit var totalWaitingNumView: TextView
-lateinit var autoCallBtn: CardView
-lateinit var autoCallBtnText: TextView
+lateinit var waitingListRecyclerView: RecyclerView
+var waitingList = ArrayList<ClientData>()
+lateinit var waitingListAdapter: SwipeRecyclerViewAdapter
+lateinit var waitingListContext: Context
+lateinit var totalWaitingNumTextView: TextView
 
 
 //lateinit var autoCallSwitchView: Switch
@@ -49,20 +47,20 @@ class StoreWaitingList : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_store_waiting_list)
 
-        listContext = this.applicationContext
-        pref = listContext.getSharedPreferences("myPref", Context.MODE_PRIVATE)
-        mRecyclerView = findViewById<View>(
-            R.id.myRecyclerView
+        waitingListContext = this.applicationContext
+        pref = waitingListContext.getSharedPreferences("myPref", Context.MODE_PRIVATE)
+        waitingListRecyclerView = findViewById<View>(
+            R.id.waiting_list_recycler_view
         ) as RecyclerView
-        totalWaitingNumView = findViewById<View>(
-            R.id.totalWaitingNum
+        totalWaitingNumTextView = findViewById<View>(
+            R.id.total_waiting_num_text_view
         ) as TextView
-        autoCallBtn = findViewById<View>(
-            R.id.auto_call_btn
-        ) as CardView
-        autoCallBtnText = findViewById<View>(
-            R.id.auto_call_btn_text
-        ) as TextView
+//        autoCallBtn = findViewById<View>(
+//            R.id.auto_call_btn
+//        ) as CardView
+//        autoCallBtnText = findViewById<View>(
+//            R.id.auto_call_btn_text
+//        ) as TextView
 
 //        // 임시로 여기에
 //        //Get Firebase FCM token
@@ -91,34 +89,34 @@ class StoreWaitingList : AppCompatActivity() {
         makeAddDialog()
         readFile()
 
-        refreshBtn.setOnClickListener {
-            refreshBtn.visibility = INVISIBLE
-            progressBar2.visibility = VISIBLE
+        waiting_list_refresh_button.setOnClickListener {
+            waiting_list_refresh_button.visibility = INVISIBLE
+            waiting_list_progress_bar.visibility = VISIBLE
 
             StoreWaitingListAsyncTask().execute()
 
-            refreshBtn.visibility = VISIBLE
-            progressBar2.visibility = INVISIBLE
+            waiting_list_refresh_button.visibility = VISIBLE
+            waiting_list_progress_bar.visibility = INVISIBLE
         }
 
-        swiperefresh.setOnRefreshListener {
-            swiperefresh.isRefreshing = true // progress bar 돌아가는 작업
+        waiting_swipe_refresh.setOnRefreshListener {
+            waiting_swipe_refresh.isRefreshing = true // progress bar 돌아가는 작업
 
-            refreshBtn.visibility = INVISIBLE
-            progressBar2.visibility = VISIBLE
+            waiting_list_refresh_button.visibility = INVISIBLE
+            waiting_list_progress_bar.visibility = VISIBLE
 
             StoreWaitingListAsyncTask().execute()
 
-            refreshBtn.visibility = VISIBLE
-            progressBar2.visibility = INVISIBLE
+            waiting_list_refresh_button.visibility = VISIBLE
+            waiting_list_progress_bar.visibility = INVISIBLE
 
             // 비동기에서 작업이 끝날때 swiperefresh.isRefreshing = false해줘야함
-            swiperefresh.isRefreshing = false
+            waiting_swipe_refresh.isRefreshing = false
         }
 
-        autoCallBtn.setOnClickListener {
-            AutoCallAsyncTask().execute()
-        }
+//        autoCallBtn.setOnClickListener {
+//            AutoCallAsyncTask().execute()
+//        }
 
 
     }
@@ -142,14 +140,14 @@ class StoreWaitingList : AppCompatActivity() {
                     people_num_tmp,
                     is_member_tmp
                 )
-            clientList?.add(data_tmp)
+            waitingList?.add(data_tmp)
         }
-        totalWaitingNumView.text = "현재 ${clientList.size}팀 대기중"
+        totalWaitingNumTextView.text = "현재 ${waitingList.size}팀 대기중"
     }
 
 
     fun makeAddDialog() {
-        val fab: View = findViewById(R.id.addFab)
+        val fab: View = findViewById(R.id.add_fab)
         fab.setOnClickListener { view ->
 
             MaterialDialog(this).show {
@@ -164,12 +162,10 @@ class StoreWaitingList : AppCompatActivity() {
                     customView.findViewById(R.id.addWaitingPhonenum) as TextView
                 positiveButton { dialog ->
 
-                    if (addWaitingName.text.toString()
-                            .equals("") || addWaitingPerson.text.toString()
-                            .equals("") || addWaitingPhonenum.text.toString().equals("")
+                    if (addWaitingName.text.toString() == "" || addWaitingPerson.text.toString() == "" || addWaitingPhonenum.text.toString().equals("")
                     ) {
                         Toasty.error(
-                            listContext,
+                            waitingListContext,
                             "대기 손님 정보를 모두 입력해주세요.",
                             Toast.LENGTH_SHORT,
                             true
@@ -199,8 +195,8 @@ class StoreWaitingList : AppCompatActivity() {
 // RecyclerView와 Adapter 연결
 fun setRecyclerView() {
 
-    mRecyclerView!!.layoutManager =
-        LinearLayoutManager(listContext, LinearLayoutManager.VERTICAL, false)
+    waitingListRecyclerView!!.layoutManager =
+        LinearLayoutManager(waitingListContext, LinearLayoutManager.VERTICAL, false)
 
 
     val prefKeys: MutableSet<String> = pref.all.keys
@@ -213,21 +209,21 @@ fun setRecyclerView() {
     }
 
     val clicked = HashMap<String, Boolean>()
-    for (a in clientList) {
+    for (a in waitingList) {
         clicked[a.phone] = false
     }
 
-    mAdapter =
+    waitingListAdapter =
         SwipeRecyclerViewAdapter(
-            clientList!!,
+            waitingList!!,
             called,
             clicked,
             pref,
-            listContext
+            waitingListContext
         )
-    mAdapter.mode = Attributes.Mode.Single
+    waitingListAdapter.mode = Attributes.Mode.Single
 
-    mAdapter.itemClickListener = object :
+    waitingListAdapter.itemClickListener = object :
         SwipeRecyclerViewAdapter.onItemClickListener {
         override fun onItemClick(
             holder: SwipeRecyclerViewAdapter.SimpleViewHolder,
@@ -235,16 +231,16 @@ fun setRecyclerView() {
             position: Int
         ) {
             Log.d("position", position?.toString())
-            if (holder.detailView.visibility == GONE) {
-                holder.detailView.visibility = VISIBLE
+            if (holder.waitingListDetailTextView.visibility == GONE) {
+                holder.waitingListDetailTextView.visibility = VISIBLE
             } else {
-                holder.detailView.visibility = GONE
+                holder.waitingListDetailTextView.visibility = GONE
             }
         }
     }
-    mRecyclerView.adapter =
-        mAdapter
-    totalWaitingNumView.text = "현재 ${clientList.size}팀 대기중"
+    waitingListRecyclerView.adapter =
+        waitingListAdapter
+    totalWaitingNumTextView.text = "현재 ${waitingList.size}팀 대기중"
 }
 
 

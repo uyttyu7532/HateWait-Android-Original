@@ -1,0 +1,158 @@
+<com.daimajia.swipe.SwipeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/swipeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
+
+
+    <!-- Bottom View Start-->
+    <FrameLayout
+            android:id="@+id/bottom_wrapper_right"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="#F14545"
+            android:clickable="true"
+            android:orientation="vertical">
+
+        <ImageButton
+                android:id="@+id/waiting_list_delete_button"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:layout_margin="20dp"
+                android:background="@drawable/trash"
+                android:tint="#FFFFFF" />
+    </FrameLayout>
+    <!-- Bottom View End-->
+
+
+    <!--        <FrameLayout-->
+    <!--                android:id="@+id/bottom_wrapper_left"-->
+    <!--                android:layout_width="100dp"-->
+    <!--                android:layout_height="match_parent"-->
+    <!--                android:background="#66ddff00"-->
+    <!--                android:orientation="vertical">-->
+
+    <!--            <ImageButton-->
+    <!--                    android:id="@+id/callBtn"-->
+    <!--                    android:layout_width="20dp"-->
+    <!--                    android:layout_height="20dp"-->
+    <!--                    android:layout_gravity="center"-->
+    <!--                    android:background="@drawable/bell" />-->
+    <!--        </FrameLayout>-->
+
+    <!-- Surface View Start -->
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#EFEFEF"
+            android:orientation="vertical">
+
+
+        <androidx.cardview.widget.CardView
+                android:id="@+id/waiting_list_card_View"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center">
+
+                <FrameLayout
+                        android:id="@+id/bottom_wrapper_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#EFEFEF"
+                        android:clickable="true">
+
+                    <ImageButton
+                            android:id="@+id/waiting_list_call_button"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:layout_margin="20dp"
+                            android:background="@drawable/bell" />
+                </FrameLayout>
+
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:layout_toRightOf="@+id/bottom_wrapper_left"
+                        android:orientation="vertical"
+                        android:padding="5dp">
+
+                    <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                        <TextView
+                                android:id="@+id/waiting_name_text_view"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="#FFFFFF"
+                                android:paddingLeft="10dp"
+                                android:text="조예린"
+                                android:textColor="#000000"
+                                android:textStyle="bold" />
+
+                        <TextView
+                                android:id="@+id/waiting_num_text_view"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="#FFFFFF"
+                                android:paddingLeft="10dp"
+                                android:text="(3명)" />
+                    </LinearLayout>
+
+                    <TextView
+                            android:id="@+id/waiting_phone_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="#FFFFFF"
+                            android:paddingLeft="10dp"
+                            android:text="010-0000-1111" />
+                </LinearLayout>
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+                android:id="@+id/waiting_list_detail_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#EFEFEF"
+                android:visibility="gone">
+
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                <TextView
+                        android:id="@+id/waiting_list_detail_text_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="대기열에 추가된 시간: 2020-05-03-09:14:02" />
+
+                <TextView
+                        android:id="@+id/waiting_list_detail_text_view2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="최근에 알림 보낸시간: 2020-05-08-09:40:15" />
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+    </LinearLayout>
+
+    <!-- Surface View End -->
+
+
+</com.daimajia.swipe.SwipeLayout>

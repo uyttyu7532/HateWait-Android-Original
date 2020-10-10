@@ -13,11 +13,13 @@ import androidx.appcompat.app.AppCompatActivity
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.example.hatewait.map.KakaoMapActivity
 import com.example.hatewait.R
+import com.example.hatewait.customerinfo.CustomerInfoUpdate
 import com.example.hatewait.socket.CUSTOMERID
 import com.example.hatewait.socket.CancelAsyncTask
 import com.example.hatewait.socket.CustomerMenuAsyncTask
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.activity_customer_menu.*
+import org.jetbrains.anko.startActivity
 
 
 lateinit var waitingStoreView: TextView
@@ -63,6 +65,9 @@ class CustomerMenu : AppCompatActivity() {
 
     fun init() {
 
+        editcustomerinfo.setOnClickListener{
+            startActivity<CustomerInfoUpdate>()
+        }
 
         otherStoreBtn.setOnClickListener {
             val intent = Intent(this, KakaoMapActivity::class.java)
@@ -107,8 +112,8 @@ class CustomerMenu : AppCompatActivity() {
                 questionDialog.dismissWithAnimation()
             }
         }
-        customerMarquee.text = resources.getString(R.string.customer_marquee)
-        customerMarquee.isSelected = true // 마키 텍스트에 포커스
+//        customerMarquee.text = resources.getString(R.string.customer_marquee)
+//        customerMarquee.isSelected = true // 마키 텍스트에 포커스
 
 
     }

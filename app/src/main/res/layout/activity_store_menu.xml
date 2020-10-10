@@ -84,7 +84,9 @@
                     android:layout_height="wrap_content"
                     android:text="명 대기중"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
         </LinearLayout>
+
     </LinearLayout>
 
 
@@ -152,10 +154,10 @@
 
                     <ImageButton
                             android:id="@+id/delBtn"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
                             android:layout_gravity="center"
-                            android:background="@drawable/test"
+                            android:background="@drawable/waitingroom"
                             android:clickable="true" />
                 </FrameLayout>
 
@@ -210,8 +212,8 @@
 
                     <ImageButton
                             android:id="@+id/imageButton2"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:background="@drawable/touchipad"
                             android:clickable="true" />
@@ -271,8 +273,8 @@
 
                     <ImageButton
                             android:id="@+id/imageButton4"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:background="@drawable/shop"
                             android:clickable="true" />
@@ -329,13 +331,14 @@
 
                     <ImageButton
                             android:id="@+id/customer_list"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
                             android:layout_gravity="center"
-                            android:background="@drawable/folder"
+                            android:background="@drawable/test"
                             android:clickable="true" />
                 </FrameLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </androidx.gridlayout.widget.GridLayout>
+
 </RelativeLayout>

@@ -24,6 +24,7 @@ import com.example.hatewait.R
 import com.example.hatewait.R.string.common_signin_button_text
 import com.example.hatewait.signup.StoreSignUp3
 import com.example.hatewait.signup.addressDialog
+import com.example.hatewait.storeinfo.StoreInfoUpdate
 import kotlinx.android.synthetic.main.activity_address.*
 import kotlinx.android.synthetic.main.activity_store_signup3.*
 import kotlin.text.format as format
@@ -146,8 +147,10 @@ class AddressDialogFragment : DialogFragment() {
         fun setAddress(arg1: String, arg2: String, arg3: String) {
             mDialog.dismiss()
 
-            val storesignup3 = activity as StoreSignUp3
-            storesignup3.store_address_input_editText.setText(String.format("(%s) %s %s", arg1, arg2, arg3))
+            val storeSignUp3 = activity as StoreSignUp3
+            storeSignUp3.store_address_input_editText.setText(String.format("(%s) %s %s", arg1, arg2, arg3))
+            val storeInfoUpdate = activity as StoreInfoUpdate
+            storeInfoUpdate.store_address_input_editText.setText(String.format("(%s) %s %s", arg1, arg2, arg3))
 
             initWebView()
         }

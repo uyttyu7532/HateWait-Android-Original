@@ -18,7 +18,13 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true">
-        <activity android:name=".store.CustomerListActivity"></activity>
+        <activity android:name=".store.VisitorListActivity"></activity>
+        <activity android:name=".store.ClientList" />
+        <activity android:name=".customerinfo.SettingPassword2" />
+        <activity android:name=".customerinfo.SettingPassword" />
+        <activity android:name=".customerinfo.CustomerInfoUpdate" />
+        <activity android:name=".storeinfo.StoreInfoUpdate2" />
+        <activity android:name=".store.CustomerListActivity" />
         <activity android:name=".signup.ChangePasswordActivity" />
         <activity android:name=".signup.FindPassWordActivity" />
         <activity android:name=".map.KakaoMapActivity" />

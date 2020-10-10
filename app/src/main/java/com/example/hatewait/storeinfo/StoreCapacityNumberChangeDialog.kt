@@ -79,7 +79,7 @@ class StoreCapacityNumberChangeDialog : DialogFragment() {
     private fun init() {
 //        첫자리 0으로 시작 불가 총 4자리수까지 입력가능.
         val storeCapacityRegex = Regex("[^0](\\d{0,3})")
-        storeCapacityEditText.setText(activity?.store_capacity_number_textView?.text)
+        storeCapacityEditText.text = activity?.store_capacity_number_textView?.text
         storeCapacityEditText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(storeCapacityNumber: Editable?) {
                 if (!storeCapacityNumber.toString().matches(storeCapacityRegex)) {

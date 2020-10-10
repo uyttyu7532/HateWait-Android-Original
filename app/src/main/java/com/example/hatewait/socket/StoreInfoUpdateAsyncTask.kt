@@ -54,7 +54,7 @@ class StoreInfoUpdateAsyncTask(context : StoreInfoUpdate) : AsyncTask<Map<String
 //        임시 방편 이름 수정
         val storeReference = currentActivity.getSharedPreferences("STORE_USER_INFO", Context.MODE_PRIVATE)
         storeReference.edit().putString("STORE_NAME", updatedStoreName)
-        currentActivity.update_store_info_button.isEnabled = false
+//        currentActivity.update_store_info_button.isEnabled = false
         Toasty.success(
             currentActivity,
             "가게 정보 수정 완료!",

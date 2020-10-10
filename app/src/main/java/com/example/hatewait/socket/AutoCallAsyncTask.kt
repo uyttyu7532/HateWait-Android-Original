@@ -61,7 +61,7 @@ class AutoCallAsyncTask : AsyncTask<Unit, Unit, QueueListSerializable?>() {
 
                 AUTONUM = result?.autonum
 
-                clientList.clear()
+                waitingList.clear()
 
                 for (i in 0..(result?.qivo?.size?.minus(1) ?: 0)) {
                     var data_tmp =
@@ -72,11 +72,11 @@ class AutoCallAsyncTask : AsyncTask<Unit, Unit, QueueListSerializable?>() {
                             result?.qivo?.get(i)?.peopleNum.toString(),
                             result?.qivo?.get(i)?.turn.toString()
                         )
-                    clientList?.add(data_tmp)
+                    waitingList?.add(data_tmp)
                 }
 
                 var tempmessage = "손님 호출 완료:\n"
-                for (i in clientList) {
+                for (i in waitingList) {
                     if (i.turn.toInt() <= AUTONUM!!) {
                         if (called[i.phone]!!) {
                         } else {

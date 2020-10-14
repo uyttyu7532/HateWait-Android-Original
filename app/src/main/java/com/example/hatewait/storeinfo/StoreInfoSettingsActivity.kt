@@ -1,14 +1,12 @@
-package com.example.hatewait.store
+package com.example.hatewait.storeinfo
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.hatewait.R
-import kotlinx.android.synthetic.main.activity_visitor_list.*
 
-class VisitorListActivity : AppCompatActivity() {
+class StoreInfoSettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_visitor_list)
-
+        setContentView(R.layout.activity_store_info_settings)
     }
 }

@@ -97,7 +97,7 @@
             app:endIconMode="clear_text">
 
         <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/store_address_input_editText"
+                android:id="@+id/store_address_input_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="true"
@@ -109,6 +109,24 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <Button
+            android:id="@+id/lat_lon_button"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="15dp"
+            android:text="위도경도"
+            android:textColor="@color/white"
+            android:textSize="25dp" />
+
+    <TextView
+            android:id="@+id/lat_lon_text_view"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="위도경도"/>
 
     <Button
             android:id="@+id/button_continue"

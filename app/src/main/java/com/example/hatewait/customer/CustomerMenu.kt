@@ -66,7 +66,8 @@ class CustomerMenu : AppCompatActivity() {
     fun init() {
 
         myCoupon.setOnClickListener{
-            startActivity<ManageStampCouponActivity>()
+//            startActivity<ManageStampCouponActivity>()
+            startActivity<StoreList>()
         }
 
         editcustomerinfo.setOnClickListener{

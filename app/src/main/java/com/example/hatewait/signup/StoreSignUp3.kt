@@ -1,22 +1,22 @@
 package com.example.hatewait.signup
 
-import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.location.Address
+import android.location.Geocoder
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.MotionEvent
-import android.view.View
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.example.hatewait.R
 import com.example.hatewait.address.AddressDialogFragment
 import kotlinx.android.synthetic.main.activity_store_signup3.*
+import java.io.IOException
 
 // 1단계 이메일 , 인증번호 (네아로면 생략)
 // 2단계 비번, 비번확인
@@ -35,7 +35,6 @@ class StoreSignUp3 : AppCompatActivity(), AddressDialogFragment.AddressDialogLis
     private val storeAddressRegex = Regex("^[가-힣]+[가-힣a-zA-Z0-9|\\-|,|\\s]{1,50}$")
     fun verifyName(storeName: String): Boolean = storeNameRegex.matches(storeName)
     fun verifyPhone(storePhone: String): Boolean = storePhoneRegex.matches(storePhone)
-    fun verifyAddress(storeAddress: String): Boolean = storeAddressRegex.matches(storeAddress)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,7 +63,7 @@ class StoreSignUp3 : AppCompatActivity(), AddressDialogFragment.AddressDialogLis
         }
 
 
-        store_address_input_editText.setOnClickListener {
+        store_address_input_edit_text.setOnClickListener {
             val bundle = Bundle()
             addressDialog = AddressDialogFragment().getInstance()
             addressDialog.arguments = bundle
@@ -178,6 +177,37 @@ class StoreSignUp3 : AppCompatActivity(), AddressDialogFragment.AddressDialogLis
 //            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 //            }
 //        })
+
+        lat_lon_button.setOnClickListener {
+
+
+        var geocoder: Geocoder = Geocoder(this);
+
+            var list: List<Address>? = null;
+
+            var str: String = store_address_input_edit_text.text.toString();
+            try {
+                list = geocoder.getFromLocationName(
+                    str, // 지역 이름
+                    10
+                ); // 읽을 개수
+            } catch (e: IOException) {
+                e.printStackTrace();
+                Log.e("test", "입출력 오류 - 서버에서 주소변환시 에러발생");
+            }
+
+            if (list != null) {
+                if (list.isEmpty()) {
+                    lat_lon_text_view.text = "해당되는 주소 정보는 없습니다";
+                } else {
+                    lat_lon_text_view.text = list[0].latitude.toString()+" "+list[0].longitude.toString();
+                    //          list.get(0).getCountryName();  // 국가명
+                    //          list.get(0).getLatitude();        // 위도
+                    //          list.get(0).getLongitude();    // 경도
+                }
+            }
+        }
+
 
     }
 

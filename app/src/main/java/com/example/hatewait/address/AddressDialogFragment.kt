@@ -15,16 +15,11 @@ import android.view.inputmethod.InputMethodManager
 import android.webkit.JavascriptInterface
 import android.webkit.WebChromeClient
 import android.webkit.WebView
-import android.widget.Button
-import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.example.hatewait.R
-import com.example.hatewait.R.string.common_signin_button_text
 import com.example.hatewait.signup.StoreSignUp3
-import com.example.hatewait.signup.addressDialog
-import com.example.hatewait.storeinfo.StoreInfoUpdate
 import kotlinx.android.synthetic.main.activity_address.*
 import kotlinx.android.synthetic.main.activity_store_signup3.*
 import kotlin.text.format as format
@@ -98,7 +93,7 @@ class AddressDialogFragment : DialogFragment() {
     @SuppressLint("ClickableViewAccessibility")
     private fun initWebView() {
 
-        webView = view!!.findViewById(R.id.webView)
+        webView = customView!!.findViewById(R.id.webView)
         webView.settings.javaScriptEnabled = true
         webView.settings.javaScriptCanOpenWindowsAutomatically = true
         webView.settings.setSupportMultipleWindows(true)
@@ -114,8 +109,7 @@ class AddressDialogFragment : DialogFragment() {
             when (event.action) {
                 MotionEvent.ACTION_DOWN, MotionEvent.ACTION_UP -> if (!v.hasFocus()) {
                     mHandler.post {
-                        var inputMethodManager =
-                            context!!.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager?
+                        var inputMethodManager = this.requireActivity().getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager?
                         inputMethodManager!!.toggleSoftInputFromWindow(
                             edit.applicationWindowToken,
                             InputMethodManager.SHOW_FORCED,
@@ -147,22 +141,22 @@ class AddressDialogFragment : DialogFragment() {
         fun setAddress(arg1: String, arg2: String, arg3: String) {
             mDialog.dismiss()
 
-            val storeSignUp3 = activity as StoreSignUp3
-            storeSignUp3.store_address_input_editText.setText(String.format("(%s) %s %s", arg1, arg2, arg3))
-            val storeInfoUpdate = activity as StoreInfoUpdate
-            storeInfoUpdate.store_address_input_editText.setText(String.format("(%s) %s %s", arg1, arg2, arg3))
+            val storesignup3 = activity as StoreSignUp3
+            storesignup3.store_address_input_edit_text.setText(String.format("(%s) %s %s", arg1, arg2, arg3))
+//            storesignup3.store_address_lat_edit_text.setText(String.format("%s",lat))
+//            storesignup3.store_address_lon_edit_text.setText(String.format("%s",lon))
 
             initWebView()
         }
 
-        @JavascriptInterface
-        fun dismissDialogFragment() {
-            //addressDialogListener.dismissDialog(dialog = this@AddressDialogFragment)
-        }
+//        @JavascriptInterface
+//        fun dismissDialogFragment(lat: String, lon: String) {
+//            val storesignup3 = activity as StoreSignUp3
+//            storesignup3.store_address_lat_edit_text.setText(String.format("%s", lat))
+//            storesignup3.store_address_lon_edit_text.setText(String.format("%s", lon))
+//        }
 
     }
 
 
 }
-
-

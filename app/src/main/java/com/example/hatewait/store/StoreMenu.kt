@@ -10,6 +10,7 @@ import com.example.hatewait.R
 
 import com.example.hatewait.login.LoginRegisterViewPagerActivity
 import com.example.hatewait.socket.*
+import com.example.hatewait.storeinfo.StoreInfoSettingsActivity
 import com.example.hatewait.storeinfo.StoreInfoUpdate2
 import kotlinx.android.synthetic.main.activity_store_menu.*
 import org.jetbrains.anko.startActivity
@@ -56,6 +57,10 @@ class StoreMenu : AppCompatActivity() {
     }
 
     private fun initView() {
+        setting_button.setOnClickListener{
+            startActivity<StoreInfoSettingsActivity>()
+        }
+
         tabletBtn.setOnClickListener {
             startActivity<LoginRegisterViewPagerActivity>()
         }

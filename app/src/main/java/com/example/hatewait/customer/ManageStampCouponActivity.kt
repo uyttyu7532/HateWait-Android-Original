@@ -5,8 +5,7 @@ import android.os.Bundle
 import com.example.hatewait.R
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_manage_stamp_coupon.*
-import kotlinx.android.synthetic.main.activity_visitor_list.*
-import kotlinx.android.synthetic.main.activity_visitor_list.visitor_view_pager
+
 
 class ManageStampCouponActivity : AppCompatActivity() {
     val stampCouponArray = arrayListOf<String>("STAMP", "COUPON")

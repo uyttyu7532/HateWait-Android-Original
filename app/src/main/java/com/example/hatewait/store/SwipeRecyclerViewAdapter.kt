@@ -69,9 +69,9 @@ class SwipeRecyclerViewAdapter(
         val waitingPhoneTextView = itemView.findViewById(R.id.waiting_phone_text_view) as TextView
         val waitingListDetailTextView = itemView.findViewById(R.id.waiting_list_detail_text_view) as TextView
         val waitingListDetailTextView2 = itemView.findViewById(R.id.waiting_list_detail_text_view2) as TextView
-        val delBtn = itemView.findViewById(R.id.delBtn) as ImageButton
+        val waitingListDeleteButton = itemView.findViewById(R.id.waiting_list_delete_button) as ImageButton
         val bottomWrapperLeft = itemView.findViewById(R.id.bottom_wrapper_left) as FrameLayout
-        val waitingListCallButton = itemView.waiting_list_call_button
+        val waitingListCallButton: ImageButton = itemView.waiting_list_call_button
 
 
         init {
@@ -189,7 +189,7 @@ class SwipeRecyclerViewAdapter(
 
 
         // db목록에서 대기손님지우기?
-        viewHolder.delBtn.setOnClickListener { view ->
+        viewHolder.waitingListDeleteButton.setOnClickListener { view ->
             SweetAlertDialog(view.context, SweetAlertDialog.WARNING_TYPE)
                 .setTitleText("${items[position].name} 손님을 정말로 리스트에서 삭제하시겠습니까?")
                 .setContentText("\n")

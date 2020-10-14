@@ -341,12 +341,13 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
                         marker.userObject =
                             restaurant.category_name + "," + restaurant.phone + "," + restaurant.place_url
                         marker.mapPoint = mapPoint
+
                         marker.markerType =
                             MapPOIItem.MarkerType.CustomImage // 기본으로 제공하는 BluePin 마커 모양.
                         marker.selectedMarkerType = MapPOIItem.MarkerType.CustomImage
                         marker.customImageResourceId =
-                            R.drawable.pin
-//                        marker.isCustomImageAutoscale = false; // hdpi, xhdpi 등 안드로이드 플랫폼의 스케일을 사용할 경우 지도 라이브러리의 스케일 기능을 꺼줌.
+                            R.drawable.markerpin
+                        marker.isCustomImageAutoscale = false
                         marker.setCustomImageAnchor(
                             0.5f,
                             1.0f
@@ -367,19 +368,21 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
 
     }
 
-    private val poiItemEventListener: POIItemEventListener = object : POIItemEventListener { // 클릭 이벤트
-        override fun onPOIItemSelected(
-            mapView: MapView,
-            mapPOIItem: MapPOIItem
-        ) { // // 마커 클릭 후 info window 띄워졌을 때
-            //sample code 없음
+    private val poiItemEventListener: POIItemEventListener =
+        object : POIItemEventListener { // 클릭 이벤트
+            override fun onPOIItemSelected(
+                mapView: MapView,
+                mapPOIItem: MapPOIItem
+            ) { // // 마커 클릭 후 info window 띄워졌을 때
+                //sample code 없음
 //            Log.i("LOG_TAG", "onPOIItemSelected")
-        }
+            }
 
-        override fun onCalloutBalloonOfPOIItemTouched(
-            mapView: MapView,
-            mapPOIItem: MapPOIItem
-        ) { // info window 클릭했을 때
+            override fun onCalloutBalloonOfPOIItemTouched(
+                mapView: MapView,
+                mapPOIItem: MapPOIItem
+            ) {
+                // TODO info window 클릭했을 때
 
 //            Log.i("LOG_TAG", "onCalloutBalloonOfPOIItemTouched")
 //            Log.i("LOG_TAG", mapPOIItem.userObject.toString().split(",")[1])
@@ -398,29 +401,29 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
 //                Log.i(LOG_TAG, e.toString());
 //            }
 
-            var intent = Intent(Intent.ACTION_VIEW, Uri.parse(mapPOIItem.userObject.toString().split(",")[2]))
-            intent.flags= FLAG_ACTIVITY_NEW_TASK
-            mcontext.startActivity(intent)
-        }
+//            var intent = Intent(Intent.ACTION_VIEW, Uri.parse(mapPOIItem.userObject.toString().split(",")[2]))
+//            intent.flags= FLAG_ACTIVITY_NEW_TASK
+//            mcontext.startActivity(intent)
+            }
 
-        override fun onCalloutBalloonOfPOIItemTouched(
-            mapView: MapView,
-            mapPOIItem: MapPOIItem,
-            calloutBalloonButtonType: CalloutBalloonButtonType
-        ) {
-            //sample code 없음
+            override fun onCalloutBalloonOfPOIItemTouched(
+                mapView: MapView,
+                mapPOIItem: MapPOIItem,
+                calloutBalloonButtonType: CalloutBalloonButtonType
+            ) {
+                //sample code 없음
 //            Log.i("LOG_TAG", "onCalloutBalloonOfPOIItemTouched")
-        }
+            }
 
-        override fun onDraggablePOIItemMoved(
-            mapView: MapView,
-            mapPOIItem: MapPOIItem,
-            mapPoint: MapPoint
-        ) {
-            //sample code 없음
+            override fun onDraggablePOIItemMoved(
+                mapView: MapView,
+                mapPOIItem: MapPOIItem,
+                mapPoint: MapPoint
+            ) {
+                //sample code 없음
 //            Log.i("LOG_TAG", "onDraggablePOIItemMoved")
+            }
         }
-    }
 
 
     internal class CustomCalloutBalloonAdapter : CalloutBalloonAdapter {

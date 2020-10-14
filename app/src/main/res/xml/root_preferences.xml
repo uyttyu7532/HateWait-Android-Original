@@ -1,0 +1,58 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="가게정보 수정">
+
+        <EditTextPreference
+                android:key="store_name"
+                android:summary="맛있는 가게"
+                android:title="가게명" />
+        <EditTextPreference
+                android:key="store_password"
+                android:title="비밀번호" />
+        <EditTextPreference
+                android:key="store_phone_num"
+                android:title="전화번호" />
+        <EditTextPreference
+                android:key="store_time"
+                android:title="영업 시간" />
+        <EditTextPreference
+                android:key="store_stamp_coupon"
+                android:title="스탬프 및 쿠폰 설정" />
+        <EditTextPreference
+                android:key="store_address"
+                android:title="가게 주소" />
+        <EditTextPreference
+                android:key="store_capacity"
+                android:summary="50명"
+                android:title="수용 가능 인원" />
+        <EditTextPreference
+                android:key="store_introduce"
+                android:summary="포장 가능합니다~"
+                android:title="가게 소개" />
+        <Preference android:title="로그아웃" />
+
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/sync_header">
+
+        <SwitchPreferenceCompat
+                android:key="sync"
+                android:title="@string/sync_title" />
+
+        <SwitchPreferenceCompat
+                android:dependency="sync"
+                android:key="attachment"
+                android:summaryOff="@string/attachment_summary_off"
+                android:summaryOn="@string/attachment_summary_on"
+                android:title="@string/attachment_title" />
+        <ListPreference
+                android:defaultValue="reply"
+                android:entries="@array/reply_entries"
+                android:entryValues="@array/reply_values"
+                android:key="reply"
+                android:title="@string/reply_title" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

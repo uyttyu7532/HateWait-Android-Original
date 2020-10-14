@@ -18,17 +18,17 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true">
+        <activity android:name=".customer.StoreList"></activity>
+        <activity android:name=".storeinfo.StoreInfoSettingsActivity" />
         <activity
                 android:name=".customer.ManageStampCouponActivity"
                 android:label="@string/title_activity_manage_stamp_coupon"
-                android:theme="@style/AppTheme.NoActionBar"></activity>
+                android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".store.VisitorListActivity" />
-        <activity android:name=".store.ClientList" />
         <activity android:name=".customerinfo.SettingPassword2" />
         <activity android:name=".customerinfo.SettingPassword" />
         <activity android:name=".customerinfo.CustomerInfoUpdate" />
         <activity android:name=".storeinfo.StoreInfoUpdate2" />
-        <activity android:name=".store.CustomerListActivity" />
         <activity android:name=".signup.ChangePasswordActivity" />
         <activity android:name=".signup.FindPassWordActivity" />
         <activity android:name=".map.KakaoMapActivity" />

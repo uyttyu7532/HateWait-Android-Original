@@ -9,4 +9,8 @@
     <color name="colorGreen">#66BB6A</color>
     <color name = "colorCall">#66ddff00</color>
     <color name="selectedBackGroundColorPrimary">#77BB6A</color>
+
+    <color name="colorVisited">#FF00E6</color>
+    <color name="colorNext">#00FFF7</color>
+
 </resources>

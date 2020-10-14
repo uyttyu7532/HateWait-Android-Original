@@ -10,7 +10,6 @@ import android.view.MenuItem
 import com.example.hatewait.R
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_customer_info_update.*
-import kotlinx.android.synthetic.main.activity_customer_info_update.register_toolbar_title_textView
 import kotlinx.android.synthetic.main.activity_setting_password.*
 import org.jetbrains.anko.startActivity
 
@@ -23,7 +22,7 @@ class SettingPassword : AppCompatActivity() {
         setContentView(R.layout.activity_setting_password)
         mcontext = this.applicationContext
 
-        register_toolbar_title_textView.text = "비밀번호 변경"
+//        register_toolbar_title_textView.text = "비밀번호 변경"
         button_continue.text = "비밀번호 변경"
 
         button_continue.setOnClickListener {

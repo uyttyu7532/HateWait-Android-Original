@@ -307,10 +307,11 @@
                                     android:textColor="#000000"
                                     android:textSize="18sp" />
 
-                            <!--                            <TextView-->
-                            <!--                                    android:layout_width="wrap_content"-->
-                            <!--                                    android:layout_height="wrap_content"-->
-                            <!--                                    android:text="서울특별시 광진구 능동로" />-->
+                            <TextView
+                                    android:id="@+id/setting_address_text_view"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="서울특별시 광진구 능동로" />
                         </LinearLayout>
                     </FrameLayout>
                 </androidx.cardview.widget.CardView>

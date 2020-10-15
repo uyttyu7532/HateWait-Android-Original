@@ -65,6 +65,9 @@ class StoreSignUp3 : AppCompatActivity() {
         store_address_input_edit_text.setOnClickListener {
             val bundle = Bundle()
             addressDialog = AddressDialogFragment().getInstance()
+            addressDialog.callBack = {
+                store_address_input_edit_text.setText(it)
+            }
             addressDialog.arguments = bundle
             supportFragmentManager?.let { fragmentManager ->
                 addressDialog.show(

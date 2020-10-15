@@ -30,6 +30,7 @@ class AddressDialogFragment : DialogFragment() {
     private val mHandler: Handler = Handler()
     var customView: View? = null
     lateinit var webView: WebView
+    var callBack: (String) -> Unit? = {}
 
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -136,15 +137,21 @@ class AddressDialogFragment : DialogFragment() {
         fun setAddress(arg1: String, arg2: String, arg3: String) {
             mDialog.dismiss()
 
-            val storesignup3 = activity as StoreSignUp3
-            storesignup3.store_address_input_edit_text.setText(
-                String.format(
-                    "(%s) %s %s",
-                    arg1,
-                    arg2,
-                    arg3
-                )
-            )
+            callBack(String.format(
+                "(%s) %s %s",
+                arg1,
+                arg2,
+                arg3
+            ))
+//            val storesignup3 = activity as StoreSignUp3
+//            storesignup3.store_address_input_edit_text.setText(
+//                String.format(
+//                    "(%s) %s %s",
+//                    arg1,
+//                    arg2,
+//                    arg3
+//                )
+//            )
 //            storesignup3.store_address_lat_edit_text.setText(String.format("%s",lat))
 //            storesignup3.store_address_lon_edit_text.setText(String.format("%s",lon))
 

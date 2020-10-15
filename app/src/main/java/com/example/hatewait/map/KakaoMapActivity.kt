@@ -341,7 +341,6 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
                         marker.userObject =
                             restaurant.category_name + "," + restaurant.phone + "," + restaurant.place_url
                         marker.mapPoint = mapPoint
-
                         marker.markerType =
                             MapPOIItem.MarkerType.CustomImage // 기본으로 제공하는 BluePin 마커 모양.
                         marker.selectedMarkerType = MapPOIItem.MarkerType.CustomImage

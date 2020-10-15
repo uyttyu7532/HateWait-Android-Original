@@ -11,7 +11,10 @@ class CustomerInfoUpdate : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_customer_info_update)
 
-        setting_password_customer.setOnClickListener{
+        setting_customer_name.setOnClickListener{
+
+        }
+        setting_customer_password.setOnClickListener{
             startActivity<SettingPassword>()
         }
     }

@@ -19,12 +19,13 @@
             android:id="@+id/store_introduce_text_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
         <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/store_introduce_editText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
-                android:hint="가게명을 입력하세요"/>
+                android:hint="가게소개를 입력하세요"
+                android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -29,13 +29,8 @@ lateinit var mDialog: Dialog
 class AddressDialogFragment : DialogFragment() {
     private val mHandler: Handler = Handler()
     var customView: View? = null
-    private lateinit var addressDialogListener: AddressDialogListener
     lateinit var webView: WebView
 
-
-    interface AddressDialogListener {
-        fun dismissDialog(dialog: DialogFragment)
-    }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -55,7 +50,6 @@ class AddressDialogFragment : DialogFragment() {
         super.onAttach(context)
 
         try {
-            addressDialogListener = context as AddressDialogListener
         } catch (e: ClassCastException) {
             throw ClassCastException((context.toString() + "must implement dialogListener"))
         }
@@ -109,7 +103,8 @@ class AddressDialogFragment : DialogFragment() {
             when (event.action) {
                 MotionEvent.ACTION_DOWN, MotionEvent.ACTION_UP -> if (!v.hasFocus()) {
                     mHandler.post {
-                        var inputMethodManager = this.requireActivity().getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager?
+                        var inputMethodManager = this.requireActivity()
+                            .getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager?
                         inputMethodManager!!.toggleSoftInputFromWindow(
                             edit.applicationWindowToken,
                             InputMethodManager.SHOW_FORCED,
@@ -142,7 +137,14 @@ class AddressDialogFragment : DialogFragment() {
             mDialog.dismiss()
 
             val storesignup3 = activity as StoreSignUp3
-            storesignup3.store_address_input_edit_text.setText(String.format("(%s) %s %s", arg1, arg2, arg3))
+            storesignup3.store_address_input_edit_text.setText(
+                String.format(
+                    "(%s) %s %s",
+                    arg1,
+                    arg2,
+                    arg3
+                )
+            )
 //            storesignup3.store_address_lat_edit_text.setText(String.format("%s",lat))
 //            storesignup3.store_address_lon_edit_text.setText(String.format("%s",lon))
 

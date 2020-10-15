@@ -19,17 +19,17 @@ import kotlinx.android.synthetic.main.activity_store_info_update.*
 import org.jetbrains.anko.layoutInflater
 import java.lang.ClassCastException
 
-class StoreNameChangeDialog : AppCompatDialogFragment() {
+class StoreIntroduceChangeDialog : AppCompatDialogFragment() {
     // 그대로 두면 onCreateView method에서 null을 리턴하면서
     //     onActivityCreated, onViewCreated 가 모두 호출되지 않음
     // viewModel 을 커스터마이징 할 수 가없으므로 일종의 트릭을 건다.
     var customView: View? = null
     lateinit var dialogListener: DialogListener
-    private val storeNameRegex = Regex("^(?=.*[a-zA-Z가-힣0-9])[a-zA-Z가-힣0-9|\\s|,]{1,}$")
-    fun verifyName(storeName: String): Boolean = storeNameRegex.matches(storeName)
+    private val storeIntroduceRegex = Regex("^(?=.*[a-zA-Z가-힣0-9])[a-zA-Z가-힣0-9|\\s|,]{1,}$")
+    fun verifyName(storeIntroduce: String): Boolean = storeIntroduceRegex.matches(storeIntroduce)
 
     interface DialogListener {
-        fun applyText(storeName: String): Unit
+        fun applyText(storeIntroduce: String): Unit
     }
 
 
@@ -37,18 +37,21 @@ class StoreNameChangeDialog : AppCompatDialogFragment() {
         val builder = AlertDialog.Builder(activity)
 //        val inflater : LayoutInflater = activity?.layoutInflater!!
         customView =
-            context?.layoutInflater?.inflate(R.layout.activity_store_name_change_dialog, null)!!
+            context?.layoutInflater?.inflate(
+                R.layout.activity_store_introduce_change_dialog,
+                null
+            )!!
         val editStoreNameText: TextInputEditText =
             customView?.findViewById(R.id.store_introduce_editText)!!
 
         builder.setView(customView)
-            .setTitle("가게이름")
-            .setNegativeButton("취소", DialogInterface.OnClickListener { dialogInterface, _ ->
+            .setTitle("가게 소개")
+            .setNegativeButton("취소", DialogInterface.OnClickListener { _, _ ->
                 dismiss()
             })
-            .setPositiveButton("변경", DialogInterface.OnClickListener { dialogInterface, _ ->
-                val updatedStoreName = editStoreNameText.text.toString()
-                dialogListener.applyText(updatedStoreName)
+            .setPositiveButton("변경", DialogInterface.OnClickListener { _, _ ->
+//                val updatedStoreIntroduce = editStoreNameText.text.toString()
+//                dialogListener.applyText(updatedStoreIntroduce)
             })
         return builder.create()
     }
@@ -60,7 +63,7 @@ class StoreNameChangeDialog : AppCompatDialogFragment() {
             dialogListener = context as DialogListener
 
         } catch (e: ClassCastException) {
-            throw ClassCastException((context.toString() + "must implement Store Name Change Listener"))
+            throw ClassCastException((context.toString() + "must implement Store Introduce Change Listener"))
         }
 
     }
@@ -74,7 +77,6 @@ class StoreNameChangeDialog : AppCompatDialogFragment() {
         return customView
     }
 
-//    호출안됨
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         Log.i("onActivityCreated", "this is dialog onActivityCreated")
@@ -96,19 +98,19 @@ class StoreNameChangeDialog : AppCompatDialogFragment() {
     }
 
     private fun init() {
-        val editStoreNameText: TextInputEditText =
+        val storeIntroduceEditText: TextInputEditText =
             customView?.findViewById(R.id.store_introduce_editText)!!
-        editStoreNameText.setText(activity?.store_name?.text)
-        val editStoreNameLayout: TextInputLayout =
+        storeIntroduceEditText.text = activity?.store_name?.text
+        val storeIntroduceTextLayout: TextInputLayout =
             customView?.findViewById(R.id.store_introduce_text_layout)!!
-        editStoreNameText.addTextChangedListener(object : TextWatcher {
+        storeIntroduceEditText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(str: Editable?) {
                 if (!verifyName(str.toString())) {
-                    editStoreNameLayout.error =
+                    storeIntroduceTextLayout.error =
                         resources.getString(R.string.store_name_error_message)
                 } else {
-                    editStoreNameLayout.error = null
-                    editStoreNameLayout.hint = null
+                    storeIntroduceTextLayout.error = null
+                    storeIntroduceTextLayout.hint = null
                 }
             }
 

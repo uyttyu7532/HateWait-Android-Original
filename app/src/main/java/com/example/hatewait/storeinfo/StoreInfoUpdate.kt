@@ -16,8 +16,7 @@ import com.example.hatewait.socket.STORENAME
 import com.example.hatewait.socket.StoreInfoUpdateAsyncTask
 import kotlinx.android.synthetic.main.activity_store_info_update.*
 
-class StoreInfoUpdate : AppCompatActivity(),
-    AddressDialogFragment.AddressDialogListener {
+class StoreInfoUpdate : AppCompatActivity(){
 
     //    3자리 - 3 or 4자리 - 4자리
     //    첫자리는 반드시 0으로 시작.
@@ -136,6 +135,7 @@ class StoreInfoUpdate : AppCompatActivity(),
             StoreCapacityNumberChangeDialog()
                 .show(supportFragmentManager, "STORE_CAPACITY_CHANGE")
         }
+
         store_phone_number_textView.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(updatedPhoneNumber: Editable?) {
                 update_store_info_button.isEnabled =
@@ -153,7 +153,7 @@ class StoreInfoUpdate : AppCompatActivity(),
             }
         })
         store_phone_number_textView.setOnClickListener {
-            StorePhoneNumberChgangeDialog()
+            StorePhoneNumberChangeDialog()
                 .show(supportFragmentManager, "STORE_PHONE_CHANGE")
         }
 
@@ -173,9 +173,5 @@ class StoreInfoUpdate : AppCompatActivity(),
     }
 
 
-
-    override fun dismissDialog(dialog: DialogFragment) {
-        Toast.makeText(this, "다이얼로그 닫고싶어요", Toast.LENGTH_SHORT).show()
-        dialog.dismiss()
-    }
+    
 }

@@ -27,12 +27,11 @@ import java.io.IOException
 private lateinit var mContext: Context
 lateinit var addressDialog: AddressDialogFragment
 
-class StoreSignUp3 : AppCompatActivity(), AddressDialogFragment.AddressDialogListener {
+class StoreSignUp3 : AppCompatActivity() {
 
 
     private val storeNameRegex = Regex("^(?=.*[a-zA-Z가-힣0-9])[a-zA-Z가-힣0-9|\\s|,]{1,}$")
     private val storePhoneRegex = Regex("^[0](\\d{2})(\\d{3,4})(\\d{3,4})")
-    private val storeAddressRegex = Regex("^[가-힣]+[가-힣a-zA-Z0-9|\\-|,|\\s]{1,50}$")
     fun verifyName(storeName: String): Boolean = storeNameRegex.matches(storeName)
     fun verifyPhone(storePhone: String): Boolean = storePhoneRegex.matches(storePhone)
 
@@ -211,10 +210,7 @@ class StoreSignUp3 : AppCompatActivity(), AddressDialogFragment.AddressDialogLis
 
     }
 
-    override fun dismissDialog(dialog: DialogFragment) {
-        Toast.makeText(mContext, "다이얼로그 닫고싶어요", Toast.LENGTH_SHORT).show()
-        dialog.dismiss()
-    }
+
 
 }
 

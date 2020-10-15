@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.activity_store_info_update.*
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
-class StorePhoneNumberChgangeDialog : DialogFragment() {
+class StorePhoneNumberChangeDialog : DialogFragment() {
     var customView: View? = null
     private lateinit var dialogListener: DialogListener
 
@@ -42,7 +42,7 @@ class StorePhoneNumberChgangeDialog : DialogFragment() {
                     dismiss()
                 })
                 .setPositiveButton("변경", DialogInterface.OnClickListener { dialog, _ ->
-                    dialogListener.applyPhoneNumber(storePhoneEditText.text.toString())
+                    //TODO 서버에게 전화번호 수정 요청
                 })
             builder.create()
         } ?: throw IllegalStateException("Activity Can't be null")
@@ -83,7 +83,7 @@ class StorePhoneNumberChgangeDialog : DialogFragment() {
 //        추후 PhoneNumberTextWatcher() 추가 고려
 //        Auto Hyphen로 유저 배려
 //        or Spinner를 통해 지역번호 선택할 수 있게
-        storePhoneEditText.setText(activity?.store_phone_number_textView?.text)
+        storePhoneEditText.text = activity?.store_phone_number_textView?.text
         storePhoneEditText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(storePhoneNumber: Editable?) {
                 if (!storePhoneNumber.toString().matches(phoneRegex)) {

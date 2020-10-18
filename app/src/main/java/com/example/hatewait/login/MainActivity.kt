@@ -9,9 +9,12 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hatewait.R
 import com.example.hatewait.customer.CustomerMenu
+import com.example.hatewait.model.CustomerLoginResponseData
+import com.example.hatewait.model.CustomerLoginRequestData
 import com.example.hatewait.signup.CustomerSignUp1
 import com.example.hatewait.signup.FindPassWordActivity1
 import com.example.hatewait.signup.StoreSignUp1
@@ -22,17 +25,23 @@ import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.startActivity
 import org.json.JSONObject
+import retrofit2.*
+import retrofit2.converter.gson.GsonConverterFactory
+
+var CustomerInfo: CustomerLoginResponseData? = null
 
 class MainActivity : AppCompatActivity() {
     var mLastBackPress: Long = 0
     val mBackPressThreshold: Long = 3500
 
     // 영문,한글,숫자 1자 이상 입력 가능
-    private val idRegex = Regex("^(?=.*[a-zA-Zㄱ-ㅎ가-힣0-9])[a-zA-Zㄱ-ㅎ가-힣0-9]{1,}$")
+//    private val idRegex = Regex("^(?=.*[a-zA-Zㄱ-ㅎ가-힣0-9])[a-zA-Zㄱ-ㅎ가-힣0-9]{1,}$")
+    private val idRegex = Regex("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")
+//    private val idRegex = Regex(".*")
 
     //    영문, 숫자, 특수문자 포함 8자 이상
-    private val passwordRegex =
-        Regex("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,}$")
+    private val passwordRegex = Regex("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,}$")
+//    private val passwordRegex = Regex(".*")
 
     fun verifyId(input_id: String): Boolean = idRegex.matches(input_id)
     fun verifyPassword(input_password: String): Boolean = passwordRegex.matches(input_password)
@@ -100,7 +109,47 @@ class MainActivity : AppCompatActivity() {
                     editor.putBoolean("AUTO_LOGIN", false)
                     editor.commit()
                 }
-                startActivity<CustomerMenu>()
+
+//                var jsonObject = JSONObject()
+//                try {
+//                    jsonObject.put("id","mmh")
+//                    jsonObject.put("pw", "passww")
+//                } catch (e: JSONException) {
+//                    e.printStackTrace()
+//                }
+
+                var customerLoginData = CustomerLoginRequestData(id_input_editText.text.toString(),password_input_editText.text.toString())
+
+                val retrofit = Retrofit.Builder().baseUrl("https://hatewait-server.herokuapp.com/")
+                    .addConverterFactory(GsonConverterFactory.create()) // JSON
+                    .build();
+                val service = retrofit.create(RetrofitCustomerLogin::class.java);
+//                service.requestCustomerLogin(id_input_editText.text.toString(),password_input_editText.text.toString())
+                service.requestCustomerLogin(customerLoginData)
+                .enqueue(object : Callback<CustomerLoginResponseData> {
+                    override fun onFailure(call: Call<CustomerLoginResponseData>, t: Throwable) {
+                        Log.d("손님로그인 :: ", "로그인연결실패 $t")
+                    }
+                    override fun onResponse(call: Call<CustomerLoginResponseData>, response: Response<CustomerLoginResponseData>) {
+                        if (response.code()==409){
+                            Log.d("손님로그인 :: ", response.code().toString() + "::" + response?.body().toString())
+                        }
+                        if (response.code()==200){
+                            Log.d("손님로그인 :: ", response.code().toString() + "::" + response?.body().toString())
+                            var data: CustomerLoginResponseData? = response?.body()
+                            CustomerInfo = data
+
+                            startActivity<CustomerMenu>()
+                        }
+                        if (response.code()==500){
+                        }
+
+                    }
+                }
+                )
+
+
+
 
             } else {
                 val editor = storeReference.edit()
@@ -128,7 +177,7 @@ class MainActivity : AppCompatActivity() {
         find_password_button.setOnClickListener {
             startActivity<FindPassWordActivity1>()
         }
-}
+    }
 
 
     //    Naver Login Initilization
@@ -300,4 +349,5 @@ class MainActivity : AppCompatActivity() {
             super.onBackPressed()
         }
     }
+
 }

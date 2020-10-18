@@ -8,8 +8,16 @@ import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import com.example.hatewait.R
-import com.example.hatewait.socket.CustomerRegisterAsyncTask
+import com.example.hatewait.customer.CustomerMenu
+import com.example.hatewait.login.CustomerInfo
+import com.example.hatewait.model.CustomerLoginResponseData
+import com.example.hatewait.model.CustomerSignUpRequestData
+import com.example.hatewait.model.CustomerSignUpResponseData
 import kotlinx.android.synthetic.main.activity_customer_register3.*
+import kotlinx.android.synthetic.main.activity_customer_register3.button_finish
+import org.jetbrains.anko.startActivity
+import retrofit2.*
+import retrofit2.converter.gson.GsonConverterFactory
 
 
 // 1단계 이메일 , 인증번호 (네아로면 생략)
@@ -54,7 +62,45 @@ class CustomerSignUp3 : AppCompatActivity() {
 //                userName,
 //                userPhone
 //            )
-            Toast.makeText(this, "$userId $userPassword $userName $userPhone",Toast.LENGTH_LONG).show()
+
+            var customerSignUpData =
+                CustomerSignUpRequestData(userId, userName, userPhone, userId, userPassword)
+
+            val retrofit = Retrofit.Builder().baseUrl("https://hatewait-server.herokuapp.com/")
+                .addConverterFactory(GsonConverterFactory.create()) // JSON
+                .build();
+            val service = retrofit.create(RetrofitCustomerSignUp::class.java);
+//                service.requestCustomerLogin(id_input_editText.text.toString(),password_input_editText.text.toString())
+            service.requestCustomerSignUp(customerSignUpData)
+                .enqueue(object : Callback<CustomerSignUpResponseData> {
+                    override fun onFailure(call: Call<CustomerSignUpResponseData>, t: Throwable) {
+
+                        Log.d("손님회원가입 :: ", "회원가입연결실패 $t")
+                    }
+
+                    override fun onResponse(
+                        call: Call<CustomerSignUpResponseData>,
+                        response: Response<CustomerSignUpResponseData>
+                    ) {
+
+                        if (response.code() == 500) {
+                            Log.d("손님회원가입 500", response.body().toString())
+                        }
+
+                        if (response.code() == 200) {
+
+                            Log.d("손님회원가입 :: ", response?.body().toString())
+                            var data: CustomerSignUpResponseData? = response?.body()
+
+                            startActivity<CustomerMenu>()
+                        }
+                    }
+                }
+                )
+
+
+            Toast.makeText(this, "$userId $userPassword $userName $userPhone", Toast.LENGTH_LONG)
+                .show()
         }
         setSupportActionBar(register_toolbar)
         supportActionBar?.apply {

@@ -23,7 +23,7 @@
                 android:orientation="horizontal">
 
             <TextView
-                    android:id="@+id/customerNameView"
+                    android:id="@+id/customer_name_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="조예린"

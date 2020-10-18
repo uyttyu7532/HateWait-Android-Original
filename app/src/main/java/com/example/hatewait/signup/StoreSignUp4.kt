@@ -1,20 +1,17 @@
 package com.example.hatewait.signup
 
 import android.content.Intent
-
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.hatewait.R
-import com.example.hatewait.socket.StoreRegisterAsyncTask
 import com.example.hatewait.storeinfo.BusinessHourPick
 import kotlinx.android.synthetic.main.activity_store_signup4.*
-
-import kotlinx.android.synthetic.main.activity_store_signup4.button_finish
-import kotlinx.android.synthetic.main.activity_store_signup4.store_business_hours_textView
+import org.json.JSONException
+import org.json.JSONObject
 
 // 1단계 이메일 , 인증번호 (네아로면 생략)
 // 2단계 비번, 비번확인
@@ -61,6 +58,20 @@ class StoreSignUp4 : AppCompatActivity(){
 
             // TODO 디비에 회원가입 요청
 //            StoreRegisterAsyncTask(this@StoreSignUp4).execute(newStoreInfo)
+            var jsonObject = JSONObject()
+            try {
+                jsonObject.put("id", intent.getStringExtra("STORE_ID"))
+                jsonObject.put("password", intent.getStringExtra("STORE_PASSWORD"))
+                jsonObject.put("name", intent.getStringExtra("STORE_NAME"))
+                jsonObject.put("phone", intent.getStringExtra("STORE_PHONE"))
+                jsonObject.put("address", intent.getStringExtra("STORE_ADDRESS"))
+                jsonObject.put("businesshours", store_business_hours_textView.text.toString())
+                jsonObject.put("capacity", store_capacity_editText.text.toString())
+                jsonObject.put("description", store_info_description_editText.text.toString())
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
+
             Toast.makeText(this, newStoreInfo.toString(), Toast.LENGTH_SHORT).show()
         }
 

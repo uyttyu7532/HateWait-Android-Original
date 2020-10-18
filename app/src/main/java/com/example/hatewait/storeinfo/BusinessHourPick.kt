@@ -23,11 +23,11 @@ class BusinessHourPick : AppCompatActivity(),
 
     fun init() {
         var bhs: List<BusinessHours>? = null
-        cancel_button.setOnClickListener {
+        setting_time_cancel_button.setOnClickListener {
             finish()
         }
 
-        btn_apply.setOnClickListener {
+        setting_time_ok_button.setOnClickListener {
 //            bhs: List<BusinessHours?>? = null
             bhs = try {
                 bh_picker.businessHoursList

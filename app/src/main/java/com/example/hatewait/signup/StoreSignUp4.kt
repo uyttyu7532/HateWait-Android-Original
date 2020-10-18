@@ -33,6 +33,7 @@ class StoreSignUp4 : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_store_signup4)
+        addTextChangeListener()
         setSupportActionBar(register_toolbar3)
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
@@ -54,13 +55,13 @@ class StoreSignUp4 : AppCompatActivity(){
                 Pair("PHONE", intent.getStringExtra("STORE_PHONE")),
                 Pair("ADDRESS", intent.getStringExtra("STORE_ADDRESS")),
                 Pair("BUSINESS_HOURS", store_business_hours_textView.text.toString()),
-                Pair("CAPACITY", intent.getStringExtra("STORE_CAPACITY")),
-                Pair("DESCRIPTION", intent.getStringExtra("STORE_DESCRIPTION"))
+                Pair("CAPACITY", store_capacity_editText.text.toString()),
+                Pair("DESCRIPTION", store_info_description_editText.text.toString())
             )
 
-            // TODO 디비에 회원정보(가게) 저장
+            // TODO 디비에 회원가입 요청
             StoreRegisterAsyncTask(this@StoreSignUp4).execute(newStoreInfo)
-            Toast.makeText(this, "성공!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, newStoreInfo.toString(), Toast.LENGTH_SHORT).show()
         }
 
     }

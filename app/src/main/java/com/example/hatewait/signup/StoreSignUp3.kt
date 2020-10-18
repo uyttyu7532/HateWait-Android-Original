@@ -57,7 +57,7 @@ class StoreSignUp3 : AppCompatActivity() {
             intent.putExtra("STORE_PASSWORD", getIntent().getStringExtra("USER_PASSWORD"))
             intent.putExtra("STORE_NAME", store_name_input_editText.text.toString())
             intent.putExtra("STORE_PHONE", store_phone_editText.text.toString())
-//            intent.putExtra("STORE_ADDRESS", store_address_input_editText.text.toString())
+            intent.putExtra("STORE_ADDRESS", store_address_input_edit_text.text.toString()+getLatLon(store_address_input_edit_text.text.toString()))
             startActivity(intent)
         }
 
@@ -154,66 +154,38 @@ class StoreSignUp3 : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             }
         })
+    }
 
-        // 도로명주소
-//        store_address_input_editText.addTextChangedListener(object : TextWatcher {
-//            override fun afterTextChanged(storeAddress: Editable?) {
-//                if (!verifyAddress(storeAddress.toString())) {
-//                    store_address_input_layout.error = "하이픈(-)과 콤마(,) 제외한 특수문자는 허용되지않습니다."
-//                    button_continue.isEnabled = false
-//                } else {
-//                    store_address_input_layout.error = null
-//                    store_address_input_layout.hint = null
-//                }
-//                button_continue.isEnabled =
-//                    (store_name_input_layout.error == null
-//                            && store_phone_layout.error == null
-//                            && !store_phone_editText.text.isNullOrBlank()
-//                            && store_address_input_editText.error == null
-//                            && !store_address_input_editText.text.isNullOrBlank())
-//            }
-//
-//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-//            }
-//
-//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//            }
-//        })
-
-        lat_lon_button.setOnClickListener {
-
+    fun getLatLon(address:String): String {
 
         var geocoder: Geocoder = Geocoder(this);
 
-            var list: List<Address>? = null;
+        var list: List<Address>? = null;
 
-            var str: String = store_address_input_edit_text.text.toString();
-            try {
-                list = geocoder.getFromLocationName(
-                    str, // 지역 이름
-                    10
-                ); // 읽을 개수
-            } catch (e: IOException) {
-                e.printStackTrace();
-                Log.e("test", "입출력 오류 - 서버에서 주소변환시 에러발생");
-            }
-
-            if (list != null) {
-                if (list.isEmpty()) {
-                    lat_lon_text_view.text = "해당되는 주소 정보는 없습니다";
-                } else {
-                    lat_lon_text_view.text = list[0].latitude.toString()+" "+list[0].longitude.toString();
-                    //          list.get(0).getCountryName();  // 국가명
-                    //          list.get(0).getLatitude();        // 위도
-                    //          list.get(0).getLongitude();    // 경도
-                }
-            }
+        var str: String = address
+        try {
+            list = geocoder.getFromLocationName(
+                str, // 지역 이름
+                10
+            ); // 읽을 개수
+        } catch (e: IOException) {
+            e.printStackTrace();
+            Log.e("test", "입출력 오류 - 서버에서 주소변환시 에러발생");
         }
 
-
+        if (list != null) {
+            if (list.isEmpty()) {
+                return ""
+//                        lat_lon_text_view.text = "해당되는 주소 정보는 없습니다";
+            } else {
+                return "("+list[0].latitude.toString() + "," + list[0].longitude.toString() +")"
+//                        lat_lon_text_view.text = list[0].latitude.toString() + " " + list[0].longitude.toString();
+                //          list.get(0).getCountryName();  // 국가명
+                //          list.get(0).getLatitude();        // 위도
+                //          list.get(0).getLongitude();    // 경도
+            }
+        }
+        return ""
     }
-
-
-
 }
 

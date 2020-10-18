@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.activity_signup2.*
 
 private lateinit var mcontext: Context
 
-class ChangePasswordActivity : AppCompatActivity() {
+class FindPasswordActivity2 : AppCompatActivity() {
 
     private var checkMailCode = false;
     private val passwordRegex =

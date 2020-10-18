@@ -1,4 +1,4 @@
-package com.example.hatewait.customerinfo
+package com.example.hatewait.storeinfo
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
@@ -9,19 +9,13 @@ import android.view.Menu
 import android.view.MenuItem
 import com.example.hatewait.R
 import es.dmoral.toasty.Toasty
-import kotlinx.android.synthetic.main.activity_customer_info_update.*
-import kotlinx.android.synthetic.main.activity_setting_password.*
-import kotlinx.android.synthetic.main.activity_setting_password.button_continue
-import kotlinx.android.synthetic.main.activity_setting_password.register_toolbar
 import kotlinx.android.synthetic.main.activity_signup2.*
-import org.jetbrains.anko.startActivity
 
 private lateinit var mcontext: Context
 
-class SettingPassword2 : AppCompatActivity() {
+class ChangePasswordActivity2 : AppCompatActivity() {
 
 
-    private var checkMailCode = false;
     private val passwordRegex =
         Regex("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,}$")
 
@@ -33,17 +27,15 @@ class SettingPassword2 : AppCompatActivity() {
         mcontext = this.applicationContext
         addTextChangeListener()
 
-//        register_toolbar_title_textView.text = "비밀번호 변경"
+        register_toolbar_title_textView.text = "비밀번호 변경"
         button_continue.text = "비밀번호 변경"
 
         button_continue.setOnClickListener {
-            checkMailCode = false
 
             // TODO 아이디 비밀번호를 이용해서 DB에서 회원정보 수정 => 완료하면 Toasty
             //intent.getStringExtra("USER_ID")
             //password_input_editText.text.toString()
             Toasty.normal(mcontext, "비밀번호가 성공적으로 변경되었습니다.", Toasty.LENGTH_SHORT)
-            this.finish()
         }
 
         setSupportActionBar(register_toolbar)
@@ -55,30 +47,8 @@ class SettingPassword2 : AppCompatActivity() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.back_front_button_menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-        when (item.itemId) {
-            R.id.forward_button -> {
-                if (!button_continue.isEnabled) {
-                    return false
-                } else {
-                    button_continue.performClick()
-                }
-            }
-            android.R.id.home -> {
-                onBackPressed()
-            }
-        }
-        return true
-    }
 
     private fun addTextChangeListener() {
-
 
         // 비밀번호
         password_input_editText.addTextChangedListener(object : TextWatcher {

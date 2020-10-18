@@ -7,7 +7,7 @@ import com.example.hatewait.R
 import com.example.hatewait.address.AddressDialogFragment
 import com.example.hatewait.signup.addressDialog
 import kotlinx.android.synthetic.main.activity_store_info_update2.*
-import kotlinx.android.synthetic.main.activity_store_signup3.*
+import org.jetbrains.anko.startActivity
 
 class StoreInfoUpdate2 : AppCompatActivity(), StoreNameChangeDialog.DialogListener,
     StorePhoneNumberChangeDialog.DialogListener, StoreCapacityNumberChangeDialog.DialogListener,StoreIntroduceChangeDialog.DialogListener {
@@ -20,7 +20,7 @@ class StoreInfoUpdate2 : AppCompatActivity(), StoreNameChangeDialog.DialogListen
             StoreNameChangeDialog().show(supportFragmentManager, "STORE_NAME_CHANGE")
         }
         setting_password.setOnClickListener {
-
+            startActivity<ChangePasswordActivity1>()
         }
         setting_time.setOnClickListener {
             val intent = Intent(this@StoreInfoUpdate2, BusinessHourPick::class.java)
@@ -31,13 +31,15 @@ class StoreInfoUpdate2 : AppCompatActivity(), StoreNameChangeDialog.DialogListen
                 .show(supportFragmentManager, "STORE_PHONE_CHANGE")
         }
         setting_coupon.setOnClickListener {
-
+            startActivity<SettingStampCoupon>()
         }
         setting_address.setOnClickListener {
             val bundle = Bundle()
             addressDialog = AddressDialogFragment().getInstance()
+
             addressDialog.callBack = {
                 setting_address_text_view.setText(it)
+
             }
             addressDialog.arguments = bundle
             supportFragmentManager?.let { fragmentManager ->

@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.activity_signup1.*
 private lateinit var mcontext: Context
 private lateinit var senderTo: String
 
-class FindPassWordActivity : AppCompatActivity() {
+class FindPassWordActivity1 : AppCompatActivity() {
 
     var customView: View? = null
     private val idRegex = Regex(
@@ -139,7 +139,7 @@ class FindPassWordActivity : AppCompatActivity() {
         checkEmailButton2.setOnClickListener {
             if (idCheckEditText.text.toString() == emailCode) {
                 Toasty.normal(mcontext, "인증번호가 확인되었습니다.", Toasty.LENGTH_SHORT)
-                val intent = Intent(this, ChangePasswordActivity::class.java)
+                val intent = Intent(this, FindPasswordActivity2::class.java)
                 intent.putExtra("USER_ID", id_input_editText.text.toString())
                 intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
                 startActivity(intent)

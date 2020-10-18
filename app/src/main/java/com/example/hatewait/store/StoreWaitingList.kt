@@ -23,6 +23,7 @@ import com.example.hatewait.model.getShared
 import com.example.hatewait.socket.*
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_store_waiting_list.*
+import org.jetbrains.anko.startActivity
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -55,6 +56,9 @@ class StoreWaitingList : AppCompatActivity() {
         totalWaitingNumTextView = findViewById<View>(
             R.id.total_waiting_num_text_view
         ) as TextView
+        waiting_list_coupon_button.setOnClickListener{
+            startActivity<VisitorListActivity>()
+        }
 //        autoCallBtn = findViewById<View>(
 //            R.id.auto_call_btn
 //        ) as CardView

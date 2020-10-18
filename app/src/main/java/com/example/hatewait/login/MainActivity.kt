@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.hatewait.R
 import com.example.hatewait.customer.CustomerMenu
 import com.example.hatewait.signup.CustomerSignUp1
-import com.example.hatewait.signup.FindPassWordActivity
+import com.example.hatewait.signup.FindPassWordActivity1
 import com.example.hatewait.signup.StoreSignUp1
 import com.example.hatewait.store.StoreMenu
 import com.nhn.android.naverlogin.OAuthLogin
@@ -126,7 +126,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         find_password_button.setOnClickListener {
-            startActivity<FindPassWordActivity>()
+            startActivity<FindPassWordActivity1>()
         }
 }
 

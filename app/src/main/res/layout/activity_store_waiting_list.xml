@@ -12,6 +12,15 @@
             android:layout_height="match_parent">
 
         <ImageView
+                android:id="@+id/waiting_list_coupon_button"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_margin="10dp"
+                android:layout_toLeftOf="@+id/waiting_list_refresh_button"
+                android:clickable="true"
+                app:srcCompat="@drawable/ic_baseline_card_membership_24" />
+
+        <ImageView
                 android:id="@+id/waiting_list_refresh_button"
                 android:layout_width="25dp"
                 android:layout_height="25dp"

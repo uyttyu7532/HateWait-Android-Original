@@ -38,10 +38,10 @@ class StorePhoneNumberChangeDialog : DialogFragment() {
             customView = inflater.inflate(R.layout.fragment_store_phone_change_dialog, null)
             builder.setView(customView)
                 .setTitle("가게 전화번호 수정")
-                .setNegativeButton("취소", DialogInterface.OnClickListener { dialog, _ ->
+                .setNegativeButton("취소", DialogInterface.OnClickListener { _, _ ->
                     dismiss()
                 })
-                .setPositiveButton("변경", DialogInterface.OnClickListener { dialog, _ ->
+                .setPositiveButton("변경", DialogInterface.OnClickListener { _, _ ->
                     //TODO 서버에게 전화번호 수정 요청
                 })
             builder.create()

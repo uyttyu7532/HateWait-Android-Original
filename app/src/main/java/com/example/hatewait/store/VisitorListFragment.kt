@@ -41,7 +41,6 @@ class VisitorListFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_visitor_list, container, false)
         val visitorListRecyclerView = view.findViewById<RecyclerView>(R.id.visitor_list_recycler_view)
-
         val fastScroller = view.findViewById(R.id.visitor_list_fast_scroller) as VerticalRecyclerViewFastScroller
         fastScroller.setRecyclerView(visitorListRecyclerView)
         visitorListRecyclerView.addOnScrollListener(fastScroller.onScrollListener)

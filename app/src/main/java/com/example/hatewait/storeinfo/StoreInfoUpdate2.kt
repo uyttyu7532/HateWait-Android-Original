@@ -68,15 +68,15 @@ class StoreInfoUpdate2 : AppCompatActivity(), StoreNameChangeDialog.DialogListen
     }
 
     override fun applyText(storeName: String) {
-        TODO("Not yet implemented")
+
     }
 
     override fun applyPhoneNumber(storePhoneNumber: String) {
-        TODO("Not yet implemented")
+
     }
 
     override fun applyCapacityNumber(capacityNumber: String) {
-        TODO("Not yet implemented")
+
     }
 }
 //    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

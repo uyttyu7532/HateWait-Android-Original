@@ -156,7 +156,7 @@ class StoreSignUp3 : AppCompatActivity() {
         })
     }
 
-    fun getLatLon(address:String): String {
+    private fun getLatLon(address:String): String {
 
         var geocoder: Geocoder = Geocoder(this);
 

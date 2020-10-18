@@ -60,7 +60,7 @@ class StoreSignUp4 : AppCompatActivity(){
             )
 
             // TODO 디비에 회원가입 요청
-            StoreRegisterAsyncTask(this@StoreSignUp4).execute(newStoreInfo)
+//            StoreRegisterAsyncTask(this@StoreSignUp4).execute(newStoreInfo)
             Toast.makeText(this, newStoreInfo.toString(), Toast.LENGTH_SHORT).show()
         }
 

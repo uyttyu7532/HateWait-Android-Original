@@ -6,6 +6,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.MenuItem
+import android.widget.Toast
 import com.example.hatewait.R
 import com.example.hatewait.socket.CustomerRegisterAsyncTask
 import kotlinx.android.synthetic.main.activity_customer_register3.*
@@ -47,12 +48,13 @@ class CustomerSignUp3 : AppCompatActivity() {
             val userPhone = user_phone_number_editText.text.toString()
 
             // TODO 디비에 회원정보(손님) 저장
-            CustomerRegisterAsyncTask(this@CustomerSignUp3).execute(
-                userId,
-                userPassword,
-                userName,
-                userPhone
-            )
+//            CustomerRegisterAsyncTask(this@CustomerSignUp3).execute(
+//                userId,
+//                userPassword,
+//                userName,
+//                userPhone
+//            )
+            Toast.makeText(this, "$userId $userPassword $userName $userPhone",Toast.LENGTH_LONG).show()
         }
         setSupportActionBar(register_toolbar)
         supportActionBar?.apply {

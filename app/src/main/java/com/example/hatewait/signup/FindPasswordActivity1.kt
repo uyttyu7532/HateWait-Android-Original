@@ -139,7 +139,7 @@ class FindPassWordActivity1 : AppCompatActivity() {
         checkEmailButton2.setOnClickListener {
             if (idCheckEditText.text.toString() == emailCode) {
                 Toasty.normal(mcontext, "인증번호가 확인되었습니다.", Toasty.LENGTH_SHORT)
-                val intent = Intent(this, FindPasswordActivity2::class.java)
+                val intent = Intent(this, FindPassWordActivity2::class.java)
                 intent.putExtra("USER_ID", id_input_editText.text.toString())
                 intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
                 startActivity(intent)

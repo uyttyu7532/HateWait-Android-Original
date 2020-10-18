@@ -18,8 +18,8 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true">
-        <activity android:name=".storeinfo.ChangePasswordActivity2"></activity>
         <activity android:name=".storeinfo.ChangePasswordActivity1" />
+        <activity android:name=".storeinfo.ChangePasswordActivity2"/>
         <activity android:name=".storeinfo.SettingStampCoupon" />
         <activity android:name=".customer.StoreList" />
         <activity android:name=".storeinfo.StoreInfoSettingsActivity" />
@@ -28,12 +28,10 @@
                 android:label="@string/title_activity_manage_stamp_coupon"
                 android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".store.VisitorListActivity" />
-        <activity android:name=".customerinfo.SettingPassword2" />
-        <activity android:name=".customerinfo.SettingPassword" />
         <activity android:name=".customerinfo.CustomerInfoUpdate" />
         <activity android:name=".storeinfo.StoreInfoUpdate2" />
-        <activity android:name=".signup.ChangePasswordActivity" />
-        <activity android:name=".signup.FindPassWordActivity" />
+        <activity android:name=".signup.FindPassWordActivity1" />
+        <activity android:name=".signup.FindPassWordActivity2" />
         <activity android:name=".map.KakaoMapActivity" />
         <activity android:name=".signup.StoreSignUp1" />
         <activity android:name=".signup.StoreSignUp2" />
@@ -65,9 +63,6 @@
             </intent-filter>
         </service>
 
-        <activity
-                android:name=".storeinfo.AutoCallNumberChangeDialog"
-                tools:ignore="Instantiatable" />
         <activity
                 android:name=".storeinfo.StoreNameChangeDialog"
                 tools:ignore="Instantiatable" />

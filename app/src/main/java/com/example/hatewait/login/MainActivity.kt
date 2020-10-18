@@ -137,7 +137,6 @@ class MainActivity : AppCompatActivity() {
     //     전화번호는 Naver 프로필 API에서 제공해주지 않기때문에
     private fun naverLoginInit() {
 
-
         val loginModule = OAuthLogin.getInstance();
         val naverLoginKeyStringArray = resources.getStringArray(R.array.naver_login_api)
 //        Client ID, SecretKey, Name

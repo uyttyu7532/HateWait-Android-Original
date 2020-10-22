@@ -110,43 +110,39 @@ class MainActivity : AppCompatActivity() {
                     editor.commit()
                 }
 
-//                var jsonObject = JSONObject()
-//                try {
-//                    jsonObject.put("id","mmh")
-//                    jsonObject.put("pw", "passww")
-//                } catch (e: JSONException) {
-//                    e.printStackTrace()
+
+
+//                var customerLoginData = CustomerLoginRequestData(id_input_editText.text.toString(),password_input_editText.text.toString())
+//
+//                val retrofit = Retrofit.Builder().baseUrl("https://hatewait-server.herokuapp.com/")
+//                    .addConverterFactory(GsonConverterFactory.create()) // JSON
+//                    .build();
+//                val service = retrofit.create(RetrofitLogin::class.java);
+////                service.requestCustomerLogin(id_input_editText.text.toString(),password_input_editText.text.toString())
+//                service.requestCustomerLogin(customerLoginData)
+//                .enqueue(object : Callback<CustomerLoginResponseData> {
+//                    override fun onFailure(call: Call<CustomerLoginResponseData>, t: Throwable) {
+//                        Log.d("손님로그인 :: ", "로그인연결실패 $t")
+//                    }
+//                    override fun onResponse(call: Call<CustomerLoginResponseData>, response: Response<CustomerLoginResponseData>) {
+//                        if (response.code()==409){
+//                            Log.d("손님로그인 :: ", response.code().toString() + "::" + response?.body().toString())
+//                        }
+//                        if (response.code()==200){
+//                            Log.d("손님로그인 :: ", response.code().toString() + "::" + response?.body().toString())
+//                            var data: CustomerLoginResponseData? = response?.body()
+//                            CustomerInfo = data
+//
+//                            startActivity<CustomerMenu>()
+//                        }
+//                        if (response.code()==500){
+//                        }
+//
+//                    }
 //                }
+//                )
 
-                var customerLoginData = CustomerLoginRequestData(id_input_editText.text.toString(),password_input_editText.text.toString())
-
-                val retrofit = Retrofit.Builder().baseUrl("https://hatewait-server.herokuapp.com/")
-                    .addConverterFactory(GsonConverterFactory.create()) // JSON
-                    .build();
-                val service = retrofit.create(RetrofitLogin::class.java);
-//                service.requestCustomerLogin(id_input_editText.text.toString(),password_input_editText.text.toString())
-                service.requestCustomerLogin(customerLoginData)
-                .enqueue(object : Callback<CustomerLoginResponseData> {
-                    override fun onFailure(call: Call<CustomerLoginResponseData>, t: Throwable) {
-                        Log.d("손님로그인 :: ", "로그인연결실패 $t")
-                    }
-                    override fun onResponse(call: Call<CustomerLoginResponseData>, response: Response<CustomerLoginResponseData>) {
-                        if (response.code()==409){
-                            Log.d("손님로그인 :: ", response.code().toString() + "::" + response?.body().toString())
-                        }
-                        if (response.code()==200){
-                            Log.d("손님로그인 :: ", response.code().toString() + "::" + response?.body().toString())
-                            var data: CustomerLoginResponseData? = response?.body()
-                            CustomerInfo = data
-
-                            startActivity<CustomerMenu>()
-                        }
-                        if (response.code()==500){
-                        }
-
-                    }
-                }
-                )
+                startActivity<CustomerMenu>()
 
 
 
@@ -330,7 +326,7 @@ class MainActivity : AppCompatActivity() {
         id_input_editText.text?.clear()
         id_input_layout.error = null
         id_input_layout.clearFocus()
-        id_input_layout.hint = "이메일 아이디를 입력해주세요"
+        id_input_layout.hint = "아이디를 입력해주세요"
         password_input_editText.text?.clear()
         password_input_layout.clearFocus()
         password_input_layout.error = null

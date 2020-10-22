@@ -1,4 +1,4 @@
-package com.example.hatewait.customer
+package com.example.hatewait.member
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

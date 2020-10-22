@@ -67,7 +67,7 @@ class BusinessHourPick : AppCompatActivity(),
         } else {
             resources.getString(R.string.all_day)
         }
-        var holidays = arrayListOf("월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일")
+        var holidays = arrayListOf("월", "화", "수", "목", "금", "토", "일")
         var alwaysSameTimeBusiness = true
 //        첫 영업 시간 시작-끝시간으로 초기화
         var businessTimeRangeArray: ArrayList<String> = arrayListOf(businessTimeRange)
@@ -101,11 +101,11 @@ class BusinessHourPick : AppCompatActivity(),
                 "매일 $businessTimeRange"
             } else {
                 val holiday = holidays.toString().removePrefix("[").removeSuffix("]")
-                "$businessTimeRange (휴무일 : ${holiday})"
+                "$businessTimeRange (휴무 요일 : ${holiday})"
             }
 
         } else {
-            //            하루라도 영업시간 다르면 영업요일별 근무시간 표시
+            //  하루라도 영업시간 다르면 영업요일별 근무시간 표시
             var resultBusinessTimeString = ""
             for (day in businessHourList) {
 //                24시가 아니면 from to 형식

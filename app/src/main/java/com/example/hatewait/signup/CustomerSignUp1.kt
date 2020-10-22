@@ -1,5 +1,6 @@
 package com.example.hatewait.signup
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -27,27 +28,29 @@ import kotlinx.android.synthetic.main.activity_signup1.*
 // 3단계 이름(네아로 생략), 전화번호
 // 가입완료 환영 메시지 액티비티 or 로그인바로됨
 
+lateinit var _customerSignUp1:Activity
 private lateinit var mcontext: Context
 private lateinit var senderTo: String
 
 class CustomerSignUp1 : AppCompatActivity() {
 
     var customView: View? = null
-    private val idRegex = Regex(
+    private val emailRegex = Regex(
         ("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                 + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")
     )
 
-    fun verifyId(input_id: String): Boolean = idRegex.matches(input_id)
+    fun verifyEmail(input_email: String): Boolean = emailRegex.matches(input_email)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup1)
-        mcontext = this.applicationContext
+        _customerSignUp1 = this
+        mcontext = this
         addTextChangeListener()
 
 
-        checkEmailButton.setOnClickListener {
+        check_email_button.setOnClickListener {
             // TODO 디비에서 존재하는 아이디인지 확인 후
 
             //인터넷 사용권한 허가
@@ -58,7 +61,7 @@ class CustomerSignUp1 : AppCompatActivity() {
                     .permitNetwork().build()
             )
 
-            senderTo = id_input_editText.text.toString()
+            senderTo = email_input_edit_text.text.toString()
             SendMail().sendSecurityCode(mcontext, senderTo)
 
             showSettingPopup()
@@ -97,20 +100,19 @@ class CustomerSignUp1 : AppCompatActivity() {
 
     private fun addTextChangeListener() {
 
-        // 아이디
-        id_input_editText.addTextChangedListener(object : TextWatcher {
+        // 이메일
+        email_input_edit_text.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                if (!verifyId(s.toString())) {
-                    id_input_layout.error = resources.getString(R.string.id_input_error)
-//                    button_continue.isEnabled = false
+                if (!verifyEmail(s.toString())) {
+                    email_input_layout.error = resources.getString(R.string.id_input_error)
+                    check_email_button.isEnabled = false
                 } else {
-                    id_input_layout.error = null
-                    id_input_layout.hint = null
+                    email_input_layout.error = null
+                    email_input_layout.hint = null
                 }
 
-
-                checkEmailButton.isEnabled =
-                    id_input_layout.error == null
+                check_email_button.isEnabled =
+                    email_input_layout.error == null
 
             }
 
@@ -127,7 +129,7 @@ class CustomerSignUp1 : AppCompatActivity() {
     private fun showSettingPopup() {
         val inflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = inflater.inflate(R.layout.check_email_dialog, null)
-        val idCheckEditText: EditText = view.findViewById(R.id.id_check_editText)
+        val emailCodeCheckEditText: EditText = view.findViewById(R.id.email_code_check_edit_text)
         val emailCheckTimer: TextView = view.findViewById(R.id.email_check_timer)
         val checkEmailButton2 = view.findViewById<Button>(R.id.checkEmailButton2)
         val conversionTime = "000500" // 5분 타이머
@@ -140,15 +142,15 @@ class CustomerSignUp1 : AppCompatActivity() {
         countDown(conversionTime,emailCheckTimer,alertDialog)
 
         checkEmailButton2.setOnClickListener {
-            if (idCheckEditText.text.toString() == emailCode) {
-                Toasty.normal(mcontext, "인증번호가 확인되었습니다.", Toasty.LENGTH_SHORT)
+            if (emailCodeCheckEditText.text.toString() == emailCode) {
+                Toasty.normal(this, "인증번호가 확인되었습니다.", Toasty.LENGTH_SHORT)
                 val intent = Intent(this, CustomerSignUp2::class.java)
-                intent.putExtra("USER_ID", id_input_editText.text.toString())
+                intent.putExtra("USER_EMAIL", email_input_edit_text.text.toString())
                 intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
                 startActivity(intent)
                 alertDialog.dismiss()
             } else {
-                Toasty.normal(mcontext, "인증번호를 다시 확인해주세요.", Toasty.LENGTH_SHORT)
+                Toasty.normal(this, "인증번호를 다시 확인해주세요.", Toasty.LENGTH_SHORT)
             }
 
         }

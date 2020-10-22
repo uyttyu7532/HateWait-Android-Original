@@ -1,4 +1,4 @@
-package com.example.hatewait.customer
+package com.example.hatewait.member
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -24,7 +24,7 @@ class StampFragment : Fragment() {
 
         var rootView = inflater.inflate(R.layout.fragment_stamp, container, false)
 
-        var recyclerView = rootView.findViewById(R.id.stamp_recycler_view) as RecyclerView
+//        var recyclerView = rootView.findViewById(R.id.stamp_recycler_view) as RecyclerView
 
 
         var stampTitleArray = ArrayList<String>()
@@ -53,12 +53,10 @@ class StampFragment : Fragment() {
         stampDateArray.add("2020-10-11 12:40")
 
 
-
-        recyclerView.setHasFixedSize(true);
-        var adapter = StampViewAdapter(stampTitleArray, stampDateArray)
-        recyclerView.layoutManager =  LinearLayoutManager(activity)
-        recyclerView.adapter = adapter
-
+//        recyclerView.setHasFixedSize(true);
+//        var adapter = StampViewAdapter(stampTitleArray, stampDateArray)
+//        recyclerView.layoutManager =  LinearLayoutManager(activity)
+//        recyclerView.adapter = adapter
 
 
         return rootView

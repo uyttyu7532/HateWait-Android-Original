@@ -9,7 +9,7 @@ import android.graphics.Color
 import android.media.RingtoneManager
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import com.example.hatewait.customer.CustomerMenu
+import com.example.hatewait.member.CustomerMenu
 import com.example.hatewait.R
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage

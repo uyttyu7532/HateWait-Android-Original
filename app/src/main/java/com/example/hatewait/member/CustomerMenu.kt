@@ -1,27 +1,21 @@
-package com.example.hatewait.customer
+package com.example.hatewait.member
 
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageButton
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.example.hatewait.map.KakaoMapActivity
 import com.example.hatewait.R
-import com.example.hatewait.customerinfo.CustomerInfoUpdate
+import com.example.hatewait.memberinfo.CustomerInfoUpdate
 import com.example.hatewait.login.CustomerInfo
 import com.example.hatewait.socket.CUSTOMERID
 import com.example.hatewait.socket.CancelAsyncTask
-import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.activity_customer_menu.*
 import org.jetbrains.anko.startActivity
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 //lateinit var waitingStoreView: TextView

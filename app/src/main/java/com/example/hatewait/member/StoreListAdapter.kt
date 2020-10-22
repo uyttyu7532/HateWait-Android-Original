@@ -1,4 +1,4 @@
-package com.example.hatewait.customer
+package com.example.hatewait.member
 
 import android.view.LayoutInflater
 import android.view.View

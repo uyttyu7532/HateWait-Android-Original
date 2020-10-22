@@ -1,18 +1,13 @@
-package com.example.hatewait.customer
+package com.example.hatewait.member
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.daimajia.swipe.util.Attributes
 import com.example.hatewait.R
-import com.example.hatewait.model.getShared
-import com.example.hatewait.store.*
 import kotlinx.android.synthetic.main.activity_store_list.*
-import kotlinx.android.synthetic.main.fragment_visitor_list.*
 import kotlinx.android.synthetic.main.fragment_visitor_list.searchView
 
 class StoreList : AppCompatActivity() {

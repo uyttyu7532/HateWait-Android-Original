@@ -21,14 +21,14 @@
         <activity android:name=".storeinfo.ChangePasswordActivity1" />
         <activity android:name=".storeinfo.ChangePasswordActivity2"/>
         <activity android:name=".storeinfo.SettingStampCoupon" />
-        <activity android:name=".customer.StoreList" />
+        <activity android:name=".member.StoreList" />
         <activity android:name=".storeinfo.StoreInfoSettingsActivity" />
         <activity
-                android:name=".customer.ManageStampCouponActivity"
+                android:name=".member.ManageStampCouponActivity"
                 android:label="@string/title_activity_manage_stamp_coupon"
                 android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".store.VisitorListActivity" />
-        <activity android:name=".customerinfo.CustomerInfoUpdate" />
+        <activity android:name=".memberinfo.CustomerInfoUpdate" />
         <activity android:name=".storeinfo.StoreInfoUpdate2" />
         <activity android:name=".signup.FindPassWordActivity1" />
         <activity android:name=".signup.FindPassWordActivity2" />
@@ -67,7 +67,7 @@
                 android:name=".storeinfo.StoreNameChangeDialog"
                 tools:ignore="Instantiatable" />
         <activity android:name=".storeinfo.StoreInfoUpdate" />
-        <activity android:name=".customer.CustomerMenu" />
+        <activity android:name=".member.CustomerMenu" />
         <activity android:name=".store.StoreMenu" />
         <activity android:name=".login.LoginRegisterViewPagerActivity" />
         <activity android:name=".register.RegisterCheck" />

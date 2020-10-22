@@ -19,7 +19,7 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/id_check_layout"
+            android:id="@+id/email_code_check_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
@@ -29,7 +29,7 @@
             app:startIconDrawable="@drawable/custom_id_icon">
 
         <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/id_check_editText"
+                android:id="@+id/email_code_check_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/id_check_hint"

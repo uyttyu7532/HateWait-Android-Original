@@ -1,4 +1,4 @@
-package com.example.hatewait.customer
+package com.example.hatewait.member
 
 
 import android.os.Bundle
@@ -65,7 +65,4 @@ class CouponFragment : Fragment() {
         return rootView
     }
 
-    companion object {
-
-    }
 }

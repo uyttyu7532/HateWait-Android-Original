@@ -1,5 +1,6 @@
 package com.example.hatewait.signup
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.location.Address
@@ -19,11 +20,12 @@ import kotlinx.android.synthetic.main.activity_store_signup3.*
 import java.io.IOException
 
 // 1단계 이메일 , 인증번호 (네아로면 생략)
-// 2단계 비번, 비번확인
+// 2단계 아이디, 비번, 비번확인
 // 3단계 가게이름, 전화번호, 도로명주소
 // 4단계 가게 영업시간, 인원 수, 문구
 // 가입완료 환영 메시지 액티비티 or 로그인바로됨
 
+lateinit var _storeSignUp3: Activity
 private lateinit var mContext: Context
 lateinit var addressDialog: AddressDialogFragment
 
@@ -39,7 +41,9 @@ class StoreSignUp3 : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_store_signup3)
         setSupportActionBar(register_toolbar2)
-        mContext = this.applicationContext
+
+        _storeSignUp3 = this
+        mContext = this
 
 
         supportActionBar?.apply {
@@ -53,8 +57,9 @@ class StoreSignUp3 : AppCompatActivity() {
 
         button_continue.setOnClickListener {
             val intent = Intent(this, StoreSignUp4::class.java)
-            intent.putExtra("STORE_ID", getIntent().getStringExtra("USER_ID"))
-            intent.putExtra("STORE_PASSWORD", getIntent().getStringExtra("USER_PASSWORD"))
+            intent.putExtra("STORE_EMAIL", getIntent().getStringExtra("STORE_EMAIL"))
+            intent.putExtra("STORE_ID", getIntent().getStringExtra("STORE_ID"))
+            intent.putExtra("STORE_PASSWORD", getIntent().getStringExtra("STORE_PASSWORD"))
             intent.putExtra("STORE_NAME", store_name_input_editText.text.toString())
             intent.putExtra("STORE_PHONE", store_phone_editText.text.toString())
             intent.putExtra("STORE_ADDRESS", store_address_input_edit_text.text.toString()+getLatLon(store_address_input_edit_text.text.toString()))
@@ -118,8 +123,7 @@ class StoreSignUp3 : AppCompatActivity() {
                     store_name_input_layout.error == null
                             && store_phone_layout.error == null
                             && !store_phone_editText.text.isNullOrBlank()
-//                            && store_address_input_editText.error == null
-//                            && !store_address_input_editText.text.isNullOrBlank()
+                            && !store_address_input_edit_text.text.isNullOrBlank()
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -144,8 +148,7 @@ class StoreSignUp3 : AppCompatActivity() {
                     store_name_input_layout.error == null
                             && store_phone_layout.error == null
                             && !store_phone_editText.text.isNullOrBlank()
-//                            && store_address_input_editText.error == null
-//                            && !store_address_input_editText.text.isNullOrBlank()
+                            && !store_address_input_edit_text.text.isNullOrBlank()
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {

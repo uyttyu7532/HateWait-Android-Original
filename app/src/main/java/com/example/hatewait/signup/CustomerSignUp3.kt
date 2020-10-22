@@ -8,11 +8,10 @@ import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import com.example.hatewait.R
-import com.example.hatewait.customer.CustomerMenu
-import com.example.hatewait.login.CustomerInfo
-import com.example.hatewait.model.CustomerLoginResponseData
+import com.example.hatewait.member.CustomerMenu
 import com.example.hatewait.model.CustomerSignUpRequestData
 import com.example.hatewait.model.CustomerSignUpResponseData
+import com.example.hatewait.retrofit2.RetrofitSignUp
 import kotlinx.android.synthetic.main.activity_customer_register3.*
 import kotlinx.android.synthetic.main.activity_customer_register3.button_finish
 import org.jetbrains.anko.startActivity
@@ -21,7 +20,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 // 1단계 이메일 , 인증번호 (네아로면 생략)
-// 2단계 비번, 비번확인
+// 2단계 아아디, 비번, 비번확인
 // 3단계 이름(네아로 생략), 전화번호
 // 가입완료 환영 메시지 액티비티 or 로그인바로됨
 
@@ -50,10 +49,14 @@ class CustomerSignUp3 : AppCompatActivity() {
         addTextChangeListener()
 
         button_finish.setOnClickListener {
+            val userEmail = intent.getStringExtra("USER_EMAIL")
             val userId = intent.getStringExtra("USER_ID")
             val userPassword = intent.getStringExtra("USER_PASSWORD")
             val userName = user_name_input_editText.text.toString()
             val userPhone = user_phone_number_editText.text.toString()
+
+
+
 
             // TODO 디비에 회원정보(손님) 저장
 //            CustomerRegisterAsyncTask(this@CustomerSignUp3).execute(
@@ -64,12 +67,12 @@ class CustomerSignUp3 : AppCompatActivity() {
 //            )
 
             var customerSignUpData =
-                CustomerSignUpRequestData(userId, userName, userPhone, userId, userPassword)
+                CustomerSignUpRequestData(userId, userName, userPhone, userEmail, userPassword)
 
             val retrofit = Retrofit.Builder().baseUrl("https://hatewait-server.herokuapp.com/")
                 .addConverterFactory(GsonConverterFactory.create()) // JSON
                 .build();
-            val service = retrofit.create(RetrofitCustomerSignUp::class.java);
+            val service = retrofit.create(RetrofitSignUp::class.java);
 //                service.requestCustomerLogin(id_input_editText.text.toString(),password_input_editText.text.toString())
             service.requestCustomerSignUp(customerSignUpData)
                 .enqueue(object : Callback<CustomerSignUpResponseData> {
@@ -90,9 +93,12 @@ class CustomerSignUp3 : AppCompatActivity() {
                         if (response.code() == 200) {
 
                             Log.d("손님회원가입 :: ", response?.body().toString())
-                            var data: CustomerSignUpResponseData? = response?.body()
+                            var data: CustomerSignUpResponseData? = response?.body() // 서버로부터 온 응답
 
                             startActivity<CustomerMenu>()
+                            _customerSignUp1.finish()
+                            _customerSignUp2.finish()
+                            finish()
                         }
                     }
                 }

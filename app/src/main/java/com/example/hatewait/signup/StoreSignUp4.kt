@@ -9,17 +9,19 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hatewait.R
 import com.example.hatewait.storeinfo.BusinessHourPick
+import kotlinx.android.synthetic.main.activity_customer_register3.*
 import kotlinx.android.synthetic.main.activity_store_signup4.*
+import kotlinx.android.synthetic.main.activity_store_signup4.button_finish
 import org.json.JSONException
 import org.json.JSONObject
 
 // 1단계 이메일 , 인증번호 (네아로면 생략)
-// 2단계 비번, 비번확인
+// 2단계 아이디, 비번, 비번확인
 // 3단계 가게이름, 전화번호, 도로명주소
 // 4단계 가게 영업시간, 인원 수, 문구
 // 가입완료 환영 메시지 액티비티 or 로그인바로됨
 
-class StoreSignUp4 : AppCompatActivity(){
+class StoreSignUp4 : AppCompatActivity() {
 
     private val storeCapacityRegex = Regex("[^0](\\d{0,3})")
 
@@ -45,34 +47,30 @@ class StoreSignUp4 : AppCompatActivity(){
         }
 
         button_finish.setOnClickListener {
-            val newStoreInfo = mapOf(
-                Pair("ID", intent.getStringExtra("STORE_ID")),
-                Pair("PASSWORD", intent.getStringExtra("STORE_PASSWORD")),
-                Pair("NAME", intent.getStringExtra("STORE_NAME")),
-                Pair("PHONE", intent.getStringExtra("STORE_PHONE")),
-                Pair("ADDRESS", intent.getStringExtra("STORE_ADDRESS")),
-                Pair("BUSINESS_HOURS", store_business_hours_textView.text.toString()),
-                Pair("CAPACITY", store_capacity_editText.text.toString()),
-                Pair("DESCRIPTION", store_info_description_editText.text.toString())
-            )
+
+            val storeEmail = intent.getStringExtra("STORE_EMAIL")
+            val storeId = intent.getStringExtra("STORE_ID")
+            val storePassword = intent.getStringExtra("STORE_PASSWORD")
+            val storeName = intent.getStringExtra("STORE_NAME")
+            val storePhone = intent.getStringExtra("STORE_PHONE")
+            val storeAddress = intent.getStringExtra("STORE_ADDRESS")
+            val storeBusinessHour = store_business_hours_textView.text.toString()
+            val storeCapacity = store_capacity_editText.text.toString()
+            val storeDescription = store_info_description_editText.text.toString()
 
             // TODO 디비에 회원가입 요청
-//            StoreRegisterAsyncTask(this@StoreSignUp4).execute(newStoreInfo)
-            var jsonObject = JSONObject()
-            try {
-                jsonObject.put("id", intent.getStringExtra("STORE_ID"))
-                jsonObject.put("password", intent.getStringExtra("STORE_PASSWORD"))
-                jsonObject.put("name", intent.getStringExtra("STORE_NAME"))
-                jsonObject.put("phone", intent.getStringExtra("STORE_PHONE"))
-                jsonObject.put("address", intent.getStringExtra("STORE_ADDRESS"))
-                jsonObject.put("businesshours", store_business_hours_textView.text.toString())
-                jsonObject.put("capacity", store_capacity_editText.text.toString())
-                jsonObject.put("description", store_info_description_editText.text.toString())
-            } catch (e: JSONException) {
-                e.printStackTrace()
-            }
+            // StoreRegisterAsyncTask(this@StoreSignUp4).execute(newStoreInfo)
 
-            Toast.makeText(this, newStoreInfo.toString(), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                "$storeEmail $storeId $storePassword $storeName $storePhone $storeAddress $storeBusinessHour $storeCapacity $storeDescription",
+                Toast.LENGTH_SHORT
+            ).show()
+
+            _storeSignUp1.finish()
+            _storeSignUp2.finish()
+            _storeSignUp3.finish()
+            finish()
         }
 
     }

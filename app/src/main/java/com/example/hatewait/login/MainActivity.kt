@@ -9,12 +9,12 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hatewait.R
-import com.example.hatewait.customer.CustomerMenu
+import com.example.hatewait.member.CustomerMenu
 import com.example.hatewait.model.CustomerLoginResponseData
 import com.example.hatewait.model.CustomerLoginRequestData
+import com.example.hatewait.retrofit2.RetrofitLogin
 import com.example.hatewait.signup.CustomerSignUp1
 import com.example.hatewait.signup.FindPassWordActivity1
 import com.example.hatewait.signup.StoreSignUp1
@@ -35,8 +35,8 @@ class MainActivity : AppCompatActivity() {
     val mBackPressThreshold: Long = 3500
 
     // 영문,한글,숫자 1자 이상 입력 가능
-//    private val idRegex = Regex("^(?=.*[a-zA-Zㄱ-ㅎ가-힣0-9])[a-zA-Zㄱ-ㅎ가-힣0-9]{1,}$")
-    private val idRegex = Regex("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")
+    private val idRegex = Regex("^(?=.*[a-zA-Zㄱ-ㅎ가-힣0-9])[a-zA-Zㄱ-ㅎ가-힣0-9]{1,}$")
+//    private val idRegex = Regex("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")
 //    private val idRegex = Regex(".*")
 
     //    영문, 숫자, 특수문자 포함 8자 이상
@@ -123,7 +123,7 @@ class MainActivity : AppCompatActivity() {
                 val retrofit = Retrofit.Builder().baseUrl("https://hatewait-server.herokuapp.com/")
                     .addConverterFactory(GsonConverterFactory.create()) // JSON
                     .build();
-                val service = retrofit.create(RetrofitCustomerLogin::class.java);
+                val service = retrofit.create(RetrofitLogin::class.java);
 //                service.requestCustomerLogin(id_input_editText.text.toString(),password_input_editText.text.toString())
                 service.requestCustomerLogin(customerLoginData)
                 .enqueue(object : Callback<CustomerLoginResponseData> {
@@ -257,7 +257,7 @@ class MainActivity : AppCompatActivity() {
         id_input_editText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 if (!verifyId(s.toString())) {
-                    id_input_layout.error = resources.getString(R.string.id_input_error)
+//                    id_input_layout.error = "아이디를 입력해주세요"
                     button_login.isEnabled = false
                 } else {
                     id_input_layout.error = null

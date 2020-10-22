@@ -1,11 +1,9 @@
-package com.example.hatewait.customer
+package com.example.hatewait.member
 
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.hatewait.customer.CouponFragment
-import com.example.hatewait.customer.StampFragment
 
 class StampCouponFragAdapter(fragmentActivity: FragmentActivity) :
     FragmentStateAdapter(fragmentActivity) {

@@ -1,4 +1,4 @@
-package com.example.hatewait.customerinfo
+package com.example.hatewait.memberinfo
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,7 +6,6 @@ import com.example.hatewait.R
 import com.example.hatewait.storeinfo.ChangePasswordActivity1
 import com.example.hatewait.storeinfo.StorePhoneNumberChangeDialog
 import kotlinx.android.synthetic.main.activity_customer_info_update.*
-import kotlinx.android.synthetic.main.activity_store_info_update2.*
 import org.jetbrains.anko.startActivity
 
 class CustomerInfoUpdate : AppCompatActivity() {

@@ -19,7 +19,7 @@
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true">
         <activity android:name=".storeinfo.ChangePasswordActivity1" />
-        <activity android:name=".storeinfo.ChangePasswordActivity2"/>
+        <activity android:name=".storeinfo.ChangePasswordActivity2" />
         <activity android:name=".storeinfo.SettingStampCoupon" />
         <activity android:name=".member.StoreList" />
         <activity android:name=".storeinfo.StoreInfoSettingsActivity" />
@@ -74,17 +74,26 @@
         <activity android:name=".login.MainActivity" />
         <activity android:name=".store.StoreWaitingList" />
         <activity android:name=".storeinfo.BusinessHourPick" />
+
+        <activity android:name=".discretescroll.ShopActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity
                 android:name=".Splash"
                 android:noHistory="true"
                 android:screenOrientation="portrait"
                 android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
                 tools:ignore="LockedOrientationActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
     </application>
 

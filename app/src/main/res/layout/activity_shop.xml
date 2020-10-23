@@ -24,29 +24,6 @@
             android:layout_height="0dp"
             android:layout_weight="10" />
 
-    <TextView
-            android:id="@+id/item_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:fontFamily="sans-serif-light"
-            android:textColor="@android:color/black"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            tools:text="Stoneware + Porcelain Plate" />
-
-    <Space
-            android:layout_width="wrap_content"
-            android:layout_height="4dp" />
-
-    <TextView
-            android:id="@+id/item_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:textColor="@color/colorPrimary"
-            android:textStyle="bold"
-            tools:text="$24.00 USD" />
 
     <Space
             android:layout_width="wrap_content"
@@ -67,16 +44,6 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-        <ImageView
-                android:id="@+id/item_btn_comment"
-                style="@style/ClickableImageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="cd_comment"
-                android:padding="8dp"
-                android:src="@drawable/store"
-                app:tint="#000000" />
-
         <Space
                 android:layout_width="16dp"
                 android:layout_height="wrap_content" />
@@ -94,15 +61,6 @@
                 android:layout_width="16dp"
                 android:layout_height="wrap_content" />
 
-        <ImageView
-                android:id="@+id/item_btn_rate"
-                style="@style/ClickableImageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="cd_favourite"
-                android:padding="8dp"
-                android:src="@drawable/ic_star_border_black_24dp"
-                app:tint="@color/colorPrimary" />
 
     </LinearLayout>
 
@@ -113,26 +71,6 @@
             android:gravity="bottom"
             android:orientation="horizontal">
 
-        <Button
-                android:id="@+id/btn_smooth_scroll"
-                style="?android:borderlessButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="btn_smooth_scroll"
-                android:textAllCaps="true"
-                android:textColor="#000000"
-                tools:ignore="NestedWeights" />
-
-        <Button
-                android:id="@+id/btn_transition_time"
-                style="?android:borderlessButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="btn_transition_time"
-                android:textAllCaps="true"
-                android:textColor="#000000" />
 
     </LinearLayout>
 

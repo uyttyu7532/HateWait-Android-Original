@@ -11,8 +11,8 @@ import com.example.hatewait.R
 
 class ShopAdapter(private val data: List<Item>) : RecyclerView.Adapter<ShopAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        val v: View = inflater.inflate(R.layout.item_shop_card, parent, false)
+
+        val v = LayoutInflater.from(parent.context).inflate(R.layout.item_shop_card, parent, false)
         return ViewHolder(v)
     }
 

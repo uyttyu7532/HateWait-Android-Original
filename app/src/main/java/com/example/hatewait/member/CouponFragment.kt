@@ -9,9 +9,22 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hatewait.R
+import com.example.hatewait.discretescroll.Item
+import com.example.hatewait.discretescroll.Shop
+import com.example.hatewait.discretescroll.ShopAdapter
+import com.yarolegovich.discretescrollview.DSVOrientation
+import com.yarolegovich.discretescrollview.DiscreteScrollView
+import com.yarolegovich.discretescrollview.InfiniteScrollAdapter
+import com.yarolegovich.discretescrollview.transform.Pivot
+import com.yarolegovich.discretescrollview.transform.ScaleTransformer
 
-class CouponFragment : Fragment() {
+class CouponFragment : Fragment(), DiscreteScrollView.OnItemChangedListener<ShopAdapter.ViewHolder?>,
+    View.OnClickListener  {
 
+    private var data: List<Item>? = null
+    private var shop: Shop? = null
+    private var itemPicker: DiscreteScrollView? = null
+    private var infiniteAdapter: InfiniteScrollAdapter<*>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +39,7 @@ class CouponFragment : Fragment() {
         var rootView = inflater.inflate(R.layout.fragment_coupon, container, false)
 
         var recyclerView = rootView.findViewById(R.id.coupon_recycler_view) as RecyclerView
+        var itemPicker = rootView.findViewById(R.id.coupon_item_picker) as DiscreteScrollView
 
 
         var couponTitleArray = ArrayList<String>()
@@ -61,8 +75,63 @@ class CouponFragment : Fragment() {
         recyclerView.adapter = adapter
 
 
+        shop = Shop.get()
+        data = shop!!.data // 쿠폰 데이터
+
+        itemPicker.setOrientation(DSVOrientation.HORIZONTAL)
+        itemPicker.addOnItemChangedListener(this)
+        infiniteAdapter = InfiniteScrollAdapter.wrap(ShopAdapter(data!!))
+        itemPicker.adapter = infiniteAdapter
+
+
+        itemPicker.setItemTransformer(
+            ScaleTransformer.Builder()
+                .setMaxScale(1.05f)
+                .setMinScale(0.8f)
+                .setPivotX(Pivot.X.CENTER) // CENTER is a default one
+                .setPivotY(Pivot.Y.BOTTOM) // CENTER is a default one
+                .build()
+        )
+
 
         return rootView
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+//        shop = Shop.get()
+//        data = shop!!.data
+//        itemPicker = view.findViewById<DiscreteScrollView>(R.id.item_picker)
+//
+//        itemPicker!!.setOrientation(DSVOrientation.HORIZONTAL)
+//        itemPicker!!.addOnItemChangedListener(this)
+//        infiniteAdapter = InfiniteScrollAdapter.wrap(ShopAdapter(data!!))
+//        itemPicker!!.adapter = infiniteAdapter
+//
+//
+//        itemPicker!!.setItemTransformer(
+//            ScaleTransformer.Builder()
+//                .setMaxScale(1.05f)
+//                .setMinScale(0.8f)
+//                .setPivotX(Pivot.X.CENTER) // CENTER is a default one
+//                .setPivotY(Pivot.Y.BOTTOM) // CENTER is a default one
+//                .build()
+//        )
+    }
+
+    override fun onClick(v: View) {
+//        when (v.id) {
+//
+//            R.id.home -> finish()
+//
+////            else ->
+//        }
+    }
+
+
+    override fun onCurrentItemChanged(viewHolder: ShopAdapter.ViewHolder?, adapterPosition: Int) {
+        val positionInDataSet: Int = infiniteAdapter!!.getRealPosition(adapterPosition)
     }
 
 }

@@ -5,15 +5,24 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.hatewait.R
+import com.example.hatewait.discretescroll.Item
+import com.example.hatewait.discretescroll.Shop
+import com.example.hatewait.discretescroll.ShopAdapter
+import com.yarolegovich.discretescrollview.DSVOrientation
+import com.yarolegovich.discretescrollview.DiscreteScrollView
+import com.yarolegovich.discretescrollview.InfiniteScrollAdapter
+import com.yarolegovich.discretescrollview.transform.Pivot
+import com.yarolegovich.discretescrollview.transform.ScaleTransformer
+import kotlinx.android.synthetic.main.fragment_coupon.*
 
-class StampFragment : Fragment() {
+class StampFragment : Fragment(){
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
 
     }
 
@@ -27,30 +36,30 @@ class StampFragment : Fragment() {
 //        var recyclerView = rootView.findViewById(R.id.stamp_recycler_view) as RecyclerView
 
 
-        var stampTitleArray = ArrayList<String>()
-        stampTitleArray.add("적립")
-        stampTitleArray.add("소멸")
-        stampTitleArray.add("사용")
-        stampTitleArray.add("사용")
-        stampTitleArray.add("적립")
-        stampTitleArray.add("적립")
-        stampTitleArray.add("소멸")
-        stampTitleArray.add("사용")
-        stampTitleArray.add("사용")
-        stampTitleArray.add("적립")
-
-        var stampDateArray = ArrayList<String>()
-        stampDateArray.add("2020-10-11 12:40")
-        stampDateArray.add("2020-10-11 12:40")
-        stampDateArray.add("2020-10-11 12:40")
-        stampDateArray.add("2020-10-11 12:40")
-        stampDateArray.add("2020-10-11 12:40")
-        stampDateArray.add("2020-10-11 12:40")
-        stampDateArray.add("2020-10-11 12:40")
-        stampDateArray.add("2020-10-11 12:40")
-        stampDateArray.add("2020-10-11 12:40")
-        stampDateArray.add("2020-10-11 12:40")
-        stampDateArray.add("2020-10-11 12:40")
+//        var stampTitleArray = ArrayList<String>()
+//        stampTitleArray.add("적립")
+//        stampTitleArray.add("소멸")
+//        stampTitleArray.add("사용")
+//        stampTitleArray.add("사용")
+//        stampTitleArray.add("적립")
+//        stampTitleArray.add("적립")
+//        stampTitleArray.add("소멸")
+//        stampTitleArray.add("사용")
+//        stampTitleArray.add("사용")
+//        stampTitleArray.add("적립")
+//
+//        var stampDateArray = ArrayList<String>()
+//        stampDateArray.add("2020-10-11 12:40")
+//        stampDateArray.add("2020-10-11 12:40")
+//        stampDateArray.add("2020-10-11 12:40")
+//        stampDateArray.add("2020-10-11 12:40")
+//        stampDateArray.add("2020-10-11 12:40")
+//        stampDateArray.add("2020-10-11 12:40")
+//        stampDateArray.add("2020-10-11 12:40")
+//        stampDateArray.add("2020-10-11 12:40")
+//        stampDateArray.add("2020-10-11 12:40")
+//        stampDateArray.add("2020-10-11 12:40")
+//        stampDateArray.add("2020-10-11 12:40")
 
 
 //        recyclerView.setHasFixedSize(true);
@@ -62,7 +71,10 @@ class StampFragment : Fragment() {
         return rootView
     }
 
+
     companion object {
 
     }
+
+
 }

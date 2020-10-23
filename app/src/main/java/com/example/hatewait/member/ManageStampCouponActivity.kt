@@ -8,7 +8,7 @@ import kotlinx.android.synthetic.main.activity_manage_stamp_coupon.*
 
 
 class ManageStampCouponActivity : AppCompatActivity() {
-    val stampCouponArray = arrayListOf<String>("STAMP", "COUPON")
+    private val stampCouponArray = arrayListOf<String>("STAMP", "COUPON")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_manage_stamp_coupon)

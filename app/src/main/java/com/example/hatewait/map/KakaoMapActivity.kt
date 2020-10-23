@@ -1,15 +1,12 @@
 package com.example.hatewait.map
 
 import android.Manifest
-import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
-import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
@@ -21,6 +18,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentManager
 import com.example.hatewait.R
 import com.example.hatewait.model.Restaurant
 import kotlinx.android.synthetic.main.activity_kakao_map.*
@@ -375,6 +373,22 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
             ) { // // 마커 클릭 후 info window 띄워졌을 때
                 //sample code 없음
 //            Log.i("LOG_TAG", "onPOIItemSelected")
+//                val dialogView = layoutInflater.inflate(R.layout.fragment_map_bottom_sheet, null)
+//                val dialog = BottomSheetDialog(mcontext.applicationContext)
+//                dialog.setContentView(dialogView)
+//                dialog.show()
+
+
+                val args = Bundle()
+                args.putString("mapPOIItem", mapPOIItem.userObject.toString())
+
+
+                val bottomSheet = MapBottomSheet()
+                bottomSheet.arguments = args
+                bottomSheet.show(supportFragmentManager, bottomSheet.tag)
+
+//                val bottomSheet = MapBottomSheet()
+//                bottomSheet.show(supportFragmentManager, bottomSheet.tag)
             }
 
             override fun onCalloutBalloonOfPOIItemTouched(

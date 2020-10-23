@@ -23,7 +23,6 @@ class CouponFragment : Fragment(), DiscreteScrollView.OnItemChangedListener<Shop
 
     private var data: List<Item>? = null
     private var shop: Shop? = null
-    private var itemPicker: DiscreteScrollView? = null
     private var infiniteAdapter: InfiniteScrollAdapter<*>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

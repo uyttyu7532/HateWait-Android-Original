@@ -5,11 +5,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import com.example.hatewait.R
-import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_signup2.*
+import kotlinx.android.synthetic.main.activity_signup2.button_continue
+import kotlinx.android.synthetic.main.activity_signup2.password_input_editText
+import kotlinx.android.synthetic.main.activity_signup2.password_input_layout
+import kotlinx.android.synthetic.main.activity_signup2.register_toolbar
+import kotlinx.android.synthetic.main.activity_signup2.register_toolbar_title_textView
 
 private lateinit var mcontext: Context
 
@@ -23,19 +27,28 @@ class ChangePasswordActivity2 : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_signup2)
+        setContentView(R.layout.activity_change_password2)
+
+        setSupportActionBar(register_toolbar)
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setHomeAsUpIndicator(R.drawable.back_icon)
+            setDisplayShowTitleEnabled(false)
+        }
+
+
         mcontext = this.applicationContext
         addTextChangeListener()
 
-        register_toolbar_title_textView.text = "비밀번호 변경"
-        button_continue.text = "비밀번호 변경"
+//        register_toolbar_title_textView.text = "비밀번호 변경"
+//        button_continue.text = "비밀번호 변경"
 
         button_continue.setOnClickListener {
 
             // TODO 아이디 비밀번호를 이용해서 DB에서 회원정보 수정 => 완료하면 Toasty
             //intent.getStringExtra("USER_ID")
             //password_input_editText.text.toString()
-            Toasty.normal(mcontext, "비밀번호가 성공적으로 변경되었습니다.", Toasty.LENGTH_SHORT)
+            Toast.makeText(mcontext, "비밀번호가 성공적으로 변경되었습니다.", Toast.LENGTH_SHORT).show()
         }
 
         setSupportActionBar(register_toolbar)
@@ -47,6 +60,15 @@ class ChangePasswordActivity2 : AppCompatActivity() {
         }
     }
 
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+
+        when (item!!.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+            }
+        }
+        return true
+    }
 
     private fun addTextChangeListener() {
 

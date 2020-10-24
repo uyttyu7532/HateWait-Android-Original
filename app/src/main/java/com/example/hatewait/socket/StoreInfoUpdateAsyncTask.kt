@@ -5,8 +5,6 @@ import android.os.AsyncTask
 import android.util.Log
 import android.widget.Toast
 import com.example.hatewait.storeinfo.StoreInfoUpdate
-import es.dmoral.toasty.Toasty
-import kotlinx.android.synthetic.main.activity_store_info_update.*
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -55,11 +53,10 @@ class StoreInfoUpdateAsyncTask(context : StoreInfoUpdate) : AsyncTask<Map<String
         val storeReference = currentActivity.getSharedPreferences("STORE_USER_INFO", Context.MODE_PRIVATE)
         storeReference.edit().putString("STORE_NAME", updatedStoreName)
 //        currentActivity.update_store_info_button.isEnabled = false
-        Toasty.success(
+        Toast.makeText(
             currentActivity,
             "가게 정보 수정 완료!",
-            Toast.LENGTH_SHORT,
-            true
+            Toast.LENGTH_SHORT
         ).show()
 
         super.onPostExecute(result)

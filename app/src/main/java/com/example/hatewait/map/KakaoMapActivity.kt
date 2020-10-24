@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -22,6 +23,7 @@ import androidx.fragment.app.FragmentManager
 import com.example.hatewait.R
 import com.example.hatewait.model.Restaurant
 import kotlinx.android.synthetic.main.activity_kakao_map.*
+import kotlinx.android.synthetic.main.activity_visitor_list.*
 import net.daum.mf.map.api.CalloutBalloonAdapter
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPOIItem.CalloutBalloonButtonType
@@ -55,6 +57,14 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_kakao_map)
 
+        setSupportActionBar(map_toolbar)
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setHomeAsUpIndicator(R.drawable.back_icon)
+            setHomeActionContentDescription("로그인 화면 이동")
+            setDisplayShowTitleEnabled(false)
+        }
+
         mcontext = this.applicationContext
 
         mapView = MapView(this)
@@ -86,6 +96,16 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
         }
 
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+            }
+        }
+        return true
     }
 
     override fun onDestroy() {
@@ -380,7 +400,7 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
 
 
                 val args = Bundle()
-                args.putString("mapPOIItem", mapPOIItem.userObject.toString())
+                args.putString("mapPOIItem", mapPOIItem.itemName+","+mapPOIItem.userObject.toString())
 
 
                 val bottomSheet = MapBottomSheet()

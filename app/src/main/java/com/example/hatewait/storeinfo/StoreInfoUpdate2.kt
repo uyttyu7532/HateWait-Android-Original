@@ -3,18 +3,31 @@ package com.example.hatewait.storeinfo
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import com.example.hatewait.R
 import com.example.hatewait.address.AddressDialogFragment
 import com.example.hatewait.signup.addressDialog
+import kotlinx.android.synthetic.main.activity_signup1.*
 import kotlinx.android.synthetic.main.activity_store_info_update2.*
 import org.jetbrains.anko.startActivity
 
 class StoreInfoUpdate2 : AppCompatActivity(), StoreNameChangeDialog.DialogListener,
-    StorePhoneNumberChangeDialog.DialogListener, StoreCapacityNumberChangeDialog.DialogListener,StoreIntroduceChangeDialog.DialogListener {
+    StorePhoneNumberChangeDialog.DialogListener, StoreCapacityNumberChangeDialog.DialogListener,
+    StoreIntroduceChangeDialog.DialogListener {
     private val REQUEST_CODE_BUSINESS_TIME = 2000
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_store_info_update2)
+
+        setSupportActionBar(store_info_update_toolbar)
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setHomeAsUpIndicator(R.drawable.back_icon)
+            setDisplayShowTitleEnabled(false)
+        }
+
+
+
 
         setting_store_name.setOnClickListener {
             StoreNameChangeDialog().show(supportFragmentManager, "STORE_NAME_CHANGE")
@@ -58,14 +71,18 @@ class StoreInfoUpdate2 : AppCompatActivity(), StoreNameChangeDialog.DialogListen
                 .show(supportFragmentManager, "STORE_INTRODUCE_CHANGE")
         }
 
-
-
-
-
-
-
-
     }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+
+        when (item!!.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+            }
+        }
+        return true
+    }
+
 
     override fun applyText(storeName: String) {
 

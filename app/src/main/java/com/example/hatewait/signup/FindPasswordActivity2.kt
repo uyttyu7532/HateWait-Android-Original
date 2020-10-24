@@ -6,9 +6,9 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hatewait.R
-import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_signup2.*
 
 
@@ -37,7 +37,7 @@ class FindPassWordActivity2 : AppCompatActivity() {
             // TODO 아이디 비밀번호를 이용해서 DB에서 회원정보 수정 => 완료하면 Toasty
             //intent.getStringExtra("USER_ID")
             //password_input_editText.text.toString()
-            Toasty.normal(mcontext, "비밀번호가 성공적으로 변경되었습니다.", Toasty.LENGTH_SHORT)
+            Toast.makeText(mcontext, "비밀번호가 성공적으로 변경되었습니다.", Toast.LENGTH_SHORT).show()
         }
 
         setSupportActionBar(register_toolbar)

@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#66BB6A</color>
-    <color name="colorPrimaryDark">#66BB6A</color>
+    <color name="colorPrimaryDark">#2B8A19</color>
     <color name="colorAccent">#D81B60</color>
     <color name="white">#FFFFFF</color>
-    <color name="black_overlay">#66000000</color>
     <color name="bgColor">#EFEFEF</color>
+    <color name="buttonDisabled">#4D66BB6A</color>
+
+    <color name="black_overlay">#66000000</color>
     <color name="colorGreen">#66BB6A</color>
-    <color name = "colorCall">#66ddff00</color>
+    <color name="colorCall">#66ddff00</color>
     <color name="selectedBackGroundColorPrimary">#77BB6A</color>
 
     <color name="colorVisited">#FF00E6</color>
     <color name="colorNext">#00FFF7</color>
+
 
 </resources>

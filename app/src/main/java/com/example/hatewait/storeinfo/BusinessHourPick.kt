@@ -2,6 +2,7 @@ package com.example.hatewait.storeinfo
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
@@ -9,6 +10,7 @@ import com.bashizip.bhlib.BusinessHours
 import com.bashizip.bhlib.ValdationException
 import com.example.hatewait.R
 import kotlinx.android.synthetic.main.activity_business_hour_pick.*
+import kotlinx.android.synthetic.main.activity_store_info_update2.*
 
 class BusinessHourPick : AppCompatActivity(),
     BusinessHourCheckDialog.TimeCheckListener {
@@ -18,16 +20,34 @@ class BusinessHourPick : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_business_hour_pick)
+
+        setSupportActionBar(register_toolbar2)
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setHomeAsUpIndicator(R.drawable.back_icon)
+            setDisplayShowTitleEnabled(false)
+        }
+
         init()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+
+        when (item!!.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+            }
+        }
+        return true
     }
 
     fun init() {
         var bhs: List<BusinessHours>? = null
-        setting_time_cancel_button.setOnClickListener {
-            finish()
-        }
+//        setting_time_cancel_button.setOnClickListener {
+//            finish()
+//        }
 
-        setting_time_ok_button.setOnClickListener {
+        button_finish_business_hours.setOnClickListener {
 //            bhs: List<BusinessHours?>? = null
             bhs = try {
                 bh_picker.businessHoursList

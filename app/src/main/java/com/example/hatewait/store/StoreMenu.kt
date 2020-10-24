@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hatewait.R
@@ -12,6 +13,7 @@ import com.example.hatewait.login.LoginRegisterViewPagerActivity
 import com.example.hatewait.socket.*
 import com.example.hatewait.storeinfo.StoreInfoSettingsActivity
 import com.example.hatewait.storeinfo.StoreInfoUpdate2
+import kotlinx.android.synthetic.main.activity_signup1.*
 import kotlinx.android.synthetic.main.activity_store_menu.*
 import org.jetbrains.anko.startActivity
 
@@ -27,6 +29,7 @@ class StoreMenu : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_store_menu)
+
 
         storeContext = this.applicationContext
 
@@ -48,6 +51,16 @@ class StoreMenu : AppCompatActivity() {
         STORENAME = storeNameView.text.toString()
         initView()
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+            }
+        }
+        return true
     }
 
     override fun onResume() {

@@ -261,25 +261,42 @@
         </LinearLayout>
 
 
-    <mehdi.sakout.fancybuttons.FancyButton
-            android:id="@+id/btn_spotify"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:paddingLeft="25dp"
-            android:paddingTop="15dp"
-            android:paddingRight="25dp"
-            android:paddingBottom="15dp"
-            fancy:fb_borderColor="#FFFFFF"
-            fancy:fb_borderWidth="1dp"
-            fancy:fb_defaultColor="@color/colorPrimary"
-            fancy:fb_focusColor="#9bd823"
-            fancy:fb_radius="5dp"
-            fancy:fb_text="설정 완료"
-            fancy:fb_textColor="#FFFFFF" />
+<!--    <mehdi.sakout.fancybuttons.FancyButton-->
+<!--            android:id="@+id/btn_spotify"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignParentBottom="true"-->
+<!--            android:layout_centerHorizontal="true"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            android:paddingLeft="25dp"-->
+<!--            android:paddingTop="15dp"-->
+<!--            android:paddingRight="25dp"-->
+<!--            android:paddingBottom="15dp"-->
+<!--            fancy:fb_borderColor="#FFFFFF"-->
+<!--            fancy:fb_borderWidth="1dp"-->
+<!--            fancy:fb_defaultColor="@color/colorPrimary"-->
+<!--            fancy:fb_focusColor="#9bd823"-->
+<!--            fancy:fb_radius="5dp"-->
+<!--            fancy:fb_text="설정 완료"-->
+<!--            fancy:fb_textColor="#FFFFFF" />-->
+
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_spotify"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="30dp"
+                android:backgroundTint="@color/color_state_material_button"
+                android:enabled="false"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:text="설정 완료"
+                android:textColor="#ffffff"
+                android:textSize="18sp"
+                app:cornerRadius="10dp"
+                app:rippleColor="@color/colorPrimaryDark" />
     </LinearLayout>
     </ScrollView>
 </RelativeLayout>

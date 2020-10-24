@@ -10,16 +10,16 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hatewait.R
 import com.example.hatewait.mail.SendMail
 import com.example.hatewait.mail.countDown
 import com.example.hatewait.mail.emailCode
-import es.dmoral.toasty.Toasty
+import com.google.android.material.button.MaterialButton
 import kotlinx.android.synthetic.main.activity_signup1.*
 
 
@@ -134,7 +134,7 @@ class StoreSignUp1 : AppCompatActivity() {
         val view = inflater.inflate(R.layout.check_email_dialog, null)
         val emailCodeCheckEditText: EditText = view.findViewById(R.id.email_code_check_edit_text)
         val emailCheckTimer: TextView = view.findViewById(R.id.email_check_timer)
-        val checkEmailButton2 = view.findViewById<Button>(R.id.checkEmailButton2)
+        val checkEmailButton2 = view.findViewById<MaterialButton>(R.id.checkEmailButton2)
         val conversionTime = "000500" // 5분 타이머
 
         val alertDialog = AlertDialog.Builder(this)
@@ -146,14 +146,14 @@ class StoreSignUp1 : AppCompatActivity() {
 
         checkEmailButton2.setOnClickListener {
             if (emailCodeCheckEditText.text.toString() == emailCode) {
-                Toasty.normal(mcontext, "인증번호가 확인되었습니다.", Toasty.LENGTH_SHORT)
+                Toast.makeText(mcontext, "인증번호가 확인되었습니다.", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, StoreSignUp2::class.java)
                 intent.putExtra("STORE_EMAIL", email_input_edit_text.text.toString())
                 intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
                 startActivity(intent)
                 alertDialog.dismiss()
             } else {
-                Toasty.normal(mcontext, "인증번호를 다시 확인해주세요.", Toasty.LENGTH_SHORT)
+                Toast.makeText(mcontext, "인증번호를 다시 확인해주세요.", Toast.LENGTH_SHORT).show()
             }
 
         }

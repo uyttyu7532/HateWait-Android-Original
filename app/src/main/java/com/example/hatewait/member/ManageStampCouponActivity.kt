@@ -2,9 +2,11 @@ package com.example.hatewait.member
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import com.example.hatewait.R
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_manage_stamp_coupon.*
+import kotlinx.android.synthetic.main.activity_signup1.*
 
 
 class ManageStampCouponActivity : AppCompatActivity() {
@@ -12,6 +14,14 @@ class ManageStampCouponActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_manage_stamp_coupon)
+
+        setSupportActionBar(stamp_coupon_toolbar)
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setHomeAsUpIndicator(R.drawable.back_icon)
+            setDisplayShowTitleEnabled(false)
+        }
+
         init()
     }
 
@@ -25,4 +35,15 @@ class ManageStampCouponActivity : AppCompatActivity() {
             // tab.icon
         }.attach()
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+            }
+        }
+        return true
+    }
 }
+

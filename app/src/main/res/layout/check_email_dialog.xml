@@ -37,16 +37,34 @@
                 android:selectAllOnFocus="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
+<!--    <Button-->
+<!--            android:id="@+id/checkEmailButton2"-->
+<!--            style="@style/Widget.AppCompat.Button.Colored"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginHorizontal="20dp"-->
+<!--            android:text="인증번호 확인"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textSize="25dp"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            android:layout_marginBottom="40dp"/>-->
+
+    <com.google.android.material.button.MaterialButton
             android:id="@+id/checkEmailButton2"
-            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginEnd="30dp"
+            android:backgroundTint="@color/color_state_material_button"
+            android:enabled="true"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
             android:text="인증번호 확인"
-            android:textColor="@color/white"
-            android:textSize="25dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="40dp"/>
+            android:textColor="#ffffff"
+            android:textSize="18sp"
+            app:cornerRadius="10dp"
+            app:rippleColor="@color/colorPrimaryDark" />
 
 </LinearLayout>

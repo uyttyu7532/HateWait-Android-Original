@@ -40,12 +40,12 @@
             android:id="@+id/email_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="25dp"
             app:boxCornerRadiusBottomEnd="10dp"
             app:boxCornerRadiusBottomStart="10dp"
             app:boxCornerRadiusTopEnd="10dp"
             app:boxCornerRadiusTopStart="10dp"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="25dp"
             app:endIconMode="clear_text">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -58,31 +58,34 @@
     </com.google.android.material.textfield.TextInputLayout>
 
 
-<!--    <Button-->
-<!--            android:id="@+id/check_email_button"-->
-<!--            style="@style/Widget.AppCompat.Button.Colored"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginHorizontal="30dp"-->
-<!--            android:layout_marginTop="8dp"-->
-<!--            android:enabled="false"-->
-<!--            android:text="인증번호 전송"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:textSize="25dp" />-->
+    <!--    <Button-->
+    <!--            android:id="@+id/check_email_button"-->
+    <!--            style="@style/Widget.AppCompat.Button.Colored"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_marginHorizontal="30dp"-->
+    <!--            android:layout_marginTop="8dp"-->
+    <!--            android:enabled="false"-->
+    <!--            android:text="인증번호 전송"-->
+    <!--            android:textColor="@color/white"-->
+    <!--            android:textSize="25dp" />-->
 
     <com.google.android.material.button.MaterialButton
             android:id="@+id/check_email_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="30dp"
+            android:backgroundTint="@color/color_state_material_button"
+            android:enabled="false"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
             android:text="인증번호 전송"
-            android:layout_marginTop="8dp"
             android:textColor="#ffffff"
-            android:backgroundTint="@color/colorPrimary"
-            app:rippleColor="#2B8A19"
-            app:cornerRadius="10dp"
             android:textSize="18sp"
-            android:layout_marginHorizontal="30dp"
-            />
+            app:cornerRadius="10dp"
+            app:rippleColor="@color/colorPrimaryDark" />
 
 
 </LinearLayout>

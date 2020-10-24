@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hatewait.R
 import com.example.hatewait.member.CustomerMenu
@@ -21,7 +22,6 @@ import com.example.hatewait.signup.StoreSignUp1
 import com.example.hatewait.store.StoreMenu
 import com.nhn.android.naverlogin.OAuthLogin
 import com.nhn.android.naverlogin.OAuthLoginHandler
-import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.startActivity
 import org.json.JSONObject
@@ -40,7 +40,8 @@ class MainActivity : AppCompatActivity() {
 //    private val idRegex = Regex(".*")
 
     //    영문, 숫자, 특수문자 포함 8자 이상
-    private val passwordRegex = Regex("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,}$")
+    private val passwordRegex =
+        Regex("^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,}$")
 //    private val passwordRegex = Regex(".*")
 
     fun verifyId(input_id: String): Boolean = idRegex.matches(input_id)
@@ -111,7 +112,6 @@ class MainActivity : AppCompatActivity() {
                 }
 
 
-
 //                var customerLoginData = CustomerLoginRequestData(id_input_editText.text.toString(),password_input_editText.text.toString())
 //
 //                val retrofit = Retrofit.Builder().baseUrl("https://hatewait-server.herokuapp.com/")
@@ -143,8 +143,6 @@ class MainActivity : AppCompatActivity() {
 //                )
 
                 startActivity<CustomerMenu>()
-
-
 
 
             } else {
@@ -334,7 +332,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        val pressBackToast = Toasty.normal(this, "한번 더 뒤로가기 키를 누르면 종료됩니다.", Toasty.LENGTH_SHORT)
+        val pressBackToast = Toast.makeText(this, "한번 더 뒤로가기 키를 누르면 종료됩니다.", Toast.LENGTH_SHORT)
 
         val currentTime = System.currentTimeMillis()
         if (Math.abs(currentTime - mLastBackPress) > mBackPressThreshold) {

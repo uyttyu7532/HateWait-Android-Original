@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.view.View.*
 import android.widget.TextView
@@ -21,7 +22,7 @@ import com.example.hatewait.model.ClientData
 import com.example.hatewait.model.NewClient
 import com.example.hatewait.model.getShared
 import com.example.hatewait.socket.*
-import es.dmoral.toasty.Toasty
+import kotlinx.android.synthetic.main.activity_signup1.*
 import kotlinx.android.synthetic.main.activity_store_waiting_list.*
 import org.jetbrains.anko.startActivity
 import java.util.*
@@ -47,6 +48,13 @@ class StoreWaitingList : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_store_waiting_list)
+
+        setSupportActionBar(waiting_list_toolbar)
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setHomeAsUpIndicator(R.drawable.back_icon)
+            setDisplayShowTitleEnabled(false)
+        }
 
         waitingListContext = this.applicationContext
         pref = waitingListContext.getSharedPreferences("myPref", Context.MODE_PRIVATE)
@@ -76,6 +84,16 @@ class StoreWaitingList : AppCompatActivity() {
 
 
         init()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+            }
+        }
+        return true
     }
 
     override fun onResume() {
@@ -168,11 +186,10 @@ class StoreWaitingList : AppCompatActivity() {
 
                     if (addWaitingName.text.toString() == "" || addWaitingPerson.text.toString() == "" || addWaitingPhonenum.text.toString().equals("")
                     ) {
-                        Toasty.error(
+                        Toast.makeText(
                             waitingListContext,
                             "대기 손님 정보를 모두 입력해주세요.",
-                            Toast.LENGTH_SHORT,
-                            true
+                            Toast.LENGTH_SHORT
                         ).show()
                     } else {
                         var newclient = NewClient(
@@ -246,5 +263,7 @@ fun setRecyclerView() {
         waitingListAdapter
     totalWaitingNumTextView.text = "현재 ${waitingList.size}팀 대기중"
 }
+
+
 
 

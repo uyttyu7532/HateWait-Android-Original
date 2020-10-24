@@ -13,13 +13,13 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hatewait.R
 import com.example.hatewait.mail.SendMail
 import com.example.hatewait.mail.countDown
 import com.example.hatewait.mail.emailCode
-import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_signup1.*
 
 
@@ -143,14 +143,14 @@ class CustomerSignUp1 : AppCompatActivity() {
 
         checkEmailButton2.setOnClickListener {
             if (emailCodeCheckEditText.text.toString() == emailCode) {
-                Toasty.normal(this, "인증번호가 확인되었습니다.", Toasty.LENGTH_SHORT)
+                Toast.makeText(this, "인증번호가 확인되었습니다.", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, CustomerSignUp2::class.java)
                 intent.putExtra("USER_EMAIL", email_input_edit_text.text.toString())
                 intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
                 startActivity(intent)
                 alertDialog.dismiss()
             } else {
-                Toasty.normal(this, "인증번호를 다시 확인해주세요.", Toasty.LENGTH_SHORT)
+                Toast.makeText(this, "인증번호를 다시 확인해주세요.", Toast.LENGTH_SHORT).show()
             }
 
         }

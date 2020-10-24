@@ -23,7 +23,6 @@ import com.example.hatewait.fcm.FcmPush
 import com.example.hatewait.model.ClientData
 import com.example.hatewait.model.setShared
 import com.example.hatewait.socket.*
-import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.waiting_list_row.view.*
 import org.jetbrains.anko.backgroundColorResource
 import java.util.*
@@ -96,12 +95,11 @@ class SwipeRecyclerViewAdapter(
                     called[items[position].phone] = true
                     this.bottomWrapperLeft.backgroundColorResource =
                         R.color.colorCall
-                    Toasty.Config.getInstance().allowQueue(true).apply()
-                    Toasty.warning(
+//                    Toast.Config.getInstance().allowQueue(true).apply()
+                    Toast.makeText(
                         itemView.context,
                         items[position].name + " 손님 호출 완료",
-                        Toast.LENGTH_SHORT,
-                        true
+                        Toast.LENGTH_SHORT
                     ).show()
 
 
@@ -206,11 +204,10 @@ class SwipeRecyclerViewAdapter(
                         called[items[position].phone] = false
                     }
 
-                    Toasty.error(
+                    Toast.makeText(
                         view.context,
                         "${items[position].name} 손님 삭제 완료",
-                        Toast.LENGTH_SHORT,
-                        true
+                        Toast.LENGTH_SHORT
                     ).show()
 
                     DelCustomerAsyncTask().execute(items[position].id)

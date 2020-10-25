@@ -18,13 +18,20 @@ import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.daimajia.swipe.util.Attributes
 import com.example.hatewait.R
-import com.example.hatewait.model.ClientData
-import com.example.hatewait.model.NewClient
-import com.example.hatewait.model.getShared
+import com.example.hatewait.model.*
+import com.example.hatewait.register.RegisterCheck
+import com.example.hatewait.retrofit2.RetrofitNonMemberRegister
 import com.example.hatewait.socket.*
+import kotlinx.android.synthetic.main.activity_non_members_reigster.*
 import kotlinx.android.synthetic.main.activity_signup1.*
 import kotlinx.android.synthetic.main.activity_store_waiting_list.*
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.support.v4.startActivity
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -64,7 +71,7 @@ class StoreWaitingList : AppCompatActivity() {
         totalWaitingNumTextView = findViewById<View>(
             R.id.total_waiting_num_text_view
         ) as TextView
-        waiting_list_coupon_button.setOnClickListener{
+        waiting_list_coupon_button.setOnClickListener {
             startActivity<VisitorListActivity>()
         }
 //        autoCallBtn = findViewById<View>(
@@ -168,6 +175,7 @@ class StoreWaitingList : AppCompatActivity() {
     }
 
 
+    // TODO 입력 데이터 확인해야 함 (비어있다는 것 말고도)
     private fun makeAddDialog() {
         val fab: View = findViewById(R.id.add_fab)
         fab.setOnClickListener { view ->
@@ -184,7 +192,8 @@ class StoreWaitingList : AppCompatActivity() {
                     customView.findViewById(R.id.addWaitingPhonenum) as TextView
                 positiveButton { dialog ->
 
-                    if (addWaitingName.text.toString() == "" || addWaitingPerson.text.toString() == "" || addWaitingPhonenum.text.toString().equals("")
+                    if (addWaitingName.text.toString() == "" || addWaitingPerson.text.toString() == "" || addWaitingPhonenum.text.toString()
+                            .equals("")
                     ) {
                         Toast.makeText(
                             waitingListContext,
@@ -192,13 +201,57 @@ class StoreWaitingList : AppCompatActivity() {
                             Toast.LENGTH_SHORT
                         ).show()
                     } else {
-                        var newclient = NewClient(
-                            name = addWaitingName.text.toString(),
-                            peopleNum = addWaitingPerson.text.toString(),
-                            phoneNum = addWaitingPhonenum.text.toString()
-                        )
+//                        var newclient = NewClient(
+//                            name = addWaitingName.text.toString(),
+//                            peopleNum = addWaitingPerson.text.toString(),
+//                            phoneNum = addWaitingPhonenum.text.toString()
+//                        )
 
-                        AddCustomerAsyncTask().execute(newclient)
+                        var userPhone = Integer(addWaitingPhonenum.text.toString())
+                        var userName = addWaitingName.text.toString()
+                        var userPeopleNum = Integer(addWaitingPerson.text.toString())
+
+
+                        var nonMemberRegisterData =
+                            NonMemberRegisterRequestData(userPhone, userName, userPeopleNum, false)
+
+                        val retrofit =
+                            Retrofit.Builder().baseUrl("https://hatewait-server.herokuapp.com/")
+                                .addConverterFactory(GsonConverterFactory.create()) // JSON
+                                .build();
+                        val service = retrofit.create(RetrofitNonMemberRegister::class.java)
+                        service.requestNonMemberRegister(nonMemberRegisterData)
+                            .enqueue(object : Callback<NonMemberRegisterResponseData> {
+                                override fun onFailure(
+                                    call: Call<NonMemberRegisterResponseData>,
+                                    t: Throwable
+                                ) {
+
+                                    Log.d("비회원 대기 등록(리스트) :: ", "연결실패 $t")
+                                }
+
+                                override fun onResponse(
+                                    call: Call<NonMemberRegisterResponseData>,
+                                    response: Response<NonMemberRegisterResponseData>
+                                ) {
+
+                                    if (response.code() == 500) {
+                                        Log.d("비회원 대기 등록(리스트) 500", response.body().toString())
+                                    }
+
+                                    if (response.code() == 200) {
+
+                                        Log.d("비회원 대기 등록(리스트) 200 :: ", response?.body().toString())
+                                        var data: NonMemberRegisterResponseData? = response?.body() // 서버로부터 온 응답
+
+
+                                    }
+                                }
+                            }
+                            )
+
+//                        AddCustomerAsyncTask().execute(newclient)
+
                         StoreWaitingListAsyncTask().execute()
 
                         dismiss()

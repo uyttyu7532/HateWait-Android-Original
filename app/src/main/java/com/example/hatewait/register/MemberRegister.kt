@@ -4,13 +4,29 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.hatewait.R
+import com.example.hatewait.model.*
+import com.example.hatewait.retrofit2.MyApi
+import com.example.hatewait.retrofit2.RetrofitMemberRegister
+import com.example.hatewait.retrofit2.RetrofitNonMemberRegister
 import com.example.hatewait.socket.MemberRegisterAsyncTask
 import kotlinx.android.synthetic.main.activity_members_register.*
+import kotlinx.android.synthetic.main.activity_members_register.people_number_editText
+import kotlinx.android.synthetic.main.activity_members_register.people_number_layout
+import kotlinx.android.synthetic.main.activity_members_register.register_customer_button
+import kotlinx.android.synthetic.main.activity_non_members_reigster.*
+import org.jetbrains.anko.support.v4.startActivity
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class MemberRegister : Fragment() {
     private val idRegex = Regex("^(?=.*[a-zA-Zㄱ-ㅎ가-힣0-9])[a-zA-Zㄱ-ㅎ가-힣0-9]{1,}$")
@@ -97,8 +113,46 @@ class MemberRegister : Fragment() {
         register_customer_button.setOnClickListener {
             val userId = user_id_input_editText.text.toString()
             val numOfGroup = people_number_editText.text.toString()
-            MemberRegisterAsyncTask(this@MemberRegister).execute(userId, numOfGroup)
+//            MemberRegisterAsyncTask(this@MemberRegister).execute(userId, numOfGroup)
 
+//            var memberRegisterData = MemberRegisterRequestData(userId, Integer(numOfGroup), true)
+
+            MyApi.checkMemberIdService.requestCheckMemberId(CheckMemberIdRequestData(userId))
+                .enqueue(object : Callback<CheckMemberIdResponseData> {
+                    override fun onFailure(
+                        call: Call<CheckMemberIdResponseData>,
+                        t: Throwable
+                    ) {
+
+                        Log.d("회원 id 확인 :: ", "연결실패 $t")
+                    }
+
+                    override fun onResponse(
+                        call: Call<CheckMemberIdResponseData>,
+                        response: Response<CheckMemberIdResponseData>
+                    ) {
+
+                        if (response.code() == 500) {
+                            Log.d("회원 id 확인 500", response.body().toString())
+                        }
+
+                        if (response.code() == 200) {
+
+                            Log.d("회원 id 확인 200 :: ", response?.body().toString())
+                            var data: CheckMemberIdResponseData? = response?.body() // 서버로부터 온 응답
+
+                            showNameCheckDialog(data!!.message)
+
+                        }
+                        if (response.code() == 409) {
+
+                            Log.d("회원 id 확인 409 :: ", response?.body().toString())
+                            var data: CheckMemberIdResponseData? = response?.body() // 서버로부터 온 응답)
+                            showMemberIdErrorDialog()
+                        }
+                    }
+                }
+                )
         }
         super.onActivityCreated(savedInstanceState)
 
@@ -131,18 +185,18 @@ class MemberRegister : Fragment() {
     }
 
 
-    fun showNameCheckDialog() {
+    fun showNameCheckDialog(checkName:String) {
         val nameCheckFragment =
             NameCheckDialogFragment()
         val argumentBundle = Bundle()
-        argumentBundle.putString("CUSTOMER_NAME", customerName)
+        argumentBundle.putString("CUSTOMER_NAME", checkName)
         nameCheckFragment.arguments = argumentBundle
-        nameCheckFragment.show(activity!!.supportFragmentManager, "MEMBER_NAME_CHECK")
+        nameCheckFragment.show(requireActivity().supportFragmentManager, "MEMBER_NAME_CHECK")
     }
 
     fun showMemberIdErrorDialog() {
         val memberIdCheckFragment =
             RegisterErrorDialogFragment()
-        memberIdCheckFragment.show(activity!!.supportFragmentManager, "MEMBER_ID_CHECK")
+        memberIdCheckFragment.show(requireActivity().supportFragmentManager, "MEMBER_ID_CHECK")
     }
 }

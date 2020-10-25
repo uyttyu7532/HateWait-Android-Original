@@ -1,14 +1,35 @@
 package com.example.hatewait.register
 
+import android.net.Uri.parse
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.hatewait.R
+import com.example.hatewait.member.CustomerMenu
+import com.example.hatewait.model.CustomerSignUpRequestData
+import com.example.hatewait.model.CustomerSignUpResponseData
+import com.example.hatewait.model.NonMemberRegisterRequestData
+import com.example.hatewait.model.NonMemberRegisterResponseData
+import com.example.hatewait.retrofit2.MyApi
+import com.example.hatewait.retrofit2.RetrofitNonMemberRegister
+import com.example.hatewait.retrofit2.RetrofitSignUp
+import com.example.hatewait.signup._customerSignUp1
+import com.example.hatewait.signup._customerSignUp2
 import com.example.hatewait.socket.NonMemberRegisterAsyncTask
 import kotlinx.android.synthetic.main.activity_non_members_reigster.*
+import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.support.v4.startActivity
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.net.URI
+import java.util.logging.Level.parse
 
 class NonMemberRegister : androidx.fragment.app.Fragment() {
 
@@ -127,14 +148,57 @@ class NonMemberRegister : androidx.fragment.app.Fragment() {
         register_customer_button.setOnClickListener {
 //            둘다 입력되어있으면 code flow는 첫줄에서 반환됨.
 
-            NonMemberRegisterAsyncTask(this@NonMemberRegister)
-                .execute(
-                    user_name_input_editText.text.toString()
-                    , user_phone_number_editText.text.toString()
-                    , people_number_editText.text.toString()
+//            NonMemberRegisterAsyncTask(this@NonMemberRegister)
+//                .execute(
+//                    user_name_input_editText.text.toString()
+//                    , user_phone_number_editText.text.toString()
+//                    , people_number_editText.text.toString()
+//                )
+
+            var userPhone = Integer(user_phone_number_editText.text.toString())
+            var userName = user_name_input_editText.text.toString()
+            var userPeopleNum = Integer(people_number_editText.text.toString())
+
+
+            var nonMemberRegisterData =
+                NonMemberRegisterRequestData(userPhone, userName, userPeopleNum, false)
+
+
+            MyApi.nonMemberRegisterService.requestNonMemberRegister(nonMemberRegisterData)
+                .enqueue(object : Callback<NonMemberRegisterResponseData> {
+                    override fun onFailure(
+                        call: Call<NonMemberRegisterResponseData>,
+                        t: Throwable
+                    ) {
+
+                        Log.d("비회원 대기 등록 :: ", "연결실패 $t")
+                    }
+
+                    override fun onResponse(
+                        call: Call<NonMemberRegisterResponseData>,
+                        response: Response<NonMemberRegisterResponseData>
+                    ) {
+
+                        if (response.code() == 500) {
+                            Log.d("비회원 대기 등록 500", response.body().toString())
+                        }
+
+                        if (response.code() == 200) {
+
+                            Log.d("비회원 대기 등록 200 :: ", response?.body().toString())
+                            var data: NonMemberRegisterResponseData? =
+                                response?.body() // 서버로부터 온 응답
+
+                            startActivity<RegisterCheck>(
+                                "CUSTOMER_NAME" to userName,
+                                "CUSTOMER_TURN" to data!!.count
+                            )
+
+                        }
+                    }
+                }
                 )
         }
-
 
         super.onActivityCreated(savedInstanceState)
     }

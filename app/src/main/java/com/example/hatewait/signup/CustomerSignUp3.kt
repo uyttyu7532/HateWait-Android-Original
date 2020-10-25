@@ -11,6 +11,7 @@ import com.example.hatewait.R
 import com.example.hatewait.member.CustomerMenu
 import com.example.hatewait.model.CustomerSignUpRequestData
 import com.example.hatewait.model.CustomerSignUpResponseData
+import com.example.hatewait.retrofit2.MyApi
 import com.example.hatewait.retrofit2.RetrofitSignUp
 import kotlinx.android.synthetic.main.activity_customer_register3.*
 import kotlinx.android.synthetic.main.activity_customer_register3.button_finish
@@ -69,12 +70,7 @@ class CustomerSignUp3 : AppCompatActivity() {
             var customerSignUpData =
                 CustomerSignUpRequestData(userId, userName, userPhone, userEmail, userPassword)
 
-            val retrofit = Retrofit.Builder().baseUrl("https://hatewait-server.herokuapp.com/")
-                .addConverterFactory(GsonConverterFactory.create()) // JSON
-                .build();
-            val service = retrofit.create(RetrofitSignUp::class.java);
-//                service.requestCustomerLogin(id_input_editText.text.toString(),password_input_editText.text.toString())
-            service.requestCustomerSignUp(customerSignUpData)
+           MyApi.CustomerSignUpService.requestCustomerSignUp(customerSignUpData)
                 .enqueue(object : Callback<CustomerSignUpResponseData> {
                     override fun onFailure(call: Call<CustomerSignUpResponseData>, t: Throwable) {
 

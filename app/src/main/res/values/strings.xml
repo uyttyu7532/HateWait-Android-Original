@@ -74,4 +74,6 @@
     <string name="tab_text_2">Tab 2</string>
 
     <string name="pref_key_transition_time" translatable="false">pref_key_transition_time</string>
+
+    <string name="serverUrl">https://hatewait-server.herokuapp.com/</string>
 </resources>

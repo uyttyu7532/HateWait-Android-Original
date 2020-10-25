@@ -1,6 +1,5 @@
 package com.example.hatewait.register
 
-import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.os.Build
@@ -22,18 +21,23 @@ class NameCheckDialogFragment : DialogFragment() {
     private var customView: View? = null
 
     interface NameCheckListener {
-        fun onDialogPositiveClick(dialog: DialogFragment)
+        fun onDialogPositiveClick(dialog: DialogFragment, customer_id:String, customer_people_num:Integer )
         fun onDialogNegativeClick(dialog: DialogFragment)
     }
 
     private var markedCustomerName = "문X훈"
+    private var customer_id = ""
+    private var customer_people_num:Int = 0
 
     //    롤리팝 이하버전은 지원 X
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
+
 //    argument를 얻는 시점은 onCreateDialog (onCreate가 끝난 이후)
         markedCustomerName = markCustomerName(arguments?.getString("CUSTOMER_NAME")!!)
+        customer_id = arguments?.getString("CUSTOMER_ID").toString()
+        customer_people_num = arguments?.getString("CUSTOMER_PEOPLE_NUM")!!.toInt()
 
 
         //                .setPositiveButtonIcon(R.drawable)
@@ -84,7 +88,7 @@ class NameCheckDialogFragment : DialogFragment() {
 
         name_yes_button.setOnClickListener {
             Log.i("test", "이게 된다고?")
-            nameChecklistener.onDialogPositiveClick(this)
+            nameChecklistener.onDialogPositiveClick(this,customer_id, Integer(customer_people_num))
         }
         name_no_button.setOnClickListener {
             Log.i("test", "이게 안된다고?")

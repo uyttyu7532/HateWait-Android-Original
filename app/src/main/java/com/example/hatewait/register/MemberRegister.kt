@@ -8,25 +8,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.hatewait.R
 import com.example.hatewait.model.*
 import com.example.hatewait.retrofit2.MyApi
-import com.example.hatewait.retrofit2.RetrofitMemberRegister
-import com.example.hatewait.retrofit2.RetrofitNonMemberRegister
-import com.example.hatewait.socket.MemberRegisterAsyncTask
 import kotlinx.android.synthetic.main.activity_members_register.*
 import kotlinx.android.synthetic.main.activity_members_register.people_number_editText
 import kotlinx.android.synthetic.main.activity_members_register.people_number_layout
 import kotlinx.android.synthetic.main.activity_members_register.register_customer_button
-import kotlinx.android.synthetic.main.activity_non_members_reigster.*
-import org.jetbrains.anko.support.v4.startActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class MemberRegister : Fragment() {
     private val idRegex = Regex("^(?=.*[a-zA-Zㄱ-ㅎ가-힣0-9])[a-zA-Zㄱ-ㅎ가-힣0-9]{1,}$")
@@ -141,7 +133,7 @@ class MemberRegister : Fragment() {
                             Log.d("회원 id 확인 200 :: ", response?.body().toString())
                             var data: CheckMemberIdResponseData? = response?.body() // 서버로부터 온 응답
 
-                            showNameCheckDialog(data!!.message)
+                            showNameCheckDialog(data!!.message, userId, numOfGroup)
 
                         }
                         if (response.code() == 409) {
@@ -185,11 +177,13 @@ class MemberRegister : Fragment() {
     }
 
 
-    fun showNameCheckDialog(checkName:String) {
+    fun showNameCheckDialog(checkName:String, customerId:String, customerPeopleNum:String ) {
         val nameCheckFragment =
             NameCheckDialogFragment()
         val argumentBundle = Bundle()
         argumentBundle.putString("CUSTOMER_NAME", checkName)
+        argumentBundle.putString("CUSTOMER_ID", customerId)
+        argumentBundle.putString("CUSTOMER_PEOPLE_NUM", customerPeopleNum)
         nameCheckFragment.arguments = argumentBundle
         nameCheckFragment.show(requireActivity().supportFragmentManager, "MEMBER_NAME_CHECK")
     }

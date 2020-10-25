@@ -2,18 +2,25 @@ package com.example.hatewait.login
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.example.hatewait.*
+import com.example.hatewait.model.MemberRegisterRequestData
+import com.example.hatewait.model.MemberRegisterResponseData
 import com.example.hatewait.register.MemberRegister
 import com.example.hatewait.register.NameCheckDialogFragment
 import com.example.hatewait.register.RegisterCheck
 import com.example.hatewait.register.RegisterErrorDialogFragment
+import com.example.hatewait.retrofit2.MyApi
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_members_register.*
 import kotlinx.android.synthetic.main.activity_register_tab_pager.*
 import org.jetbrains.anko.startActivity
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class LoginRegisterViewPagerActivity : AppCompatActivity(),
@@ -45,14 +52,58 @@ class LoginRegisterViewPagerActivity : AppCompatActivity(),
 
     }
 
-    override fun onDialogPositiveClick(dialog: DialogFragment) {
+    override fun onDialogPositiveClick(
+        dialog: DialogFragment,
+        customer_id: String,
+        customer_people_num: Integer
+    ) {
 
-//        여기에서 asynctask 수행 방법?
-        startActivity<RegisterCheck>(
-            "CUSTOMER_NAME" to newCustomerName,
-            "CUSTOMER_TURN" to newCustomerTurn
-        )
-        dialog.dismiss()
+        var memberRegisterData = MemberRegisterRequestData(customer_id, Integer(customer_people_num.toInt()), true)
+        Log.i("멤버 대기 등록", memberRegisterData.toString())
+
+        MyApi.memberRegisterService.requestMemberRegister(memberRegisterData)
+            .enqueue(object : Callback<MemberRegisterResponseData> {
+                override fun onFailure(
+                    call: Call<MemberRegisterResponseData>,
+                    t: Throwable
+                ) {
+
+                    Log.d("회원 대기 등록 :: ", "연결실패 $t")
+                }
+
+                override fun onResponse(
+                    call: Call<MemberRegisterResponseData>,
+                    response: Response<MemberRegisterResponseData>
+                ) {
+
+                    if (response.code() == 500) {
+                        Log.d("회원 대기 등록 500", response.body().toString())
+                    }
+
+                    if (response.code() == 200) {
+
+                        Log.d("회원 대기 등록 200 :: ", response?.body().toString())
+                        var data: MemberRegisterResponseData? = response?.body() // 서버로부터 온 응답
+
+                        startActivity<RegisterCheck>(
+                            "CUSTOMER_NAME" to data!!.name,
+                            "CUSTOMER_TURN" to data!!.count
+                        )
+                        dialog.dismiss()
+                    }
+
+                    if (response.code() == 409) {
+
+                        Log.d("회원 대기 등록 409 :: ", response?.body().toString())
+                        var data: MemberRegisterResponseData? = response?.body() // 서버로부터 온 응답
+
+                    }
+                }
+            }
+            )
+
+
+
     }
 
     override fun onDialogNegativeClick(dialog: DialogFragment) {

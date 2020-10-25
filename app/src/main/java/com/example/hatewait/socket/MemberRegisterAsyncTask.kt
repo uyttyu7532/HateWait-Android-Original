@@ -59,7 +59,7 @@ class MemberRegisterAsyncTask(context: MemberRegister) : AsyncTask<String, Unit,
             currentActivity.customerTurn = memberInfoArray[3].toInt()
             Log.i("response", "${memberInfoArray[2]} , ${memberInfoArray[3]}")
             currentActivity.customerInfoListener.registerCustomer(currentActivity)
-            currentActivity.showNameCheckDialog("이름")
+            currentActivity.showNameCheckDialog("이름","id","인원수")
         }
         super.onPostExecute(result)
     }

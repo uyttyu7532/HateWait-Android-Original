@@ -6,15 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.hatewait.R
-import com.example.hatewait.discretescroll.Item
-import com.example.hatewait.discretescroll.Shop
-import com.example.hatewait.discretescroll.ShopAdapter
-import com.yarolegovich.discretescrollview.DSVOrientation
-import com.yarolegovich.discretescrollview.DiscreteScrollView
-import com.yarolegovich.discretescrollview.InfiniteScrollAdapter
-import com.yarolegovich.discretescrollview.transform.Pivot
-import com.yarolegovich.discretescrollview.transform.ScaleTransformer
-import kotlinx.android.synthetic.main.fragment_coupon.*
 
 class StampFragment : Fragment(){
 

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_margin="4dp"
+        android:elevation="2dp"
+        app:cardBackgroundColor="#FFFFFF"
+        app:cardCornerRadius="10dp">
+
+    <!--    <ImageView-->
+    <!--        android:id="@+id/image"-->
+    <!--        android:scaleType="centerCrop"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        tools:ignore="ContentDescription" />-->
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+        <TextView
+                android:layout_marginStart="10dp"
+                android:layout_gravity="start"
+                android:id="@+id/coupon_benefit_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="자몽에이드 한 잔"
+                android:textSize="25sp"
+                android:textColor="#000000"
+                android:textStyle="bold"/>
+
+        <TextView
+                android:layout_marginStart="10dp"
+                android:layout_gravity="start"
+                android:id="@+id/coupon_remark_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2만원 이상 주문시 사용 가능"
+                android:textSize="18sp" />
+
+        <Space
+                android:layout_width="match_parent"
+                android:layout_height="30dp"></Space>
+
+        <TextView
+                android:layout_marginEnd="10dp"
+                android:layout_gravity="end"
+                android:id="@+id/coupon_issue_date_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="발급 날짜: 2020-11-01 14:57까지"
+                android:textSize="18sp" />
+
+        <TextView
+                android:layout_marginEnd="10dp"
+                android:layout_gravity="end"
+                android:id="@+id/coupon_exp_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="유효 기간: 2020-11-01 14:57까지"
+                android:textSize="18sp" />
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

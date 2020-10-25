@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hatewait.R
-import com.example.hatewait.discretescroll.Item
+import com.example.hatewait.discretescroll.Coupon
 import com.example.hatewait.discretescroll.Shop
 import com.example.hatewait.discretescroll.ShopAdapter
 import com.yarolegovich.discretescrollview.DSVOrientation
@@ -21,7 +21,7 @@ import com.yarolegovich.discretescrollview.transform.ScaleTransformer
 class CouponFragment : Fragment(), DiscreteScrollView.OnItemChangedListener<ShopAdapter.ViewHolder?>,
     View.OnClickListener  {
 
-    private var data: List<Item>? = null
+    private var data: List<Coupon>? = null
     private var shop: Shop? = null
     private var infiniteAdapter: InfiniteScrollAdapter<*>? = null
 

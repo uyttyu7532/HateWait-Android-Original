@@ -48,6 +48,7 @@ class BusinessHourPick : AppCompatActivity(),
 //        }
 
         button_finish_business_hours.setOnClickListener {
+
 //            bhs: List<BusinessHours?>? = null
             bhs = try {
                 bh_picker.businessHoursList

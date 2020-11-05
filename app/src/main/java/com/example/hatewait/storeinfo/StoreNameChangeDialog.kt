@@ -13,10 +13,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDialogFragment
 import com.example.hatewait.R
+import com.example.hatewait.retrofit2.MyApi
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.activity_store_info_update.*
+import kotlinx.android.synthetic.main.activity_store_name_change_dialog.*
 import org.jetbrains.anko.layoutInflater
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.lang.ClassCastException
 
 class StoreNameChangeDialog : AppCompatDialogFragment() {
@@ -43,12 +48,38 @@ class StoreNameChangeDialog : AppCompatDialogFragment() {
 
         builder.setView(customView)
             .setTitle("가게이름")
-            .setNegativeButton("취소", DialogInterface.OnClickListener { dialogInterface, _ ->
-                dismiss()
-            })
-            .setPositiveButton("변경", DialogInterface.OnClickListener { dialogInterface, _ ->
+            .setNegativeButton("취소", DialogInterface.OnClickListener { _, _ -> dismiss() })
+            .setPositiveButton("변경", DialogInterface.OnClickListener { _, _ ->
                 val updatedStoreName = editStoreNameText.text.toString()
                 dialogListener.applyText(updatedStoreName)
+
+                MyApi.UpdateService.requestStoreNameUpdate(
+                    id= "hate2020",
+                    name = store_introduce_editText.text.toString()
+                )
+                    .enqueue(object : Callback<MyApi.onlyMessageResponseData> {
+                        override fun onFailure(call: Call<MyApi.onlyMessageResponseData>, t: Throwable) {
+                            Log.d("retrofit2 가게이름수정 :: ", "가게이름수정실패 $t")
+                        }
+
+                        override fun onResponse(
+                            call: Call<MyApi.onlyMessageResponseData>,
+                            response: Response<MyApi.onlyMessageResponseData>
+                        ) {
+
+                            var data: MyApi.onlyMessageResponseData? = response?.body()
+                            Log.d(
+                                "retrofit2 가게이름수정 ::",
+                                response.code().toString() + response.body().toString()
+                            )
+                            when (response.code()) {
+
+                                200 -> {
+                                }
+                            }
+                        }
+                    })
+
             })
         return builder.create()
     }

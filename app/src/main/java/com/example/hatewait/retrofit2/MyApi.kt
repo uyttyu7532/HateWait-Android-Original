@@ -7,12 +7,15 @@ object MyApi {
 
     private const val BASE_URL = "https://hatewait-server.herokuapp.com/"
 
+    data class onlyMessageResponseData(var message:String)
 
     private fun retrofit(): Retrofit { // Singleton
         return Retrofit.Builder().baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create()) // JSON
             .build()
     }
+
+
 
     val nonMemberRegisterService: RetrofitNonMemberRegister by lazy {
         retrofit().create(RetrofitNonMemberRegister::class.java)
@@ -41,6 +44,11 @@ object MyApi {
     val CouponService: RetrofitCoupon by lazy {
         retrofit().create(RetrofitCoupon::class.java)
     }
+
+    val UpdateService: RetrofitInfoUpdate by lazy {
+        retrofit().create(RetrofitInfoUpdate::class.java)
+    }
+
 
 
 

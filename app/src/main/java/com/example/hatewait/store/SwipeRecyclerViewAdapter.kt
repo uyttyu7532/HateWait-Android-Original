@@ -82,7 +82,7 @@ class SwipeRecyclerViewAdapter(
             waitingListCallButton.setOnClickListener {
                 val position = adapterPosition
 
-                if (items[position].is_called.equals("0")) { // 호출 x
+                if (items[position].called_time.equals("0000-00-00 00:00:00")) {
                     //                    callCustomer(
 //                        items[position].id,
 //                        "[${STORENAME}] ${items[position].turn}번째 순서 전 입니다. 가게 앞으로 와주세요."
@@ -96,7 +96,7 @@ class SwipeRecyclerViewAdapter(
                         items[position].name + " 손님 호출 완료",
                         Toast.LENGTH_SHORT
                     ).show()
-                } else if (items[position].is_called!!.equals("1")) { // 호출 o
+                } else  { // 호출 o
 
                 }
 
@@ -263,10 +263,10 @@ class SwipeRecyclerViewAdapter(
 //            viewHolder.bottomWrapperLeft.backgroundColorResource =
 //                R.color.white
 //        }
-        if (items[position].is_called.equals("0") || items[position].is_called == null) { // 호출x
+        if (items[position].called_time.equals("0000-00-00 00:00:00")) { // 호출x
             viewHolder.bottomWrapperLeft.backgroundColorResource =
                 R.color.white
-        } else if (items[position].is_called.equals("1")) { // 호출o
+        } else{ // 호출o
             viewHolder.bottomWrapperLeft.backgroundColorResource =
                 R.color.colorCall
         }

@@ -53,7 +53,7 @@ class StoreMenu : AppCompatActivity() {
 //            getSharedPreferences(resources.getString(R.string.store_mode), Context.MODE_PRIVATE)
 //        STOREID = storeReference.getString("STORE_ID", "")
 //        STORENAME = storeNameView.text.toString()
-        store_name_view.text = storeInfo?.store
+        store_name_view.text = storeInfo?.storeName
         initView()
 
     }

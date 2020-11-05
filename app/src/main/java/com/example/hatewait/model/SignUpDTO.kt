@@ -11,16 +11,16 @@ data class MemberSignUpRequestData(
 data class MemberSignUpResponseData(var message: String, var memberName: String)
 
 data class StoreSignUpRequestData(
-    var id: String,
-    var name: String,
-    var phone: String,
-    var email: String,
-    var info: String,
-    var business_hour: String,
-    var maximum_capacity: Int,
-    var address : String,
-    var coupon_enable : Boolean,
-    var pw: String
+    var id: String?,
+    var name: String?,
+    var phone: String?,
+    var email: String?,
+    var info: String?,
+    var business_hour: String?,
+    var maximum_capacity: Int?,
+    var address : String?,
+    var coupon_enable : Boolean?,
+    var pw: String?
 )
 
-data class StoreSignUpResponseData(var message: String, var storeName: String)
+data class StoreSignUpResponseData(var message: String, var name: String)

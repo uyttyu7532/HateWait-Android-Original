@@ -86,13 +86,18 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
 
         // 현재 위치로 이동하게 해야함
         myLocationFAB.setOnClickListener {
-            location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-            mapView!!.setMapCenterPointAndZoomLevel(
-                MapPoint.mapPointWithGeoCoord(
-                    location.latitude,
-                    location.longitude
-                ), 1, true
-            );
+            if (!checkLocationServicesStatus()) {
+                showDialogForLocationServiceSetting()
+            } else {
+                checkRunTimePermission()
+            }
+//            location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+//            mapView!!.setMapCenterPointAndZoomLevel(
+//                MapPoint.mapPointWithGeoCoord(
+//                    location.latitude,
+//                    location.longitude
+//                ), 1, true
+//            )
         }
 
 
@@ -173,7 +178,7 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
                 ) {
                     Toast.makeText(
                         this@KakaoMapActivity,
-                        "퍼미션이 거부되었습니다. 앱을 다시 실행하여 퍼미션을 허용해주세요.",
+                        "현재 위치로 이동하려면 앱을 다시 실행하여 퍼미션을 허용해주세요.",
                         Toast.LENGTH_LONG
                     ).show()
                     finish()
@@ -198,6 +203,13 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
                 Manifest.permission.ACCESS_FINE_LOCATION
             )
         if (hasFineLocationPermission == PackageManager.PERMISSION_GRANTED) {
+            location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            mapView!!.setMapCenterPointAndZoomLevel(
+                MapPoint.mapPointWithGeoCoord(
+                    location.latitude,
+                    location.longitude
+                ), 1, true
+            );
             // 2. 이미 퍼미션을 가지고 있다면
             // ( 안드로이드 6.0 이하 버전은 런타임 퍼미션이 필요없기 때문에 이미 허용된 걸로 인식합니다.)
             // 3.  위치 값을 가져올 수 있음

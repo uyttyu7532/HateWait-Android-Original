@@ -2,7 +2,7 @@ package com.example.hatewait.socket
 
 import android.content.Context
 import android.os.AsyncTask
-import com.example.hatewait.member.CustomerMenu
+import com.example.hatewait.member.MemberMenu
 import com.example.hatewait.signup.CustomerSignUp3
 import com.example.hatewait.R
 import org.jetbrains.anko.startActivity
@@ -45,7 +45,7 @@ class CustomerRegisterAsyncTask(context: CustomerSignUp3) : AsyncTask<String, Un
         if (currentActivity == null || currentActivity.isFinishing) return
         val customerReference = currentActivity.getSharedPreferences(currentActivity.resources.getString(R.string.customer_mode), Context.MODE_PRIVATE)
         customerReference.edit().putString("CUSTOMER_ID", newCustomerId).commit()
-        currentActivity.startActivity<CustomerMenu>()
+        currentActivity.startActivity<MemberMenu>()
         currentActivity.finishAffinity()
         super.onPostExecute(result)
     }

@@ -9,7 +9,7 @@ import android.graphics.Color
 import android.media.RingtoneManager
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import com.example.hatewait.member.CustomerMenu
+import com.example.hatewait.member.MemberMenu
 import com.example.hatewait.R
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
@@ -43,7 +43,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     // 수신된 알림을 기기에 표시 (foreground)
     private fun sendNotification(body: String?) {
-        val intent = Intent(this, CustomerMenu::class.java).apply {
+        val intent = Intent(this, MemberMenu::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             Intent.FLAG_ACTIVITY_SINGLE_TOP
             putExtra("Notification", body)

@@ -55,11 +55,11 @@ class LoginRegisterViewPagerActivity : AppCompatActivity(),
     override fun onDialogPositiveClick(
         dialog: DialogFragment,
         customer_id: String,
-        customer_people_num: Integer
+        customer_people_num: Int
     ) {
 
-        var memberRegisterData = MemberRegisterRequestData(customer_id, Integer(customer_people_num.toInt()), true)
-        Log.i("멤버 대기 등록", memberRegisterData.toString())
+        var memberRegisterData =
+            MemberRegisterRequestData(customer_id, customer_people_num.toInt(), true)
 
         MyApi.memberRegisterService.requestMemberRegister(memberRegisterData)
             .enqueue(object : Callback<MemberRegisterResponseData> {
@@ -67,43 +67,30 @@ class LoginRegisterViewPagerActivity : AppCompatActivity(),
                     call: Call<MemberRegisterResponseData>,
                     t: Throwable
                 ) {
-
-                    Log.d("회원 대기 등록 :: ", "연결실패 $t")
+                    Log.d("retrofit2 회원 대기 등록 :: ", "연결실패 $t")
                 }
 
                 override fun onResponse(
                     call: Call<MemberRegisterResponseData>,
                     response: Response<MemberRegisterResponseData>
                 ) {
+                    var data: MemberRegisterResponseData? = response?.body() // 서버로부터 온 응답
+                    Log.d(
+                        "retrofit2 회원 대기 등록 ::",
+                        response.code().toString() + data
+                    )
+                    when (response.code()) {
+                        200 -> {
 
-                    if (response.code() == 500) {
-                        Log.d("회원 대기 등록 500", response.body().toString())
-                    }
-
-                    if (response.code() == 200) {
-
-                        Log.d("회원 대기 등록 200 :: ", response?.body().toString())
-                        var data: MemberRegisterResponseData? = response?.body() // 서버로부터 온 응답
-
-                        startActivity<RegisterCheck>(
-                            "CUSTOMER_NAME" to data!!.name,
-                            "CUSTOMER_TURN" to data!!.count
-                        )
-                        dialog.dismiss()
-                    }
-
-                    if (response.code() == 409) {
-
-                        Log.d("회원 대기 등록 409 :: ", response?.body().toString())
-                        var data: MemberRegisterResponseData? = response?.body() // 서버로부터 온 응답
-
+                            startActivity<RegisterCheck>(
+                                "CUSTOMER_NAME" to data!!.name,
+                                "CUSTOMER_TURN" to data!!.count
+                            )
+                            dialog.dismiss()
+                        }
                     }
                 }
-            }
-            )
-
-
-
+            })
     }
 
     override fun onDialogNegativeClick(dialog: DialogFragment) {

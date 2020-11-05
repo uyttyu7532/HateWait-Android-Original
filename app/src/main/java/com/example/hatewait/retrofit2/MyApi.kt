@@ -8,7 +8,7 @@ object MyApi {
     private const val BASE_URL = "https://hatewait-server.herokuapp.com/"
 
 
-    private fun retrofit(): Retrofit {
+    private fun retrofit(): Retrofit { // Singleton
         return Retrofit.Builder().baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create()) // JSON
             .build()
@@ -26,9 +26,23 @@ object MyApi {
         retrofit().create(RetrofitCheckMemberIdRegister::class.java)
     }
 
-    val CustomerSignUpService: RetrofitSignUp by lazy {
+    val SignUpService: RetrofitSignUp by lazy {
         retrofit().create(RetrofitSignUp::class.java)
     }
+
+    val LoginService: RetrofitLogin by lazy {
+        retrofit().create(RetrofitLogin::class.java)
+    }
+
+    val WaitingListService: RetrofitWaitingList by lazy {
+        retrofit().create(RetrofitWaitingList::class.java)
+    }
+
+    val CouponService: RetrofitCoupon by lazy {
+        retrofit().create(RetrofitCoupon::class.java)
+    }
+
+
 
 
 

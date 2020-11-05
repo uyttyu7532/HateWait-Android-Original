@@ -2,13 +2,20 @@ package com.example.hatewait.member
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hatewait.R
+import com.example.hatewait.model.NonMemberRegisterResponseData
+import com.example.hatewait.model.StoreListResponseData
+import com.example.hatewait.retrofit2.MyApi
 import kotlinx.android.synthetic.main.activity_store_list.*
 import kotlinx.android.synthetic.main.fragment_visitor_list.searchView
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class StoreList : AppCompatActivity() {
 
@@ -26,7 +33,6 @@ class StoreList : AppCompatActivity() {
         setRecyclerView()
 
 
-
         store_list_search_view.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
             android.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -41,7 +47,6 @@ class StoreList : AppCompatActivity() {
 
 
     }
-
 
 
     // RecyclerView와 Adapter 연결
@@ -63,6 +68,30 @@ class StoreList : AppCompatActivity() {
         storeList.add("맛있는가게")
         storeList.add("마라탕집")
 
+        MyApi.CouponService.requestStoreList(
+            "uyttyu7532"
+        )
+            .enqueue(object : Callback<Any> {
+                override fun onFailure(
+                    call: Call<Any>,
+                    t: Throwable
+                ) {
+                    Log.d("retrofit2 가게 리스트 :: ", "연결실패 $t")
+                }
+
+                override fun onResponse(
+                    call: Call<Any>,
+                    response: Response<Any>
+                ) {
+                    Log.d("retrofit2 가게 리스트 ::",response.code().toString() + response.body().toString())
+                    when (response.code()) {
+                        200 -> {
+                            var data: Any? = response?.body() // 서버로부터 온 응답
+                        }
+                    }
+                }
+            }
+            )
 
         storeListAdapter = StoreListAdapter(storeList)
         storeListRecyclerView.adapter = storeListAdapter

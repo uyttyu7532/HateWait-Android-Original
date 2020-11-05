@@ -18,6 +18,7 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true">
+        <activity android:name=".StartWaitActivity"></activity>
         <activity android:name=".storeinfo.ChangePasswordActivity1" />
         <activity android:name=".storeinfo.ChangePasswordActivity2" />
         <activity android:name=".storeinfo.SettingStampCoupon" />
@@ -67,16 +68,14 @@
                 android:name=".storeinfo.StoreNameChangeDialog"
                 tools:ignore="Instantiatable" />
         <activity android:name=".storeinfo.StoreInfoUpdate" />
-        <activity android:name=".member.CustomerMenu" />
+        <activity android:name=".member.MemberMenu" />
         <activity android:name=".store.StoreMenu" />
         <activity android:name=".login.LoginRegisterViewPagerActivity" />
         <activity android:name=".register.RegisterCheck" />
         <activity android:name=".login.MainActivity" />
         <activity android:name=".store.StoreWaitingList" />
         <activity android:name=".storeinfo.BusinessHourPick" />
-
-        <activity android:name=".discretescroll.ShopActivity"/>
-
+        <activity android:name=".discretescroll.ShopActivity" />
         <activity
                 android:name=".Splash"
                 android:noHistory="true"

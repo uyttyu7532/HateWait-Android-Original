@@ -4,18 +4,23 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.pm.ActivityInfo
+import android.net.ConnectivityManager
 import android.os.AsyncTask
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hatewait.R
-import com.example.hatewait.member.CustomerMenu
-import com.example.hatewait.model.CustomerLoginResponseData
-import com.example.hatewait.model.CustomerLoginRequestData
-import com.example.hatewait.retrofit2.RetrofitLogin
+import com.example.hatewait.member.MemberMenu
+import com.example.hatewait.model.MemberLoginRequestData
+import com.example.hatewait.model.MemberLoginResponseData
+import com.example.hatewait.model.StoreLoginRequestData
+import com.example.hatewait.model.StoreLoginResponseData
+import com.example.hatewait.retrofit2.MyApi
 import com.example.hatewait.signup.CustomerSignUp1
 import com.example.hatewait.signup.FindPassWordActivity1
 import com.example.hatewait.signup.StoreSignUp1
@@ -25,10 +30,13 @@ import com.nhn.android.naverlogin.OAuthLoginHandler
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.startActivity
 import org.json.JSONObject
-import retrofit2.*
-import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-var CustomerInfo: CustomerLoginResponseData? = null
+var memberInfo: MemberLoginResponseData? = null
+var storeInfo: StoreLoginResponseData? = null
+lateinit var mContext: Context
 
 class MainActivity : AppCompatActivity() {
     var mLastBackPress: Long = 0
@@ -48,10 +56,11 @@ class MainActivity : AppCompatActivity() {
     fun verifyPassword(input_password: String): Boolean = passwordRegex.matches(input_password)
 
     private val storeReference: SharedPreferences by lazy {
-//        initalizer Property에 다음 초기화 블록 코드 내용 자체를 저장.
+//        initalizer Property에 다음 초기
+//        화 블록 코드 내용 자체를 저장.
         getSharedPreferences(resources.getString(R.string.store_mode), Context.MODE_PRIVATE)
     }
-    private val customerReference: SharedPreferences by lazy {
+    private val memberReference: SharedPreferences by lazy {
 //        한번도 초기화 되지 않은 val lazy는 getValue() == UNINITIALIZED_VALUE 상태
 //        초기화 1번이라도 되면 getValue()호출하여 값을 얻어옴.
         getSharedPreferences(resources.getString(R.string.customer_mode), Context.MODE_PRIVATE)
@@ -63,13 +72,21 @@ class MainActivity : AppCompatActivity() {
 
     private var isCustomerMode = true
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        mContext = this
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         buttonInitialize()
         naverLoginInit()
         addTextChangeListener()
+
+    }
+
+
+    override fun onResume() {
+        super.onResume()
     }
 
     override fun onStart() {
@@ -85,7 +102,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun autoLoginCheck() {
 //        둘중 하나라도 자동로그인 설정시 ID/PASSWORD 불러오기 체크박스 체크상태
-        auto_login_checkBox.isChecked = (customerReference.getBoolean("AUTO_LOGIN", false)
+        auto_login_checkBox.isChecked = (memberReference.getBoolean("AUTO_LOGIN", false)
                 or storeReference.getBoolean("AUTO_LOGIN", false))
     }
 
@@ -98,7 +115,7 @@ class MainActivity : AppCompatActivity() {
         }
         button_login.setOnClickListener {
             if (isCustomerMode) {
-                val editor = customerReference.edit()
+                val editor = memberReference.edit()
                 if (auto_login_checkBox.isChecked) {
                     editor.putString("CUSTOMER_ID", id_input_editText.text.toString())
                     editor.putString("CUSTOMER_PASSWORD", password_input_editText.text.toString())
@@ -112,37 +129,46 @@ class MainActivity : AppCompatActivity() {
                 }
 
 
-//                var customerLoginData = CustomerLoginRequestData(id_input_editText.text.toString(),password_input_editText.text.toString())
-//
-//                val retrofit = Retrofit.Builder().baseUrl("https://hatewait-server.herokuapp.com/")
-//                    .addConverterFactory(GsonConverterFactory.create()) // JSON
-//                    .build();
-//                val service = retrofit.create(RetrofitLogin::class.java);
-////                service.requestCustomerLogin(id_input_editText.text.toString(),password_input_editText.text.toString())
-//                service.requestCustomerLogin(customerLoginData)
-//                .enqueue(object : Callback<CustomerLoginResponseData> {
-//                    override fun onFailure(call: Call<CustomerLoginResponseData>, t: Throwable) {
-//                        Log.d("손님로그인 :: ", "로그인연결실패 $t")
-//                    }
-//                    override fun onResponse(call: Call<CustomerLoginResponseData>, response: Response<CustomerLoginResponseData>) {
-//                        if (response.code()==409){
-//                            Log.d("손님로그인 :: ", response.code().toString() + "::" + response?.body().toString())
-//                        }
-//                        if (response.code()==200){
-//                            Log.d("손님로그인 :: ", response.code().toString() + "::" + response?.body().toString())
-//                            var data: CustomerLoginResponseData? = response?.body()
-//                            CustomerInfo = data
-//
-//                            startActivity<CustomerMenu>()
-//                        }
-//                        if (response.code()==500){
-//                        }
-//
-//                    }
-//                }
-//                )
+                var customerLoginData = MemberLoginRequestData(
+                    id_input_editText.text.toString(),
+                    password_input_editText.text.toString()
+                )
 
-                startActivity<CustomerMenu>()
+                MyApi.LoginService.requestMemberLogin(customerLoginData)
+                    .enqueue(object : Callback<MemberLoginResponseData> {
+                        override fun onFailure(call: Call<MemberLoginResponseData>, t: Throwable) {
+                            Log.d("retrofit2 손님로그인 :: ", "로그인연결실패 $t")
+                        }
+
+                        override fun onResponse(
+                            call: Call<MemberLoginResponseData>,
+                            response: Response<MemberLoginResponseData>
+                        ) {
+                            Log.d(
+                                "retrofit2 손님로그인 ::",
+                                response.code().toString() + response.body().toString()
+                            )
+                            when(response.code()){
+                                200 -> {
+                                    var data: MemberLoginResponseData? = response?.body()
+                                    memberInfo = data
+
+                                    startActivity<MemberMenu>()
+                                }
+                                409 -> {
+                                    Toast.makeText(mContext, "아이디나 비밀번호를 확인해주세요.", Toast.LENGTH_SHORT).show()
+                                }
+                                500 -> {
+                                    Toast.makeText(mContext, "서버 오류", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+
+                        }
+                    }
+                    )
+
+                // TODO 주석처리해야함
+                startActivity<MemberMenu>()
 
 
             } else {
@@ -158,6 +184,50 @@ class MainActivity : AppCompatActivity() {
                     editor.putBoolean("AUTO_LOGIN", false)
                     editor.commit()
                 }
+
+                var storeLoginData = StoreLoginRequestData(
+                    id_input_editText.text.toString(),
+                    password_input_editText.text.toString()
+                )
+
+                MyApi.LoginService.requestStoreLogin(storeLoginData)
+                    .enqueue(object : Callback<StoreLoginResponseData> {
+                        override fun onFailure(call: Call<StoreLoginResponseData>, t: Throwable) {
+                            Log.d("retrofit2 가게로그인 :: ", "로그인연결실패 $t")
+                        }
+
+                        override fun onResponse(
+                            call: Call<StoreLoginResponseData>,
+                            response: Response<StoreLoginResponseData>
+                        ) {
+                            Log.d(
+                                "retrofit2 가게로그인 ::",
+                                response.code().toString() + response.body().toString()
+                            )
+                            when (response.code()) {
+                                200 -> {
+                                    var data: StoreLoginResponseData? = response?.body()
+                                    storeInfo = data
+
+                                    startActivity<StoreMenu>()
+                                }
+                                409 -> {
+                                    Toast.makeText(
+                                        mContext,
+                                        "아이디나 비밀번호를 확인해주세요.",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                                500 -> {
+                                    Toast.makeText(mContext, "서버 오류", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+
+                        }
+                    }
+                    )
+
+                // TODO 주석처리해야함
                 startActivity<StoreMenu>()
             }
         }
@@ -215,8 +285,8 @@ class MainActivity : AppCompatActivity() {
                 val userName = resultUserInfoJSON.getString("name")
                 Log.i("userInfo", "이름 : $userName\n이메일: $userEmail")
 
-//                일단은 로그인 계정이 customer 계정이라고 판단할 경우.
-                startActivity<CustomerMenu>()
+//                일단은 로그인 계정이 member 계정이라고 판단할 경우.
+                startActivity<MemberMenu>()
             }
 
         }
@@ -306,10 +376,10 @@ class MainActivity : AppCompatActivity() {
                 isCustomerMode = false
             }
             1 -> {
-                if (customerReference.getBoolean("AUTO_LOGIN", false)) {
-                    id_input_editText.setText(customerReference.getString("CUSTOMER_ID", null))
+                if (memberReference.getBoolean("AUTO_LOGIN", false)) {
+                    id_input_editText.setText(memberReference.getString("CUSTOMER_ID", null))
                     password_input_editText.setText(
-                        customerReference.getString(
+                        memberReference.getString(
                             "CUSTOMER_PASSWORD",
                             null
                         )
@@ -345,3 +415,4 @@ class MainActivity : AppCompatActivity() {
     }
 
 }
+

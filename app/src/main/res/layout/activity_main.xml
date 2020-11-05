@@ -147,7 +147,7 @@
     <com.google.android.material.button.MaterialButton
             android:id="@+id/button_login"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_marginStart="30dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="30dp"
@@ -169,19 +169,39 @@
             android:gravity="center"
             android:text="───────     OR     ───────" />
 
-      네이버 버튼 크기 조정하기
-    <ImageButton
+<!--      네이버 버튼 크기 조정하기-->
+<!--    <ImageButton-->
+<!--            android:id="@+id/naver_login_button"-->
+<!--            style="@style/marginHorizontal"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="45dp"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            android:adjustViewBounds="true"-->
+<!--            android:background="#fcfcfc"-->
+<!--            android:elevation="1dp"-->
+<!--            android:scaleType="fitCenter"-->
+<!--            android:src="@drawable/naver_login_green_photoshop2" />-->
+
+    <com.google.android.material.button.MaterialButton
             android:id="@+id/naver_login_button"
-            style="@style/marginHorizontal"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_gravity="center"
+            android:layout_height="60dp"
+            android:layout_marginStart="30dp"
             android:layout_marginTop="8dp"
-            android:adjustViewBounds="true"
-            android:background="#fcfcfc"
-            android:elevation="1dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/naver_login_green_photoshop2" />
+            android:layout_marginEnd="30dp"
+            android:backgroundTint="@color/white"
+            android:enabled="true"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            app:icon="@drawable/naver_logo"
+            app:iconTint="#1EC800"
+            app:iconSize="50dp"
+            android:text="네이버 아이디로 로그인"
+            android:textColor="#999999"
+            android:textSize="18sp"
+            app:cornerRadius="10dp"
+            app:rippleColor="#1A1EC800" />
 
 <!--    <com.google.android.material.button.MaterialButton-->
 <!--            android:id="@+id/naver_login_button"-->

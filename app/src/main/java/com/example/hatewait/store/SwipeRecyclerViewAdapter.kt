@@ -21,6 +21,7 @@ import com.daimajia.swipe.adapters.RecyclerSwipeAdapter
 import com.example.hatewait.R
 import com.example.hatewait.fcm.FcmPush
 import com.example.hatewait.model.ClientData
+import com.example.hatewait.model.WaitingInfo
 import com.example.hatewait.model.setShared
 import com.example.hatewait.socket.*
 import kotlinx.android.synthetic.main.waiting_list_row.view.*
@@ -29,10 +30,10 @@ import java.util.*
 
 
 class SwipeRecyclerViewAdapter(
-    val items: ArrayList<ClientData>,
-    val called: HashMap<String, Boolean>,
+    val items: List<WaitingInfo>,
+//    val called: HashMap<String, Boolean>,
     val clicked: HashMap<String, Boolean>,
-    val pref: SharedPreferences,
+//    val pref: SharedPreferences,
     val context: Context
 ) :
     RecyclerSwipeAdapter<SwipeRecyclerViewAdapter.SimpleViewHolder>() {
@@ -60,15 +61,19 @@ class SwipeRecyclerViewAdapter(
 
     inner class SimpleViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
-        val waitingListSwipeLayout = itemView.findViewById(R.id.waiting_list_swipe_layout) as SwipeLayout
-        val waitingListCardView= itemView.findViewById(R.id.waiting_list_card_View) as CardView
+        val waitingListSwipeLayout =
+            itemView.findViewById(R.id.waiting_list_swipe_layout) as SwipeLayout
+        val waitingListCardView = itemView.findViewById(R.id.waiting_list_card_View) as CardView
         val waitingListDetailView = itemView.findViewById(R.id.waiting_list_detail_view) as CardView
         val waitingNameTextView = itemView.findViewById(R.id.waiting_name_text_view) as TextView
         val waitingNumTextView = itemView.findViewById(R.id.waiting_num_text_view) as TextView
         val waitingPhoneTextView = itemView.findViewById(R.id.waiting_phone_text_view) as TextView
-        val waitingListDetailTextView = itemView.findViewById(R.id.waiting_list_detail_text_view) as TextView
-        val waitingListDetailTextView2 = itemView.findViewById(R.id.waiting_list_detail_text_view2) as TextView
-        val waitingListDeleteButton = itemView.findViewById(R.id.waiting_list_delete_button) as ImageButton
+        val waitingListDetailTextView =
+            itemView.findViewById(R.id.waiting_list_detail_text_view) as TextView
+        val waitingListDetailTextView2 =
+            itemView.findViewById(R.id.waiting_list_detail_text_view2) as TextView
+        val waitingListDeleteButton =
+            itemView.findViewById(R.id.waiting_list_delete_button) as ImageButton
         val bottomWrapperLeft = itemView.findViewById(R.id.bottom_wrapper_left) as FrameLayout
         val waitingListCallButton: ImageButton = itemView.waiting_list_call_button
 
@@ -76,38 +81,58 @@ class SwipeRecyclerViewAdapter(
         init {
             waitingListCallButton.setOnClickListener {
                 val position = adapterPosition
-                if (called.containsKey(items[position].phone) && called[items[position].phone]!!) {
-                    //TODO 원래는 이 if의 내용이 없어야 함!!!
-                    setShared(
-                        pref,
-                        items[position].phone,
-                        false
-                    )
-                    called[items[position].phone] = false
-                    this.bottomWrapperLeft.backgroundColorResource =
-                        R.color.white
-                } else {
-                    setShared(
-                        pref,
-                        items[position].phone,
-                        true
-                    )
-                    called[items[position].phone] = true
+
+                if (items[position].is_called.equals("0")) { // 호출 x
+                    //                    callCustomer(
+//                        items[position].id,
+//                        "[${STORENAME}] ${items[position].turn}번째 순서 전 입니다. 가게 앞으로 와주세요."
+//                    )
+
+                    // TODO 호출성공하면 밑에 실행
                     this.bottomWrapperLeft.backgroundColorResource =
                         R.color.colorCall
-//                    Toast.Config.getInstance().allowQueue(true).apply()
                     Toast.makeText(
                         itemView.context,
                         items[position].name + " 손님 호출 완료",
                         Toast.LENGTH_SHORT
                     ).show()
+                } else if (items[position].is_called!!.equals("1")) { // 호출 o
 
-
-                    callCustomer(
-                        items[position].id,
-                        "[${STORENAME}] ${items[position].turn}번째 순서 전 입니다. 가게 앞으로 와주세요."
-                    )
                 }
+
+
+//                if (called.containsKey(items[position].phone) && called[items[position].phone]!!) {
+//                    //TODO 원래는 이 if의 내용이 없어야 함!!!
+//                    setShared(
+//                        pref,
+//                        items[position].phone,
+//                        false
+//                    )
+//                    called[items[position].phone] = false
+//                    this.bottomWrapperLeft.backgroundColorResource =
+//                        R.color.white
+//                } else {
+//                    setShared(
+//                        pref,
+//                        items[position].phone,
+//                        true
+//                    )
+//                    called[items[position].phone] = true
+//                    this.bottomWrapperLeft.backgroundColorResource =
+//                        R.color.colorCall
+////                    Toast.Config.getInstance().allowQueue(true).apply()
+//                    Toast.makeText(
+//                        itemView.context,
+//                        items[position].name + " 손님 호출 완료",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+
+
+//                    callCustomer(
+//                        items[position].id,
+//                        "[${STORENAME}] ${items[position].turn}번째 순서 전 입니다. 가게 앞으로 와주세요."
+//                    )
+//                }
             }
 
             waitingListCardView.setOnClickListener {
@@ -135,11 +160,11 @@ class SwipeRecyclerViewAdapter(
         position: Int
     ) {
 
-        val item: ClientData = items[position]
+        val item: WaitingInfo = items[position]
 
 
         viewHolder.waitingNameTextView.text = item.name
-        viewHolder.waitingNumTextView.text = "(" + item.peopleNum + "명)"
+        viewHolder.waitingNumTextView.text = "(" + item.people_number + "명)"
         viewHolder.waitingPhoneTextView.text = "0" + item.phone
 
 //        viewHolder.detailView1.text =
@@ -195,14 +220,14 @@ class SwipeRecyclerViewAdapter(
                 .setConfirmClickListener { sDialog ->
 
                     // 호출한 손님 목록에서도 지우기 (제대로 동작하나 모르겠다.)
-                    if (called.containsKey(items[position].phone) && called[items[position].phone]!!) {
-                        setShared(
-                            pref,
-                            items[position].phone,
-                            false
-                        )
-                        called[items[position].phone] = false
-                    }
+//                    if (called.containsKey(items[position].phone) && called[items[position].phone]!!) {
+//                        setShared(
+//                            pref,
+//                            items[position].phone,
+//                            false
+//                        )
+//                        called[items[position].phone] = false
+//                    }
 
                     Toast.makeText(
                         view.context,
@@ -210,17 +235,17 @@ class SwipeRecyclerViewAdapter(
                         Toast.LENGTH_SHORT
                     ).show()
 
-                    DelCustomerAsyncTask().execute(items[position].id)
+//                    DelCustomerAsyncTask().execute(items[position].id)
 
-
+// TODO 서버로 지우는 코드 보내고 다시 리스트 만들기
                     mItemManger.removeShownLayouts(viewHolder.waitingListSwipeLayout)
-                    items.removeAt(position)
+//                    items.removeAt(position)
                     notifyItemRemoved(position)
                     notifyItemRangeChanged(position, items.size)
                     mItemManger.closeAllItems()
 
 
-                    StoreWaitingListAsyncTask().execute()
+//                    StoreWaitingListAsyncTask().execute()
 
                     sDialog.dismissWithAnimation()
                 }
@@ -231,13 +256,21 @@ class SwipeRecyclerViewAdapter(
         }
 
 
-        if (called.containsKey(items[position].phone) && called[items[position].phone]!!) {
-            viewHolder.bottomWrapperLeft.backgroundColorResource =
-                R.color.colorCall
-        } else {
+//        if (called.containsKey(items[position].phone) && called[items[position].phone]!!) {
+//            viewHolder.bottomWrapperLeft.backgroundColorResource =
+//                R.color.colorCall
+//        } else {
+//            viewHolder.bottomWrapperLeft.backgroundColorResource =
+//                R.color.white
+//        }
+        if (items[position].is_called.equals("0") || items[position].is_called == null) { // 호출x
             viewHolder.bottomWrapperLeft.backgroundColorResource =
                 R.color.white
+        } else if (items[position].is_called.equals("1")) { // 호출o
+            viewHolder.bottomWrapperLeft.backgroundColorResource =
+                R.color.colorCall
         }
+
 
         if (clicked.containsKey(items[position].phone) && clicked[items[position].phone]!!) {
             viewHolder.waitingListDetailTextView.visibility = View.VISIBLE

@@ -116,29 +116,23 @@ class MemberRegister : Fragment() {
                         t: Throwable
                     ) {
 
-                        Log.d("회원 id 확인 :: ", "연결실패 $t")
+                        Log.d("retrofit2 회원 id 확인 :: ", "연결실패 $t")
                     }
 
                     override fun onResponse(
                         call: Call<CheckMemberIdResponseData>,
                         response: Response<CheckMemberIdResponseData>
                     ) {
-
-                        if (response.code() == 500) {
-                            Log.d("회원 id 확인 500", response.body().toString())
-                        }
+                        Log.d("retrofit2 회원 id 확인 ::",response.code().toString() + response.body().toString())
 
                         if (response.code() == 200) {
 
-                            Log.d("회원 id 확인 200 :: ", response?.body().toString())
                             var data: CheckMemberIdResponseData? = response?.body() // 서버로부터 온 응답
 
                             showNameCheckDialog(data!!.message, userId, numOfGroup)
 
                         }
                         if (response.code() == 409) {
-
-                            Log.d("회원 id 확인 409 :: ", response?.body().toString())
                             var data: CheckMemberIdResponseData? = response?.body() // 서버로부터 온 응답)
                             showMemberIdErrorDialog()
                         }

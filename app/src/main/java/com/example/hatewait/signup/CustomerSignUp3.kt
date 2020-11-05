@@ -8,16 +8,14 @@ import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import com.example.hatewait.R
-import com.example.hatewait.member.CustomerMenu
-import com.example.hatewait.model.CustomerSignUpRequestData
-import com.example.hatewait.model.CustomerSignUpResponseData
+import com.example.hatewait.member.MemberMenu
+import com.example.hatewait.model.MemberSignUpRequestData
+import com.example.hatewait.model.MemberSignUpResponseData
 import com.example.hatewait.retrofit2.MyApi
-import com.example.hatewait.retrofit2.RetrofitSignUp
 import kotlinx.android.synthetic.main.activity_customer_register3.*
 import kotlinx.android.synthetic.main.activity_customer_register3.button_finish
 import org.jetbrains.anko.startActivity
 import retrofit2.*
-import retrofit2.converter.gson.GsonConverterFactory
 
 
 // 1단계 이메일 , 인증번호 (네아로면 생략)
@@ -57,8 +55,6 @@ class CustomerSignUp3 : AppCompatActivity() {
             val userPhone = user_phone_number_editText.text.toString()
 
 
-
-
             // TODO 디비에 회원정보(손님) 저장
 //            CustomerRegisterAsyncTask(this@CustomerSignUp3).execute(
 //                userId,
@@ -67,42 +63,39 @@ class CustomerSignUp3 : AppCompatActivity() {
 //                userPhone
 //            )
 
-            var customerSignUpData =
-                CustomerSignUpRequestData(userId, userName, userPhone, userEmail, userPassword)
+            var customerSignUpData = MemberSignUpRequestData(userId, userName, userPhone, userEmail, userPassword)
 
-           MyApi.CustomerSignUpService.requestCustomerSignUp(customerSignUpData)
-                .enqueue(object : Callback<CustomerSignUpResponseData> {
-                    override fun onFailure(call: Call<CustomerSignUpResponseData>, t: Throwable) {
+            MyApi.SignUpService.requestCustomerSignUp(customerSignUpData)
+                .enqueue(object : Callback<MemberSignUpResponseData> {
+                    override fun onFailure(call: Call<MemberSignUpResponseData>, t: Throwable) {
 
-                        Log.d("손님회원가입 :: ", "회원가입연결실패 $t")
+                        Log.d("retrofit2 손님회원가입 :: ", "회원가입연결실패 $t")
                     }
 
                     override fun onResponse(
-                        call: Call<CustomerSignUpResponseData>,
-                        response: Response<CustomerSignUpResponseData>
+                        call: Call<MemberSignUpResponseData>,
+                        response: Response<MemberSignUpResponseData>
                     ) {
+                        Log.d(
+                            "retrofit2 손님회원가입 ::",
+                            response.code().toString() + response.body().toString()
+                        )
 
-                        if (response.code() == 500) {
-                            Log.d("손님회원가입 500", response.body().toString())
+                        when (response.code()) {
+                            200 -> {
+                                var data: MemberSignUpResponseData? = response?.body() // 서버로부터 온 응답
+
+                                startActivity<MemberMenu>()
+                                _customerSignUp1.finish()
+                                _customerSignUp2.finish()
+                                finish()
+                            }
                         }
 
-                        if (response.code() == 200) {
-
-                            Log.d("손님회원가입 :: ", response?.body().toString())
-                            var data: CustomerSignUpResponseData? = response?.body() // 서버로부터 온 응답
-
-                            startActivity<CustomerMenu>()
-                            _customerSignUp1.finish()
-                            _customerSignUp2.finish()
-                            finish()
-                        }
                     }
                 }
                 )
-
-
-            Toast.makeText(this, "$userId $userPassword $userName $userPhone", Toast.LENGTH_LONG)
-                .show()
+            Toast.makeText(this, "$userId $userPassword $userName $userPhone", Toast.LENGTH_LONG).show()
         }
         setSupportActionBar(register_toolbar)
         supportActionBar?.apply {

@@ -4,16 +4,27 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hatewait.R
+import com.example.hatewait.member.MemberMenu
+import com.example.hatewait.model.MemberSignUpRequestData
+import com.example.hatewait.model.MemberSignUpResponseData
+import com.example.hatewait.model.StoreSignUpRequestData
+import com.example.hatewait.model.StoreSignUpResponseData
+import com.example.hatewait.retrofit2.MyApi
 import com.example.hatewait.storeinfo.BusinessHourPick
 import kotlinx.android.synthetic.main.activity_customer_register3.*
 import kotlinx.android.synthetic.main.activity_store_signup4.*
 import kotlinx.android.synthetic.main.activity_store_signup4.button_finish
+import org.jetbrains.anko.startActivity
 import org.json.JSONException
 import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 // 1단계 이메일 , 인증번호 (네아로면 생략)
 // 2단계 아이디, 비번, 비번확인
@@ -55,11 +66,53 @@ class StoreSignUp4 : AppCompatActivity() {
             val storePhone = intent.getStringExtra("STORE_PHONE")
             val storeAddress = intent.getStringExtra("STORE_ADDRESS")
             val storeBusinessHour = store_business_hours_textView.text.toString()
-            val storeCapacity = store_capacity_editText.text.toString()
+            val storeCapacity = store_capacity_editText.text.toString().toInt()
             val storeDescription = store_info_description_editText.text.toString()
 
-            // TODO 디비에 회원가입 요청
-            // StoreRegisterAsyncTask(this@StoreSignUp4).execute(newStoreInfo)
+            var storeSignUpData = StoreSignUpRequestData(
+                storeId,
+                storeName,
+                storePhone,
+                storeEmail,
+                storeDescription,
+                storeBusinessHour,
+                storeCapacity,
+                storeAddress,
+                false,
+                storePassword
+            )
+
+            MyApi.SignUpService.requestStoreSignUp(storeSignUpData)
+                .enqueue(object : Callback<StoreSignUpResponseData> {
+                    override fun onFailure(call: Call<StoreSignUpResponseData>, t: Throwable) {
+
+                        Log.d("retrofit2 손님회원가입 :: ", "회원가입연결실패 $t")
+                    }
+
+                    override fun onResponse(
+                        call: Call<StoreSignUpResponseData>,
+                        response: Response<StoreSignUpResponseData>
+                    ) {
+                        Log.d(
+                            "retrofit2 가게회원가입 ::",
+                            response.code().toString() + response.body().toString()
+                        )
+
+                        when (response.code()) {
+                            200 -> {
+                                var data: StoreSignUpResponseData? = response?.body() // 서버로부터 온 응답
+
+                                startActivity<MemberMenu>()
+                                _customerSignUp1.finish()
+                                _customerSignUp2.finish()
+                                finish()
+                            }
+                        }
+
+                    }
+                }
+                )
+
 
             Toast.makeText(
                 this,

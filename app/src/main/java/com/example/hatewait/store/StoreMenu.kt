@@ -8,11 +8,15 @@ import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hatewait.R
+import com.example.hatewait.StartWaitActivity
 
 import com.example.hatewait.login.LoginRegisterViewPagerActivity
+import com.example.hatewait.login.memberInfo
+import com.example.hatewait.login.storeInfo
 import com.example.hatewait.socket.*
 import com.example.hatewait.storeinfo.StoreInfoSettingsActivity
 import com.example.hatewait.storeinfo.StoreInfoUpdate2
+import kotlinx.android.synthetic.main.activity_customer_menu.*
 import kotlinx.android.synthetic.main.activity_signup1.*
 import kotlinx.android.synthetic.main.activity_store_menu.*
 import org.jetbrains.anko.startActivity
@@ -38,17 +42,18 @@ class StoreMenu : AppCompatActivity() {
         storeNameView = findViewById<TextView>(
             R.id.store_name_view
         )
-        storeWaitingNum = findViewById<TextView>(
-            R.id.store_waiting_num
-        )
+//        storeWaitingNum = findViewById<TextView>(
+//            R.id.store_waiting_num
+//        )
 //        storeMarquee = findViewById<TextView>(
 //            R.id.store_marquee
 //        )
         // 임시 로그인 이후 ID와 이름만 받아옴.
-        val storeReference =
-            getSharedPreferences(resources.getString(R.string.store_mode), Context.MODE_PRIVATE)
-        STOREID = storeReference.getString("STORE_ID", "")
-        STORENAME = storeNameView.text.toString()
+//        val storeReference =
+//            getSharedPreferences(resources.getString(R.string.store_mode), Context.MODE_PRIVATE)
+//        STOREID = storeReference.getString("STORE_ID", "")
+//        STORENAME = storeNameView.text.toString()
+        store_name_view.text = storeInfo?.store
         initView()
 
     }
@@ -70,12 +75,12 @@ class StoreMenu : AppCompatActivity() {
     }
 
     private fun initView() {
-        setting_button.setOnClickListener{
-            startActivity<StoreInfoSettingsActivity>()
-        }
+//        setting_button.setOnClickListener{
+//            startActivity<StoreInfoSettingsActivity>()
+//        }
 
         tabletBtn.setOnClickListener {
-            startActivity<LoginRegisterViewPagerActivity>()
+            startActivity<StartWaitActivity>()
         }
 
         listBtn.setOnClickListener {

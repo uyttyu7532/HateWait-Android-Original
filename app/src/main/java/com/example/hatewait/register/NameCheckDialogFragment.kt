@@ -21,7 +21,7 @@ class NameCheckDialogFragment : DialogFragment() {
     private var customView: View? = null
 
     interface NameCheckListener {
-        fun onDialogPositiveClick(dialog: DialogFragment, customer_id:String, customer_people_num:Integer )
+        fun onDialogPositiveClick(dialog: DialogFragment, customer_id:String, customer_people_num: Int)
         fun onDialogNegativeClick(dialog: DialogFragment)
     }
 
@@ -88,7 +88,7 @@ class NameCheckDialogFragment : DialogFragment() {
 
         name_yes_button.setOnClickListener {
             Log.i("test", "이게 된다고?")
-            nameChecklistener.onDialogPositiveClick(this,customer_id, Integer(customer_people_num))
+            nameChecklistener.onDialogPositiveClick(this,customer_id, customer_people_num)
         }
         name_no_button.setOnClickListener {
             Log.i("test", "이게 안된다고?")

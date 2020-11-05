@@ -11,7 +11,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog
 import com.example.hatewait.map.KakaoMapActivity
 import com.example.hatewait.R
 import com.example.hatewait.memberinfo.CustomerInfoUpdate
-import com.example.hatewait.login.CustomerInfo
+import com.example.hatewait.login.memberInfo
 import com.example.hatewait.socket.CUSTOMERID
 import com.example.hatewait.socket.CancelAsyncTask
 import kotlinx.android.synthetic.main.activity_customer_menu.*
@@ -24,7 +24,7 @@ import org.jetbrains.anko.startActivity
 //lateinit var recentRefreshTime: TextView
 //lateinit var customerWaiting: LinearLayout
 
-class CustomerMenu : AppCompatActivity() {
+class MemberMenu : AppCompatActivity() {
 
     var customView: View? = null
     private val yesButton: ImageButton by lazy {
@@ -66,8 +66,8 @@ class CustomerMenu : AppCompatActivity() {
 
 
         myCoupon.setOnClickListener {
-            startActivity<ManageStampCouponActivity>()
-//            startActivity<StoreList>()
+//            startActivity<ManageStampCouponActivity>()
+            startActivity<StoreList>()
         }
 
         editcustomerinfo.setOnClickListener {
@@ -131,16 +131,13 @@ class CustomerMenu : AppCompatActivity() {
     }
 
 
-    companion object {
-        private const val LOG_TAG = "CustomerMenu"
-    }
 
     private fun retrofit2() {
 //        if (CustomerInfo == "null") {
 //            com.example.hatewait.customer.waitingStoreView.text = "대기중인 가게가 없습니다."
 //            com.example.hatewait.customer.customerWaiting.visibility = View.GONE
 //        } else {
-        customer_name_text_view.text = CustomerInfo?.member
+        customer_name_text_view.text = memberInfo?.member
 //            com.example.hatewait.customer.waitingStoreView.text = result?.get(3)
 //            com.example.hatewait.customer.customerWaitingNum.text = result?.get(4)
 //            com.example.hatewait.customer.customerWaiting.visibility = View.VISIBLE

@@ -70,17 +70,10 @@
                             android:layout_height="wrap_content"
                             android:background="#FFFFFF"
                             android:paddingLeft="10dp"
-                            android:text="스탬프 1  쿠폰3" />
+                            android:text="스탬프 1/7  쿠폰 3" />
                 </RelativeLayout>
 
 
-                                <TextView
-                                        android:id="@+id/clientPhoneView"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:background="#FFFFFF"
-                                        android:paddingLeft="10dp"
-                                        android:text="최근 방문 일시: 2020-10-14 23:46" />
             </LinearLayout>
         </RelativeLayout>
     </androidx.cardview.widget.CardView>

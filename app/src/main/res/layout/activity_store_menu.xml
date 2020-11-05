@@ -66,37 +66,35 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
         </LinearLayout>
 
-        <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="horizontal">
+<!--        <LinearLayout-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:orientation="horizontal">-->
 
-            <TextView
-                    android:id="@+id/store_waiting_num"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+<!--            <TextView-->
+<!--                    android:id="@+id/store_waiting_num"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="0"-->
+<!--                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />-->
 
-            <TextView
-                    android:id="@+id/waitingNumText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="명 대기중"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+<!--            <TextView-->
+<!--                    android:id="@+id/waitingNumText"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="명 대기중"-->
+<!--                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />-->
+<!--        </LinearLayout>-->
 
-
-        </LinearLayout>
-
-        <TextView
-                android:id="@+id/setting_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:gravity="center"
-                android:text="설정화면"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+<!--        <TextView-->
+<!--                android:id="@+id/setting_button"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:clickable="true"-->
+<!--                android:gravity="center"-->
+<!--                android:text="설정화면"-->
+<!--                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />-->
 
     </LinearLayout>
 

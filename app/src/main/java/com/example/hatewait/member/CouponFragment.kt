@@ -11,6 +11,7 @@ import com.example.hatewait.discretescroll.Coupon
 import com.example.hatewait.discretescroll.Shop
 import com.example.hatewait.discretescroll.ShopAdapter
 import com.example.hatewait.login.memberInfo
+import com.example.hatewait.model.CouponListInfo
 import com.example.hatewait.model.CouponListResponseData
 import com.example.hatewait.retrofit2.MyApi
 import com.yarolegovich.discretescrollview.DSVOrientation
@@ -22,19 +23,21 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class CouponFragment : Fragment(), DiscreteScrollView.OnItemChangedListener<ShopAdapter.ViewHolder?>,
-    View.OnClickListener  {
+class CouponFragment : Fragment(),
+    DiscreteScrollView.OnItemChangedListener<ShopAdapter.ViewHolder?>,
+    View.OnClickListener {
 
-    private var data: List<Coupon>? = null
+    private var couponList: List<CouponListInfo>? = null
     private var shop: Shop? = null
     private var infiniteAdapter: InfiniteScrollAdapter<*>? = null
-
-    private var storeId : String? = null
+    private var rootView: View? = null
+    private var itemPicker:DiscreteScrollView? = null
+    private var storeId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        var bundle:Bundle = this.requireArguments()
+        var bundle: Bundle = this.requireArguments()
         storeId = bundle.getString("store_id")
 
         Log.d("retrofit2", "$storeId")
@@ -47,33 +50,10 @@ class CouponFragment : Fragment(), DiscreteScrollView.OnItemChangedListener<Shop
         savedInstanceState: Bundle?
     ): View? {
 
-        var rootView = inflater.inflate(R.layout.fragment_coupon, container, false)
-        var itemPicker = rootView.findViewById(R.id.coupon_item_picker) as DiscreteScrollView
-
-
-
-
-
-        shop = Shop.get()
-        data = shop!!.data // 쿠폰 데이터
-
-        itemPicker.setOrientation(DSVOrientation.HORIZONTAL)
-        itemPicker.addOnItemChangedListener(this)
-        infiniteAdapter = InfiniteScrollAdapter.wrap(ShopAdapter(data!!))
-        itemPicker.adapter = infiniteAdapter
-
-
-        itemPicker.setItemTransformer(
-            ScaleTransformer.Builder()
-                .setMaxScale(1.05f)
-                .setMinScale(0.8f)
-                .setPivotX(Pivot.X.CENTER) // CENTER is a default one
-                .setPivotY(Pivot.Y.BOTTOM) // CENTER is a default one
-                .build()
-        )
-
-
-
+        rootView = inflater.inflate(R.layout.fragment_coupon, container, false)
+        itemPicker = rootView!!.findViewById(R.id.coupon_item_picker) as DiscreteScrollView
+        itemPicker!!.setOrientation(DSVOrientation.HORIZONTAL)
+        itemPicker!!.addOnItemChangedListener(this)
 
         return rootView
     }
@@ -128,6 +108,20 @@ class CouponFragment : Fragment(), DiscreteScrollView.OnItemChangedListener<Shop
                     when (response.code()) {
                         200 -> {
 
+                            couponList = data!!.coupons
+
+                            infiniteAdapter = InfiniteScrollAdapter.wrap(ShopAdapter(data!!.coupons!!))
+                            itemPicker!!.adapter = infiniteAdapter
+
+
+                            itemPicker!!.setItemTransformer(
+                                ScaleTransformer.Builder()
+                                    .setMaxScale(1.05f)
+                                    .setMinScale(0.8f)
+                                    .setPivotX(Pivot.X.CENTER) // CENTER is a default one
+                                    .setPivotY(Pivot.Y.BOTTOM) // CENTER is a default one
+                                    .build()
+                            )
                         }
                     }
                 }

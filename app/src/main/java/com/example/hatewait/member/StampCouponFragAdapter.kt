@@ -23,13 +23,13 @@ class StampCouponFragAdapter(fragmentActivity: FragmentActivity , var storeId: S
 
         var stampFragment = StampFragment()
         stampFragment.arguments = bundle
-//
-//        var couponFragment = CouponFragment()
-//        couponFragment.arguments = bundle
+
+        var couponFragment = CouponFragment()
+        couponFragment.arguments = bundle
 
         return when(position){
             0 -> stampFragment
-            else-> CouponFragment()
+            else-> couponFragment
         }
     }
 

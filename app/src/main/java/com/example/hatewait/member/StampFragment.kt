@@ -42,7 +42,6 @@ class StampFragment : Fragment(){
 
         stamp_pie_view.setStepCountText("${stampCount}/${maximumStamp}")
         stamp_pie_view.setPercentage(stampCount!!*360/maximumStamp!!)
-        Log.d("retrofit2", "${stampCount!!*360/maximumStamp!!}")
         stamp_description.text = "쿠폰 발행까지 \n${maximumStamp!!-stampCount!!}번 남았습니다."
     }
 

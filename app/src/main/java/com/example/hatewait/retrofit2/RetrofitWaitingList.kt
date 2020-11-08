@@ -1,14 +1,26 @@
 package com.example.hatewait.retrofit2
 
+import com.example.hatewait.model.DeleteWaitingResponseData
 import com.example.hatewait.model.WaitingListResponseData
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Path
+import retrofit2.http.*
 
-//test안해봄
 interface RetrofitWaitingList {
     @GET("/waiting-customers/{userId}")
     fun requestWaitingList(
-        @Path("userId") userId: String?):
+        @Path("userId") userId: String
+    ):
             Call<WaitingListResponseData>
+
+    @HTTP(method = "DELETE", path = "/waiting-customers/{id}", hasBody = true)
+    fun requestDeleteWaiting(
+        @Path("id") userId: String,
+        @Body deleteWaiting : DeleteWaitingResponseData
+    )
+            :Call<MyApi.onlyMessageResponseData>
+
 }
+
+
+
+

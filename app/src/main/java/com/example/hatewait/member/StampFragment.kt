@@ -1,15 +1,17 @@
 package com.example.hatewait.member
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.hatewait.R
+import kotlinx.android.synthetic.main.fragment_stamp.*
+import kotlinx.android.synthetic.main.fragment_stamp.view.*
 
 class StampFragment : Fragment(){
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,50 +24,21 @@ class StampFragment : Fragment(){
         savedInstanceState: Bundle?
     ): View? {
 
-        var rootView = inflater.inflate(R.layout.fragment_stamp, container, false)
+        var bundle:Bundle = this.requireArguments()
+        var storeId = bundle.getString("store_id")
+        var stampCount = bundle.getInt("stamp_count")
+        var maximumStamp = bundle.getInt("maximum_stamp")
 
-//        var recyclerView = rootView.findViewById(R.id.stamp_recycler_view) as RecyclerView
-
-
-//        var stampTitleArray = ArrayList<String>()
-//        stampTitleArray.add("적립")
-//        stampTitleArray.add("소멸")
-//        stampTitleArray.add("사용")
-//        stampTitleArray.add("사용")
-//        stampTitleArray.add("적립")
-//        stampTitleArray.add("적립")
-//        stampTitleArray.add("소멸")
-//        stampTitleArray.add("사용")
-//        stampTitleArray.add("사용")
-//        stampTitleArray.add("적립")
-//
-//        var stampDateArray = ArrayList<String>()
-//        stampDateArray.add("2020-10-11 12:40")
-//        stampDateArray.add("2020-10-11 12:40")
-//        stampDateArray.add("2020-10-11 12:40")
-//        stampDateArray.add("2020-10-11 12:40")
-//        stampDateArray.add("2020-10-11 12:40")
-//        stampDateArray.add("2020-10-11 12:40")
-//        stampDateArray.add("2020-10-11 12:40")
-//        stampDateArray.add("2020-10-11 12:40")
-//        stampDateArray.add("2020-10-11 12:40")
-//        stampDateArray.add("2020-10-11 12:40")
-//        stampDateArray.add("2020-10-11 12:40")
+        stamp_pie_view.setStepCountText("${stampCount}/${maximumStamp}")
+        stamp_pie_view.setPercentage(stampCount/maximumStamp*360)
+        stamp_description.text = "쿠폰 발행까지 \n${maximumStamp-stampCount}번 남았습니다."
 
 
-//        recyclerView.setHasFixedSize(true);
-//        var adapter = StampViewAdapter(stampTitleArray, stampDateArray)
-//        recyclerView.layoutManager =  LinearLayoutManager(activity)
-//        recyclerView.adapter = adapter
+        Log.d("retrofit2", "$stampCount $maximumStamp")
 
-
-        return rootView
+        return inflater.inflate(R.layout.fragment_stamp, container, false)
     }
 
-
-    companion object {
-
-    }
 
 
 }

@@ -31,19 +31,19 @@
                 <View
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1" />
 
                 <com.app.progresviews.ProgressWheel
-                        android:id="@+id/pieView"
-                       android:padding="20dp"
+                        android:id="@+id/stamp_pie_view"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="6"
+                        android:padding="20dp"
                         app:barWidth="40dp"
                         app:countText="4/12"
                         app:countTextColor="@android:color/black"
                         app:countTextSize="50sp"
-                        app:percentage="90"
+                        app:percentage="33"
                         app:progressColor="@color/colorPrimary" />
 
                 <!--                        app:defTextColor="@android:color/black"-->
@@ -51,35 +51,37 @@
                 <!--                        app:definitionText=""-->
 
                 <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_weight="2"
-                        android:orientation="vertical"
                         android:gravity="center"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                <TextView
-                        android:layout_gravity="center"
-                        android:gravity="center_horizontal"
-                        android:id="@+id/stamp_description"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="쿠폰 발행까지 \n7번 남았습니다."
-                        android:textColor="#979797"
-                        android:textSize="28sp" />
+                        android:orientation="vertical">
 
-                <TextView
-                        android:id="@+id/stamp_description2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:layout_marginTop="20dp"
-                        android:text="방문 시간 기준 24시간 후 자동 발급됩니다."
-                        android:textColor="#979797"
-                        android:textSize="18sp" />
+                    <TextView
+                            android:id="@+id/stamp_description"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center_horizontal"
+                            android:text="쿠폰 발행까지 \n7번 남았습니다."
+                            android:textColor="#979797"
+                            android:textSize="28sp" />
+
+                    <!--                <TextView-->
+                    <!--                        android:id="@+id/stamp_description2"-->
+                    <!--                        android:layout_width="match_parent"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:gravity="center_horizontal"-->
+                    <!--                        android:layout_marginTop="20dp"-->
+                    <!--                        android:text="방문 시간 기준 24시간 후 자동 발급됩니다."-->
+                    <!--                        android:textColor="#979797"-->
+                    <!--                        android:textSize="18sp" />-->
                 </LinearLayout>
+
                 <View
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 

@@ -34,6 +34,8 @@ class SettingStampCoupon : AppCompatActivity() {
 
         wheelView.data = list
 
+
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

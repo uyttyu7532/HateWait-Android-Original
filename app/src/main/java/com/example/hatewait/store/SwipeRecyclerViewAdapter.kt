@@ -20,12 +20,19 @@ import com.daimajia.swipe.SwipeLayout
 import com.daimajia.swipe.adapters.RecyclerSwipeAdapter
 import com.example.hatewait.R
 import com.example.hatewait.fcm.FcmPush
+import com.example.hatewait.login.storeInfo
 import com.example.hatewait.model.ClientData
+import com.example.hatewait.model.DeleteWaitingResponseData
 import com.example.hatewait.model.WaitingInfo
 import com.example.hatewait.model.setShared
+import com.example.hatewait.retrofit2.MyApi
 import com.example.hatewait.socket.*
 import kotlinx.android.synthetic.main.waiting_list_row.view.*
+import org.jetbrains.anko.backgroundColor
 import org.jetbrains.anko.backgroundColorResource
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.*
 
 
@@ -70,8 +77,8 @@ class SwipeRecyclerViewAdapter(
         val waitingPhoneTextView = itemView.findViewById(R.id.waiting_phone_text_view) as TextView
         val waitingListDetailTextView =
             itemView.findViewById(R.id.waiting_list_detail_text_view) as TextView
-        val waitingListDetailTextView2 =
-            itemView.findViewById(R.id.waiting_list_detail_text_view2) as TextView
+//        val waitingListDetailTextView2 =
+//            itemView.findViewById(R.id.waiting_list_detail_text_view2) as TextView
         val waitingListDeleteButton =
             itemView.findViewById(R.id.waiting_list_delete_button) as ImageButton
         val bottomWrapperLeft = itemView.findViewById(R.id.bottom_wrapper_left) as FrameLayout
@@ -82,7 +89,7 @@ class SwipeRecyclerViewAdapter(
             waitingListCallButton.setOnClickListener {
                 val position = adapterPosition
 
-                if (items[position].called_time.equals("0000-00-00 00:00:00")) {
+                if (items[position].called_time.equals("0000-00-00 00:00:00") || items[position].called_time == null) {
                     //                    callCustomer(
 //                        items[position].id,
 //                        "[${STORENAME}] ${items[position].turn}번째 순서 전 입니다. 가게 앞으로 와주세요."
@@ -96,7 +103,7 @@ class SwipeRecyclerViewAdapter(
                         items[position].name + " 손님 호출 완료",
                         Toast.LENGTH_SHORT
                     ).show()
-                } else  { // 호출 o
+                } else { // 호출 o
 
                 }
 
@@ -213,10 +220,11 @@ class SwipeRecyclerViewAdapter(
 
         // db목록에서 대기손님지우기?
         viewHolder.waitingListDeleteButton.setOnClickListener { view ->
+            Log.d("retrofit2 ::", storeInfo.toString())
             SweetAlertDialog(view.context, SweetAlertDialog.WARNING_TYPE)
-                .setTitleText("${items[position].name} 손님을 정말로 리스트에서 삭제하시겠습니까?")
+                .setTitleText("${items[position].name} 손님이 가게에 방문하셨나요??")
                 .setContentText("\n")
-                .setConfirmText("삭제")
+                .setConfirmText("방문함")
                 .setConfirmClickListener { sDialog ->
 
                     // 호출한 손님 목록에서도 지우기 (제대로 동작하나 모르겠다.)
@@ -236,13 +244,36 @@ class SwipeRecyclerViewAdapter(
                     ).show()
 
 //                    DelCustomerAsyncTask().execute(items[position].id)
+//                    visited = true
 
-// TODO 서버로 지우는 코드 보내고 다시 리스트 만들기
-                    mItemManger.removeShownLayouts(viewHolder.waitingListSwipeLayout)
-//                    items.removeAt(position)
-                    notifyItemRemoved(position)
-                    notifyItemRangeChanged(position, items.size)
-                    mItemManger.closeAllItems()
+                    MyApi.WaitingListService.requestDeleteWaiting(
+                        userId = storeInfo!!.id,
+                        deleteWaiting= DeleteWaitingResponseData(items[position].phone, true)
+                    )
+                        .enqueue(object : Callback<MyApi.onlyMessageResponseData> {
+                            override fun onFailure(call: Call<MyApi.onlyMessageResponseData>, t: Throwable) {
+                                Log.d("retrofit2 대기 삭제 :: ", "대기삭제 연결실패 $t")
+                            }
+
+                            override fun onResponse(
+                                call: Call<MyApi.onlyMessageResponseData>,
+                                response: Response<MyApi.onlyMessageResponseData>
+                            ) {
+                                var data: MyApi.onlyMessageResponseData? = response?.body()
+                                Log.d("retrofit2 대기 삭제 ::", response.code().toString() + response.body().toString())
+                                when (response.code()) {
+                                    409 -> {
+                                    }
+                                    200 -> {
+                                        mItemManger.removeShownLayouts(viewHolder.waitingListSwipeLayout)
+                                        notifyItemRemoved(position)
+                                        notifyItemRangeChanged(position, items.size)
+                                        mItemManger.closeAllItems()
+                                    }
+                                }
+                            }
+                        }
+                        )
 
 
 //                    StoreWaitingListAsyncTask().execute()
@@ -250,9 +281,41 @@ class SwipeRecyclerViewAdapter(
                     sDialog.dismissWithAnimation()
                 }
                 .setCancelButton(
-                    "아니오"
-                ) { sDialog -> sDialog.dismissWithAnimation() }
+                    "방문안함"
+                ) { sDialog ->
+//                    visited = false
+                    MyApi.WaitingListService.requestDeleteWaiting(
+                        userId = storeInfo!!.id,
+                        deleteWaiting = DeleteWaitingResponseData(items[position].phone, false)
+                    )
+                        .enqueue(object : Callback<MyApi.onlyMessageResponseData> {
+                            override fun onFailure(call: Call<MyApi.onlyMessageResponseData>, t: Throwable) {
+                                Log.d("retrofit2 대기 삭제 :: ", "대기삭제 연결실패 $t")
+                            }
+
+                            override fun onResponse(
+                                call: Call<MyApi.onlyMessageResponseData>,
+                                response: Response<MyApi.onlyMessageResponseData>
+                            ) {
+                                var data: MyApi.onlyMessageResponseData? = response?.body()
+                                Log.d("retrofit2 대기 삭제 ::", response.code().toString() + response.body().toString())
+                                when (response.code()) {
+                                    409 -> {
+                                    }
+                                    200 -> {
+                                        mItemManger.removeShownLayouts(viewHolder.waitingListSwipeLayout)
+                                        notifyItemRemoved(position)
+                                        notifyItemRangeChanged(position, items.size)
+                                        mItemManger.closeAllItems()
+                                    }
+                                }
+                            }
+                        }
+                        )
+                    sDialog.dismissWithAnimation() }
                 .show()
+
+
         }
 
 
@@ -263,10 +326,10 @@ class SwipeRecyclerViewAdapter(
 //            viewHolder.bottomWrapperLeft.backgroundColorResource =
 //                R.color.white
 //        }
-        if (items[position].called_time.equals("0000-00-00 00:00:00")) { // 호출x
+        if (items[position].called_time.equals("0000-00-00 00:00:00") || items[position].called_time == null) { // 호출x
             viewHolder.bottomWrapperLeft.backgroundColorResource =
                 R.color.white
-        } else{ // 호출o
+        } else { // 호출o
             viewHolder.bottomWrapperLeft.backgroundColorResource =
                 R.color.colorCall
         }
@@ -298,3 +361,5 @@ fun callCustomer(customerId: String, message: String) {
     PushMessageAsyncTask().execute(customerId)
     Log.i("로그", "callCustomer 호출하는손님id:${customerId}")
 }
+
+

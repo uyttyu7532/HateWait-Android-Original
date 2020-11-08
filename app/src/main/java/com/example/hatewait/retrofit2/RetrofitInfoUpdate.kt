@@ -1,12 +1,15 @@
 package com.example.hatewait.retrofit2
 
-
+import com.example.hatewait.model.storeInfoData
 import retrofit2.Call
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.PATCH
+import retrofit2.http.*
 
 interface RetrofitInfoUpdate {
+
+    @GET("stores/{id}")
+    fun requestStoreInfo(
+        @Path("id") storeID: String
+    ): Call<storeInfoData>
 
     @FormUrlEncoded
     @PATCH("/stores/information")
@@ -19,14 +22,7 @@ interface RetrofitInfoUpdate {
     @PATCH("/stores/information")
     fun requestStorePhoneUpdate(
         @Field("id") id: String,
-        @Field("phone") phone: String
-    ): Call<MyApi.onlyMessageResponseData>
-
-    @FormUrlEncoded
-    @PATCH("/stores/information")
-    fun requestStoreEmailUpdate(
-        @Field("id") id: String,
-        @Field("email") email: String
+        @Field("phone") phone: Int
     ): Call<MyApi.onlyMessageResponseData>
 
 
@@ -67,7 +63,7 @@ interface RetrofitInfoUpdate {
 
     @FormUrlEncoded
     @PATCH("/stores/information")
-    fun requestStoreCouponEnableUpdate(
+    fun requestStorePassWordUpdate(
         @Field("id") id: String,
         @Field("pw") pw: String
     ): Call<MyApi.onlyMessageResponseData>

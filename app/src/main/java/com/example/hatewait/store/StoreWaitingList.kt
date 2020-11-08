@@ -16,6 +16,7 @@ import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.daimajia.swipe.util.Attributes
 import com.example.hatewait.R
+import com.example.hatewait.login.storeInfo
 import com.example.hatewait.model.*
 import com.example.hatewait.retrofit2.MyApi
 import kotlinx.android.synthetic.main.activity_store_waiting_list.*
@@ -30,7 +31,7 @@ lateinit var waitingListAdapter: SwipeRecyclerViewAdapter
 lateinit var waitingListContext: Context
 lateinit var totalWaitingNumTextView: TextView
 
-var waitingList = ArrayList<WaitingInfo>()
+//var waitingList : List<WaitingInfo>? = null
 
 //lateinit var autoCallSwitchView: Switch
 //var called = HashMap<String, Boolean>()
@@ -183,10 +184,9 @@ class StoreWaitingList : AppCompatActivity() {
                     customView.findViewById(R.id.addWaitingPerson) as TextView
                 var addWaitingPhonenum =
                     customView.findViewById(R.id.addWaitingPhonenum) as TextView
-                positiveButton { dialog ->
+                positiveButton {
 
-                    if (addWaitingName.text.toString() == "" || addWaitingPerson.text.toString() == "" || addWaitingPhonenum.text.toString()
-                            .equals("")
+                    if (addWaitingName.text.toString() == "" || addWaitingPerson.text.toString() == "" || addWaitingPhonenum.text.toString() == ""
                     ) {
                         Toast.makeText(
                             waitingListContext,
@@ -254,8 +254,7 @@ fun getWaitingList() {
 
     Log.i("대기 리스트 :: ", "getWaitingList()")
 
-    // TODO 가게 id전달해야함 (임시: bani123)
-    MyApi.WaitingListService.requestWaitingList("bani123")
+    MyApi.WaitingListService.requestWaitingList(storeInfo!!.id)
         .enqueue(object : Callback<WaitingListResponseData> {
             override fun onFailure(call: Call<WaitingListResponseData>, t: Throwable) {
 
@@ -272,10 +271,7 @@ fun getWaitingList() {
                         val data = response.body() // 서버로부터 온 응답
                         data?.let {
                             var responseMessage = it.message
-                            waitingList.clear()
-                            waitingList.addAll(it.waiting_customers)
-                            Log.d("retrofit2 대기리스트 200 :: ", "${responseMessage}${waitingList}")
-                            setRecyclerView(it.waiting_customers)
+                            setRecyclerView(it.waiting_customers!!)
                         }
                     }
                 }

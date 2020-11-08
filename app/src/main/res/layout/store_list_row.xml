@@ -28,9 +28,10 @@
 
 
     <androidx.cardview.widget.CardView
-            android:id="@+id/store_card_view"
+            android:id="@+id/store_list_card_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:clickable="true">
 
         <RelativeLayout
                 android:layout_width="match_parent"
@@ -53,10 +54,10 @@
                         android:orientation="horizontal">
 
                     <TextView
-                            android:layout_alignParentStart="true"
                             android:id="@+id/store_name_text_view"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
                             android:background="#FFFFFF"
                             android:paddingLeft="10dp"
                             android:text="엽기떡볶이"
@@ -64,10 +65,10 @@
                             android:textStyle="bold" />
 
                     <TextView
-                            android:layout_alignParentEnd="true"
-                            android:id="@+id/clientNumView"
+                            android:id="@+id/store_stamp_coupon_text_view"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
                             android:background="#FFFFFF"
                             android:paddingLeft="10dp"
                             android:text="스탬프 1/7  쿠폰 3" />
@@ -78,50 +79,50 @@
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
-<!--    <androidx.cardview.widget.CardView-->
-<!--            android:id="@+id/visitor_list_detail_view"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:background="#EFEFEF"-->
-<!--            android:visibility="gone">-->
+    <!--    <androidx.cardview.widget.CardView-->
+    <!--            android:id="@+id/visitor_list_detail_view"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:background="#EFEFEF"-->
+    <!--            android:visibility="gone">-->
 
-<!--        <LinearLayout-->
-<!--                android:layout_marginHorizontal="5dp"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_gravity="end"-->
-<!--                android:orientation="vertical"-->
-<!--                android:padding="10dp">-->
+    <!--        <LinearLayout-->
+    <!--                android:layout_marginHorizontal="5dp"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_gravity="end"-->
+    <!--                android:orientation="vertical"-->
+    <!--                android:padding="10dp">-->
 
-<!--            <TextView-->
-<!--                    android:id="@+id/detailView1"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:gravity="end"-->
-<!--                    android:text="최근 방문 날짜: 2020-05-03-09:14:02" />-->
+    <!--            <TextView-->
+    <!--                    android:id="@+id/detailView1"-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:gravity="end"-->
+    <!--                    android:text="최근 방문 날짜: 2020-05-03-09:14:02" />-->
 
-<!--            <TextView-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:gravity="end"-->
-<!--                    android:text="방문횟수: 5" />-->
+    <!--            <TextView-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:gravity="end"-->
+    <!--                    android:text="방문횟수: 5" />-->
 
-<!--            <TextView-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:gravity="end"-->
-<!--                    android:text="쿠폰갯수: 1" />-->
+    <!--            <TextView-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:gravity="end"-->
+    <!--                    android:text="쿠폰갯수: 1" />-->
 
 
-<!--            <TextView-->
-<!--                    android:id="@+id/detailView2"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:gravity="end"-->
-<!--                    android:text="no-show횟수: 0" />-->
-<!--        </LinearLayout>-->
+    <!--            <TextView-->
+    <!--                    android:id="@+id/detailView2"-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:gravity="end"-->
+    <!--                    android:text="no-show횟수: 0" />-->
+    <!--        </LinearLayout>-->
 
-<!--    </androidx.cardview.widget.CardView>-->
+    <!--    </androidx.cardview.widget.CardView>-->
 
 
 </LinearLayout>

@@ -1,22 +1,26 @@
 package com.example.hatewait.member
 
-
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.hatewait.R
 import com.example.hatewait.discretescroll.Coupon
 import com.example.hatewait.discretescroll.Shop
 import com.example.hatewait.discretescroll.ShopAdapter
+import com.example.hatewait.login.memberInfo
+import com.example.hatewait.model.CouponListResponseData
+import com.example.hatewait.retrofit2.MyApi
 import com.yarolegovich.discretescrollview.DSVOrientation
 import com.yarolegovich.discretescrollview.DiscreteScrollView
 import com.yarolegovich.discretescrollview.InfiniteScrollAdapter
 import com.yarolegovich.discretescrollview.transform.Pivot
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class CouponFragment : Fragment(), DiscreteScrollView.OnItemChangedListener<ShopAdapter.ViewHolder?>,
     View.OnClickListener  {
@@ -28,6 +32,40 @@ class CouponFragment : Fragment(), DiscreteScrollView.OnItemChangedListener<Shop
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        var bundle:Bundle = this.requireArguments()
+        var storeId = bundle.getString("store_id")
+        var stampCount = bundle.getInt("stamp_count")
+        var maximumStamp = bundle.getInt("maximum_stamp")
+
+        MyApi.CouponService.requestCouponList(
+            memberInfo!!.id,
+            storeId
+        )
+            .enqueue(object : Callback<CouponListResponseData> {
+                override fun onFailure(
+                    call: Call<CouponListResponseData>,
+                    t: Throwable
+                ) {
+                    Log.d("retrofit2 쿠폰 리스트 :: ", "연결실패 $t")
+                }
+
+                override fun onResponse(
+                    call: Call<CouponListResponseData>,
+                    response: Response<CouponListResponseData>
+                ) {
+                    var data: CouponListResponseData? = response?.body() // 서버로부터 온 응답
+                    Log.d(
+                        "retrofit2 쿠폰 리스트 ::",
+                        response.code().toString() + response.body().toString()
+                    )
+                    when (response.code()) {
+                        200 -> {
+
+                        }
+                    }
+                }
+            }
+            )
     }
 
     override fun onCreateView(
@@ -36,42 +74,10 @@ class CouponFragment : Fragment(), DiscreteScrollView.OnItemChangedListener<Shop
     ): View? {
 
         var rootView = inflater.inflate(R.layout.fragment_coupon, container, false)
-
-        var recyclerView = rootView.findViewById(R.id.coupon_recycler_view) as RecyclerView
         var itemPicker = rootView.findViewById(R.id.coupon_item_picker) as DiscreteScrollView
 
 
-        var couponTitleArray = ArrayList<String>()
-        couponTitleArray.add("적립")
-        couponTitleArray.add("소멸")
-        couponTitleArray.add("사용")
-        couponTitleArray.add("사용")
-        couponTitleArray.add("적립")
-        couponTitleArray.add("적립")
-        couponTitleArray.add("소멸")
-        couponTitleArray.add("사용")
-        couponTitleArray.add("사용")
-        couponTitleArray.add("적립")
 
-        var couponDateArray = ArrayList<String>()
-        couponDateArray.add("2020-10-11 12:40")
-        couponDateArray.add("2020-10-11 12:40")
-        couponDateArray.add("2020-10-11 12:40")
-        couponDateArray.add("2020-10-11 12:40")
-        couponDateArray.add("2020-10-11 12:40")
-        couponDateArray.add("2020-10-11 12:40")
-        couponDateArray.add("2020-10-11 12:40")
-        couponDateArray.add("2020-10-11 12:40")
-        couponDateArray.add("2020-10-11 12:40")
-        couponDateArray.add("2020-10-11 12:40")
-        couponDateArray.add("2020-10-11 12:40")
-
-
-
-        recyclerView.setHasFixedSize(true);
-        var adapter = StampViewAdapter(couponTitleArray, couponDateArray)
-        recyclerView.layoutManager =  LinearLayoutManager(activity)
-        recyclerView.adapter = adapter
 
 
         shop = Shop.get()
@@ -91,6 +97,8 @@ class CouponFragment : Fragment(), DiscreteScrollView.OnItemChangedListener<Shop
                 .setPivotY(Pivot.Y.BOTTOM) // CENTER is a default one
                 .build()
         )
+
+
 
 
         return rootView

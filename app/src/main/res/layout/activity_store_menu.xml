@@ -8,6 +8,15 @@
         android:visibility="visible"
         tools:context=".store.StoreMenu">
 
+<!--    <com.airbnb.lottie.LottieAnimationView-->
+<!--            android:id="@+id/loading_view"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_gravity="center"-->
+<!--            app:lottie_autoPlay="true"-->
+<!--            app:lottie_loop="true"-->
+<!--            app:lottie_rawRes="@raw/loading" />-->
+
     <!--    <androidx.cardview.widget.CardView-->
     <!--            android:id="@+id/nextClientCard"-->
     <!--            android:layout_width="match_parent"-->

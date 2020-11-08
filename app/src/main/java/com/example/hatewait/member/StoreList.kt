@@ -1,5 +1,6 @@
 package com.example.hatewait.member
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -8,7 +9,8 @@ import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hatewait.R
-import com.example.hatewait.model.NonMemberRegisterResponseData
+import com.example.hatewait.login.memberInfo
+import com.example.hatewait.model.StoreListInfo
 import com.example.hatewait.model.StoreListResponseData
 import com.example.hatewait.retrofit2.MyApi
 import kotlinx.android.synthetic.main.activity_store_list.*
@@ -17,14 +19,20 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+lateinit var StoreListContext: Context
+
 class StoreList : AppCompatActivity() {
+
 
     lateinit var storeListRecyclerView: RecyclerView
     lateinit var storeListAdapter: StoreListAdapter
+    var storeList: List<StoreListInfo>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_store_list)
+
+        StoreListContext = this
 
         storeListRecyclerView = findViewById<View>(
             R.id.store_recycler_view
@@ -40,7 +48,7 @@ class StoreList : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                storeListAdapter.filter.filter(newText)
+//                storeListAdapter.filter.filter(newText)
                 return false
             }
         })
@@ -56,45 +64,41 @@ class StoreList : AppCompatActivity() {
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
 
-        var storeList = ArrayList<String>()
-        storeList.add("고에몬")
-        storeList.add("멘타이코")
-        storeList.add("부타이")
-        storeList.add("교촌치킨")
-        storeList.add("엽기떡볶이")
-        storeList.add("맛있는가게")
-        storeList.add("갈비탕집")
-        storeList.add("린슐랭")
-        storeList.add("맛있는가게")
-        storeList.add("마라탕집")
-
         MyApi.CouponService.requestStoreList(
-            "uyttyu7532"
+            memberInfo!!.id
         )
-            .enqueue(object : Callback<Any> {
+            .enqueue(object : Callback<StoreListResponseData> {
                 override fun onFailure(
-                    call: Call<Any>,
+                    call: Call<StoreListResponseData>,
                     t: Throwable
                 ) {
                     Log.d("retrofit2 가게 리스트 :: ", "연결실패 $t")
                 }
 
                 override fun onResponse(
-                    call: Call<Any>,
-                    response: Response<Any>
+                    call: Call<StoreListResponseData>,
+                    response: Response<StoreListResponseData>
                 ) {
-                    Log.d("retrofit2 가게 리스트 ::",response.code().toString() + response.body().toString())
+                    var data: StoreListResponseData? = response?.body() // 서버로부터 온 응답
+                    Log.d(
+                        "retrofit2 가게 리스트 ::",
+                        response.code().toString() + response.body().toString()
+                    )
                     when (response.code()) {
                         200 -> {
-                            var data: Any? = response?.body() // 서버로부터 온 응답
+
+                            storeList = data!!.array
+                            if (storeList != null) {
+                                storeListAdapter =
+                                    StoreListAdapter(storeList as ArrayList<StoreListInfo>)
+                                storeListRecyclerView.adapter = storeListAdapter
+                            }
                         }
                     }
                 }
             }
             )
 
-        storeListAdapter = StoreListAdapter(storeList)
-        storeListRecyclerView.adapter = storeListAdapter
 
         try {
             if (searchView.query != null) {

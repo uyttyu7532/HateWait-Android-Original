@@ -8,22 +8,15 @@ import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hatewait.R
-import com.example.hatewait.StartWaitActivity
-
-import com.example.hatewait.login.LoginRegisterViewPagerActivity
-import com.example.hatewait.login.memberInfo
+import com.example.hatewait.register.StartWaitActivity
 import com.example.hatewait.login.storeInfo
-import com.example.hatewait.socket.*
-import com.example.hatewait.storeinfo.StoreInfoSettingsActivity
 import com.example.hatewait.storeinfo.StoreInfoUpdate2
-import kotlinx.android.synthetic.main.activity_customer_menu.*
-import kotlinx.android.synthetic.main.activity_signup1.*
 import kotlinx.android.synthetic.main.activity_store_menu.*
 import org.jetbrains.anko.startActivity
 
 
 lateinit var storeNameView: TextView
-lateinit var storeWaitingNum: TextView
+//lateinit var storeWaitingNum: TextView
 //lateinit var storeMarquee: TextView
 lateinit var storeContext: Context
 
@@ -35,11 +28,14 @@ class StoreMenu : AppCompatActivity() {
         setContentView(R.layout.activity_store_menu)
 
 
+//        val task = MyAsyncTask(this)
+//        task.execute()
+
         storeContext = this.applicationContext
 
         // store mode
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-        storeNameView = findViewById<TextView>(
+        storeNameView = findViewById(
             R.id.store_name_view
         )
 //        storeWaitingNum = findViewById<TextView>(
@@ -53,7 +49,7 @@ class StoreMenu : AppCompatActivity() {
 //            getSharedPreferences(resources.getString(R.string.store_mode), Context.MODE_PRIVATE)
 //        STOREID = storeReference.getString("STORE_ID", "")
 //        STORENAME = storeNameView.text.toString()
-        store_name_view.text = storeInfo?.storeName
+        store_name_view.text = storeInfo?.name
         initView()
 
     }
@@ -70,7 +66,7 @@ class StoreMenu : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        StoreMenuAsyncTask().execute()
+//        StoreMenuAsyncTask().execute()
 
     }
 

@@ -138,6 +138,9 @@ class MainActivity : AppCompatActivity() {
                     .enqueue(object : Callback<MemberLoginResponseData> {
                         override fun onFailure(call: Call<MemberLoginResponseData>, t: Throwable) {
                             Log.d("retrofit2 손님로그인 :: ", "로그인연결실패 $t")
+                            // TODO 주석처리해야함
+                            Toast.makeText(mContext, "서버 연결실패", Toast.LENGTH_SHORT).show()
+                            startActivity<MemberMenu>()
                         }
 
                         override fun onResponse(
@@ -167,8 +170,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     )
 
-                // TODO 주석처리해야함
-                startActivity<MemberMenu>()
+
 
 
             } else {
@@ -194,6 +196,9 @@ class MainActivity : AppCompatActivity() {
                     .enqueue(object : Callback<StoreLoginResponseData> {
                         override fun onFailure(call: Call<StoreLoginResponseData>, t: Throwable) {
                             Log.d("retrofit2 가게로그인 :: ", "로그인연결실패 $t")
+
+                            // TODO 주석처리해야함
+                            startActivity<StoreMenu>()
                         }
 
                         override fun onResponse(
@@ -227,8 +232,6 @@ class MainActivity : AppCompatActivity() {
                     }
                     )
 
-                // TODO 주석처리해야함
-                startActivity<StoreMenu>()
             }
         }
         account_register_textButton.setOnClickListener {
@@ -243,8 +246,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-    //    Naver Login Initilization
 
     // 네아로(네이버 아이디로 로그인) 기능 이용시 전화번호는 따로 입력받아야한다.
     //     전화번호는 Naver 프로필 API에서 제공해주지 않기때문에
@@ -312,6 +313,9 @@ class MainActivity : AppCompatActivity() {
 
 
         naver_login_button.setOnClickListener {
+            // 갱신 토큰이 잇는 지 확인
+            // 성공 -> OAuthLoginHandler 객체 호출
+            // 실패 -> 로그인 창
             loginModule.startOauthLoginActivity(this@MainActivity, loginHandler)
         }
 

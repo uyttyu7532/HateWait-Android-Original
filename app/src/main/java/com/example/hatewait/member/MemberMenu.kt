@@ -137,7 +137,7 @@ class MemberMenu : AppCompatActivity() {
 //            com.example.hatewait.customer.waitingStoreView.text = "대기중인 가게가 없습니다."
 //            com.example.hatewait.customer.customerWaiting.visibility = View.GONE
 //        } else {
-        customer_name_text_view.text = memberInfo?.member
+        customer_name_text_view.text = memberInfo?.name
 //            com.example.hatewait.customer.waitingStoreView.text = result?.get(3)
 //            com.example.hatewait.customer.customerWaitingNum.text = result?.get(4)
 //            com.example.hatewait.customer.customerWaiting.visibility = View.VISIBLE

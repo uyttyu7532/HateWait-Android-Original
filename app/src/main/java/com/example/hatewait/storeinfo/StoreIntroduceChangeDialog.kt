@@ -13,10 +13,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDialogFragment
 import com.example.hatewait.R
+import com.example.hatewait.retrofit2.MyApi
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.activity_store_info_update.*
+import kotlinx.android.synthetic.main.activity_store_introduce_change_dialog.*
+import kotlinx.android.synthetic.main.fragment_store_phone_change_dialog.*
 import org.jetbrains.anko.layoutInflater
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.lang.ClassCastException
 
 class StoreIntroduceChangeDialog : AppCompatDialogFragment() {
@@ -52,7 +58,36 @@ class StoreIntroduceChangeDialog : AppCompatDialogFragment() {
             .setPositiveButton("변경", DialogInterface.OnClickListener { _, _ ->
 //                val updatedStoreIntroduce = editStoreNameText.text.toString()
 //                dialogListener.applyText(updatedStoreIntroduce)
+                MyApi.UpdateService.requestStoreInfoUpdate(
+                    id = "hate2020",
+                    info = store_introduce_editText.text.toString()
+                )
+                    .enqueue(object : Callback<MyApi.onlyMessageResponseData> {
+                        override fun onFailure(
+                            call: Call<MyApi.onlyMessageResponseData>,
+                            t: Throwable
+                        ) {
+                            Log.d("retrofit2 가게 소개 수정 :: ", "가게 소개 수정실패 $t")
+                        }
+
+                        override fun onResponse(
+                            call: Call<MyApi.onlyMessageResponseData>,
+                            response: Response<MyApi.onlyMessageResponseData>
+                        ) {
+
+                            var data: MyApi.onlyMessageResponseData? = response?.body()
+                            Log.d(
+                                "retrofit2 가게 소개 수정 ::",
+                                response.code().toString() + response.body().toString()
+                            )
+                            when (response.code()) {
+                                200 -> {
+                                }
+                            }
+                        }
+                    })
             })
+
         return builder.create()
     }
 

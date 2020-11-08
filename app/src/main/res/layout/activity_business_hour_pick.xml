@@ -49,10 +49,10 @@
     </ScrollView>
 
     <com.google.android.material.button.MaterialButton
-            android:layout_below="@+id/store_business_hours_scroll_view"
             android:id="@+id/button_finish_business_hours"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/store_business_hours_scroll_view"
             android:layout_marginStart="30dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="30dp"
@@ -66,75 +66,75 @@
             app:cornerRadius="10dp"
             app:rippleColor="@color/colorPrimaryDark" />
 
-<!--    <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@+id/store_business_hours_scroll_view"-->
-<!--            android:gravity="center_horizontal"-->
-<!--            -->
-<!--            android:orientation="horizontal">-->
+    <!--    <LinearLayout-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_below="@+id/store_business_hours_scroll_view"-->
+    <!--            android:gravity="center_horizontal"-->
+    <!--            -->
+    <!--            android:orientation="horizontal">-->
 
-<!--        <mehdi.sakout.fancybuttons.FancyButton-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_alignParentBottom="true"-->
-<!--                android:layout_centerHorizontal="true"-->
-<!--                android:layout_gravity="center"-->
-<!--                android:layout_marginTop="50dp"-->
-<!--                android:layout_marginRight="5dp"-->
-<!--                android:layout_marginBottom="50dp"-->
-<!--                android:paddingLeft="25dp"-->
-<!--                android:paddingTop="15dp"-->
-<!--                android:paddingRight="25dp"-->
-<!--                android:paddingBottom="15dp"/>-->
-<!--        -->
+    <!--        <mehdi.sakout.fancybuttons.FancyButton-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_alignParentBottom="true"-->
+    <!--                android:layout_centerHorizontal="true"-->
+    <!--                android:layout_gravity="center"-->
+    <!--                android:layout_marginTop="50dp"-->
+    <!--                android:layout_marginRight="5dp"-->
+    <!--                android:layout_marginBottom="50dp"-->
+    <!--                android:paddingLeft="25dp"-->
+    <!--                android:paddingTop="15dp"-->
+    <!--                android:paddingRight="25dp"-->
+    <!--                android:paddingBottom="15dp"/>-->
+    <!--        -->
 
-<!--        <mehdi.sakout.fancybuttons.FancyButton-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_alignParentBottom="true"-->
-<!--                android:layout_centerHorizontal="true"-->
-<!--                android:layout_gravity="center"-->
-<!--                android:layout_marginLeft="5dp"-->
-<!--                android:layout_marginTop="50dp"-->
-<!--                android:layout_marginBottom="50dp"-->
-<!--                android:paddingLeft="25dp"-->
-<!--                android:paddingTop="15dp"-->
-<!--                android:paddingRight="25dp"-->
-<!--                android:paddingBottom="15dp"-->-->
+    <!--        <mehdi.sakout.fancybuttons.FancyButton-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_alignParentBottom="true"-->
+    <!--                android:layout_centerHorizontal="true"-->
+    <!--                android:layout_gravity="center"-->
+    <!--                android:layout_marginLeft="5dp"-->
+    <!--                android:layout_marginTop="50dp"-->
+    <!--                android:layout_marginBottom="50dp"-->
+    <!--                android:paddingLeft="25dp"-->
+    <!--                android:paddingTop="15dp"-->
+    <!--                android:paddingRight="25dp"-->
+    <!--                android:paddingBottom="15dp"-->-->
 
-<!--        <com.google.android.material.button.MaterialButton-->
-<!--                android:id="@+id/setting_time_ok_button"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginStart="15dp"-->
-<!--                android:layout_marginTop="16dp"-->
-<!--                android:layout_marginEnd="15dp"-->
-<!--                android:backgroundTint="@color/color_state_material_button"-->
-<!--                android:enabled="false"-->
-<!--                android:paddingTop="8dp"-->
-<!--                android:paddingBottom="8dp"-->
-<!--                android:text="완료"-->
-<!--                android:textColor="#ffffff"-->
-<!--                android:textSize="18sp"-->
-<!--                app:cornerRadius="10dp"-->
-<!--                app:rippleColor="@color/colorPrimaryDark"/>-->
+    <!--        <com.google.android.material.button.MaterialButton-->
+    <!--                android:id="@+id/setting_time_ok_button"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginStart="15dp"-->
+    <!--                android:layout_marginTop="16dp"-->
+    <!--                android:layout_marginEnd="15dp"-->
+    <!--                android:backgroundTint="@color/color_state_material_button"-->
+    <!--                android:enabled="false"-->
+    <!--                android:paddingTop="8dp"-->
+    <!--                android:paddingBottom="8dp"-->
+    <!--                android:text="완료"-->
+    <!--                android:textColor="#ffffff"-->
+    <!--                android:textSize="18sp"-->
+    <!--                app:cornerRadius="10dp"-->
+    <!--                app:rippleColor="@color/colorPrimaryDark"/>-->
 
-<!--        <com.google.android.material.button.MaterialButton-->
-<!--                android:id="@+id/setting_time_cancel_button"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginStart="15dp"-->
-<!--                android:layout_marginTop="16dp"-->
-<!--                android:layout_marginEnd="15dp"-->
-<!--                android:backgroundTint="@color/color_state_material_button"-->
-<!--                android:enabled="false"-->
-<!--                android:paddingTop="8dp"-->
-<!--                android:paddingBottom="8dp"-->
-<!--                android:text="취소"-->
-<!--                android:textColor="#ffffff"-->
-<!--                android:textSize="18sp"-->
-<!--                app:cornerRadius="10dp"-->
-<!--                app:rippleColor="@color/colorPrimaryDark" />-->
-<!--    </LinearLayout>-->
+    <!--        <com.google.android.material.button.MaterialButton-->
+    <!--                android:id="@+id/setting_time_cancel_button"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginStart="15dp"-->
+    <!--                android:layout_marginTop="16dp"-->
+    <!--                android:layout_marginEnd="15dp"-->
+    <!--                android:backgroundTint="@color/color_state_material_button"-->
+    <!--                android:enabled="false"-->
+    <!--                android:paddingTop="8dp"-->
+    <!--                android:paddingBottom="8dp"-->
+    <!--                android:text="취소"-->
+    <!--                android:textColor="#ffffff"-->
+    <!--                android:textSize="18sp"-->
+    <!--                app:cornerRadius="10dp"-->
+    <!--                app:rippleColor="@color/colorPrimaryDark" />-->
+    <!--    </LinearLayout>-->
 </RelativeLayout>

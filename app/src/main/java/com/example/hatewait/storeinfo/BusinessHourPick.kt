@@ -2,6 +2,7 @@ package com.example.hatewait.storeinfo
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -9,8 +10,12 @@ import androidx.fragment.app.DialogFragment
 import com.bashizip.bhlib.BusinessHours
 import com.bashizip.bhlib.ValdationException
 import com.example.hatewait.R
+import com.example.hatewait.retrofit2.MyApi
 import kotlinx.android.synthetic.main.activity_business_hour_pick.*
 import kotlinx.android.synthetic.main.activity_store_info_update2.*
+import retrofit2.Call
+import retrofit2.Response
+import javax.security.auth.callback.Callback
 
 class BusinessHourPick : AppCompatActivity(),
     BusinessHourCheckDialog.TimeCheckListener {
@@ -54,12 +59,11 @@ class BusinessHourPick : AppCompatActivity(),
                 bh_picker.businessHoursList
             } catch (e: ValdationException) {
 //                on 상태에서 영업시간을 입력하지 않은경우
-                Toast.makeText(this, e.message, Toast.LENGTH_SHORT)
-                    .show()
+                Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 //            val intent =
-//                Intent(this, MainActivity::class.java)
+//              Intent(this, MainActivity::class.java)
 //            intent.putExtra("BUSINESS_HOUR_LIST", bhs as Serializable?)
 //            startActivity(intent)
 
@@ -67,8 +71,7 @@ class BusinessHourPick : AppCompatActivity(),
             if (!bhs.isNullOrEmpty()) {
                 updatedBusinessTime = parsingBusinessHour(bhs!!)
 //            result: 오전 1:00 - 오전 2:00 (휴무일 : 월요일, 목요일)
-                val businessTimeCheckFragment =
-                    BusinessHourCheckDialog()
+                val businessTimeCheckFragment = BusinessHourCheckDialog()
                 val argumentBundle = Bundle()
                 argumentBundle.putString("NEW_BUSINESS_HOURS", updatedBusinessTime)
                 businessTimeCheckFragment.arguments = argumentBundle
@@ -152,12 +155,11 @@ class BusinessHourPick : AppCompatActivity(),
     }
 
     override fun onDialogPositiveClick(dialog: DialogFragment) {
-//        변경 버튼 클릭시 원래 액티비티에 결과 적용
-        dialog.dismiss()
-        val intent = Intent()
-        intent.putExtra("UPDATED_BUSINESS_TIME", updatedBusinessTime)
-        setResult(200, intent)
-        this@BusinessHourPick.finish()
+
+                val intent = Intent()
+                intent.putExtra("UPDATED_BUSINESS_TIME", updatedBusinessTime)
+                setResult(200, intent)
+                this@BusinessHourPick.finish()
     }
 
     override fun onDialogNegativeClick(dialog: DialogFragment) {

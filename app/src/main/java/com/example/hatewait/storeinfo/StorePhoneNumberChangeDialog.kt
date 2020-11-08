@@ -6,15 +6,22 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.example.hatewait.R
+import com.example.hatewait.retrofit2.MyApi
 import kotlinx.android.synthetic.main.activity_store_info_update.*
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.android.synthetic.main.activity_store_info_update2.*
+import kotlinx.android.synthetic.main.fragment_store_phone_change_dialog.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class StorePhoneNumberChangeDialog : DialogFragment() {
     var customView: View? = null
@@ -42,8 +49,36 @@ class StorePhoneNumberChangeDialog : DialogFragment() {
                     dismiss()
                 })
                 .setPositiveButton("변경", DialogInterface.OnClickListener { _, _ ->
-                    //TODO 서버에게 전화번호 수정 요청
+                    MyApi.UpdateService.requestStorePhoneUpdate(
+                        id = "hate2020",
+                        phone = store_phone_editText.text.toString().toInt()
+                    )
+                        .enqueue(object : Callback<MyApi.onlyMessageResponseData> {
+                            override fun onFailure(
+                                call: Call<MyApi.onlyMessageResponseData>,
+                                t: Throwable
+                            ) {
+                                Log.d("retrofit2 가게 번호 수정 :: ", "가게 번호 수정실패 $t")
+                            }
+
+                            override fun onResponse(
+                                call: Call<MyApi.onlyMessageResponseData>,
+                                response: Response<MyApi.onlyMessageResponseData>
+                            ) {
+
+                                var data: MyApi.onlyMessageResponseData? = response?.body()
+                                Log.d(
+                                    "retrofit2 가게 번호 수정 ::",
+                                    response.code().toString() + response.body().toString()
+                                )
+                                when (response.code()) {
+                                    200 -> {
+                                    }
+                                }
+                            }
+                        })
                 })
+
             builder.create()
         } ?: throw IllegalStateException("Activity Can't be null")
     }

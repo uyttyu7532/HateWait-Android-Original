@@ -125,7 +125,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#EFEFEF"
-                android:visibility="gone">
+                android:visibility="visible">
 
             <LinearLayout
                     android:layout_width="wrap_content"
@@ -138,13 +138,13 @@
                         android:id="@+id/waiting_list_detail_text_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="대기열에 추가된 시간: 2020-05-03-09:14:02" />
+                        android:text="최근 호출 시간: 2020-05-03-09:14:02" />
 
-                <TextView
-                        android:id="@+id/waiting_list_detail_text_view2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="최근에 알림 보낸시간: 2020-05-08-09:40:15" />
+<!--                <TextView-->
+<!--                        android:id="@+id/waiting_list_detail_text_view2"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="최근에 알림 보낸시간: 2020-05-08-09:40:15" />-->
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>

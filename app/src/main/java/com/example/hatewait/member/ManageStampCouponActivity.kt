@@ -34,16 +34,15 @@ class ManageStampCouponActivity : AppCompatActivity() {
         stampCount = intent.getIntExtra("stamp_count",0)
         maximumStamp = intent.getIntExtra("maximum_stamp",1)
 
+
         init()
     }
 
     private fun init() {
 
-        Log.d("retrofit2", "$memberId, $storeId")
-
-
 
         manage_stamp_coupon_view_pager.adapter = StampCouponFragAdapter(this, storeId, stampCount!!,maximumStamp!!)
+//        manage_stamp_coupon_view_pager.adapter = StampCouponFragAdapter(this)
 
 
         TabLayoutMediator(

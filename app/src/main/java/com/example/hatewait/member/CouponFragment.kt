@@ -29,43 +29,17 @@ class CouponFragment : Fragment(), DiscreteScrollView.OnItemChangedListener<Shop
     private var shop: Shop? = null
     private var infiniteAdapter: InfiniteScrollAdapter<*>? = null
 
+    private var storeId : String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         var bundle:Bundle = this.requireArguments()
-        var storeId = bundle.getString("store_id")
-        var stampCount = bundle.getInt("stamp_count")
-        var maximumStamp = bundle.getInt("maximum_stamp")
+        storeId = bundle.getString("store_id")
 
-        MyApi.CouponService.requestCouponList(
-            memberInfo!!.id,
-            storeId
-        )
-            .enqueue(object : Callback<CouponListResponseData> {
-                override fun onFailure(
-                    call: Call<CouponListResponseData>,
-                    t: Throwable
-                ) {
-                    Log.d("retrofit2 쿠폰 리스트 :: ", "연결실패 $t")
-                }
+        Log.d("retrofit2", "$storeId")
 
-                override fun onResponse(
-                    call: Call<CouponListResponseData>,
-                    response: Response<CouponListResponseData>
-                ) {
-                    var data: CouponListResponseData? = response?.body() // 서버로부터 온 응답
-                    Log.d(
-                        "retrofit2 쿠폰 리스트 ::",
-                        response.code().toString() + response.body().toString()
-                    )
-                    when (response.code()) {
-                        200 -> {
 
-                        }
-                    }
-                }
-            }
-            )
     }
 
     override fun onCreateView(
@@ -125,6 +99,40 @@ class CouponFragment : Fragment(), DiscreteScrollView.OnItemChangedListener<Shop
 //                .setPivotY(Pivot.Y.BOTTOM) // CENTER is a default one
 //                .build()
 //        )
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        MyApi.CouponService.requestCouponList(
+            memberInfo!!.id,
+            storeId!!
+        )
+            .enqueue(object : Callback<CouponListResponseData> {
+                override fun onFailure(
+                    call: Call<CouponListResponseData>,
+                    t: Throwable
+                ) {
+                    Log.d("retrofit2 쿠폰 리스트 :: ", "연결실패 $t")
+                }
+
+                override fun onResponse(
+                    call: Call<CouponListResponseData>,
+                    response: Response<CouponListResponseData>
+                ) {
+                    var data: CouponListResponseData? = response?.body() // 서버로부터 온 응답
+                    Log.d(
+                        "retrofit2 쿠폰 리스트 ::",
+                        response.code().toString() + response.body().toString()
+                    )
+                    when (response.code()) {
+                        200 -> {
+
+                        }
+                    }
+                }
+            }
+            )
     }
 
     override fun onClick(v: View) {

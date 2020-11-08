@@ -53,7 +53,6 @@ class StoreListAdapter(
         holder.storeStampCouponTextView.text = "스탬프 ${itemsFilterList[position].stamp_count}/${itemsFilterList[position].maximum_stamp}  쿠폰 ${itemsFilterList[position].coupon_count}"
 
         holder.storeListCardView.setOnClickListener{
-            Log.d("retrofit2", "${memberInfo!!.id}, ${itemsFilterList[position].store_id}")
             val intent = Intent(StoreListContext, ManageStampCouponActivity::class.java)
             intent.putExtra("memberId", memberInfo!!.id)
             intent.putExtra("storeId", itemsFilterList[position].store_id)

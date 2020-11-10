@@ -2,7 +2,6 @@ package com.example.hatewait.storeinfo
 
 import android.app.Dialog
 import android.content.Context
-import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -31,12 +30,12 @@ class BusinessHourCheckDialog : DialogFragment() {
             builder.setTitle("영업 시간 확인")
                 .setIcon(resources.getDrawable(R.drawable.main_logo, context?.theme))
                 .setMessage("$updatedBusinessHours\n으로 변경하시겠어요?")
-                .setPositiveButton("변경", DialogInterface.OnClickListener { dialog, _ ->
+                .setPositiveButton("변경") { _, _ ->
                     timeCheckListener.onDialogPositiveClick(this)
-                })
-                .setNegativeButton("취소", DialogInterface.OnClickListener { dialog, _ ->
+                }
+                .setNegativeButton("취소") { _, _ ->
                     dismiss()
-                })
+                }
             val dialog = builder.create()
             dialog
         } ?: throw IllegalStateException("Activity Can't be null")

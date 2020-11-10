@@ -70,6 +70,8 @@ class StoreSignUp1 : AppCompatActivity() {
             showSettingPopup()
         }
 
+        register_toolbar_title_textView.text = "가게 회원가입"
+
         setSupportActionBar(register_toolbar)
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)

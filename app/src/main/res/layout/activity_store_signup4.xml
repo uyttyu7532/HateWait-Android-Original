@@ -80,7 +80,7 @@
                 android:clickable="true"
                 android:gravity="center"
                 android:paddingVertical="5dp"
-                android:text="매일 오전 11:00 - 오후 8:00 \n(휴무일: 토요일, 일요일)"
+                android:text="영업시간을 선택해주세요."
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textSize="15sp" />
     </LinearLayout>

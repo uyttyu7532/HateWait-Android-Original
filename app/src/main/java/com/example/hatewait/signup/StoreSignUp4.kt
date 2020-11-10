@@ -37,7 +37,7 @@ class StoreSignUp4 : AppCompatActivity() {
     private val storeCapacityRegex = Regex("[^0](\\d{0,3})")
 
     fun verifyCapacity(capacityNumber: String): Boolean = storeCapacityRegex.matches(capacityNumber)
-    private val REQUEST_CODE_BUSINESS_TIME = 2000
+    private val REQUEST_CODE_BUSINESS_TIME = 200
     private var isBusinessHours = false;
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,7 +54,7 @@ class StoreSignUp4 : AppCompatActivity() {
 
         store_business_hours_textView.setOnClickListener {
             val intent = Intent(this@StoreSignUp4, BusinessHourPick::class.java)
-            startActivityForResult(intent, 2000)
+            startActivityForResult(intent, 200)
         }
 
         button_finish.setOnClickListener {

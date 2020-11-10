@@ -47,14 +47,9 @@ class BusinessHourPick : AppCompatActivity(),
     }
 
     fun init() {
-        var bhs: List<BusinessHours>? = null
-//        setting_time_cancel_button.setOnClickListener {
-//            finish()
-//        }
 
         button_finish_business_hours.setOnClickListener {
-
-//            bhs: List<BusinessHours?>? = null
+            var bhs: List<BusinessHours>? = null
             bhs = try {
                 bh_picker.businessHoursList
             } catch (e: ValdationException) {
@@ -98,7 +93,7 @@ class BusinessHourPick : AppCompatActivity(),
 
 //      일주일 - 영업일 = 휴무일
         for (day in businessHourList) {
-            holidays.remove(day.dayOfWeek)
+            holidays.remove(day.dayOfWeek.substring(0,1))
         }
 
 //        매일 영업시간이 같은지 체크
@@ -156,10 +151,10 @@ class BusinessHourPick : AppCompatActivity(),
 
     override fun onDialogPositiveClick(dialog: DialogFragment) {
 
-                val intent = Intent()
-                intent.putExtra("UPDATED_BUSINESS_TIME", updatedBusinessTime)
-                setResult(200, intent)
-                this@BusinessHourPick.finish()
+        val intent = Intent()
+        intent.putExtra("UPDATED_BUSINESS_TIME", updatedBusinessTime)
+        setResult(200, intent)
+        this@BusinessHourPick.finish()
     }
 
     override fun onDialogNegativeClick(dialog: DialogFragment) {

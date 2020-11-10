@@ -67,6 +67,7 @@ class CustomerSignUp1 : AppCompatActivity() {
             showSettingPopup()
         }
 
+
         setSupportActionBar(register_toolbar)
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)

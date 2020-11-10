@@ -76,7 +76,6 @@
         <activity android:name=".login.MainActivity" />
         <activity android:name=".store.StoreWaitingList" />
         <activity android:name=".storeinfo.BusinessHourPick" />
-        <activity android:name=".discretescroll.ShopActivity" />
         <activity
                 android:name=".Splash"
                 android:noHistory="true"

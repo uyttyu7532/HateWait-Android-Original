@@ -44,7 +44,7 @@ class StoreInfoUpdate2 : AppCompatActivity(), StoreNameChangeDialog.DialogListen
         }
         setting_time.setOnClickListener {
             val intent = Intent(this@StoreInfoUpdate2, BusinessHourPick::class.java)
-            startActivityForResult(intent, 2000)
+            startActivityForResult(intent, 200)
         }
         setting_phone_num.setOnClickListener {
             StorePhoneNumberChangeDialog()

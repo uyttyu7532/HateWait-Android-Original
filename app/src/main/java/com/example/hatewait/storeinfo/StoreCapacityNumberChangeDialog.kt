@@ -2,10 +2,7 @@ package com.example.hatewait.storeinfo
 
 import android.app.Dialog
 import android.content.Context
-import android.content.DialogInterface
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,12 +10,10 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.example.hatewait.R
+import com.example.hatewait.login.storeInfo
 import com.example.hatewait.retrofit2.MyApi
-import kotlinx.android.synthetic.main.activity_store_info_update.*
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.activity_store_info_update2.*
-import kotlinx.android.synthetic.main.activity_store_name_change_dialog.*
+import kotlinx.android.synthetic.main.activity_store_introduce_change_dialog.*
 import kotlinx.android.synthetic.main.fragmet_store_capacity_change_dialog.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -28,13 +23,6 @@ class StoreCapacityNumberChangeDialog : DialogFragment() {
     var customView: View? = null
     private lateinit var dialogListener: DialogListener
 
-
-//    val storeCapacityLayout: TextInputLayout by lazy {
-//        customView?.findViewById<TextInputLayout>(R.id.store_capacity_layout)!!
-//    }
-//    private val storeCapacityEditText: TextInputEditText by lazy {
-//        customView?.findViewById<TextInputEditText>(R.id.store_capacity_editText)!!
-//    }
 
     interface DialogListener {
         fun applyCapacityNumber(capacityNumber: String): Unit
@@ -51,10 +39,11 @@ class StoreCapacityNumberChangeDialog : DialogFragment() {
                     dismiss()
                 }
                 .setPositiveButton("변경") { _, _ ->
-//                    dialogListener.applyCapacityNumber(setting_capacity_text_view.text.toString())
+                    val updatedStoreCapacity = number_picker_capacity.value
+                    dialogListener.applyCapacityNumber(updatedStoreCapacity.toString())
                     MyApi.UpdateService.requestStoreCapacityUpdate(
-                        id = "hate2020",
-                        maximum_capacity = number_picker_capacity.value
+                        id = storeInfo!!.id,
+                        maximum_capacity = updatedStoreCapacity
                     )
                         .enqueue(object : Callback<MyApi.onlyMessageResponseData> {
                             override fun onFailure(
@@ -113,24 +102,6 @@ class StoreCapacityNumberChangeDialog : DialogFragment() {
     }
 
     private fun init() {
-////        첫자리 0으로 시작 불가 총 4자리수까지 입력가능.
-//        val storeCapacityRegex = Regex("[^0](\\d{0,3})")
-//        storeCapacityEditText.text = activity?.store_capacity_number_textView?.text
-//        storeCapacityEditText.addTextChangedListener(object : TextWatcher {
-//            override fun afterTextChanged(storeCapacityNumber: Editable?) {
-//                if (!storeCapacityNumber.toString().matches(storeCapacityRegex)) {
-//                    storeCapacityLayout.error = "9999명까지 입력 가능합니다."
-//                } else {
-//                    storeCapacityLayout.error = null
-//                    storeCapacityLayout.hint = null
-//                }
-//            }
-//
-//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-//            }
-//
-//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//            }
-//        })
+
     }
 }

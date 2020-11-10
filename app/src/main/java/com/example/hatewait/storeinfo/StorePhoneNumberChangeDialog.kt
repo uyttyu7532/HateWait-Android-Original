@@ -13,11 +13,11 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.example.hatewait.R
+import com.example.hatewait.login.storeInfo
 import com.example.hatewait.retrofit2.MyApi
 import kotlinx.android.synthetic.main.activity_store_info_update.*
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import kotlinx.android.synthetic.main.activity_store_info_update2.*
 import kotlinx.android.synthetic.main.fragment_store_phone_change_dialog.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -43,15 +43,18 @@ class StorePhoneNumberChangeDialog : DialogFragment() {
             val builder = AlertDialog.Builder(it)
             val inflater = requireActivity().layoutInflater
             customView = inflater.inflate(R.layout.fragment_store_phone_change_dialog, null)
+
             builder.setView(customView)
                 .setTitle("가게 전화번호 수정")
                 .setNegativeButton("취소", DialogInterface.OnClickListener { _, _ ->
                     dismiss()
                 })
                 .setPositiveButton("변경", DialogInterface.OnClickListener { _, _ ->
+                    val updatedStorePhone = store_phone_editText.text.toString().toInt()
+                    dialogListener.applyPhoneNumber(store_phone_editText.text.toString())
                     MyApi.UpdateService.requestStorePhoneUpdate(
-                        id = "hate2020",
-                        phone = store_phone_editText.text.toString().toInt()
+                        id = storeInfo!!.id,
+                        phone = updatedStorePhone
                     )
                         .enqueue(object : Callback<MyApi.onlyMessageResponseData> {
                             override fun onFailure(

@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.MenuItem
 import com.example.hatewait.R
 import com.example.hatewait.address.AddressDialogFragment
+import com.example.hatewait.login.storeInfo
 import com.example.hatewait.model.StoreSignUpRequestData
 import com.example.hatewait.model.storeInfoData
 import com.example.hatewait.retrofit2.MyApi
@@ -21,7 +22,7 @@ import retrofit2.Response
 class StoreInfoUpdate2 : AppCompatActivity(), StoreNameChangeDialog.DialogListener,
     StorePhoneNumberChangeDialog.DialogListener, StoreCapacityNumberChangeDialog.DialogListener,
     StoreIntroduceChangeDialog.DialogListener {
-    private val REQUEST_CODE_BUSINESS_TIME = 2000
+    private val REQUEST_CODE_BUSINESS_TIME = 200
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_store_info_update2)
@@ -32,6 +33,7 @@ class StoreInfoUpdate2 : AppCompatActivity(), StoreNameChangeDialog.DialogListen
             setHomeAsUpIndicator(R.drawable.back_icon)
             setDisplayShowTitleEnabled(false)
         }
+
 
 
 
@@ -82,6 +84,7 @@ class StoreInfoUpdate2 : AppCompatActivity(), StoreNameChangeDialog.DialogListen
 
     override fun onResume() {
         super.onResume()
+
         MyApi.UpdateService.requestStoreInfo("hate2020")
             .enqueue(object : Callback<storeInfoData> {
                 override fun onFailure(call: Call<storeInfoData>, t: Throwable) {
@@ -102,8 +105,10 @@ class StoreInfoUpdate2 : AppCompatActivity(), StoreNameChangeDialog.DialogListen
                             setting_store_name_text_view.text = data!!.storeInfo.name
                             setting_store_phone_text_view.text = data!!.storeInfo.phone
                             setting_store_address_text_view.text = data!!.storeInfo.address
-                            setting_store_capacity_text_view.text = data!!.storeInfo.maximum_capacity.toString()
+                            setting_store_capacity_text_view.text =
+                                data!!.storeInfo.maximum_capacity.toString()
                             setting_store_info_text_view.text = data!!.storeInfo.info
+                            setting_business_time.text = data!!.storeInfo.business_hour
                         }
                     }
                 }
@@ -121,19 +126,6 @@ class StoreInfoUpdate2 : AppCompatActivity(), StoreNameChangeDialog.DialogListen
     }
 
 
-    override fun applyText(storeName: String) {
-
-    }
-
-    override fun applyPhoneNumber(storePhoneNumber: String) {
-
-    }
-
-    override fun applyCapacityNumber(capacityNumber: String) {
-
-    }
-
-
     override fun onActivityResult(
         requestCode: Int,
         resultCode: Int,
@@ -144,9 +136,8 @@ class StoreInfoUpdate2 : AppCompatActivity(), StoreNameChangeDialog.DialogListen
         if (requestCode == REQUEST_CODE_BUSINESS_TIME) {
             if (resultCode == 200) {
 
-
                 MyApi.UpdateService.requestStoreBusinessHourUpdate(
-                    id = "uyttyu7532",
+                    id = storeInfo!!.id,
                     business_hour = data?.getStringExtra("UPDATED_BUSINESS_TIME").toString()
                 ).enqueue(object : Callback<MyApi.onlyMessageResponseData> {
                     override fun onFailure(
@@ -178,5 +169,21 @@ class StoreInfoUpdate2 : AppCompatActivity(), StoreNameChangeDialog.DialogListen
 //                nothing to do (failed to update business Time)
             }
         }
+    }
+
+    override fun applyStoreName(storeName: String) {
+        setting_store_name_text_view.text = storeName
+    }
+
+    override fun applyPhoneNumber(storePhoneNumber: String) {
+        setting_store_phone_text_view.text = storePhoneNumber
+    }
+
+    override fun applyCapacityNumber(capacityNumber: String) {
+        setting_store_capacity_text_view.text = capacityNumber
+    }
+
+    override fun applyStoreIntroduce(storeIntroduce: String) {
+        setting_store_info_text_view.text = storeIntroduce
     }
 }

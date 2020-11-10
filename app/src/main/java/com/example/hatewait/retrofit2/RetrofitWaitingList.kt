@@ -19,6 +19,12 @@ interface RetrofitWaitingList {
     )
             :Call<MyApi.onlyMessageResponseData>
 
+    @FormUrlEncoded
+    @PATCH("/waiting_customers/{id}")
+    fun requestWaitingCall(
+        @Field("id") id: String
+    ): Call<MyApi.onlyMessageResponseData>
+
 }
 
 

@@ -128,7 +128,7 @@
                                     android:id="@+id/setting_store_name_text_view"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="맛있는 가게" />
+                                    android:text="" />
                         </LinearLayout>
                     </FrameLayout>
                 </androidx.cardview.widget.CardView>
@@ -211,7 +211,7 @@
                                     android:id="@+id/setting_store_phone_text_view"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="02-1234-5567" />
+                                    android:text="" />
                         </LinearLayout>
                     </FrameLayout>
                 </androidx.cardview.widget.CardView>
@@ -249,10 +249,11 @@
                                     android:textColor="#000000"
                                     android:textSize="15sp" />
 
-                            <!--                            <TextView-->
-                            <!--                                    android:layout_width="wrap_content"-->
-                            <!--                                    android:layout_height="wrap_content"-->
-                            <!--                                    android:text="매일 오전 11:00~오후8:00" />-->
+                            <TextView
+                                    android:id="@+id/setting_business_time"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="" />
                         </LinearLayout>
                     </FrameLayout>
                 </androidx.cardview.widget.CardView>
@@ -335,7 +336,7 @@
                                     android:id="@+id/setting_store_address_text_view"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="서울특별시 광진구 능동로" />
+                                    android:text="" />
                         </LinearLayout>
                     </FrameLayout>
                 </androidx.cardview.widget.CardView>
@@ -369,16 +370,15 @@
                             <TextView
                                     android:id="@+id/setting_store_capacity_text_view"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="match_parent"
                                     android:text="수용가능 인원"
                                     android:textColor="#000000"
                                     android:textSize="15sp" />
 
                             <TextView
-
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="50명" />
+                                    android:text="" />
                         </LinearLayout>
                     </FrameLayout>
                 </androidx.cardview.widget.CardView>
@@ -420,7 +420,7 @@
                                     android:id="@+id/setting_store_info_text_view"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="포장 가능합니다~" />
+                                    android:text="" />
                         </LinearLayout>
                     </FrameLayout>
                 </androidx.cardview.widget.CardView>

@@ -1,5 +1,6 @@
 package com.example.hatewait.signup
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -35,6 +36,7 @@ import retrofit2.Response
 class StoreSignUp4 : AppCompatActivity() {
 
     private val storeCapacityRegex = Regex("[^0](\\d{0,3})")
+    private var mContext: Context? = null
 
     fun verifyCapacity(capacityNumber: String): Boolean = storeCapacityRegex.matches(capacityNumber)
     private val REQUEST_CODE_BUSINESS_TIME = 200
@@ -45,6 +47,8 @@ class StoreSignUp4 : AppCompatActivity() {
         setContentView(R.layout.activity_store_signup4)
         addTextChangeListener()
         setSupportActionBar(register_toolbar3)
+
+        mContext = this
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
             setHomeAsUpIndicator(R.drawable.back_icon)
@@ -86,7 +90,7 @@ class StoreSignUp4 : AppCompatActivity() {
                 .enqueue(object : Callback<StoreSignUpResponseData> {
                     override fun onFailure(call: Call<StoreSignUpResponseData>, t: Throwable) {
 
-                        Log.d("retrofit2 손님회원가입 :: ", "회원가입연결실패 $t")
+                        Log.d("retrofit2 가게회원가입 :: ", "연결실패 $t")
                     }
 
                     override fun onResponse(
@@ -102,10 +106,20 @@ class StoreSignUp4 : AppCompatActivity() {
                             200 -> {
                                 var data: StoreSignUpResponseData? = response?.body() // 서버로부터 온 응답
 
-                                startActivity<MemberMenu>()
-                                _customerSignUp1.finish()
-                                _customerSignUp2.finish()
+                                Toast.makeText(
+                                    mContext,
+                                    "가게 회원가입이 완료되었습니다.", Toast.LENGTH_SHORT
+                                ).show()
+                                _storeSignUp1.finish()
+                                _storeSignUp2.finish()
+                                _storeSignUp3.finish()
                                 finish()
+                            }
+                            else -> {
+                                Toast.makeText(
+                                    mContext,
+                                    "가게 회원가입이 실패하였습니다.", Toast.LENGTH_SHORT
+                                ).show()
                             }
                         }
 
@@ -114,16 +128,13 @@ class StoreSignUp4 : AppCompatActivity() {
                 )
 
 
-            Toast.makeText(
-                this,
-                "$storeEmail $storeId $storePassword $storeName $storePhone $storeAddress $storeBusinessHour $storeCapacity $storeDescription",
-                Toast.LENGTH_SHORT
-            ).show()
+//            Toast.makeText(
+//                this,
+//                "$storeEmail $storeId $storePassword $storeName $storePhone $storeAddress $storeBusinessHour $storeCapacity $storeDescription",
+//                Toast.LENGTH_SHORT
+//            ).show()
 
-            _storeSignUp1.finish()
-            _storeSignUp2.finish()
-            _storeSignUp3.finish()
-            finish()
+
         }
 
     }

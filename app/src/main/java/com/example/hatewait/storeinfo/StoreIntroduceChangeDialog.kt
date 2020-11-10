@@ -13,10 +13,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDialogFragment
 import com.example.hatewait.R
+import com.example.hatewait.login.storeInfo
 import com.example.hatewait.retrofit2.MyApi
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.activity_store_info_update.*
+import kotlinx.android.synthetic.main.activity_store_info_update2.*
 import kotlinx.android.synthetic.main.activity_store_introduce_change_dialog.*
 import kotlinx.android.synthetic.main.fragment_store_phone_change_dialog.*
 import org.jetbrains.anko.layoutInflater
@@ -35,7 +37,7 @@ class StoreIntroduceChangeDialog : AppCompatDialogFragment() {
     fun verifyName(storeIntroduce: String): Boolean = storeIntroduceRegex.matches(storeIntroduce)
 
     interface DialogListener {
-        fun applyText(storeIntroduce: String): Unit
+        fun applyStoreIntroduce(storeIntroduce: String): Unit
     }
 
 
@@ -56,11 +58,11 @@ class StoreIntroduceChangeDialog : AppCompatDialogFragment() {
                 dismiss()
             })
             .setPositiveButton("변경", DialogInterface.OnClickListener { _, _ ->
-//                val updatedStoreIntroduce = editStoreNameText.text.toString()
-//                dialogListener.applyText(updatedStoreIntroduce)
+                val updatedStoreIntroduce = store_introduce_editText.text.toString()
+                dialogListener.applyStoreIntroduce(updatedStoreIntroduce)
                 MyApi.UpdateService.requestStoreInfoUpdate(
-                    id = "hate2020",
-                    info = store_introduce_editText.text.toString()
+                    id = storeInfo!!.id,
+                    info = updatedStoreIntroduce
                 )
                     .enqueue(object : Callback<MyApi.onlyMessageResponseData> {
                         override fun onFailure(

@@ -19,7 +19,6 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.activity_store_info_update.*
 import kotlinx.android.synthetic.main.activity_store_name_change_dialog.*
-import org.jetbrains.anko.layoutInflater
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -31,35 +30,36 @@ class StoreNameChangeDialog : AppCompatDialogFragment() {
     // viewModel 을 커스터마이징 할 수 가없으므로 일종의 트릭을 건다.
     var customView: View? = null
     lateinit var dialogListener: DialogListener
+
     private val storeNameRegex = Regex("^(?=.*[a-zA-Z가-힣0-9])[a-zA-Z가-힣0-9|\\s|,]{1,}$")
     fun verifyName(storeName: String): Boolean = storeNameRegex.matches(storeName)
 
     interface DialogListener {
-        fun applyText(storeName: String): Unit
+        fun applyStoreName(storeName: String): Unit
     }
 
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(activity)
-//        val inflater : LayoutInflater = activity?.layoutInflater!!
-        customView =
-            context?.layoutInflater?.inflate(R.layout.activity_store_name_change_dialog, null)!!
-        val editStoreNameText: TextInputEditText =
-            customView?.findViewById(R.id.store_introduce_editText)!!
+        val inflater = requireActivity().layoutInflater
+        customView = inflater.inflate(R.layout.activity_store_name_change_dialog, null)
 
         builder.setView(customView)
             .setTitle("가게이름")
             .setNegativeButton("취소", DialogInterface.OnClickListener { _, _ -> dismiss() })
             .setPositiveButton("변경", DialogInterface.OnClickListener { _, _ ->
-                val updatedStoreName = editStoreNameText.text.toString()
-                dialogListener.applyText(updatedStoreName)
+                val updatedStoreName = store_name_edit_text.text.toString()
+                dialogListener.applyStoreName(updatedStoreName)
 
                 MyApi.UpdateService.requestStoreNameUpdate(
-                    id= storeInfo!!.id,
-                    name = store_introduce_editText.text.toString()
+                    id = storeInfo!!.id,
+                    name = updatedStoreName
                 )
                     .enqueue(object : Callback<MyApi.onlyMessageResponseData> {
-                        override fun onFailure(call: Call<MyApi.onlyMessageResponseData>, t: Throwable) {
+                        override fun onFailure(
+                            call: Call<MyApi.onlyMessageResponseData>,
+                            t: Throwable
+                        ) {
                             Log.d("retrofit2 가게이름수정 :: ", "가게이름수정실패 $t")
                         }
 
@@ -129,10 +129,10 @@ class StoreNameChangeDialog : AppCompatDialogFragment() {
 
     private fun init() {
         val editStoreNameText: TextInputEditText =
-            customView?.findViewById(R.id.store_introduce_editText)!!
-        editStoreNameText.setText(activity?.store_name?.text)
+            customView?.findViewById(R.id.store_name_edit_text)!!
+        editStoreNameText.text = activity?.store_name?.text
         val editStoreNameLayout: TextInputLayout =
-            customView?.findViewById(R.id.store_introduce_text_layout)!!
+            customView?.findViewById(R.id.store_name_text_layout)!!
         editStoreNameText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(str: Editable?) {
                 if (!verifyName(str.toString())) {

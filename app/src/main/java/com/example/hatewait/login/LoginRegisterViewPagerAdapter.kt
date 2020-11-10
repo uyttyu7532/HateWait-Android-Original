@@ -61,7 +61,7 @@ class LoginRegisterViewPagerActivity : AppCompatActivity(),
         var memberRegisterData =
             MemberRegisterRequestData(customer_id, customer_people_num.toInt(), true)
 
-        MyApi.memberRegisterService.requestMemberRegister(memberRegisterData)
+        MyApi.RegisterService.requestMemberRegister(storeInfo!!.id, memberRegisterData)
             .enqueue(object : Callback<MemberRegisterResponseData> {
                 override fun onFailure(
                     call: Call<MemberRegisterResponseData>,

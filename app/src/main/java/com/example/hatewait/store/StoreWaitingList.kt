@@ -16,6 +16,7 @@ import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.daimajia.swipe.util.Attributes
 import com.example.hatewait.R
+import com.example.hatewait.login.mContext
 import com.example.hatewait.login.storeInfo
 import com.example.hatewait.model.*
 import com.example.hatewait.retrofit2.MyApi
@@ -31,6 +32,7 @@ lateinit var waitingListAdapter: SwipeRecyclerViewAdapter
 lateinit var waitingListContext: Context
 lateinit var totalWaitingNumTextView: TextView
 
+
 //var waitingList : List<WaitingInfo>? = null
 
 //lateinit var autoCallSwitchView: Switch
@@ -40,6 +42,7 @@ lateinit var totalWaitingNumTextView: TextView
 
 class StoreWaitingList : AppCompatActivity() {
 
+    lateinit var mContext: Context
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -208,7 +211,8 @@ class StoreWaitingList : AppCompatActivity() {
                         var nonMemberRegisterData =
                             NonMemberRegisterRequestData(userPhone, userName, userPeopleNum, false)
 
-                        MyApi.nonMemberRegisterService.requestNonMemberRegister(
+                        MyApi.RegisterService.requestNonMemberRegister(
+                            storeInfo!!.id,
                             nonMemberRegisterData
                         )
                             .enqueue(object : Callback<NonMemberRegisterResponseData> {
@@ -224,10 +228,14 @@ class StoreWaitingList : AppCompatActivity() {
                                     call: Call<NonMemberRegisterResponseData>,
                                     response: Response<NonMemberRegisterResponseData>
                                 ) {
-                                    Log.d("retrofit2 비회원 대기 등록 ::",response.code().toString() + response.body().toString())
+                                    Log.d(
+                                        "retrofit2 비회원 대기 등록 ::",
+                                        response.code().toString() + response.body().toString()
+                                    )
                                     when (response.code()) {
                                         200 -> {
-                                            var data: NonMemberRegisterResponseData? = response?.body() // 서버로부터 온 응답
+                                            var data: NonMemberRegisterResponseData? =
+                                                response?.body() // 서버로부터 온 응답
                                         }
                                     }
                                 }
@@ -265,13 +273,20 @@ fun getWaitingList() {
                 call: Call<WaitingListResponseData>,
                 response: Response<WaitingListResponseData>
             ) {
-                Log.d("retrofit2 대기 리스트 ::",response.code().toString() + response.body().toString())
+                Log.d(
+                    "retrofit2 대기 리스트 ::",
+                    response.code().toString() + response.body().toString()
+                )
                 when (response.code()) {
                     200 -> {
                         val data = response.body() // 서버로부터 온 응답
                         data?.let {
                             var responseMessage = it.message
-                            setRecyclerView(it.waiting_customers!!)
+                            if (it.waiting_customers != null) {
+                                setRecyclerView(it.waiting_customers!!)
+                            } else {
+                                Toast.makeText(mContext, "현재 대기 인원이 없어요", Toast.LENGTH_SHORT).show()
+                            }
                         }
                     }
                 }

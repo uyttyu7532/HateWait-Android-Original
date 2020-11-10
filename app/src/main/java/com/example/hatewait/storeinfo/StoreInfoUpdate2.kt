@@ -35,9 +35,6 @@ class StoreInfoUpdate2 : AppCompatActivity(), StoreNameChangeDialog.DialogListen
         }
 
 
-
-
-
         setting_store_name.setOnClickListener {
             StoreNameChangeDialog().show(supportFragmentManager, "STORE_NAME_CHANGE")
         }
@@ -60,7 +57,35 @@ class StoreInfoUpdate2 : AppCompatActivity(), StoreNameChangeDialog.DialogListen
             addressDialog = AddressDialogFragment().getInstance()
 
             addressDialog.callBack = {
-                setting_store_address_text_view.setText(it)
+
+
+                MyApi.UpdateService.requestStoreAddressUpdate(
+                    id = storeInfo!!.id,
+                    address = it
+                ).enqueue(object : Callback<MyApi.onlyMessageResponseData> {
+                    override fun onFailure(
+                        call: Call<MyApi.onlyMessageResponseData>,
+                        t: Throwable
+                    ) {
+                        Log.d("retrofit2 가게주소변경 :: ", "연결실패 $t")
+                    }
+
+                    override fun onResponse(
+                        call: Call<MyApi.onlyMessageResponseData>,
+                        response: Response<MyApi.onlyMessageResponseData>
+                    ) {
+                        Log.d(
+                            "retrofit2 가게주소변경 ::",
+                            response.code().toString() + response.body().toString()
+                        )
+                        when (response.code()) {
+                            200 -> {
+                                setting_store_address_text_view.setText(it)
+                            }
+                        }
+                    }
+                }
+                )
 
             }
             addressDialog.arguments = bundle
@@ -85,7 +110,7 @@ class StoreInfoUpdate2 : AppCompatActivity(), StoreNameChangeDialog.DialogListen
     override fun onResume() {
         super.onResume()
 
-        MyApi.UpdateService.requestStoreInfo("hate2020")
+        MyApi.UpdateService.requestStoreInfo(storeInfo!!.id)
             .enqueue(object : Callback<storeInfoData> {
                 override fun onFailure(call: Call<storeInfoData>, t: Throwable) {
                     Log.d("retrofit2 가게정보조회 :: ", "연결실패 $t")

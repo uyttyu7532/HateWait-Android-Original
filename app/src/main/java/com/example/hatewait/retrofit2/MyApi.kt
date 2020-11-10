@@ -16,18 +16,10 @@ object MyApi {
     }
 
 
-
-    val nonMemberRegisterService: RetrofitNonMemberRegister by lazy {
-        retrofit().create(RetrofitNonMemberRegister::class.java)
+    val RegisterService: RetrofitRegister by lazy {
+        retrofit().create(RetrofitRegister::class.java)
     }
 
-    val memberRegisterService: RetrofitMemberRegister by lazy {
-        retrofit().create(RetrofitMemberRegister::class.java)
-    }
-
-    val checkMemberIdService: RetrofitCheckMemberIdRegister by lazy {
-        retrofit().create(RetrofitCheckMemberIdRegister::class.java)
-    }
 
     val SignUpService: RetrofitSignUp by lazy {
         retrofit().create(RetrofitSignUp::class.java)

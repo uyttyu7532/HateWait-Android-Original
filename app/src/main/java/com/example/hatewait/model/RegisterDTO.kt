@@ -11,7 +11,3 @@ data class NonMemberRegisterResponseData(var message:String, var count:Integer)
 data class CheckMemberIdRequestData(var id:String)
 
 data class CheckMemberIdResponseData(var message:String)
-
-//data class StoreLoginRequestData(var id:String, var pw:String)
-
-//data class StoreLoginResponseData(var message:String, var store:String)

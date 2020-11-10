@@ -24,11 +24,9 @@ import com.example.hatewait.login.storeInfo
 import com.example.hatewait.model.ClientData
 import com.example.hatewait.model.DeleteWaitingResponseData
 import com.example.hatewait.model.WaitingInfo
-import com.example.hatewait.model.setShared
 import com.example.hatewait.retrofit2.MyApi
 import com.example.hatewait.socket.*
 import kotlinx.android.synthetic.main.waiting_list_row.view.*
-import org.jetbrains.anko.backgroundColor
 import org.jetbrains.anko.backgroundColorResource
 import retrofit2.Call
 import retrofit2.Callback
@@ -77,7 +75,8 @@ class SwipeRecyclerViewAdapter(
         val waitingPhoneTextView = itemView.findViewById(R.id.waiting_phone_text_view) as TextView
         val waitingListDetailTextView =
             itemView.findViewById(R.id.waiting_list_detail_text_view) as TextView
-//        val waitingListDetailTextView2 =
+
+        //        val waitingListDetailTextView2 =
 //            itemView.findViewById(R.id.waiting_list_detail_text_view2) as TextView
         val waitingListDeleteButton =
             itemView.findViewById(R.id.waiting_list_delete_button) as ImageButton
@@ -90,10 +89,35 @@ class SwipeRecyclerViewAdapter(
                 val position = adapterPosition
 
                 if (items[position].called_time.equals("0000-00-00 00:00:00") || items[position].called_time == null) {
-                    //                    callCustomer(
+
+
+                    MyApi.WaitingListService.requestWaitingCall(
+                        id = storeInfo!!.id,
+                        phone = items[position].phone
+                    )
+                        .enqueue(object : Callback<MyApi.onlyMessageResponseData> {
+                            override fun onFailure(call: Call<MyApi.onlyMessageResponseData>, t: Throwable) {
+                                Log.d("retrofit2 대기손님호출 :: ", "연결실패 $t")
+                            }
+
+                            override fun onResponse(
+                                call: Call<MyApi.onlyMessageResponseData>,
+                                response: Response<MyApi.onlyMessageResponseData>
+                            ) {
+                                var data: MyApi.onlyMessageResponseData? = response?.body()
+                                Log.d("retrofit2 대기손님호출 ::", response.code().toString() + response.body().toString())
+                                when (response.code()) {
+                                    200 -> {
+                                        //                    callCustomer(
 //                        items[position].id,
 //                        "[${STORENAME}] ${items[position].turn}번째 순서 전 입니다. 가게 앞으로 와주세요."
 //                    )
+                                    }
+                                }
+                            }
+                        }
+                        )
+
 
                     // TODO 호출성공하면 밑에 실행
                     this.bottomWrapperLeft.backgroundColorResource =
@@ -248,10 +272,13 @@ class SwipeRecyclerViewAdapter(
 
                     MyApi.WaitingListService.requestDeleteWaiting(
                         userId = storeInfo!!.id,
-                        deleteWaiting= DeleteWaitingResponseData(items[position].phone, true)
+                        deleteWaiting = DeleteWaitingResponseData(items[position].phone, true)
                     )
                         .enqueue(object : Callback<MyApi.onlyMessageResponseData> {
-                            override fun onFailure(call: Call<MyApi.onlyMessageResponseData>, t: Throwable) {
+                            override fun onFailure(
+                                call: Call<MyApi.onlyMessageResponseData>,
+                                t: Throwable
+                            ) {
                                 Log.d("retrofit2 대기 삭제 :: ", "대기삭제 연결실패 $t")
                             }
 
@@ -260,7 +287,10 @@ class SwipeRecyclerViewAdapter(
                                 response: Response<MyApi.onlyMessageResponseData>
                             ) {
                                 var data: MyApi.onlyMessageResponseData? = response?.body()
-                                Log.d("retrofit2 대기 삭제 ::", response.code().toString() + response.body().toString())
+                                Log.d(
+                                    "retrofit2 대기 삭제 ::",
+                                    response.code().toString() + response.body().toString()
+                                )
                                 when (response.code()) {
                                     409 -> {
                                     }
@@ -289,7 +319,10 @@ class SwipeRecyclerViewAdapter(
                         deleteWaiting = DeleteWaitingResponseData(items[position].phone, false)
                     )
                         .enqueue(object : Callback<MyApi.onlyMessageResponseData> {
-                            override fun onFailure(call: Call<MyApi.onlyMessageResponseData>, t: Throwable) {
+                            override fun onFailure(
+                                call: Call<MyApi.onlyMessageResponseData>,
+                                t: Throwable
+                            ) {
                                 Log.d("retrofit2 대기 삭제 :: ", "대기삭제 연결실패 $t")
                             }
 
@@ -298,7 +331,10 @@ class SwipeRecyclerViewAdapter(
                                 response: Response<MyApi.onlyMessageResponseData>
                             ) {
                                 var data: MyApi.onlyMessageResponseData? = response?.body()
-                                Log.d("retrofit2 대기 삭제 ::", response.code().toString() + response.body().toString())
+                                Log.d(
+                                    "retrofit2 대기 삭제 ::",
+                                    response.code().toString() + response.body().toString()
+                                )
                                 when (response.code()) {
                                     409 -> {
                                     }
@@ -312,7 +348,8 @@ class SwipeRecyclerViewAdapter(
                             }
                         }
                         )
-                    sDialog.dismissWithAnimation() }
+                    sDialog.dismissWithAnimation()
+                }
                 .show()
 
 

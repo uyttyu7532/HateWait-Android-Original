@@ -15,14 +15,14 @@ interface RetrofitWaitingList {
     @HTTP(method = "DELETE", path = "/waiting-customers/{id}", hasBody = true)
     fun requestDeleteWaiting(
         @Path("id") userId: String,
-        @Body deleteWaiting : DeleteWaitingResponseData
+        @Body deleteWaiting: DeleteWaitingResponseData
     )
-            :Call<MyApi.onlyMessageResponseData>
+            : Call<MyApi.onlyMessageResponseData>
 
-    @FormUrlEncoded
-    @PATCH("/waiting_customers/{id}")
+    @PATCH("/waiting-customers/{id}")
     fun requestWaitingCall(
-        @Field("id") id: String
+        @Path("id") id: String,
+        @Body phone: String
     ): Call<MyApi.onlyMessageResponseData>
 
 }

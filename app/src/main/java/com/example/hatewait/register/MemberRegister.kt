@@ -109,7 +109,7 @@ class MemberRegister : Fragment() {
 
 //            var memberRegisterData = MemberRegisterRequestData(userId, Integer(numOfGroup), true)
 
-            MyApi.checkMemberIdService.requestCheckMemberId(CheckMemberIdRequestData(userId))
+            MyApi.RegisterService.requestCheckMemberId(CheckMemberIdRequestData(userId))
                 .enqueue(object : Callback<CheckMemberIdResponseData> {
                     override fun onFailure(
                         call: Call<CheckMemberIdResponseData>,

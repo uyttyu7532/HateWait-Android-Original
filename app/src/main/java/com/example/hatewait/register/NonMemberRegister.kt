@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.hatewait.R
+import com.example.hatewait.login.storeInfo
 import com.example.hatewait.model.NonMemberRegisterRequestData
 import com.example.hatewait.model.NonMemberRegisterResponseData
 import com.example.hatewait.retrofit2.MyApi
@@ -150,7 +151,7 @@ class NonMemberRegister : androidx.fragment.app.Fragment() {
                 NonMemberRegisterRequestData(userPhone, userName, userPeopleNum, false)
 
 
-            MyApi.nonMemberRegisterService.requestNonMemberRegister(nonMemberRegisterData)
+            MyApi.RegisterService.requestNonMemberRegister(storeInfo!!.id, nonMemberRegisterData)
                 .enqueue(object : Callback<NonMemberRegisterResponseData> {
                     override fun onFailure(
                         call: Call<NonMemberRegisterResponseData>,

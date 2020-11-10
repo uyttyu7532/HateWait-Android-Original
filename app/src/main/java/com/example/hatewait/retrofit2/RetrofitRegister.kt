@@ -2,24 +2,23 @@ package com.example.hatewait.retrofit2
 
 import com.example.hatewait.model.*
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.POST
+import retrofit2.http.*
 
-interface RetrofitMemberRegister {
-    @POST("/waiting-customers/bani123")
+interface RetrofitRegister {
+
+    @POST("/waiting-customers/{id}")
     fun requestMemberRegister(
+        @Path("id") id: String,
         @Body memberRegister: MemberRegisterRequestData
     ): Call<MemberRegisterResponseData>
-}
 
-interface RetrofitNonMemberRegister {
-    @POST("/waiting-customers/bani123")
+
+    @POST("/waiting-customers/{id}")
     fun requestNonMemberRegister(
+        @Path("id") id: String,
         @Body nonMemberRegister: NonMemberRegisterRequestData
     ): Call<NonMemberRegisterResponseData>
-}
 
-interface RetrofitCheckMemberIdRegister {
     @POST("/members")
     fun requestCheckMemberId(
         @Body memberId: CheckMemberIdRequestData

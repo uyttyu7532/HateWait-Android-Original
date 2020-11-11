@@ -23,6 +23,7 @@ import com.example.hatewait.model.StoreLoginResponseData
 import com.example.hatewait.retrofit2.MyApi
 import com.example.hatewait.signup.CustomerSignUp1
 import com.example.hatewait.signup.FindPassWordActivity1
+import com.example.hatewait.signup.SelectSignUp
 import com.example.hatewait.signup.StoreSignUp1
 import com.example.hatewait.store.StoreMenu
 import com.nhn.android.naverlogin.OAuthLogin
@@ -151,7 +152,7 @@ class MainActivity : AppCompatActivity() {
                                 "retrofit2 손님로그인 ::",
                                 response.code().toString() + response.body().toString()
                             )
-                            when(response.code()){
+                            when (response.code()) {
                                 200 -> {
                                     var data: MemberLoginResponseData? = response?.body()
                                     memberInfo = data
@@ -159,7 +160,11 @@ class MainActivity : AppCompatActivity() {
                                     startActivity<MemberMenu>()
                                 }
                                 409 -> {
-                                    Toast.makeText(mContext, "아이디나 비밀번호를 확인해주세요.", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(
+                                        mContext,
+                                        "아이디나 비밀번호를 확인해주세요.",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
                                 }
                                 500 -> {
                                     Toast.makeText(mContext, "서버 오류", Toast.LENGTH_SHORT).show()
@@ -169,8 +174,6 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                     )
-
-
 
 
             } else {
@@ -231,15 +234,11 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                     )
-
             }
         }
+
         account_register_textButton.setOnClickListener {
-            if (isCustomerMode) {
-                startActivity<CustomerSignUp1>()
-            } else {
-                startActivity<StoreSignUp1>()
-            }
+            startActivity<SelectSignUp>()
         }
         find_password_button.setOnClickListener {
             startActivity<FindPassWordActivity1>()

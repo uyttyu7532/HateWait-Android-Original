@@ -1,5 +1,6 @@
 package com.example.hatewait.retrofit2
 
+import com.example.hatewait.model.MemberInfoData
 import com.example.hatewait.model.storeInfoData
 import retrofit2.Call
 import retrofit2.http.*
@@ -67,4 +68,11 @@ interface RetrofitInfoUpdate {
         @Field("id") id: String,
         @Field("pw") pw: String
     ): Call<MyApi.onlyMessageResponseData>
+
+
+    // 손님
+    @GET("members/{id}")
+    fun requestMemberInfo(
+        @Path("id") memberID: String
+    ): Call<MemberInfoData>
 }

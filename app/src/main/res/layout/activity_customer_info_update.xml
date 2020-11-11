@@ -43,21 +43,23 @@
                     android:orientation="vertical">
 
                 <TextView
+                        android:id="@+id/setting_member_name_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="15dp"
-                        android:text="조예린"
+                        android:text=""
                         android:textColor="@color/white"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
                 <TextView
+                        android:id="@+id/setting_member_email_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:layout_marginBottom="15dp"
-                        android:text="hatewait2020@gmail.com"
+                        android:text=""
                         android:textColor="@color/white"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -110,9 +112,10 @@
                                     android:textSize="15sp" />
 
                             <TextView
+                                    android:id="@+id/setting_member_phone_text_view"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="010-1234-5678" />
+                                    android:text="" />
                         </LinearLayout>
                     </FrameLayout>
                 </androidx.cardview.widget.CardView>

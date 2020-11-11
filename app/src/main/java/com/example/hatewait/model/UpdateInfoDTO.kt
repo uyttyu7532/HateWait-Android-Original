@@ -16,6 +16,15 @@ data class StoreInfoResponseData(
     var coupon_enable: Int
 )
 
-//data class MemberInfoResponseData(
-//    var phone: String
-//)
+
+data class MemberInfoData(
+    var memberInformation : MemberInfoResponseData
+)
+
+data class MemberInfoResponseData(
+    var id: String,
+    var name: String,
+    var phone: String,
+    var email: String,
+    var no_show: Int
+)

@@ -368,7 +368,6 @@
                                 android:orientation="vertical">
 
                             <TextView
-                                    android:id="@+id/setting_store_capacity_text_view"
                                     android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
                                     android:text="수용가능 인원"
@@ -376,6 +375,7 @@
                                     android:textSize="15sp" />
 
                             <TextView
+                                    android:id="@+id/setting_store_capacity_text_view"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="" />

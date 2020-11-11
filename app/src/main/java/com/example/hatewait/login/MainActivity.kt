@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.pm.ActivityInfo
-import android.net.ConnectivityManager
 import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
@@ -21,10 +20,8 @@ import com.example.hatewait.model.MemberLoginResponseData
 import com.example.hatewait.model.StoreLoginRequestData
 import com.example.hatewait.model.StoreLoginResponseData
 import com.example.hatewait.retrofit2.MyApi
-import com.example.hatewait.signup.CustomerSignUp1
 import com.example.hatewait.signup.FindPassWordActivity1
 import com.example.hatewait.signup.SelectSignUp
-import com.example.hatewait.signup.StoreSignUp1
 import com.example.hatewait.store.StoreMenu
 import com.nhn.android.naverlogin.OAuthLogin
 import com.nhn.android.naverlogin.OAuthLoginHandler
@@ -67,7 +64,6 @@ class MainActivity : AppCompatActivity() {
         getSharedPreferences(resources.getString(R.string.customer_mode), Context.MODE_PRIVATE)
     }
 
-    private val TAG = "MainActivity"
 
     @SuppressLint("SourceLockedOrientationActivity")
 
@@ -246,79 +242,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    // 네아로(네이버 아이디로 로그인) 기능 이용시 전화번호는 따로 입력받아야한다.
-    //     전화번호는 Naver 프로필 API에서 제공해주지 않기때문에
-    private fun naverLoginInit() {
 
-        val loginModule = OAuthLogin.getInstance();
-        val naverLoginKeyStringArray = resources.getStringArray(R.array.naver_login_api)
-//        Client ID, SecretKey, Name
-        loginModule.init(
-            this@MainActivity,
-            naverLoginKeyStringArray[0],
-            naverLoginKeyStringArray[1],
-            naverLoginKeyStringArray[2]
-        )
-
-
-
-
-        // Offline API 요청은 Network 를 사용하기 때문에 AsyncTask 사용.
-        class NaverProfileApiTask : AsyncTask<Void?, Void?, String>() {
-            override fun onPreExecute() {
-            }
-
-            override fun doInBackground(vararg params: Void?): String? {
-//                naver user profile 을 JSON 객체 형태로 얻어옴.
-                val url = "https://openapi.naver.com/v1/nid/me"
-//                mOAuthLoginHandler로부터 토큰을 따로 받아오지 않으므로
-//                별도로 토큰을 얻는 메소드 호출 필요.
-                val at: String = loginModule.getAccessToken(this@MainActivity)
-//      API 호출   실패시 :  null 반환.
-//                성공시: 네이버 유저정보 JSON Format String return
-                return loginModule.requestApi(this@MainActivity, at, url)
-            }
-
-            override fun onPostExecute(content: String) {
-                val resultUserInfoJSON = JSONObject(content).getJSONObject("response")
-                val userEmail = resultUserInfoJSON.getString("email")
-                val userName = resultUserInfoJSON.getString("name")
-                Log.i("userInfo", "이름 : $userName\n이메일: $userEmail")
-
-//                일단은 로그인 계정이 member 계정이라고 판단할 경우.
-                startActivity<MemberMenu>()
-            }
-
-        }
-
-
-        val loginHandler = object : OAuthLoginHandler() {
-            override fun run(success: Boolean) {
-                if (success) {
-                    val accessToken = loginModule.getAccessToken(this@MainActivity)
-                    var refreshToken = loginModule.getRefreshToken(this@MainActivity)
-                    NaverProfileApiTask().execute()
-                } else {
-                    val errorCode = loginModule.getLastErrorCode(this@MainActivity).code
-                    val errorDescription = loginModule.getLastErrorDesc(this@MainActivity)
-//                    Toast.makeText(
-//                        this@MainActivity,
-//                        "errorCode : $errorCode\nerrorMessage : $errorDescription",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-                }
-            }
-        }
-
-
-        naver_login_button.setOnClickListener {
-            // 갱신 토큰이 잇는 지 확인
-            // 성공 -> OAuthLoginHandler 객체 호출
-            // 실패 -> 로그인 창
-            loginModule.startOauthLoginActivity(this@MainActivity, loginHandler)
-        }
-
-    }
 
     private fun addTextChangeListener() {
         id_input_editText.addTextChangedListener(object : TextWatcher {
@@ -363,6 +287,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
+
 
     private fun userKindAndAutoLoginCheck() {
         when (user_kind_group.position) {
@@ -415,6 +340,89 @@ class MainActivity : AppCompatActivity() {
             pressBackToast.cancel()
             super.onBackPressed()
         }
+    }
+
+
+
+
+
+    private fun naverLoginInit() {
+
+        val loginModule = OAuthLogin.getInstance()
+        val naverLoginKeyStringArray = resources.getStringArray(R.array.naver_login_api)
+        loginModule.init(
+            this@MainActivity,
+            naverLoginKeyStringArray[0],
+            naverLoginKeyStringArray[1],
+            naverLoginKeyStringArray[2]
+        )
+
+
+        // Offline API 요청은 Network 를 사용하기 때문에 AsyncTask 사용.
+        class NaverProfileApiTask : AsyncTask<Void?, Void?, String>() {
+            override fun onPreExecute() {
+            }
+
+            override fun doInBackground(vararg params: Void?): String? {
+//                naver user profile 을 JSON 객체 형태로 얻어옴.
+                val url = "https://openapi.naver.com/v1/nid/me"
+//                mOAuthLoginHandler로부터 토큰을 따로 받아오지 않으므로
+//                별도로 토큰을 얻는 메소드 호출 필요.
+                val at: String = loginModule.getAccessToken(this@MainActivity)
+//      API 호출   실패시 :  null 반환.
+//                성공시: 네이버 유저정보 JSON Format String return
+
+
+
+
+                return loginModule.requestApi(this@MainActivity, at, url)
+            }
+
+            override fun onPostExecute(content: String) {
+                val resultUserInfoJSON = JSONObject(content).getJSONObject("response")
+                val userId = resultUserInfoJSON.getString("id")
+                val userEmail = resultUserInfoJSON.getString("email")
+                val userName = resultUserInfoJSON.getString("name")
+                Log.i("네아로", resultUserInfoJSON.toString())
+
+//                if(DB에 회원이 있다면){
+//                    if (이메일로 가입된 회원입니다.)
+//                    DB에 at 을 업데이트하고 로그인
+//                }else{
+//                    회원가입
+//                }
+
+//                일단은 로그인 계정이 member 계정이라고 판단할 경우.
+                startActivity<MemberMenu>()
+            }
+
+        }
+
+
+
+        val loginHandler = object : OAuthLoginHandler() {
+            override fun run(success: Boolean) {
+                if (success) {
+                    val accessToken = loginModule.getAccessToken(this@MainActivity)
+                    var refreshToken = loginModule.getRefreshToken(this@MainActivity)
+
+                    NaverProfileApiTask().execute()
+                } else {
+                    val errorCode = loginModule.getLastErrorCode(this@MainActivity).code
+                    val errorDescription = loginModule.getLastErrorDesc(this@MainActivity)
+                    Log.d("네아로", "errorCode : $errorCode\nerrorMessage : $errorDescription")
+                }
+            }
+        }
+
+
+        naver_login_button.setOnClickListener {
+            // 갱신 토큰이 잇는 지 확인
+            // 성공 -> OAuthLoginHandler 객체 호출
+            // 실패 -> 로그인 창
+            loginModule.startOauthLoginActivity(this@MainActivity, loginHandler)
+        }
+
     }
 
 }

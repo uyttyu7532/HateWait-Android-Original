@@ -25,7 +25,7 @@ class NameCheckDialogFragment : DialogFragment() {
         fun onDialogNegativeClick(dialog: DialogFragment)
     }
 
-    private var markedCustomerName = "문X훈"
+    private var markedCustomerName = "기본이름!"
     private var customer_id = ""
     private var customer_people_num:Int = 0
 
@@ -35,7 +35,8 @@ class NameCheckDialogFragment : DialogFragment() {
 
 
 //    argument를 얻는 시점은 onCreateDialog (onCreate가 끝난 이후)
-        markedCustomerName = markCustomerName(arguments?.getString("CUSTOMER_NAME")!!)
+//        markedCustomerName = markCustomerName(arguments?.getString("CUSTOMER_NAME")!!)
+        markedCustomerName = arguments?.getString("CUSTOMER_NAME")!!
         customer_id = arguments?.getString("CUSTOMER_ID").toString()
         customer_people_num = arguments?.getString("CUSTOMER_PEOPLE_NUM")!!.toInt()
 
@@ -104,6 +105,7 @@ class NameCheckDialogFragment : DialogFragment() {
     }
 
     //    이름 모자이크 함수
+    //    서버에서 처리 예정
     private fun markCustomerName(customerName: String): String {
         //    한글/ 영어 구분해야함
         //    한글 -> 2~4자 -> 2~3글자 : 가운데 1  4글자: 2글자 모자이크

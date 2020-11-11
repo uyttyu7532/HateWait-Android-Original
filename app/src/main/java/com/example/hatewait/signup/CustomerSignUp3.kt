@@ -40,8 +40,8 @@ class CustomerSignUp3 : AppCompatActivity() {
         if (savedInstanceState != null) {
             with(savedInstanceState) {
                 Log.i("State", "onCreate Restore Instance")
-                user_name_input_editText.setText(savedInstanceState.getString("USER_NAME"))
-                user_phone_number_editText.setText(savedInstanceState.getString("USER_PHONE"))
+                user_name_input_edit_text.setText(savedInstanceState.getString("USER_NAME"))
+                user_phone_number_edit_text.setText(savedInstanceState.getString("USER_PHONE"))
             }
 
         }
@@ -51,8 +51,8 @@ class CustomerSignUp3 : AppCompatActivity() {
             val userEmail = intent.getStringExtra("USER_EMAIL")
             val userId = intent.getStringExtra("USER_ID")
             val userPassword = intent.getStringExtra("USER_PASSWORD")
-            val userName = user_name_input_editText.text.toString()
-            val userPhone = user_phone_number_editText.text.toString()
+            val userName = user_name_input_edit_text.text.toString()
+            val userPhone = user_phone_number_edit_text.text.toString()
 
 
             // TODO 디비에 회원정보(손님) 저장
@@ -137,7 +137,7 @@ class CustomerSignUp3 : AppCompatActivity() {
     }
 
     private fun addTextChangeListener() {
-        user_name_input_editText.addTextChangedListener(object : TextWatcher {
+        user_name_input_edit_text.addTextChangedListener(object : TextWatcher {
             //            text에 변화가 있을 때마다
             override fun afterTextChanged(s: Editable?) {
                 if (!verifyName(s.toString())) {
@@ -152,7 +152,7 @@ class CustomerSignUp3 : AppCompatActivity() {
                 button_finish.isEnabled =
                     (user_name_input_layout.error == null
                             && user_phone_number_layout.error == null
-                            && !user_phone_number_editText.text.isNullOrBlank())
+                            && !user_phone_number_edit_text.text.isNullOrBlank())
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -162,7 +162,7 @@ class CustomerSignUp3 : AppCompatActivity() {
             }
         })
 
-        user_phone_number_editText.addTextChangedListener(object : TextWatcher {
+        user_phone_number_edit_text.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 if (!verifyPhoneNumber(s.toString())) {
                     user_phone_number_layout.error = "10~11자리 전화번호를 입력해주세요"
@@ -174,7 +174,7 @@ class CustomerSignUp3 : AppCompatActivity() {
                 button_finish.isEnabled =
                     (user_name_input_layout.error == null
                             && user_phone_number_layout.error == null
-                            && !user_name_input_editText.text.isNullOrBlank())
+                            && !user_name_input_edit_text.text.isNullOrBlank())
             }
 
             override fun beforeTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -186,12 +186,12 @@ class CustomerSignUp3 : AppCompatActivity() {
     }
 
     private fun inputLayoutInitialize() {
-        user_name_input_editText.text?.clear()
-        user_name_input_editText.clearFocus()
+        user_name_input_edit_text.text?.clear()
+        user_name_input_edit_text.clearFocus()
         user_name_input_layout.error = null
         user_name_input_layout.hint = "이름을 입력해주세요"
-        user_phone_number_editText.text?.clear()
-        user_phone_number_editText.clearFocus()
+        user_phone_number_edit_text.text?.clear()
+        user_phone_number_edit_text.clearFocus()
         user_phone_number_layout.error = null
         user_phone_number_layout.hint = "전화번호를 입력해주세요"
     }
@@ -202,8 +202,8 @@ class CustomerSignUp3 : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
 //    입력했던것 저장
         Log.i("State", "save Instance")
-        outState.putString("USER_NAME", user_name_input_editText.text.toString())
-        outState.putString("USER_PHONE", user_phone_number_editText.text.toString())
+        outState.putString("USER_NAME", user_name_input_edit_text.text.toString())
+        outState.putString("USER_PHONE", user_phone_number_edit_text.text.toString())
         super.onSaveInstanceState(outState)
     }
 
@@ -212,8 +212,8 @@ class CustomerSignUp3 : AppCompatActivity() {
         Log.i("State", "Restore Instance")
         super.onRestoreInstanceState(savedInstanceState)
         savedInstanceState?.run {
-            user_name_input_editText.setText(savedInstanceState.getString("USER_NAME"))
-            user_phone_number_editText.setText(savedInstanceState.getString("USER_PHONE"))
+            user_name_input_edit_text.setText(savedInstanceState.getString("USER_NAME"))
+            user_phone_number_edit_text.setText(savedInstanceState.getString("USER_PHONE"))
         }
     }
 

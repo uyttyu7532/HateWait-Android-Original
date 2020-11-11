@@ -18,7 +18,8 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true">
-        <activity android:name=".signup.SelectSignUp"></activity>
+        <activity android:name=".signup.CustomerSignUpWithNaver"/>
+        <activity android:name=".signup.SelectSignUp" />
         <activity android:name=".LoadingActivity" />
         <activity android:name=".register.StartWaitActivity" />
         <activity android:name=".storeinfo.ChangePasswordActivity1" />

@@ -2,6 +2,7 @@ package com.example.hatewait.login
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.ActivityInfo
 import android.os.AsyncTask
@@ -14,7 +15,9 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hatewait.R
+import com.example.hatewait.member.ManageStampCouponActivity
 import com.example.hatewait.member.MemberMenu
+import com.example.hatewait.member.StoreListContext
 import com.example.hatewait.model.MemberLoginRequestData
 import com.example.hatewait.model.MemberLoginResponseData
 import com.example.hatewait.model.StoreLoginRequestData
@@ -234,14 +237,15 @@ class MainActivity : AppCompatActivity() {
         }
 
         account_register_textButton.setOnClickListener {
-            startActivity<SelectSignUp>()
+            val intent = Intent(this, SelectSignUp::class.java)
+            intent.putExtra("isFromNaver", false)
+            this.startActivity(intent)
         }
+
         find_password_button.setOnClickListener {
             startActivity<FindPassWordActivity1>()
         }
     }
-
-
 
 
     private fun addTextChangeListener() {
@@ -343,9 +347,6 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
-
-
     private fun naverLoginInit() {
 
         val loginModule = OAuthLogin.getInstance()
@@ -373,31 +374,39 @@ class MainActivity : AppCompatActivity() {
 //                성공시: 네이버 유저정보 JSON Format String return
 
 
-
-
                 return loginModule.requestApi(this@MainActivity, at, url)
             }
 
             override fun onPostExecute(content: String) {
                 val resultUserInfoJSON = JSONObject(content).getJSONObject("response")
-                val userId = resultUserInfoJSON.getString("id")
-                val userEmail = resultUserInfoJSON.getString("email")
-                val userName = resultUserInfoJSON.getString("name")
+                val naverUserId = resultUserInfoJSON.getString("id")
+                val naverUserEmail = resultUserInfoJSON.getString("email")
+                val naverUserName = resultUserInfoJSON.getString("name")
                 Log.i("네아로", resultUserInfoJSON.toString())
 
-//                if(DB에 회원이 있다면){
+
+//                if (DB에 회원이 있다면) {
 //                    if (이메일로 가입된 회원입니다.)
+//                        if (가게회원) {
+//                            startActivity<StoreMenu>()
+//                        }
+//                    if (손님회원) {
+//                        startActivity<MemberMenu>()
+//                    }
 //                    DB에 at 을 업데이트하고 로그인
-//                }else{
-//                    회원가입
+//                } else {
+                    val intent = Intent(mContext, SelectSignUp::class.java)
+                    intent.putExtra("isFromNaver", true)
+                    intent.putExtra("naverUserId", naverUserId)
+                    intent.putExtra("naverUserEmail", naverUserEmail)
+                    intent.putExtra("naverUserName", naverUserName)
+                    mContext.startActivity(intent)
 //                }
 
-//                일단은 로그인 계정이 member 계정이라고 판단할 경우.
-                startActivity<MemberMenu>()
+
             }
 
         }
-
 
 
         val loginHandler = object : OAuthLoginHandler() {

@@ -52,18 +52,47 @@ class StoreSignUp3 : AppCompatActivity() {
             setHomeActionContentDescription("아이디 & 비밀번호")
             setDisplayShowTitleEnabled(false)
         }
+
+        var isFromNaver = intent.getBooleanExtra("isFromNaver",false)
+
+
         addTextChangeListener()
 
 
         button_continue.setOnClickListener {
-            val intent = Intent(this, StoreSignUp4::class.java)
-            intent.putExtra("STORE_EMAIL", getIntent().getStringExtra("STORE_EMAIL"))
-            intent.putExtra("STORE_ID", getIntent().getStringExtra("STORE_ID"))
-            intent.putExtra("STORE_PASSWORD", getIntent().getStringExtra("STORE_PASSWORD"))
-            intent.putExtra("STORE_NAME", store_name_input_editText.text.toString())
-            intent.putExtra("STORE_PHONE", store_phone_editText.text.toString())
-            intent.putExtra("STORE_ADDRESS", store_address_input_edit_text.text.toString()+getLatLon(store_address_input_edit_text.text.toString()))
-            startActivity(intent)
+            if(isFromNaver) {
+                var naverUserId = intent.getStringExtra("naverUserId")
+                var naverUserEmail = intent.getStringExtra("naverUserEmail")
+                var naverUserName = intent.getStringExtra("naverUserName")
+
+                intent.putExtra("STORE_EMAIL", naverUserEmail)
+                intent.putExtra("STORE_ID", naverUserId)
+                intent.putExtra("STORE_PASSWORD", "")
+                intent.putExtra("STORE_NAME", store_name_input_editText.text.toString())
+                intent.putExtra("STORE_PHONE", store_phone_editText.text.toString())
+                intent.putExtra(
+                    "STORE_ADDRESS",
+                    store_address_input_edit_text.text.toString() + getLatLon(
+                        store_address_input_edit_text.text.toString()
+                    )
+                )
+                startActivity(intent)
+            }
+            else {
+                val intent = Intent(this, StoreSignUp4::class.java)
+                intent.putExtra("STORE_EMAIL", getIntent().getStringExtra("STORE_EMAIL"))
+                intent.putExtra("STORE_ID", getIntent().getStringExtra("STORE_ID"))
+                intent.putExtra("STORE_PASSWORD", getIntent().getStringExtra("STORE_PASSWORD"))
+                intent.putExtra("STORE_NAME", store_name_input_editText.text.toString())
+                intent.putExtra("STORE_PHONE", store_phone_editText.text.toString())
+                intent.putExtra(
+                    "STORE_ADDRESS",
+                    store_address_input_edit_text.text.toString() + getLatLon(
+                        store_address_input_edit_text.text.toString()
+                    )
+                )
+                startActivity(intent)
+            }
         }
 
 

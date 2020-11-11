@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+            android:id="@+id/register_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:elevation="4dp"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:popupTheme="@style/Theme.AppCompat.Light">
+
+        <TextView
+                android:id="@+id/register_toolbar_title_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="회원가입"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+    </androidx.appcompat.widget.Toolbar>
+
+
+    <ProgressBar
+            android:id="@+id/register_progressbar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="2"
+            android:progress="2" />
+
+    <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/user_email_input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="25dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/register_toolbar"
+            app:startIconContentDescription="Name"
+            app:startIconDrawable="@drawable/ic_baseline_alternate_email_24">
+
+        <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/user_email_input_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:enabled="false"
+                android:selectAllOnFocus="true" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/user_name_input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/register_toolbar"
+            app:startIconContentDescription="Name"
+            app:startIconDrawable="@drawable/name_icon">
+
+        <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/user_name_input_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:enabled="false"
+                android:selectAllOnFocus="true" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/user_phone_number_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="8dp"
+            app:counterMaxLength="11"
+            app:endIconMode="clear_text"
+            app:startIconContentDescription="Name"
+            app:startIconDrawable="@drawable/phone_icon">
+
+        <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/user_phone_number_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="전화번호를 입력해주세요"
+                android:inputType="phone"
+                android:selectAllOnFocus="true" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <!--    <Button-->
+    <!--            android:id="@+id/button_finish"-->
+    <!--            style="@style/Widget.AppCompat.Button.Colored"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_marginHorizontal="20dp"-->
+    <!--            android:layout_marginTop="25dp"-->
+    <!--            android:enabled="false"-->
+    <!--            android:text="가입완료"-->
+    <!--            android:textColor="@color/white"-->
+    <!--            android:textSize="25dp" />-->
+
+    <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_finish"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="30dp"
+            android:backgroundTint="@color/color_state_material_button"
+            android:enabled="false"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:text="가입완료"
+            android:textColor="#ffffff"
+            android:textSize="18sp"
+            app:cornerRadius="10dp"
+            app:rippleColor="@color/colorPrimaryDark" />
+
+
+</LinearLayout>

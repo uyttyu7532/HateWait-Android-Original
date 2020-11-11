@@ -34,6 +34,9 @@ class StoreNameChangeDialog : AppCompatDialogFragment() {
     private val storeNameRegex = Regex("^(?=.*[a-zA-Z가-힣0-9])[a-zA-Z가-힣0-9|\\s|,]{1,}$")
     fun verifyName(storeName: String): Boolean = storeNameRegex.matches(storeName)
 
+
+
+
     interface DialogListener {
         fun applyStoreName(storeName: String): Unit
     }

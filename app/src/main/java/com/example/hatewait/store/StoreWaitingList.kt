@@ -44,6 +44,13 @@ class StoreWaitingList : AppCompatActivity() {
 
     lateinit var mContext: Context
 
+    private val nameRegex = Regex("^[가-힣]{2,4}|[a-zA-Z]{2,10}\\s[a-zA-Z]{2,10}$")
+    fun verifyName(name: String): Boolean = nameRegex.matches(name)
+    private val peopleNumberRegex = Regex("^[1-9](\\d?)")
+    fun verifyPeopleNum(peopleNum: String): Boolean = peopleNumberRegex.matches(peopleNum)
+    private val phoneRegex = Regex("^[0](\\d{2})(\\d{3,4})(\\d{3,4})")
+    fun verifyPhone(phone: String): Boolean = phoneRegex.matches(phone)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_store_waiting_list)
@@ -196,7 +203,29 @@ class StoreWaitingList : AppCompatActivity() {
                             "대기 손님 정보를 모두 입력해주세요.",
                             Toast.LENGTH_SHORT
                         ).show()
-                    } else {
+                    }
+                    else if(!verifyName(addWaitingName.text.toString() )){
+                        Toast.makeText(
+                            waitingListContext,
+                            "이름을 확인해주세요. (한글 2~4자 / 영문 2~10자)",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    else if(!verifyPeopleNum(addWaitingPerson.text.toString())){
+                        Toast.makeText(
+                            waitingListContext,
+                            "인원 수를 확인해주세요. (1~99 입력 가능)",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    else if(!verifyPhone(addWaitingPhonenum.text.toString())){
+                        Toast.makeText(
+                            waitingListContext,
+                            "전화번호를 확인해주세요",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    else {
 //                        var newclient = NewClient(
 //                            name = addWaitingName.text.toString(),
 //                            peopleNum = addWaitingPerson.text.toString(),

@@ -6,16 +6,16 @@ import retrofit2.http.*
 
 interface RetrofitRegister {
 
-    @POST("/waiting-customers/{id}")
+    @POST("/stores/{store-id}/waiting-customers")
     fun requestMemberRegister(
-        @Path("id") id: String,
+        @Path("store-id") id: String,
         @Body memberRegister: MemberRegisterRequestData
     ): Call<MemberRegisterResponseData>
 
 
-    @POST("/waiting-customers/{id}")
+    @POST("/stores/{store-id}/waiting-customers")
     fun requestNonMemberRegister(
-        @Path("id") id: String,
+        @Path("store-id") id: String,
         @Body nonMemberRegister: NonMemberRegisterRequestData
     ): Call<NonMemberRegisterResponseData>
 

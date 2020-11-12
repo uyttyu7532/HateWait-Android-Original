@@ -18,7 +18,10 @@ import com.daimajia.swipe.util.Attributes
 import com.example.hatewait.R
 import com.example.hatewait.login.mContext
 import com.example.hatewait.login.storeInfo
-import com.example.hatewait.model.*
+import com.example.hatewait.model.NonMemberRegisterRequestData
+import com.example.hatewait.model.NonMemberRegisterResponseData
+import com.example.hatewait.model.WaitingInfo
+import com.example.hatewait.model.WaitingListResponseData
 import com.example.hatewait.retrofit2.MyApi
 import kotlinx.android.synthetic.main.activity_store_waiting_list.*
 import org.jetbrains.anko.startActivity
@@ -92,6 +95,7 @@ class StoreWaitingList : AppCompatActivity() {
 
         init()
     }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
@@ -179,7 +183,6 @@ class StoreWaitingList : AppCompatActivity() {
 //    }
 
 
-    // TODO 입력 데이터 확인해야 함 (비어있다는 것 말고도)
     private fun makeAddDialog() {
         val fab: View = findViewById(R.id.add_fab)
         fab.setOnClickListener {
@@ -203,29 +206,25 @@ class StoreWaitingList : AppCompatActivity() {
                             "대기 손님 정보를 모두 입력해주세요.",
                             Toast.LENGTH_SHORT
                         ).show()
-                    }
-                    else if(!verifyName(addWaitingName.text.toString() )){
+                    } else if (!verifyName(addWaitingName.text.toString())) {
                         Toast.makeText(
                             waitingListContext,
                             "이름을 확인해주세요. (한글 2~4자 / 영문 2~10자)",
                             Toast.LENGTH_SHORT
                         ).show()
-                    }
-                    else if(!verifyPeopleNum(addWaitingPerson.text.toString())){
+                    } else if (!verifyPeopleNum(addWaitingPerson.text.toString())) {
                         Toast.makeText(
                             waitingListContext,
                             "인원 수를 확인해주세요. (1~99 입력 가능)",
                             Toast.LENGTH_SHORT
                         ).show()
-                    }
-                    else if(!verifyPhone(addWaitingPhonenum.text.toString())){
+                    } else if (!verifyPhone(addWaitingPhonenum.text.toString())) {
                         Toast.makeText(
                             waitingListContext,
                             "전화번호를 확인해주세요",
                             Toast.LENGTH_SHORT
                         ).show()
-                    }
-                    else {
+                    } else {
 //                        var newclient = NewClient(
 //                            name = addWaitingName.text.toString(),
 //                            peopleNum = addWaitingPerson.text.toString(),
@@ -245,6 +244,7 @@ class StoreWaitingList : AppCompatActivity() {
                             nonMemberRegisterData
                         )
                             .enqueue(object : Callback<NonMemberRegisterResponseData> {
+
                                 override fun onFailure(
                                     call: Call<NonMemberRegisterResponseData>,
                                     t: Throwable
@@ -265,9 +265,14 @@ class StoreWaitingList : AppCompatActivity() {
                                         200 -> {
                                             var data: NonMemberRegisterResponseData? =
                                                 response?.body() // 서버로부터 온 응답
+                                            getWaitingList()
+
                                         }
                                     }
                                 }
+
+
+
                             }
                             )
 
@@ -286,7 +291,6 @@ class StoreWaitingList : AppCompatActivity() {
 
 }
 
-//test안해봄
 fun getWaitingList() {
 
     Log.i("대기 리스트 :: ", "getWaitingList()")

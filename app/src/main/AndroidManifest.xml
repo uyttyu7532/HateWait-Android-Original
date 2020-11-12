@@ -32,7 +32,7 @@
                 android:label="@string/title_activity_manage_stamp_coupon"
                 android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".store.VisitorListActivity" />
-        <activity android:name=".memberinfo.CustomerInfoUpdate" />
+        <activity android:name=".memberinfo.MemberInfoUpdate" />
         <activity android:name=".storeinfo.StoreInfoUpdate2" />
         <activity android:name=".signup.FindPassWordActivity1" />
         <activity android:name=".signup.FindPassWordActivity2" />

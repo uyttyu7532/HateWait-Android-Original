@@ -128,7 +128,7 @@ class StoreInfoUpdate2 : AppCompatActivity(), StoreNameChangeDialog.DialogListen
                     when (response.code()) {
                         200 -> {
                             setting_store_name_text_view.text = data!!.storeInfo.name
-                            setting_store_phone_text_view.text = data!!.storeInfo.phone
+                            setting_store_phone_text_view.text = "0"+data!!.storeInfo.phone
                             setting_store_address_text_view.text = data!!.storeInfo.address
                             setting_store_capacity_text_view.text =
                                 data!!.storeInfo.maximum_capacity.toString()

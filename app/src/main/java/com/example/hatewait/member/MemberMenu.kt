@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.example.hatewait.map.KakaoMapActivity
 import com.example.hatewait.R
-import com.example.hatewait.memberinfo.CustomerInfoUpdate
+import com.example.hatewait.memberinfo.MemberInfoUpdate
 import com.example.hatewait.login.memberInfo
 import com.example.hatewait.socket.CUSTOMERID
 import com.example.hatewait.socket.CancelAsyncTask
@@ -71,7 +71,7 @@ class MemberMenu : AppCompatActivity() {
         }
 
         editcustomerinfo.setOnClickListener {
-            startActivity<CustomerInfoUpdate>()
+            startActivity<MemberInfoUpdate>()
         }
 
         otherStoreBtn.setOnClickListener {

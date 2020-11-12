@@ -21,6 +21,7 @@ import com.daimajia.swipe.adapters.RecyclerSwipeAdapter
 import com.example.hatewait.R
 import com.example.hatewait.fcm.FcmPush
 import com.example.hatewait.login.storeInfo
+import com.example.hatewait.model.CallWaitingResponseData
 import com.example.hatewait.model.ClientData
 import com.example.hatewait.model.DeleteWaitingResponseData
 import com.example.hatewait.model.WaitingInfo
@@ -95,16 +96,16 @@ class SwipeRecyclerViewAdapter(
                         id = storeInfo!!.id,
                         phone = items[position].phone
                     )
-                        .enqueue(object : Callback<MyApi.onlyMessageResponseData> {
-                            override fun onFailure(call: Call<MyApi.onlyMessageResponseData>, t: Throwable) {
+                        .enqueue(object : Callback<CallWaitingResponseData> {
+                            override fun onFailure(call: Call<CallWaitingResponseData>, t: Throwable) {
                                 Log.d("retrofit2 대기손님호출 :: ", "연결실패 $t")
                             }
 
                             override fun onResponse(
-                                call: Call<MyApi.onlyMessageResponseData>,
-                                response: Response<MyApi.onlyMessageResponseData>
+                                call: Call<CallWaitingResponseData>,
+                                response: Response<CallWaitingResponseData>
                             ) {
-                                var data: MyApi.onlyMessageResponseData? = response?.body()
+                                var data: CallWaitingResponseData? = response?.body()
                                 Log.d("retrofit2 대기손님호출 ::", response.code().toString() + response.body().toString())
                                 when (response.code()) {
                                     200 -> {
@@ -112,6 +113,7 @@ class SwipeRecyclerViewAdapter(
 //                        items[position].id,
 //                        "[${STORENAME}] ${items[position].turn}번째 순서 전 입니다. 가게 앞으로 와주세요."
 //                    )
+                                        getWaitingList()
                                     }
                                 }
                             }
@@ -133,7 +135,6 @@ class SwipeRecyclerViewAdapter(
 
 
 //                if (called.containsKey(items[position].phone) && called[items[position].phone]!!) {
-//                    //TODO 원래는 이 if의 내용이 없어야 함!!!
 //                    setShared(
 //                        pref,
 //                        items[position].phone,
@@ -177,10 +178,10 @@ class SwipeRecyclerViewAdapter(
 //                    detailView.visibility = View.VISIBLE
 //                }
 
-                val callIntent =
-                    Intent(Intent.ACTION_DIAL, Uri.parse("tel:0" + items[position].phone))
-                callIntent.flags = FLAG_ACTIVITY_NEW_TASK
-                context.startActivity(callIntent)
+//                val callIntent =
+//                    Intent(Intent.ACTION_DIAL, Uri.parse("tel:0" + items[position].phone))
+//                callIntent.flags = FLAG_ACTIVITY_NEW_TASK
+//                context.startActivity(callIntent)
             }
         }
     }
@@ -299,10 +300,13 @@ class SwipeRecyclerViewAdapter(
                                         notifyItemRemoved(position)
                                         notifyItemRangeChanged(position, items.size)
                                         mItemManger.closeAllItems()
+
+                                        getWaitingList()
                                     }
                                 }
                             }
                         }
+
                         )
 
 
@@ -343,6 +347,8 @@ class SwipeRecyclerViewAdapter(
                                         notifyItemRemoved(position)
                                         notifyItemRangeChanged(position, items.size)
                                         mItemManger.closeAllItems()
+
+                                        getWaitingList()
                                     }
                                 }
                             }

@@ -15,7 +15,6 @@ import androidx.fragment.app.DialogFragment
 import com.example.hatewait.R
 import com.example.hatewait.login.storeInfo
 import com.example.hatewait.retrofit2.MyApi
-import kotlinx.android.synthetic.main.activity_store_info_update.*
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.fragment_store_phone_change_dialog.*
@@ -121,7 +120,6 @@ class StorePhoneNumberChangeDialog : DialogFragment() {
 //        추후 PhoneNumberTextWatcher() 추가 고려
 //        Auto Hyphen로 유저 배려
 //        or Spinner를 통해 지역번호 선택할 수 있게
-        storePhoneEditText.text = activity?.store_phone_number_textView?.text
         storePhoneEditText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(storePhoneNumber: Editable?) {
                 if (!storePhoneNumber.toString().matches(phoneRegex)) {

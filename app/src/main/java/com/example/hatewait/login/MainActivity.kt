@@ -28,6 +28,7 @@ import com.example.hatewait.signup.SelectSignUp
 import com.example.hatewait.store.StoreMenu
 import com.nhn.android.naverlogin.OAuthLogin
 import com.nhn.android.naverlogin.OAuthLoginHandler
+import com.nhn.android.naverlogin.data.OAuthLoginState
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.startActivity
 import org.json.JSONObject
@@ -357,6 +358,8 @@ class MainActivity : AppCompatActivity() {
             naverLoginKeyStringArray[1],
             naverLoginKeyStringArray[2]
         )
+        Log.d("네아로1", "${loginModule.getState(this@MainActivity)}")
+
 
 
         // Offline API 요청은 Network 를 사용하기 때문에 AsyncTask 사용.
@@ -365,14 +368,18 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun doInBackground(vararg params: Void?): String? {
+                if (OAuthLoginState.NEED_REFRESH_TOKEN == loginModule.getState(mContext)) {  // 네이버
+                    Log.d("네아로" , loginModule.getState(mContext).toString())
+                    loginModule.refreshAccessToken(mContext);
+                }
 //                naver user profile 을 JSON 객체 형태로 얻어옴.
-                val url = "https://openapi.naver.com/v1/nid/me"
-//                mOAuthLoginHandler로부터 토큰을 따로 받아오지 않으므로
+                //                mOAuthLoginHandler로부터 토큰을 따로 받아오지 않으므로
 //                별도로 토큰을 얻는 메소드 호출 필요.
+                val url = "https://openapi.naver.com/v1/nid/me"
                 val at: String = loginModule.getAccessToken(this@MainActivity)
 //      API 호출   실패시 :  null 반환.
 //                성공시: 네이버 유저정보 JSON Format String return
-
+                Log.d("네아로" , "$at ${loginModule.getExpiresAt(this@MainActivity)}")
 
                 return loginModule.requestApi(this@MainActivity, at, url)
             }
@@ -409,12 +416,13 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        val loginHandler = object : OAuthLoginHandler() {
+        val loginHandler = @SuppressLint("HandlerLeak")
+        object : OAuthLoginHandler() {
             override fun run(success: Boolean) {
                 if (success) {
                     val accessToken = loginModule.getAccessToken(this@MainActivity)
                     var refreshToken = loginModule.getRefreshToken(this@MainActivity)
-
+                    Log.d("네아로2", "${loginModule.getState(this@MainActivity)}")
                     NaverProfileApiTask().execute()
                 } else {
                     val errorCode = loginModule.getLastErrorCode(this@MainActivity).code

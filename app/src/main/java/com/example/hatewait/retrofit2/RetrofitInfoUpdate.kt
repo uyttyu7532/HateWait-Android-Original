@@ -75,4 +75,11 @@ interface RetrofitInfoUpdate {
     fun requestMemberInfo(
         @Path("id") memberID: String
     ): Call<MemberInfoData>
+
+    @FormUrlEncoded
+    @PATCH("/members/information")
+    fun requestMemberPhoneUpdate(
+        @Field("id") id: String,
+        @Field("phone") phone: Int
+    ): Call<MyApi.onlyMessageResponseData>
 }

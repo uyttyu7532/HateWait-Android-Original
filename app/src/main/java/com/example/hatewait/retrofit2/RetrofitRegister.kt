@@ -19,7 +19,7 @@ interface RetrofitRegister {
         @Body nonMemberRegister: NonMemberRegisterRequestData
     ): Call<NonMemberRegisterResponseData>
 
-    @POST("/members")
+    @POST("/members/name")
     fun requestCheckMemberId(
         @Body memberId: CheckMemberIdRequestData
     ): Call<CheckMemberIdResponseData>

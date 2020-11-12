@@ -129,7 +129,7 @@ class MemberRegister : Fragment() {
 
                             var data: CheckMemberIdResponseData? = response?.body() // 서버로부터 온 응답
 
-                            showNameCheckDialog(data!!.message, userId, numOfGroup)
+                            showNameCheckDialog(data!!.memberName, userId, numOfGroup)
 
                         }
                         if (response.code() == 409) {

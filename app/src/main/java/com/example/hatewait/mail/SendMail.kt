@@ -18,7 +18,7 @@ class SendMail : AppCompatActivity() {
         try {
             val gMailSender = GmailSender(user, password)
             gMailSender.sendMail("HateWait 회원가입 메일입니다.", "인증번호: ${emailCode}", sendTo!!)
-            Toast.makeText(context!!, "인증번호가 확인되었습니다.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context!!, "인증번호가 전송되었습니다.", Toast.LENGTH_SHORT).show()
         } catch (e: SendFailedException) {
             Toast.makeText(context!!, "이메일 형식이 잘못되었습니다.", Toast.LENGTH_SHORT).show()
         } catch (e: MessagingException) {

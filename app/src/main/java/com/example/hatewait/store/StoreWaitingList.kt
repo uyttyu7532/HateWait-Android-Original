@@ -262,7 +262,7 @@ class StoreWaitingList : AppCompatActivity() {
                                         response.code().toString() + response.body().toString()
                                     )
                                     when (response.code()) {
-                                        200 -> {
+                                        201 -> {
                                             var data: NonMemberRegisterResponseData? =
                                                 response?.body() // 서버로부터 온 응답
                                             getWaitingList()

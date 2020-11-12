@@ -88,11 +88,9 @@ class NameCheckDialogFragment : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         name_yes_button.setOnClickListener {
-            Log.i("test", "이게 된다고?")
-            nameChecklistener.onDialogPositiveClick(this,customer_id, customer_people_num)
+            nameChecklistener.onDialogPositiveClick(this, customer_id, customer_people_num)
         }
         name_no_button.setOnClickListener {
-            Log.i("test", "이게 안된다고?")
             nameChecklistener.onDialogNegativeClick(this)
         }
 

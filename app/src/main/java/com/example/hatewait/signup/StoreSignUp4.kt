@@ -103,7 +103,7 @@ class StoreSignUp4 : AppCompatActivity() {
                         )
 
                         when (response.code()) {
-                            200 -> {
+                            201 -> {
                                 var data: StoreSignUpResponseData? = response?.body() // 서버로부터 온 응답
 
                                 Toast.makeText(

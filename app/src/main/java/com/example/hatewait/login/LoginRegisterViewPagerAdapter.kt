@@ -59,8 +59,8 @@ class LoginRegisterViewPagerActivity : AppCompatActivity(),
     ) {
 
         var memberRegisterData =
-            MemberRegisterRequestData(customer_id, customer_people_num.toInt(), true)
-
+            MemberRegisterRequestData(customer_id, customer_people_num, true)
+        Log.d("retrofit2 회원 대기 등록 :: ", memberRegisterData.toString())
         MyApi.RegisterService.requestMemberRegister(storeInfo!!.id, memberRegisterData)
             .enqueue(object : Callback<MemberRegisterResponseData> {
                 override fun onFailure(
@@ -80,7 +80,7 @@ class LoginRegisterViewPagerActivity : AppCompatActivity(),
                         response.code().toString() + data
                     )
                     when (response.code()) {
-                        200 -> {
+                        201 -> {
 
                             startActivity<RegisterCheck>(
                                 "CUSTOMER_NAME" to data!!.name,

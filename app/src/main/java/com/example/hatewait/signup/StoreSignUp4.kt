@@ -193,9 +193,9 @@ class StoreSignUp4 : AppCompatActivity() {
 
         // 가게 소개
         store_info_description_editText.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(capacityNumber: Editable?) {
-                if (!verifyCapacity(capacityNumber.toString())) {
-                    store_capacity_layout.error = "9999명까지 입력 가능합니다."
+            override fun afterTextChanged(storeInfo: Editable?) {
+                if (storeInfo!!.isNullOrEmpty()) {
+                    store_capacity_layout.error = "가게 소개 한마디를 적어주세요."
                     button_finish.isEnabled = false
                 } else {
                     store_info_description_layout.error = null

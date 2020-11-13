@@ -11,6 +11,7 @@ import com.example.hatewait.login.storeInfo
 import com.example.hatewait.model.StoreSignUpRequestData
 import com.example.hatewait.model.storeInfoData
 import com.example.hatewait.retrofit2.MyApi
+import com.example.hatewait.signup.SelectSignUp
 import com.example.hatewait.signup.addressDialog
 import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.activity_store_info_update2.*
@@ -50,7 +51,9 @@ class StoreInfoUpdate2 : AppCompatActivity(), StoreNameChangeDialog.DialogListen
                 .show(supportFragmentManager, "STORE_PHONE_CHANGE")
         }
         setting_coupon.setOnClickListener {
-            startActivity<SettingStampCoupon>()
+            val intent = Intent(this, SettingStampCoupon::class.java)
+            intent.putExtra("is_using_stamp_coupon", is_using_stamp_coupon_text_view.text)
+            this.startActivity(intent)
         }
         setting_address.setOnClickListener {
             val bundle = Bundle()
@@ -134,6 +137,11 @@ class StoreInfoUpdate2 : AppCompatActivity(), StoreNameChangeDialog.DialogListen
                                 data!!.storeInfo.maximum_capacity.toString()
                             setting_store_info_text_view.text = data!!.storeInfo.info
                             setting_business_time.text = data!!.storeInfo.business_hour
+
+                            when(data!!.storeInfo.coupon_enable){
+                                1 -> is_using_stamp_coupon_text_view.text = "ON"
+                                0 -> is_using_stamp_coupon_text_view.text = "OFF"
+                            }
                         }
                     }
                 }

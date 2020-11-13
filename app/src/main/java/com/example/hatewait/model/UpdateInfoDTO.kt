@@ -28,3 +28,25 @@ data class MemberInfoResponseData(
     var email: String,
     var no_show: Int
 )
+
+data class CouponUnableRequestData(
+    var id: String,
+    var coupon_enable: Boolean = false
+)
+
+data class CouponEnableRequestData(
+    var id: String,
+    var coupon_enable: Boolean = true,
+    var coupon_information :CouponInfoData
+)
+
+data class CouponInfoData(
+    var benefit_description: String,
+    var maximum_stamp: Int,
+    var validity_period_days: Int,
+    var remark: String
+)
+
+data class CouponResponseData(
+    var couponInformation: CouponInfoData
+)

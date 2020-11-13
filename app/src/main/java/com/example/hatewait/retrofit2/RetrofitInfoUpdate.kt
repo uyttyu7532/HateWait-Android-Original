@@ -1,7 +1,6 @@
 package com.example.hatewait.retrofit2
 
-import com.example.hatewait.model.MemberInfoData
-import com.example.hatewait.model.storeInfoData
+import com.example.hatewait.model.*
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -55,12 +54,20 @@ interface RetrofitInfoUpdate {
         @Field("address") address: String
     ): Call<MyApi.onlyMessageResponseData>
 
-    @FormUrlEncoded
+
+
+    @PATCH("/stores/information")
+    fun requestStoreCouponUnableUpdate(
+        @Body enableCoupon: CouponUnableRequestData
+    ): Call<MyApi.onlyMessageResponseData>
+
+
     @PATCH("/stores/information")
     fun requestStoreCouponEnableUpdate(
-        @Field("id") id: String,
-        @Field("coupon_enable") coupon_enable: Boolean
+        @Body enableCoupon: CouponEnableRequestData
     ): Call<MyApi.onlyMessageResponseData>
+
+
 
     @FormUrlEncoded
     @PATCH("/stores/information")

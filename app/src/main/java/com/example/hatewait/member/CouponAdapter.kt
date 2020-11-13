@@ -1,4 +1,4 @@
-package com.example.hatewait.discretescroll
+package com.example.hatewait.member
 
 import android.os.Build
 import android.view.LayoutInflater

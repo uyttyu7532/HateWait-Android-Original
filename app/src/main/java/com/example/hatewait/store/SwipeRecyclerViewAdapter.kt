@@ -68,21 +68,17 @@ class SwipeRecyclerViewAdapter(
 
     inner class SimpleViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
-        val waitingListSwipeLayout =
-            itemView.findViewById(R.id.waiting_list_swipe_layout) as SwipeLayout
+        val waitingListSwipeLayout = itemView.findViewById(R.id.waiting_list_swipe_layout) as SwipeLayout
         private val waitingListCardView = itemView.findViewById(R.id.waiting_list_card_View) as CardView
         private val waitingListDetailView = itemView.findViewById(R.id.waiting_list_detail_view) as CardView
         val waitingNameTextView = itemView.findViewById(R.id.waiting_name_text_view) as TextView
         val waitingNumTextView = itemView.findViewById(R.id.waiting_num_text_view) as TextView
         val waitingPhoneTextView = itemView.findViewById(R.id.waiting_phone_text_view) as TextView
         val waitingListDetailTextView = itemView.findViewById(R.id.waiting_list_detail_text_view) as TextView
-
-        //        val waitingListDetailTextView2 =
-//            itemView.findViewById(R.id.waiting_list_detail_text_view2) as TextView
         val waitingListDeleteButton =
             itemView.findViewById(R.id.waiting_list_delete_button) as ImageButton
         val bottomWrapperLeft = itemView.findViewById(R.id.bottom_wrapper_left) as FrameLayout
-        val waitingListCallButton: ImageButton = itemView.waiting_list_call_button
+        private val waitingListCallButton: ImageButton = itemView.waiting_list_call_button
 
 
         init {
@@ -211,12 +207,6 @@ class SwipeRecyclerViewAdapter(
             viewHolder.waitingListDetailTextView.text = "최근 호출 시간: ${SimpleDateFormat("yyyy.MM.dd HH:mm:ss", Locale.KOREA).format(items[position].called_time)}"
         }
 
-
-        if (clicked.containsKey(items[position].phone) && clicked[items[position].phone]!!) {
-            viewHolder.waitingListDetailTextView.visibility = View.VISIBLE
-        } else {
-            viewHolder.waitingListDetailTextView.visibility = View.GONE
-        }
 
         viewHolder.waitingListSwipeLayout.showMode = SwipeLayout.ShowMode.PullOut
         // Drag From Left

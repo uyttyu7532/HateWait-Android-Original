@@ -13,7 +13,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class CouponAdapter(private val data: List<CouponListInfo>) : RecyclerView.Adapter<CouponAdapter.ViewHolder>() {
+class CouponAdapter(private val data: List<CouponListInfo>) :
+    RecyclerView.Adapter<CouponAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         val v =
@@ -31,15 +32,24 @@ class CouponAdapter(private val data: List<CouponListInfo>) : RecyclerView.Adapt
 //        holder.couponRemarkTextView.text = " (${data[position].remark})" 설명
 
 
-
-
 //        val formatter = DateTimeFormatter.ofPattern("YYYY-MM-dd HH:mm:ss", Locale.KOREA)
 //        holder.couponIssueDateTextView.text = "발급날짜: ${SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(data[position].issue_date))}"
 //        holder.couponExpTextView.text = "유효기간: ${SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(data[position].expiration_date))}"
 
-
-        holder.couponIssueDateTextView.text = "발급날짜: ${SimpleDateFormat("yyyy.MM.dd HH:mm:ss", Locale.KOREA).format(data[position].issue_date)}"
-        holder.couponExpTextView.text = "유효기간: ${SimpleDateFormat("yyyy.MM.dd HH:mm:ss", Locale.KOREA).format(data[position].expiration_date)}"
+        holder.couponBenefitTextView.text = data[position].benefit_description
+        holder.couponRemarkTextView.text = data[position].remark
+        holder.couponIssueDateTextView.text = "발급날짜: ${
+            SimpleDateFormat(
+                "yyyy.MM.dd HH:mm:ss",
+                Locale.KOREA
+            ).format(data[position].issue_date)
+        }"
+        holder.couponExpTextView.text = "유효기간: ${
+            SimpleDateFormat(
+                "yyyy.MM.dd HH:mm:ss",
+                Locale.KOREA
+            ).format(data[position].expiration_date)
+        }"
 
     }
 
@@ -51,7 +61,8 @@ class CouponAdapter(private val data: List<CouponListInfo>) : RecyclerView.Adapt
         //        val image: ImageView = itemView.findViewById(R.id.image)
         val couponBenefitTextView: TextView = itemView.findViewById(R.id.coupon_benefit_text_view)
         val couponRemarkTextView: TextView = itemView.findViewById(R.id.coupon_remark_text_view)
-        val couponIssueDateTextView: TextView = itemView.findViewById(R.id.coupon_issue_date_text_view)
+        val couponIssueDateTextView: TextView =
+            itemView.findViewById(R.id.coupon_issue_date_text_view)
         val couponExpTextView: TextView = itemView.findViewById(R.id.coupon_exp_text_view)
     }
 }

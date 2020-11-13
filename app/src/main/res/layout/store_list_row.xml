@@ -5,27 +5,6 @@
         android:layout_margin="10dp"
         android:orientation="vertical">
 
-    <!--    <TextView-->
-    <!--            android:id="@+id/textView"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_margin="10dp"-->
-    <!--            android:background="#FFFFFF"-->
-    <!--            android:padding="20dp"-->
-    <!--            android:text="TextView"-->
-    <!--            android:textColor="#000000"-->
-    <!--            android:textSize="15dp"-->
-    <!--            android:textStyle="bold" />-->
-
-    <!--    <TextView-->
-    <!--            android:id="@+id/meaningView"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:paddingHorizontal="20dp"-->
-    <!--            android:layout_margin="10dp"-->
-    <!--            android:text="뜻"-->
-    <!--            android:visibility="gone" />-->
-
 
     <androidx.cardview.widget.CardView
             android:id="@+id/store_list_card_view"
@@ -63,6 +42,19 @@
                             android:text="엽기떡볶이"
                             android:textColor="#000000"
                             android:textStyle="bold" />
+
+                    <TextView
+                            android:layout_marginTop="8dp"
+                            android:id="@+id/store_benefit_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/store_stamp_coupon_text_view"
+                            android:layout_alignParentEnd="true"
+                            android:background="#FFFFFF"
+                            android:paddingLeft="10dp"
+                            android:text="자몽에이드 증정"
+
+                            />
 
                     <TextView
                             android:id="@+id/store_stamp_coupon_text_view"

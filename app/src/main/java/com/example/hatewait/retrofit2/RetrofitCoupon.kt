@@ -8,25 +8,29 @@ import com.google.gson.annotations.SerializedName
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface RetrofitCoupon {
 
+    // 가게 목록
     @SerializedName("array")
-    @GET("/coupon/member/{memberId}")
+    @GET("/members/{memberId}/coupons")
     fun requestStoreList(
         @Path("memberId") memberId: String
     ):
             Call<StoreListResponseData>
 
 
-    @GET("/coupon/member/{memberId}/store/{storeId}")
+    // 쿠폰
+    @GET("/members/{memberId}/coupons/stores")
     fun requestCouponList(
         @Path("memberId") memberId: String,
-        @Path("storeId") storeId: String
+        @Query("id") storeId: String
     ):
             Call<CouponListResponseData>
 
 
+    // 가게에서 쿠폰 설정용
     @GET("/stores/{id}/coupon-information")
     fun requestStoreCouponInfo(
         @Path("id") id: String

@@ -61,6 +61,7 @@ class StoreListAdapter(
             StoreListContext.startActivity(intent)
 
         }
+        holder.storeBenefitTextView.text = itemsFilterList[position].benefit_description
 
     }
 
@@ -69,7 +70,7 @@ class StoreListAdapter(
         var storeNameTextView = itemView.findViewById(R.id.store_name_text_view) as TextView
         var storeStampCouponTextView = itemView.findViewById(R.id.store_stamp_coupon_text_view) as TextView
         var storeListCardView = itemView.findViewById(R.id.store_list_card_view) as CardView
-
+        var storeBenefitTextView = itemView.findViewById(R.id.store_benefit_text_view) as TextView
 
 
     }

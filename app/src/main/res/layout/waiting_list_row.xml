@@ -125,7 +125,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#EFEFEF"
-                android:visibility="gone">
+                android:visibility="visible">
 
             <LinearLayout
                     android:layout_width="wrap_content"
@@ -138,7 +138,7 @@
                         android:id="@+id/waiting_list_detail_text_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="최근 호출 시간: 2020-05-03-09:14:02" />
+                        android:text="아직 호출되지 않은 손님입니다." />
 
 <!--                <TextView-->
 <!--                        android:id="@+id/waiting_list_detail_text_view2"-->

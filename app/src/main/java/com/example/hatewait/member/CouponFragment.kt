@@ -7,9 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.hatewait.R
-import com.example.hatewait.discretescroll.Coupon
-import com.example.hatewait.discretescroll.Shop
-import com.example.hatewait.discretescroll.ShopAdapter
+import com.example.hatewait.discretescroll.CouponAdapter
 import com.example.hatewait.login.memberInfo
 import com.example.hatewait.model.CouponListInfo
 import com.example.hatewait.model.CouponListResponseData
@@ -24,11 +22,10 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class CouponFragment : Fragment(),
-    DiscreteScrollView.OnItemChangedListener<ShopAdapter.ViewHolder?>,
+    DiscreteScrollView.OnItemChangedListener<CouponAdapter.ViewHolder?>,
     View.OnClickListener {
 
     private var couponList: List<CouponListInfo>? = null
-    private var shop: Shop? = null
     private var infiniteAdapter: InfiniteScrollAdapter<*>? = null
     private var rootView: View? = null
     private var itemPicker:DiscreteScrollView? = null
@@ -110,7 +107,7 @@ class CouponFragment : Fragment(),
 
                             couponList = data!!.coupons
 
-                            infiniteAdapter = InfiniteScrollAdapter.wrap(ShopAdapter(data!!.coupons!!))
+                            infiniteAdapter = InfiniteScrollAdapter.wrap(CouponAdapter(data!!.coupons!!))
                             itemPicker!!.adapter = infiniteAdapter
 
 
@@ -139,7 +136,7 @@ class CouponFragment : Fragment(),
     }
 
 
-    override fun onCurrentItemChanged(viewHolder: ShopAdapter.ViewHolder?, adapterPosition: Int) {
+    override fun onCurrentItemChanged(viewHolder: CouponAdapter.ViewHolder?, adapterPosition: Int) {
         val positionInDataSet: Int = infiniteAdapter!!.getRealPosition(adapterPosition)
     }
 

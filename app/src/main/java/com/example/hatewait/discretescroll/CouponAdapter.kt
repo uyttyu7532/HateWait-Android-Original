@@ -10,11 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.hatewait.R
 import com.example.hatewait.model.CouponListInfo
 import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 
-class ShopAdapter(private val data: List<CouponListInfo>) : RecyclerView.Adapter<ShopAdapter.ViewHolder>() {
+class CouponAdapter(private val data: List<CouponListInfo>) : RecyclerView.Adapter<CouponAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         val v =
@@ -37,7 +36,7 @@ class ShopAdapter(private val data: List<CouponListInfo>) : RecyclerView.Adapter
 //        val formatter = DateTimeFormatter.ofPattern("YYYY-MM-dd HH:mm:ss", Locale.KOREA)
 //        holder.couponIssueDateTextView.text = "발급날짜: ${SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(data[position].issue_date))}"
 //        holder.couponExpTextView.text = "유효기간: ${SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(data[position].expiration_date))}"
-        var dateFormat = SimpleDateFormat("yyyy.MM.dd HH:mm:ss", Locale.KOREA).format(data[position].issue_date)
+
 
         holder.couponIssueDateTextView.text = "발급날짜: ${SimpleDateFormat("yyyy.MM.dd HH:mm:ss", Locale.KOREA).format(data[position].issue_date)}"
         holder.couponExpTextView.text = "유효기간: ${SimpleDateFormat("yyyy.MM.dd HH:mm:ss", Locale.KOREA).format(data[position].expiration_date)}"

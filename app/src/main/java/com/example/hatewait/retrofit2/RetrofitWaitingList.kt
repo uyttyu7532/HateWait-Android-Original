@@ -20,10 +20,11 @@ interface RetrofitWaitingList {
     )
             : Call<MyApi.onlyMessageResponseData>
 
+    @FormUrlEncoded
     @PATCH("/stores/{store-id}/waiting-customers")
     fun requestWaitingCall(
-        @Path("store-id") id: String,
-        @Body phone: String
+        @Path("store-id") userId: String,
+        @Field("phone") phone: String
     ): Call<CallWaitingResponseData>
 
 }

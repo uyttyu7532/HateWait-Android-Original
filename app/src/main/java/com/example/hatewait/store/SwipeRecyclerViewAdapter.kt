@@ -32,6 +32,7 @@ import org.jetbrains.anko.backgroundColorResource
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -69,13 +70,12 @@ class SwipeRecyclerViewAdapter(
         RecyclerView.ViewHolder(itemView) {
         val waitingListSwipeLayout =
             itemView.findViewById(R.id.waiting_list_swipe_layout) as SwipeLayout
-        val waitingListCardView = itemView.findViewById(R.id.waiting_list_card_View) as CardView
-        val waitingListDetailView = itemView.findViewById(R.id.waiting_list_detail_view) as CardView
+        private val waitingListCardView = itemView.findViewById(R.id.waiting_list_card_View) as CardView
+        private val waitingListDetailView = itemView.findViewById(R.id.waiting_list_detail_view) as CardView
         val waitingNameTextView = itemView.findViewById(R.id.waiting_name_text_view) as TextView
         val waitingNumTextView = itemView.findViewById(R.id.waiting_num_text_view) as TextView
         val waitingPhoneTextView = itemView.findViewById(R.id.waiting_phone_text_view) as TextView
-        val waitingListDetailTextView =
-            itemView.findViewById(R.id.waiting_list_detail_text_view) as TextView
+        val waitingListDetailTextView = itemView.findViewById(R.id.waiting_list_detail_text_view) as TextView
 
         //        val waitingListDetailTextView2 =
 //            itemView.findViewById(R.id.waiting_list_detail_text_view2) as TextView
@@ -89,12 +89,12 @@ class SwipeRecyclerViewAdapter(
             waitingListCallButton.setOnClickListener {
                 val position = adapterPosition
 
-                if (items[position].called_time.equals("0000-00-00 00:00:00") || items[position].called_time == null) {
+//                if (items[position].called_time.equals("0000-00-00 00:00:00") || items[position].called_time == null) {
 
-
+                    Log.d("retrofit2 대기손님호출 :: ", "${items[position].phone}")
                     MyApi.WaitingListService.requestWaitingCall(
-                        id = storeInfo!!.id,
-                        phone = items[position].phone
+                        storeInfo!!.id,
+                        items[position].phone
                     )
                         .enqueue(object : Callback<CallWaitingResponseData> {
                             override fun onFailure(call: Call<CallWaitingResponseData>, t: Throwable) {
@@ -113,6 +113,16 @@ class SwipeRecyclerViewAdapter(
 //                        items[position].id,
 //                        "[${STORENAME}] ${items[position].turn}번째 순서 전 입니다. 가게 앞으로 와주세요."
 //                    )
+                                        bottomWrapperLeft.backgroundColorResource =
+                                            R.color.colorCall
+                                        Toast.makeText(
+                                            itemView.context,
+                                            items[position].name + " 손님 호출 완료",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+
+
+
                                         getWaitingList()
                                     }
                                 }
@@ -120,18 +130,9 @@ class SwipeRecyclerViewAdapter(
                         }
                         )
 
-
-                    // TODO 호출성공하면 밑에 실행
-                    this.bottomWrapperLeft.backgroundColorResource =
-                        R.color.colorCall
-                    Toast.makeText(
-                        itemView.context,
-                        items[position].name + " 손님 호출 완료",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                } else { // 호출 o
-
-                }
+//                } else { // 이미 호출됨
+//
+//                }
 
 
 //                if (called.containsKey(items[position].phone) && called[items[position].phone]!!) {
@@ -170,13 +171,13 @@ class SwipeRecyclerViewAdapter(
             waitingListCardView.setOnClickListener {
                 val position = adapterPosition
 
-//                if (clicked.containsKey(items[position].phone) && clicked[items[position].phone]!!) {
-//                    clicked[items[position].phone] = false
-//                    detailView.visibility = View.GONE
-//                } else {
-//                    clicked[items[position].phone] = true
-//                    detailView.visibility = View.VISIBLE
-//                }
+                if (clicked.containsKey(items[position].phone) && clicked[items[position].phone]!!) {
+                    clicked[items[position].phone] = false
+                    waitingListDetailView.visibility = View.GONE
+                } else {
+                    clicked[items[position].phone] = true
+                    waitingListDetailView.visibility = View.VISIBLE
+                }
 
 //                val callIntent =
 //                    Intent(Intent.ACTION_DIAL, Uri.parse("tel:0" + items[position].phone))
@@ -197,12 +198,25 @@ class SwipeRecyclerViewAdapter(
 
         viewHolder.waitingNameTextView.text = item.name
         viewHolder.waitingNumTextView.text = "(" + item.people_number + "명)"
-        viewHolder.waitingPhoneTextView.text = "0" + item.phone
+        viewHolder.waitingPhoneTextView.text = item.phone
 
-//        viewHolder.detailView1.text =
-//            "대기열에 추가된 시간: 2020-00-00-00:00:00"
-//        viewHolder.detailView2.text =
-//            "최근에 알림 보낸시간: 2020-00-00-00:00:00"
+
+        if (item.called_time == null) { // 호출x
+            viewHolder.bottomWrapperLeft.backgroundColorResource =
+                R.color.white
+            viewHolder.waitingListDetailTextView.text = "아직 호출되지 않은 손님입니다."
+        } else { // 호출o
+            viewHolder.bottomWrapperLeft.backgroundColorResource =
+                R.color.colorCall
+            viewHolder.waitingListDetailTextView.text = "최근 호출 시간: ${SimpleDateFormat("yyyy.MM.dd HH:mm:ss", Locale.KOREA).format(items[position].called_time)}"
+        }
+
+
+        if (clicked.containsKey(items[position].phone) && clicked[items[position].phone]!!) {
+            viewHolder.waitingListDetailTextView.visibility = View.VISIBLE
+        } else {
+            viewHolder.waitingListDetailTextView.visibility = View.GONE
+        }
 
         viewHolder.waitingListSwipeLayout.showMode = SwipeLayout.ShowMode.PullOut
         // Drag From Left
@@ -360,30 +374,6 @@ class SwipeRecyclerViewAdapter(
 
 
         }
-
-
-//        if (called.containsKey(items[position].phone) && called[items[position].phone]!!) {
-//            viewHolder.bottomWrapperLeft.backgroundColorResource =
-//                R.color.colorCall
-//        } else {
-//            viewHolder.bottomWrapperLeft.backgroundColorResource =
-//                R.color.white
-//        }
-        if (items[position].called_time.equals("0000-00-00 00:00:00") || items[position].called_time == null) { // 호출x
-            viewHolder.bottomWrapperLeft.backgroundColorResource =
-                R.color.white
-        } else { // 호출o
-            viewHolder.bottomWrapperLeft.backgroundColorResource =
-                R.color.colorCall
-        }
-
-
-        if (clicked.containsKey(items[position].phone) && clicked[items[position].phone]!!) {
-            viewHolder.waitingListDetailTextView.visibility = View.VISIBLE
-        } else {
-            viewHolder.waitingListDetailTextView.visibility = View.GONE
-        }
-
 
         // mItemManger is member in RecyclerSwipeAdapter Class
         mItemManger.bindView(viewHolder.itemView, position)

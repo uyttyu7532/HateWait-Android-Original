@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
-class StampCouponFragAdapter(fragmentActivity: FragmentActivity , var storeId: String, var stampCount: Int , var maximumStamp:Int) :
+class StampCouponFragAdapter(fragmentActivity: FragmentActivity , var storeId: String, var storeName: String, var stampBenefit:String, var stampCount: Int , var maximumStamp:Int) :
     FragmentStateAdapter(fragmentActivity) {
     override fun getItemCount(): Int {
         return 2
@@ -17,6 +17,8 @@ class StampCouponFragAdapter(fragmentActivity: FragmentActivity , var storeId: S
     override fun createFragment(position: Int): Fragment {
         var bundle = Bundle()
         bundle.putString("store_id", storeId)
+        bundle.putString("store_name", storeName)
+        bundle.putString("stamp_benefit", stampBenefit)
         bundle.putInt("stamp_count", stampCount)
         bundle.putInt("maximum_stamp", maximumStamp)
 

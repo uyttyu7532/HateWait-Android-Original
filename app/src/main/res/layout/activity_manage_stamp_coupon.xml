@@ -18,7 +18,7 @@
             app:popupTheme="@style/Theme.AppCompat.Light">
 
         <TextView
-                android:id="@+id/register_toolbar_title_textView"
+                android:id="@+id/stamp_coupon_title_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"

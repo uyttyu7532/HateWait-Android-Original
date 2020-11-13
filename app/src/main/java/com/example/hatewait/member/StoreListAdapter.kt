@@ -56,6 +56,8 @@ class StoreListAdapter(
             val intent = Intent(StoreListContext, ManageStampCouponActivity::class.java)
             intent.putExtra("memberId", memberInfo!!.id)
             intent.putExtra("storeId", itemsFilterList[position].store_id)
+            intent.putExtra("store_name", itemsFilterList[position].store_name)
+            intent.putExtra("stamp_benefit", itemsFilterList[position].benefit_description)
             intent.putExtra("stamp_count", itemsFilterList[position].stamp_count)
             intent.putExtra("maximum_stamp", itemsFilterList[position].maximum_stamp)
             StoreListContext.startActivity(intent)

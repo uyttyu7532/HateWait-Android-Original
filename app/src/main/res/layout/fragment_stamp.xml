@@ -11,6 +11,26 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+<!--        <androidx.cardview.widget.CardView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginHorizontal="10dp"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:layout_marginBottom="10dp"-->
+<!--                app:cardCornerRadius="5dp"-->
+<!--                app:cardElevation="2dp">-->
+<!--            <TextView-->
+<!--                    android:layout_margin="20dp"-->
+<!--                    android:id="@+id/store_name_text_view"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_gravity="center"-->
+<!--                    android:gravity="center_horizontal"-->
+<!--                    android:text="바나프레소 강남점"-->
+<!--                    android:textColor="#000000"-->
+<!--                    android:textSize="23sp"/>-->
+<!--        </androidx.cardview.widget.CardView>-->
+
 
         <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -32,6 +52,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1" />
+
 
                 <com.app.progresviews.ProgressWheel
                         android:id="@+id/stamp_pie_view"
@@ -58,6 +79,16 @@
                         android:orientation="vertical">
 
                     <TextView
+                            android:id="@+id/stamp_benefit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center_horizontal"
+                            android:text="아메리카노 1잔 (Tall)"
+                            android:textColor="#000000"
+                            android:textSize="23sp" />
+                    <TextView
+                            android:layout_marginTop="8dp"
                             android:id="@+id/stamp_description"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -65,17 +96,8 @@
                             android:gravity="center_horizontal"
                             android:text="쿠폰 발행까지 \n7번 남았습니다."
                             android:textColor="#979797"
-                            android:textSize="28sp" />
+                            android:textSize="18sp" />
 
-                    <!--                <TextView-->
-                    <!--                        android:id="@+id/stamp_description2"-->
-                    <!--                        android:layout_width="match_parent"-->
-                    <!--                        android:layout_height="wrap_content"-->
-                    <!--                        android:gravity="center_horizontal"-->
-                    <!--                        android:layout_marginTop="20dp"-->
-                    <!--                        android:text="방문 시간 기준 24시간 후 자동 발급됩니다."-->
-                    <!--                        android:textColor="#979797"-->
-                    <!--                        android:textSize="18sp" />-->
                 </LinearLayout>
 
                 <View

@@ -11,9 +11,10 @@ import kotlinx.android.synthetic.main.fragment_stamp.*
 
 class StampFragment : Fragment(){
 
+    private var storeName : String? = null
+    private var stampBenefit : String? = null
     private var stampCount : Int? = null
     private var maximumStamp : Int? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +30,8 @@ class StampFragment : Fragment(){
     ): View? {
 
         var bundle:Bundle = this.requireArguments()
+        storeName = bundle.getString("store_name")
+        stampBenefit = bundle.getString("stamp_benefit")
         stampCount = bundle.getInt("stamp_count")
         maximumStamp = bundle.getInt("maximum_stamp")
 
@@ -42,6 +45,8 @@ class StampFragment : Fragment(){
 
         stamp_pie_view.setStepCountText("${stampCount}/${maximumStamp}")
         stamp_pie_view.setPercentage(stampCount!!*360/maximumStamp!!)
+//        store_name_text_view.text = storeName
+        stamp_benefit.text = stampBenefit
         stamp_description.text = "쿠폰 발행까지 \n${maximumStamp!!-stampCount!!}번 남았습니다."
     }
 

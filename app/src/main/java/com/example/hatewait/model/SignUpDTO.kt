@@ -19,7 +19,6 @@ data class StoreSignUpRequestData(
     var business_hour: String,
     var maximum_capacity: Int,
     var address : String,
-    var coupon_enable : Int,
     var pw: String
 )
 

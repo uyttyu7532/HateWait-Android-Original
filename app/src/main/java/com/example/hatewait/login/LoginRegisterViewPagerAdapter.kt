@@ -1,6 +1,7 @@
 package com.example.hatewait.login
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -31,12 +32,14 @@ class LoginRegisterViewPagerActivity : AppCompatActivity(),
     lateinit var newCustomerName: String
     var newCustomerTurn = -1
     private val tabNameArray = arrayOf<String>("비회원", "회원")
+    lateinit var mContext: Context
 
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_tab_pager)
 //        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+        mContext = this
         init()
 
     }
@@ -87,6 +90,9 @@ class LoginRegisterViewPagerActivity : AppCompatActivity(),
                                 "CUSTOMER_TURN" to data!!.count
                             )
                             dialog.dismiss()
+                        }
+                        409 -> {
+                            Toast.makeText(mContext, "이미 다른 가게에 등록된 아이디입니다.", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }

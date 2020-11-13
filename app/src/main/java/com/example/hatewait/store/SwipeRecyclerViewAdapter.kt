@@ -194,7 +194,7 @@ class SwipeRecyclerViewAdapter(
 
         viewHolder.waitingNameTextView.text = item.name
         viewHolder.waitingNumTextView.text = "(" + item.people_number + "명)"
-        viewHolder.waitingPhoneTextView.text = item.phone
+        viewHolder.waitingPhoneTextView.text = "0"+item.phone
 
 
         if (item.called_time == null) { // 호출x

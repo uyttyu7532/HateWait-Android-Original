@@ -82,7 +82,6 @@ class StoreSignUp4 : AppCompatActivity() {
                 storeBusinessHour,
                 storeCapacity,
                 storeAddress,
-                0,
                 storePassword
             )
 

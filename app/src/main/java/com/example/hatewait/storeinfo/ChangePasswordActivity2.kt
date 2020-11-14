@@ -5,15 +5,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import com.example.hatewait.R
-import kotlinx.android.synthetic.main.activity_signup2.*
-import kotlinx.android.synthetic.main.activity_signup2.button_continue
-import kotlinx.android.synthetic.main.activity_signup2.password_input_editText
-import kotlinx.android.synthetic.main.activity_signup2.password_input_layout
-import kotlinx.android.synthetic.main.activity_signup2.register_toolbar
-import kotlinx.android.synthetic.main.activity_signup2.register_toolbar_title_textView
+import com.example.hatewait.retrofit2.MyApi
+import kotlinx.android.synthetic.main.activity_change_password2.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 private lateinit var mcontext: Context
 
@@ -40,15 +40,86 @@ class ChangePasswordActivity2 : AppCompatActivity() {
         mcontext = this.applicationContext
         addTextChangeListener()
 
-//        register_toolbar_title_textView.text = "비밀번호 변경"
-//        button_continue.text = "비밀번호 변경"
+        val userId = intent.getStringExtra("USER_ID")
+        val isStore = intent.getBooleanExtra("IS_STORE", true)
 
         button_continue.setOnClickListener {
 
-            // TODO 아이디 비밀번호를 이용해서 DB에서 회원정보 수정 => 완료하면 Toasty
-            //intent.getStringExtra("USER_ID")
-            //password_input_editText.text.toString()
-            Toast.makeText(mcontext, "비밀번호가 성공적으로 변경되었습니다.", Toast.LENGTH_SHORT).show()
+            if (isStore) { // 가게
+                MyApi.UpdateService.requestStorePassWordUpdate(
+                    userId,
+                    password_input_edit_text.text.toString()
+                )
+                    .enqueue(object : Callback<MyApi.onlyMessageResponseData> {
+                        override fun onFailure(
+                            call: Call<MyApi.onlyMessageResponseData>,
+                            t: Throwable
+                        ) {
+                            Log.d("retrofit2 가게비밀번호변경 :: ", "연결실패 $t")
+                        }
+
+                        override fun onResponse(
+                            call: Call<MyApi.onlyMessageResponseData>,
+                            response: Response<MyApi.onlyMessageResponseData>
+                        ) {
+                            var data: MyApi.onlyMessageResponseData? = response?.body()
+                            Log.d(
+                                "retrofit2 가게비밀번호 변경 ::",
+                                response.code().toString() + response.body().toString()
+                            )
+                            when (response.code()) {
+                                200 -> {
+                                    Toast.makeText(
+                                        mcontext,
+                                        "비밀번호가 성공적으로 변경되었습니다.",
+                                        Toast.LENGTH_SHORT
+                                    )
+                                        .show()
+                                    finish()
+                                    _ChangePassword1.finish()
+                                }
+                            }
+                        }
+                    }
+                    )
+            } else { // 손님
+                MyApi.UpdateService.requestMemberPassWordUpdate(
+                    userId,
+                    password_input_edit_text.text.toString()
+                )
+                    .enqueue(object : Callback<MyApi.onlyMessageResponseData> {
+                        override fun onFailure(
+                            call: Call<MyApi.onlyMessageResponseData>,
+                            t: Throwable
+                        ) {
+                            Log.d("retrofit2 손님비밀번호변경 :: ", "연결실패 $t")
+                        }
+
+                        override fun onResponse(
+                            call: Call<MyApi.onlyMessageResponseData>,
+                            response: Response<MyApi.onlyMessageResponseData>
+                        ) {
+                            var data: MyApi.onlyMessageResponseData? = response?.body()
+                            Log.d(
+                                "retrofit2 손님비밀번호변경 ::",
+                                response.code().toString() + response.body().toString()
+                            )
+                            when (response.code()) {
+                                20 -> {
+                                    Toast.makeText(
+                                        mcontext,
+                                        "비밀번호가 성공적으로 변경되었습니다.",
+                                        Toast.LENGTH_SHORT
+                                    )
+                                        .show()
+                                    finish()
+                                    _ChangePassword1.finish()
+                                }
+                            }
+                        }
+                    }
+                    )
+            }
         }
 
         setSupportActionBar(register_toolbar)
@@ -73,7 +144,7 @@ class ChangePasswordActivity2 : AppCompatActivity() {
     private fun addTextChangeListener() {
 
         // 비밀번호
-        password_input_editText.addTextChangedListener(object : TextWatcher {
+        password_input_edit_text.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 if (!verifyPassword(s.toString())) {
                     password_input_layout.error = resources.getString(R.string.password_input_error)
@@ -82,7 +153,7 @@ class ChangePasswordActivity2 : AppCompatActivity() {
                     password_input_layout.error = null
                     password_input_layout.hint = null
                 }
-                if (password_input_editText.text.toString() != password_reinput_editText.text.toString()) {
+                if (password_input_edit_text.text.toString() != password_reinput_edit_text.text.toString()) {
                     password_reinput_layout.error =
                         resources.getString(R.string.password_reinput_error)
                     button_continue.isEnabled = false
@@ -93,7 +164,7 @@ class ChangePasswordActivity2 : AppCompatActivity() {
                 button_continue.isEnabled =
                     (password_input_layout.error == null
                             && password_reinput_layout.error == null
-                            && !password_reinput_editText.text.isNullOrBlank())
+                            && !password_reinput_edit_text.text.isNullOrBlank())
                 // enabled 상태에 따라 button 색상 ColorPrimary 로 설정할 수 있어야함. (selector 사용 or app Compat Button)
             }
 
@@ -105,9 +176,9 @@ class ChangePasswordActivity2 : AppCompatActivity() {
         })
 
         // 비밀번호 재입력
-        password_reinput_editText.addTextChangedListener(object : TextWatcher {
+        password_reinput_edit_text.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(reinputText: Editable?) {
-                if (reinputText.toString() != password_input_editText.text.toString()) {
+                if (reinputText.toString() != password_input_edit_text.text.toString()) {
                     password_reinput_layout.error =
                         resources.getString(R.string.password_reinput_error)
                     button_continue.isEnabled = false
@@ -118,7 +189,7 @@ class ChangePasswordActivity2 : AppCompatActivity() {
                 button_continue.isEnabled =
                     (password_input_layout.error == null
                             && password_reinput_layout.error == null
-                            && !password_reinput_editText.text.isNullOrBlank())
+                            && !password_reinput_edit_text.text.isNullOrBlank())
 
             }
 

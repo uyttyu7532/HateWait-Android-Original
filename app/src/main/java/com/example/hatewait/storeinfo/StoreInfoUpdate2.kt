@@ -40,7 +40,10 @@ class StoreInfoUpdate2 : AppCompatActivity(), StoreNameChangeDialog.DialogListen
             StoreNameChangeDialog().show(supportFragmentManager, "STORE_NAME_CHANGE")
         }
         setting_password.setOnClickListener {
-            startActivity<ChangePasswordActivity1>()
+            val intent = Intent(this, ChangePasswordActivity1::class.java)
+            intent.putExtra("USER_ID", storeInfo!!.id)
+            intent.putExtra("IS_STORE", true)
+            this.startActivity(intent)
         }
         setting_time.setOnClickListener {
             val intent = Intent(this@StoreInfoUpdate2, BusinessHourPick::class.java)

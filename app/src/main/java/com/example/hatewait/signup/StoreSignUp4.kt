@@ -17,12 +17,8 @@ import com.example.hatewait.model.StoreSignUpRequestData
 import com.example.hatewait.model.StoreSignUpResponseData
 import com.example.hatewait.retrofit2.MyApi
 import com.example.hatewait.storeinfo.BusinessHourPick
-import kotlinx.android.synthetic.main.activity_customer_register3.*
 import kotlinx.android.synthetic.main.activity_store_signup4.*
 import kotlinx.android.synthetic.main.activity_store_signup4.button_finish
-import org.jetbrains.anko.startActivity
-import org.json.JSONException
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

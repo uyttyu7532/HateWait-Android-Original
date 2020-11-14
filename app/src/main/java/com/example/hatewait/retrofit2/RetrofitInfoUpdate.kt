@@ -89,4 +89,11 @@ interface RetrofitInfoUpdate {
         @Field("id") id: String,
         @Field("phone") phone: Int
     ): Call<MyApi.onlyMessageResponseData>
+
+    @FormUrlEncoded
+    @PATCH("/members/information")
+    fun requestMemberPassWordUpdate(
+        @Field("id") id: String,
+        @Field("pw") pw: String
+    ): Call<MyApi.onlyMessageResponseData>
 }

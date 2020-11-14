@@ -1,10 +1,12 @@
 package com.example.hatewait.memberinfo
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.example.hatewait.R
 import com.example.hatewait.login.memberInfo
+import com.example.hatewait.login.storeInfo
 import com.example.hatewait.model.MemberInfoData
 import com.example.hatewait.retrofit2.MyApi
 import com.example.hatewait.storeinfo.ChangePasswordActivity1
@@ -24,7 +26,10 @@ class MemberInfoUpdate : AppCompatActivity(),MemberPhoneNumberChangeDialog.Dialo
                 .show(supportFragmentManager, "STORE_PHONE_CHANGE")
         }
         setting_customer_password.setOnClickListener{
-            startActivity<ChangePasswordActivity1>()
+            val intent = Intent(this, ChangePasswordActivity1::class.java)
+            intent.putExtra("USER_ID", memberInfo!!.id)
+            intent.putExtra("IS_STORE", false)
+            this.startActivity(intent)
         }
     }
 

@@ -138,9 +138,9 @@ class MainActivity : AppCompatActivity() {
                 MyApi.LoginService.requestMemberLogin(customerLoginData)
                     .enqueue(object : Callback<MemberLoginResponseData> {
                         override fun onFailure(call: Call<MemberLoginResponseData>, t: Throwable) {
-                            Log.d("retrofit2 손님로그인 :: ", "로그인연결실패 $t")
-                            // TODO 주석처리해야함
+                            Log.d("retrofit2 손님로그인 :: ", "연결실패 $t")
                             Toast.makeText(mContext, "서버 연결실패", Toast.LENGTH_SHORT).show()
+                            // TODO 주석처리해야함
                             startActivity<MemberMenu>()
                         }
 
@@ -198,7 +198,7 @@ class MainActivity : AppCompatActivity() {
                 MyApi.LoginService.requestStoreLogin(storeLoginData)
                     .enqueue(object : Callback<StoreLoginResponseData> {
                         override fun onFailure(call: Call<StoreLoginResponseData>, t: Throwable) {
-                            Log.d("retrofit2 가게로그인 :: ", "로그인연결실패 $t")
+                            Log.d("retrofit2 가게로그인 :: ", "연결실패 $t")
 
                             // TODO 주석처리해야함
                             startActivity<StoreMenu>()

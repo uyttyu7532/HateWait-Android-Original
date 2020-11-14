@@ -169,7 +169,7 @@ class NonMemberRegister : androidx.fragment.app.Fragment() {
                         newInstance().dismiss()
                         Log.d("retrofit2 비회원 대기 등록 ::",response.code().toString() + response.body().toString())
 
-                        if (response.code() == 200) {
+                        if (response.code() == 201) {
                             var data: NonMemberRegisterResponseData? =
                                 response?.body() // 서버로부터 온 응답
 

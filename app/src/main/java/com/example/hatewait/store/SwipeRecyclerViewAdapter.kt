@@ -17,14 +17,11 @@ import com.daimajia.swipe.SwipeLayout
 import com.daimajia.swipe.adapters.RecyclerSwipeAdapter
 import com.example.hatewait.R
 import com.example.hatewait.fcm.FcmPush
-import com.example.hatewait.login.storeInfo
-import com.example.hatewait.member.StoreList
+import com.example.hatewait.login.LoginInfo.storeInfo
 import com.example.hatewait.model.CallWaitingResponseData
-import com.example.hatewait.model.ClientData
 import com.example.hatewait.model.DeleteWaitingResponseData
 import com.example.hatewait.model.WaitingInfo
 import com.example.hatewait.retrofit2.MyApi
-import com.example.hatewait.socket.*
 import kotlinx.android.synthetic.main.waiting_list_row.view.*
 import org.jetbrains.anko.backgroundColorResource
 import retrofit2.Call
@@ -66,13 +63,17 @@ class SwipeRecyclerViewAdapter(
 
     inner class SimpleViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
-        val waitingListSwipeLayout = itemView.findViewById(R.id.waiting_list_swipe_layout) as SwipeLayout
-        private val waitingListCardView = itemView.findViewById(R.id.waiting_list_card_View) as CardView
-        private val waitingListDetailView = itemView.findViewById(R.id.waiting_list_detail_view) as CardView
+        val waitingListSwipeLayout =
+            itemView.findViewById(R.id.waiting_list_swipe_layout) as SwipeLayout
+        private val waitingListCardView =
+            itemView.findViewById(R.id.waiting_list_card_View) as CardView
+        private val waitingListDetailView =
+            itemView.findViewById(R.id.waiting_list_detail_view) as CardView
         val waitingNameTextView = itemView.findViewById(R.id.waiting_name_text_view) as TextView
         val waitingNumTextView = itemView.findViewById(R.id.waiting_num_text_view) as TextView
         val waitingPhoneTextView = itemView.findViewById(R.id.waiting_phone_text_view) as TextView
-        val waitingListDetailTextView = itemView.findViewById(R.id.waiting_list_detail_text_view) as TextView
+        val waitingListDetailTextView =
+            itemView.findViewById(R.id.waiting_list_detail_text_view) as TextView
         val waitingListDeleteButton =
             itemView.findViewById(R.id.waiting_list_delete_button) as ImageButton
         val bottomWrapperLeft = itemView.findViewById(R.id.bottom_wrapper_left) as FrameLayout
@@ -85,49 +86,51 @@ class SwipeRecyclerViewAdapter(
 
 //                if (items[position].called_time.equals("0000-00-00 00:00:00") || items[position].called_time == null) {
 
-                    Log.d("retrofit2 대기손님호출 :: ", "${items[position].phone}")
+                Log.d("retrofit2 대기손님호출 :: ", "${items[position].phone}")
 
 
                 val ft = (context as StoreWaitingList).supportFragmentManager.beginTransaction()
                 newInstance().show(ft, "")
-                    MyApi.WaitingListService.requestWaitingCall(
-                        storeInfo!!.id,
-                        items[position].phone
-                    )
-                        .enqueue(object : Callback<CallWaitingResponseData> {
-                            override fun onFailure(call: Call<CallWaitingResponseData>, t: Throwable) {
-                                Log.d("retrofit2 대기손님호출 :: ", "연결실패 $t")
-                            }
+                MyApi.WaitingListService.requestWaitingCall(
+                    storeInfo!!.id,
+                    items[position].phone
+                )
+                    .enqueue(object : Callback<CallWaitingResponseData> {
+                        override fun onFailure(call: Call<CallWaitingResponseData>, t: Throwable) {
+                            Log.d("retrofit2 대기손님호출 :: ", "연결실패 $t")
+                        }
 
-                            override fun onResponse(
-                                call: Call<CallWaitingResponseData>,
-                                response: Response<CallWaitingResponseData>
-                            ) {
-                                newInstance().dismiss()
-                                var data: CallWaitingResponseData? = response?.body()
-                                Log.d("retrofit2 대기손님호출 ::", response.code().toString() + response.body().toString())
-                                when (response.code()) {
-                                    200 -> {
-                                        //                    callCustomer(
-//                        items[position].id,
-//                        "[${STORENAME}] ${items[position].turn}번째 순서 전 입니다. 가게 앞으로 와주세요."
-//                    )
-                                        bottomWrapperLeft.backgroundColorResource =
-                                            R.color.colorCall
-                                        Toast.makeText(
-                                            itemView.context,
-                                            items[position].name + " 손님 호출 완료",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-
+                        override fun onResponse(
+                            call: Call<CallWaitingResponseData>,
+                            response: Response<CallWaitingResponseData>
+                        ) {
+                            newInstance().dismiss()
+                            var data: CallWaitingResponseData? = response?.body()
+                            Log.d(
+                                "retrofit2 대기손님호출 ::",
+                                response.code().toString() + response.body().toString()
+                            )
+                            when (response.code()) {
+                                200 -> {
+                                    callCustomer(
+                                        items[position].phone,
+                                        "[${storeInfo!!.name}] ${position}번째 순서 전 입니다. 가게 앞으로 와주세요."
+                                    )
+                                    bottomWrapperLeft.backgroundColorResource =
+                                        R.color.colorCall
+                                    Toast.makeText(
+                                        itemView.context,
+                                        items[position].name + " 손님 호출 완료",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
 
 
 //                                        getWaitingList()
-                                    }
                                 }
                             }
                         }
-                        )
+                    }
+                    )
 
 //                } else { // 이미 호출됨
 //
@@ -197,7 +200,7 @@ class SwipeRecyclerViewAdapter(
 
         viewHolder.waitingNameTextView.text = item.name
         viewHolder.waitingNumTextView.text = "(" + item.people_number + "명)"
-        viewHolder.waitingPhoneTextView.text = "0"+item.phone
+        viewHolder.waitingPhoneTextView.text = "0" + item.phone
 
 
         if (item.called_time == null) { // 호출x
@@ -207,7 +210,12 @@ class SwipeRecyclerViewAdapter(
         } else { // 호출o
             viewHolder.bottomWrapperLeft.backgroundColorResource =
                 R.color.colorCall
-            viewHolder.waitingListDetailTextView.text = "최근 호출 시간: ${SimpleDateFormat("yyyy.MM.dd HH:mm:ss", Locale.KOREA).format(items[position].called_time)}"
+            viewHolder.waitingListDetailTextView.text = "최근 호출 시간: ${
+                SimpleDateFormat(
+                    "yyyy.MM.dd HH:mm:ss",
+                    Locale.KOREA
+                ).format(items[position].called_time)
+            }"
         }
 
 
@@ -386,13 +394,14 @@ class SwipeRecyclerViewAdapter(
 }
 
 
-fun callCustomer(customerId: String, message: String) {
+fun callCustomer(customerPhone: String, message:String) {
     //푸시를 받을 유저의 UID가 담긴 destinationUid 값을 넣어준후 fcmPush클래스의 sendMessage 메소드 호출
     val fcmPush = FcmPush()
-    fcmPush?.sendMessage(customerId, message)
+    fcmPush?.sendMessage(customerPhone, message)
+
     // 서버쪽에서 문자메시지 보내기
-    PushMessageAsyncTask().execute(customerId)
-    Log.i("로그", "callCustomer 호출하는손님id:${customerId}")
+//    PushMessageAsyncTask().execute(customerPhone)
+
 }
 
 

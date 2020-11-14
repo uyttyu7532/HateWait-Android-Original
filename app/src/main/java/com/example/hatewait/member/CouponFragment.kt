@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.hatewait.R
-import com.example.hatewait.login.memberInfo
+import com.example.hatewait.login.LoginInfo.memberInfo
 import com.example.hatewait.model.CouponListInfo
 import com.example.hatewait.model.CouponListResponseData
 import com.example.hatewait.retrofit2.MyApi

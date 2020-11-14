@@ -6,13 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.example.hatewait.R
-import com.example.hatewait.login.memberInfo
-import com.example.hatewait.login.storeInfo
+import com.example.hatewait.login.LoginInfo.memberInfo
 import com.example.hatewait.model.MemberInfoData
 import com.example.hatewait.retrofit2.MyApi
 import com.example.hatewait.storeinfo.ChangePasswordActivity1
 import kotlinx.android.synthetic.main.activity_customer_info_update.*
-import org.jetbrains.anko.startActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

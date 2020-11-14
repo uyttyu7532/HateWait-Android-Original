@@ -1,7 +1,6 @@
 package com.example.hatewait.member
 
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hatewait.R
-import com.example.hatewait.login.memberInfo
+import com.example.hatewait.login.LoginInfo.memberInfo
 import com.example.hatewait.model.StoreListInfo
 import java.util.*
 import kotlin.collections.ArrayList

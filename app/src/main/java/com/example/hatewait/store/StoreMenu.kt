@@ -8,8 +8,8 @@ import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hatewait.R
+import com.example.hatewait.login.LoginInfo.storeInfo
 import com.example.hatewait.register.StartWaitActivity
-import com.example.hatewait.login.storeInfo
 import com.example.hatewait.storeinfo.StoreInfoUpdate2
 import kotlinx.android.synthetic.main.activity_store_menu.*
 import org.jetbrains.anko.startActivity

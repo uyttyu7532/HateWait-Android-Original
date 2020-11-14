@@ -8,15 +8,11 @@ import android.util.Log
 import android.view.MenuItem
 import com.example.hatewait.R
 import com.example.hatewait.address.AddressDialogFragment
-import com.example.hatewait.login.storeInfo
-import com.example.hatewait.model.StoreSignUpRequestData
+import com.example.hatewait.login.LoginInfo.storeInfo
 import com.example.hatewait.model.storeInfoData
 import com.example.hatewait.retrofit2.MyApi
-import com.example.hatewait.signup.SelectSignUp
 import com.example.hatewait.signup.addressDialog
-import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.activity_store_info_update2.*
-import org.jetbrains.anko.startActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

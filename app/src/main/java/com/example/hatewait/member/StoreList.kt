@@ -10,7 +10,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hatewait.R
-import com.example.hatewait.login.memberInfo
+import com.example.hatewait.login.LoginInfo.memberInfo
 import com.example.hatewait.model.StoreListInfo
 import com.example.hatewait.model.StoreListResponseData
 import com.example.hatewait.retrofit2.MyApi

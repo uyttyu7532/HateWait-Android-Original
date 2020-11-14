@@ -18,8 +18,8 @@ import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.daimajia.swipe.util.Attributes
 import com.example.hatewait.R
+import com.example.hatewait.login.LoginInfo.storeInfo
 import com.example.hatewait.login.mContext
-import com.example.hatewait.login.storeInfo
 import com.example.hatewait.model.NonMemberRegisterRequestData
 import com.example.hatewait.model.NonMemberRegisterResponseData
 import com.example.hatewait.model.WaitingInfo

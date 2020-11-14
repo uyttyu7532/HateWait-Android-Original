@@ -14,7 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDialogFragment
 import com.example.hatewait.R
-import com.example.hatewait.login.storeInfo
+import com.example.hatewait.login.LoginInfo.storeInfo
 import com.example.hatewait.retrofit2.MyApi
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout

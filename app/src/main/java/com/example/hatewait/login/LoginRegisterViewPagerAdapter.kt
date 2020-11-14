@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.example.hatewait.*
+import com.example.hatewait.login.LoginInfo.storeInfo
 import com.example.hatewait.model.MemberRegisterRequestData
 import com.example.hatewait.model.MemberRegisterResponseData
 import com.example.hatewait.register.MemberRegister

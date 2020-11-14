@@ -1,7 +1,5 @@
 package com.example.hatewait.member
 
-
-import LottieDialogFragment
 import LottieDialogFragment.Companion.newInstance
 import android.content.Context
 import android.content.Intent
@@ -12,21 +10,16 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.ImageButton
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.example.hatewait.map.KakaoMapActivity
 import com.example.hatewait.R
-import com.example.hatewait.login.mContext
+import com.example.hatewait.login.LoginInfo.memberInfo
 import com.example.hatewait.memberinfo.MemberInfoUpdate
-import com.example.hatewait.login.memberInfo
-import com.example.hatewait.login.storeInfo
 import com.example.hatewait.model.MyWaitingResponseData
-import com.example.hatewait.model.WaitingListResponseData
 import com.example.hatewait.retrofit2.MyApi
 import com.example.hatewait.socket.CUSTOMERID
 import com.example.hatewait.socket.CancelAsyncTask
-import com.example.hatewait.store.setRecyclerView
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.activity_customer_menu.*
 import org.jetbrains.anko.startActivity
@@ -57,9 +50,7 @@ class MemberMenu : AppCompatActivity() {
 //            getSharedPreferences(resources.getString(R.string.customer_mode), Context.MODE_PRIVATE)
 //        CUSTOMERID = customerReference.getString("CUSTOMER_ID", "")
 
-        //TODO sub topic
-        FirebaseMessaging.getInstance().subscribeToTopic(CUSTOMERID)
-
+        FirebaseMessaging.getInstance().subscribeToTopic("0"+memberInfo.phone)
 
     }
 

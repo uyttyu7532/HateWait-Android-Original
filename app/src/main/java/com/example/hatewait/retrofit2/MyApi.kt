@@ -41,12 +41,4 @@ object MyApi {
         retrofit().create(RetrofitInfoUpdate::class.java)
     }
 
-
-
-
-
-
-
-
-
 }

@@ -10,7 +10,7 @@ import android.view.View.*
 import android.widget.CompoundButton
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hatewait.R
-import com.example.hatewait.login.storeInfo
+import com.example.hatewait.login.LoginInfo.storeInfo
 import com.example.hatewait.model.CouponEnableRequestData
 import com.example.hatewait.model.CouponInfoData
 import com.example.hatewait.model.CouponResponseData

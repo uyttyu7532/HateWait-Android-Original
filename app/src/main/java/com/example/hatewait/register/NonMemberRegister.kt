@@ -9,7 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.hatewait.R
-import com.example.hatewait.login.storeInfo
+import com.example.hatewait.login.LoginInfo.storeInfo
 import com.example.hatewait.model.NonMemberRegisterRequestData
 import com.example.hatewait.model.NonMemberRegisterResponseData
 import com.example.hatewait.retrofit2.MyApi

@@ -16,6 +16,8 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hatewait.R
+import com.example.hatewait.login.LoginInfo.memberInfo
+import com.example.hatewait.login.LoginInfo.storeInfo
 import com.example.hatewait.member.MemberMenu
 import com.example.hatewait.model.MemberLoginRequestData
 import com.example.hatewait.model.MemberLoginResponseData
@@ -34,11 +36,17 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-var memberInfo: MemberLoginResponseData? = null
-var storeInfo: StoreLoginResponseData? = null
+object LoginInfo {
+    lateinit var memberInfo: MemberLoginResponseData
+    lateinit var storeInfo: StoreLoginResponseData
+}
+
+//var memberInfo: MemberLoginResponseData? = null
+//var storeInfo: StoreLoginResponseData? = null
 lateinit var mContext: Context
 
 class MainActivity : AppCompatActivity() {
+
     var mLastBackPress: Long = 0
     val mBackPressThreshold: Long = 3500
 
@@ -153,7 +161,7 @@ class MainActivity : AppCompatActivity() {
                                 200 -> {
 
                                     var data: MemberLoginResponseData? = response?.body()
-                                    memberInfo = data
+                                    memberInfo = data!!
 
                                     startActivity<MemberMenu>()
                                 }
@@ -215,7 +223,7 @@ class MainActivity : AppCompatActivity() {
                             when (response.code()) {
                                 200 -> {
                                     var data: StoreLoginResponseData? = response?.body()
-                                    storeInfo = data
+                                    storeInfo = data!!
                                     startActivity<StoreMenu>()
                                 }
                                 409 -> {

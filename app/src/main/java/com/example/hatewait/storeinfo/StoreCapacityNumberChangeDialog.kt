@@ -11,10 +11,8 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.example.hatewait.R
-import com.example.hatewait.login.storeInfo
+import com.example.hatewait.login.LoginInfo.storeInfo
 import com.example.hatewait.retrofit2.MyApi
-import kotlinx.android.synthetic.main.activity_store_info_update2.*
-import kotlinx.android.synthetic.main.activity_store_introduce_change_dialog.*
 import kotlinx.android.synthetic.main.fragmet_store_capacity_change_dialog.*
 import retrofit2.Call
 import retrofit2.Callback

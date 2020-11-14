@@ -13,7 +13,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.example.hatewait.R
-import com.example.hatewait.login.memberInfo
+import com.example.hatewait.login.LoginInfo.memberInfo
 import com.example.hatewait.retrofit2.MyApi
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout

@@ -10,16 +10,12 @@ import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import com.example.hatewait.R
-import com.example.hatewait.login.memberInfo
-import com.example.hatewait.member.MemberMenu
 import com.example.hatewait.model.MemberLoginRequestData
 import com.example.hatewait.model.MemberLoginResponseData
 import com.example.hatewait.model.StoreLoginRequestData
 import com.example.hatewait.model.StoreLoginResponseData
 import com.example.hatewait.retrofit2.MyApi
 import kotlinx.android.synthetic.main.activity_change_password.*
-import kotlinx.android.synthetic.main.activity_main.*
-import org.jetbrains.anko.startActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

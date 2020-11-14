@@ -56,7 +56,6 @@ class CustomerSignUp3 : AppCompatActivity() {
             val userPhone = user_phone_number_edit_text.text.toString()
 
 
-            // TODO 디비에 회원정보(손님) 저장
 //            CustomerRegisterAsyncTask(this@CustomerSignUp3).execute(
 //                userId,
 //                userPassword,

@@ -9,4 +9,5 @@ data class DeleteWaitingResponseData(var phone:String, var visited: Boolean)
 
 data class CallWaitingResponseData(var message:String, var called_time: Date?)
 
+data class MyWaitingResponseData(var message: String?, var store_name :String?, var member_name : String?, var turn_number : Int?)
 

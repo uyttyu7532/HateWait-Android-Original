@@ -21,7 +21,6 @@ import com.example.hatewait.model.MemberLoginResponseData
 import com.example.hatewait.model.StoreLoginRequestData
 import com.example.hatewait.model.StoreLoginResponseData
 import com.example.hatewait.retrofit2.MyApi
-import com.example.hatewait.signup.FindPassWordActivity1
 import com.example.hatewait.signup.SelectSignUp
 import com.example.hatewait.store.StoreMenu
 import com.nhn.android.naverlogin.OAuthLogin

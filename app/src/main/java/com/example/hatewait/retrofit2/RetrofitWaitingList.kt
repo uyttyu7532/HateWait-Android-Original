@@ -2,6 +2,7 @@ package com.example.hatewait.retrofit2
 
 import com.example.hatewait.model.CallWaitingResponseData
 import com.example.hatewait.model.DeleteWaitingResponseData
+import com.example.hatewait.model.MyWaitingResponseData
 import com.example.hatewait.model.WaitingListResponseData
 import retrofit2.Call
 import retrofit2.http.*
@@ -26,6 +27,14 @@ interface RetrofitWaitingList {
         @Path("store-id") userId: String,
         @Field("phone") phone: String
     ): Call<CallWaitingResponseData>
+
+
+    // 본인 대기 현황 조회
+    @GET("/members/{memberId}/waiting-customers")
+    fun requestMyWaiting(
+        @Path("memberId") memberId: String
+    ):
+            Call<MyWaitingResponseData>
 
 }
 

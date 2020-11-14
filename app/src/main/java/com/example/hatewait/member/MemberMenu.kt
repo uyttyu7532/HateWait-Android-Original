@@ -1,30 +1,44 @@
 package com.example.hatewait.member
 
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.ImageButton
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.example.hatewait.map.KakaoMapActivity
 import com.example.hatewait.R
+import com.example.hatewait.login.mContext
 import com.example.hatewait.memberinfo.MemberInfoUpdate
 import com.example.hatewait.login.memberInfo
+import com.example.hatewait.login.storeInfo
+import com.example.hatewait.model.MyWaitingResponseData
+import com.example.hatewait.model.WaitingListResponseData
+import com.example.hatewait.retrofit2.MyApi
 import com.example.hatewait.socket.CUSTOMERID
 import com.example.hatewait.socket.CancelAsyncTask
+import com.example.hatewait.store.setRecyclerView
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.activity_customer_menu.*
 import org.jetbrains.anko.startActivity
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.*
 
-
-//lateinit var waitingStoreView: TextView
-//lateinit var customerWaitingNum: TextView
-//lateinit var customerNameTextView: TextView
-//lateinit var recentRefreshTime: TextView
-//lateinit var customerWaiting: LinearLayout
 
 class MemberMenu : AppCompatActivity() {
+
+    lateinit var mContext: Context
+    lateinit var recentRefreshTime:TextView
 
     var customView: View? = null
     private val yesButton: ImageButton by lazy {
@@ -34,20 +48,15 @@ class MemberMenu : AppCompatActivity() {
         customView?.findViewById<ImageButton>(R.id.name_no_button)!!
     }
 
-
     override fun onResume() {
         super.onResume()
 
-        // customer mode
-        val customerReference =
+//        val customerReference =
 //            getSharedPreferences(resources.getString(R.string.customer_mode), Context.MODE_PRIVATE)
 //        CUSTOMERID = customerReference.getString("CUSTOMER_ID", "")
 
-            //TODO sub topic
-//        FirebaseMessaging.getInstance().subscribeToTopic(CUSTOMERID)
-
-        Log.i("LOG_TAG", "onresume 손님메뉴, customerID=${CUSTOMERID}")
-//        CustomerMenuAsyncTask().execute(CUSTOMERID)
+        //TODO sub topic
+        FirebaseMessaging.getInstance().subscribeToTopic(CUSTOMERID)
 
 
     }
@@ -56,9 +65,13 @@ class MemberMenu : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_customer_menu)
 
-        init()
-        retrofit2()
+        mContext = this
 
+        recentRefreshTime = findViewById(R.id.recentRefreshTime)
+
+        init()
+        customer_name_text_view.text = memberInfo?.name
+        getMyWaiting()
     }
 
 
@@ -66,7 +79,6 @@ class MemberMenu : AppCompatActivity() {
 
 
         myCoupon.setOnClickListener {
-//            startActivity<ManageStampCouponActivity>()
             startActivity<StoreList>()
         }
 
@@ -97,7 +109,7 @@ class MemberMenu : AppCompatActivity() {
         }
 
         my_refresh_button.setOnClickListener {
-//            CustomerMenuAsyncTask().execute(CUSTOMERID)
+            getMyWaiting()
         }
 
 //        customerNameTextView = customView!!.findViewById(R.id.customer_name_text_view)
@@ -130,24 +142,44 @@ class MemberMenu : AppCompatActivity() {
         super.onDestroy()
     }
 
+    private fun getMyWaiting() {
+        MyApi.WaitingListService.requestMyWaiting(memberInfo!!.id)
+            .enqueue(object : Callback<MyWaitingResponseData> {
+                override fun onFailure(call: Call<MyWaitingResponseData>, t: Throwable) {
 
+                    Log.d("retrofit2 대기현황 조회 :: ", "서버 연결 실패 $t")
+                }
 
-    private fun retrofit2() {
-//        if (CustomerInfo == "null") {
-//            com.example.hatewait.customer.waitingStoreView.text = "대기중인 가게가 없습니다."
-//            com.example.hatewait.customer.customerWaiting.visibility = View.GONE
-//        } else {
-        customer_name_text_view.text = memberInfo?.name
-//            com.example.hatewait.customer.waitingStoreView.text = result?.get(3)
-//            com.example.hatewait.customer.customerWaitingNum.text = result?.get(4)
-//            com.example.hatewait.customer.customerWaiting.visibility = View.VISIBLE
-//        }
+                override fun onResponse(
+                    call: Call<MyWaitingResponseData>,
+                    response: Response<MyWaitingResponseData>
+                ) {
+                    Log.d(
+                        "retrofit2 대기현황 조회 ::",
+                        response.code().toString() + response.body().toString()
+                    )
+                    when (response.code()) {
+                        200 -> {
+                            refreshTime(recentRefreshTime)
+                            val data = response.body() // 서버로부터 온 응답
+                            if (data?.message.isNullOrEmpty()) {
+                                no_waiting_text_view.visibility = GONE
+                                my_waiting_info_linear_layout.visibility = VISIBLE
+                                waiting_store_text_view.text = data!!.store_name
+                                customer_waiting_num_text_view.text = data!!.turn_number.toString()
+                            } else {
+                                no_waiting_text_view.visibility = VISIBLE
+                                my_waiting_info_linear_layout.visibility = GONE
+                            }
+                        }
+                    }
 
-//        var reservationTime = System.currentTimeMillis() + 1000 * 60 * 60 * 9
-//        val dateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
-//        val curTime = dateFormat.format(Date(reservationTime))
-//        com.example.hatewait.customer.recentRefreshTime.text = "최근 새로고침 시간: ${curTime}"
+                }
+            }
+            )
     }
+
+
 }
 
 //    private fun fcm() {
@@ -163,3 +195,9 @@ class MemberMenu : AppCompatActivity() {
 //        FirebaseMessaging.getInstance().subscribeToTopic("${customerPhoneNum}")
 //    }
 
+fun refreshTime(text_view: TextView) {
+    var reservationTime = System.currentTimeMillis()
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA)
+    val curTime = dateFormat.format(Date(reservationTime))
+    text_view.text = "최근 새로고침 시간: ${curTime}"
+}

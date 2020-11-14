@@ -299,7 +299,7 @@ fun getWaitingList() {
         .enqueue(object : Callback<WaitingListResponseData> {
             override fun onFailure(call: Call<WaitingListResponseData>, t: Throwable) {
 
-                Log.d("대기 리스트 :: ", "서버 연결 실패 $t")
+                Log.d("retrofit2 대기 리스트 :: ", "서버 연결 실패 $t")
             }
 
             override fun onResponse(

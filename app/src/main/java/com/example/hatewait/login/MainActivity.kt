@@ -1,5 +1,6 @@
 package com.example.hatewait.login
 
+import LottieDialogFragment.Companion.fragment
 import LottieDialogFragment.Companion.newInstance
 import android.annotation.SuppressLint
 import android.content.Context
@@ -138,7 +139,9 @@ class MainActivity : AppCompatActivity() {
                     password_input_editText.text.toString()
                 )
 
-                newInstance().show(supportFragmentManager, "")
+                if (fragment == null || (!(fragment?.isAdded)!!)) {
+                    newInstance().show(supportFragmentManager, "")
+                }
                 MyApi.LoginService.requestMemberLogin(customerLoginData)
                     .enqueue(object : Callback<MemberLoginResponseData> {
                         override fun onFailure(call: Call<MemberLoginResponseData>, t: Throwable) {
@@ -153,6 +156,7 @@ class MainActivity : AppCompatActivity() {
                             response: Response<MemberLoginResponseData>
                         ) {
                             newInstance().dismiss()
+
                             Log.d(
                                 "retrofit2 손님로그인 ::",
                                 response.code().toString() + response.body().toString()
@@ -201,7 +205,10 @@ class MainActivity : AppCompatActivity() {
                     password_input_editText.text.toString()
                 )
 
-                newInstance().show(supportFragmentManager, "")
+                if (fragment == null || (!(fragment?.isAdded)!!)) {
+                    newInstance().show(supportFragmentManager, "")
+                }
+
                 MyApi.LoginService.requestStoreLogin(storeLoginData)
                     .enqueue(object : Callback<StoreLoginResponseData> {
                         override fun onFailure(call: Call<StoreLoginResponseData>, t: Throwable) {

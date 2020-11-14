@@ -1,5 +1,6 @@
 package com.example.hatewait.member
 
+import LottieDialogFragment.Companion.fragment
 import LottieDialogFragment.Companion.newInstance
 import android.os.Bundle
 import android.util.Log
@@ -36,9 +37,6 @@ class CouponFragment : Fragment(),
 
         var bundle: Bundle = this.requireArguments()
         storeId = bundle.getString("store_id")
-
-        Log.d("retrofit2", "$storeId")
-
 
     }
 
@@ -81,8 +79,10 @@ class CouponFragment : Fragment(),
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        newInstance().show(requireActivity().supportFragmentManager, "")
-        MyApi.CouponService.requestCouponList(
+        if (fragment == null || (!(fragment?.isAdded)!!)) {
+            newInstance().show(requireActivity().supportFragmentManager, "")
+        }
+            MyApi.CouponService.requestCouponList(
             memberInfo!!.id,
             storeId!!
         )

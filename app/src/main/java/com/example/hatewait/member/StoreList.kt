@@ -1,5 +1,6 @@
 package com.example.hatewait.member
 
+import LottieDialogFragment.Companion.fragment
 import LottieDialogFragment.Companion.newInstance
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
@@ -64,7 +65,9 @@ class StoreList : AppCompatActivity() {
         storeListRecyclerView!!.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-        newInstance().show(supportFragmentManager, "")
+        if (fragment == null || (!(fragment?.isAdded)!!)) {
+            newInstance().show(supportFragmentManager, "")
+        }
         MyApi.CouponService.requestStoreList(
             memberInfo!!.id
         )

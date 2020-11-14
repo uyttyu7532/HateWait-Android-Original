@@ -1,5 +1,6 @@
 package com.example.hatewait.memberinfo
 
+import LottieDialogFragment.Companion.fragment
 import LottieDialogFragment.Companion.newInstance
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -34,8 +35,9 @@ class MemberInfoUpdate : AppCompatActivity(),MemberPhoneNumberChangeDialog.Dialo
 
     override fun onResume() {
         super.onResume()
-
-        newInstance().show(supportFragmentManager, "")
+        if (fragment == null || (!(fragment?.isAdded)!!)) {
+            newInstance().show(supportFragmentManager, "")
+        }
         MyApi.UpdateService.requestMemberInfo(memberInfo!!.id)
             .enqueue(object : Callback<MemberInfoData> {
                 override fun onFailure(call: Call<MemberInfoData>, t: Throwable) {

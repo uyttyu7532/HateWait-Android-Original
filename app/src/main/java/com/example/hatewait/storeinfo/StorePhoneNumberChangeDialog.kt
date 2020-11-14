@@ -1,5 +1,6 @@
 package com.example.hatewait.storeinfo
 
+import LottieDialogFragment.Companion.fragment
 import LottieDialogFragment.Companion.newInstance
 import android.app.Dialog
 import android.content.Context
@@ -53,8 +54,10 @@ class StorePhoneNumberChangeDialog : DialogFragment() {
                     val updatedStorePhone = store_phone_editText.text.toString().toInt()
                     dialogListener.applyPhoneNumber(store_phone_editText.text.toString())
 
-                    newInstance().show(requireActivity().supportFragmentManager, "")
-                    MyApi.UpdateService.requestStorePhoneUpdate(
+                    if (fragment == null || (!(fragment?.isAdded)!!)) {
+                        newInstance().show(requireActivity().supportFragmentManager, "")
+                    }
+                        MyApi.UpdateService.requestStorePhoneUpdate(
                         id = storeInfo!!.id,
                         phone = updatedStorePhone
                     )

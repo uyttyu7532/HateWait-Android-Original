@@ -30,6 +30,7 @@ class LottieDialogFragment : DialogFragment() {
 //        setStyle(DialogFragment.STYLE_NO_FRAME, R.style.Theme)
     }
 
+
     companion object {
         var fragment:LottieDialogFragment? = null
         fun newInstance(): LottieDialogFragment {
@@ -38,16 +39,8 @@ class LottieDialogFragment : DialogFragment() {
                 fragment = LottieDialogFragment()
                 fragment!!.arguments = args
             }
-            return fragment!!
+            return fragment as LottieDialogFragment
         }
     }
-
-
-//    val fragment = object {
-//        val fragment:LottieDialogFragment = LottieDialogFragment()
-//        fun newInstance(): LottieDialogFragment {
-//            return fragment
-//        }
-//    }
 
 }

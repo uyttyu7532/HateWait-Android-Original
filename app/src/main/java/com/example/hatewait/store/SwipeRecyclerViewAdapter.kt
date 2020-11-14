@@ -1,5 +1,6 @@
 package com.example.hatewait.store
 
+import LottieDialogFragment.Companion.fragment
 import LottieDialogFragment.Companion.newInstance
 import android.content.Context
 import android.util.Log
@@ -86,13 +87,12 @@ class SwipeRecyclerViewAdapter(
 
 //                if (items[position].called_time.equals("0000-00-00 00:00:00") || items[position].called_time == null) {
 
-                Log.d("retrofit2 대기손님호출 :: ", "${items[position].phone}")
-
-
-                val ft = (context as StoreWaitingList).supportFragmentManager.beginTransaction()
-                newInstance().show(ft, "")
+                if (fragment == null || (!(fragment?.isAdded)!!)) {
+                    val ft = (context as StoreWaitingList).supportFragmentManager.beginTransaction()
+                    newInstance().show(ft, "")
+                }
                 MyApi.WaitingListService.requestWaitingCall(
-                    storeInfo!!.id,
+                    storeInfo.id,
                     items[position].phone
                 )
                     .enqueue(object : Callback<CallWaitingResponseData> {
@@ -113,8 +113,8 @@ class SwipeRecyclerViewAdapter(
                             when (response.code()) {
                                 200 -> {
                                     callCustomer(
-                                        items[position].phone,
-                                        "[${storeInfo!!.name}] ${position}번째 순서 전 입니다. 가게 앞으로 와주세요."
+                                        "0"+items[position].phone,
+                                        "[${storeInfo!!.name}] ${position+1}번째 순서 전 입니다. 가게 앞으로 와주세요."
                                     )
                                     bottomWrapperLeft.backgroundColorResource =
                                         R.color.colorCall
@@ -258,7 +258,6 @@ class SwipeRecyclerViewAdapter(
         })
 
 
-        // db목록에서 대기손님지우기?
         viewHolder.waitingListDeleteButton.setOnClickListener { view ->
             Log.d("retrofit2 ::", storeInfo.toString())
             SweetAlertDialog(view.context, SweetAlertDialog.WARNING_TYPE)
@@ -267,15 +266,6 @@ class SwipeRecyclerViewAdapter(
                 .setConfirmText("방문함")
                 .setConfirmClickListener { sDialog ->
 
-                    // 호출한 손님 목록에서도 지우기 (제대로 동작하나 모르겠다.)
-//                    if (called.containsKey(items[position].phone) && called[items[position].phone]!!) {
-//                        setShared(
-//                            pref,
-//                            items[position].phone,
-//                            false
-//                        )
-//                        called[items[position].phone] = false
-//                    }
 
                     Toast.makeText(
                         view.context,
@@ -286,11 +276,14 @@ class SwipeRecyclerViewAdapter(
 //                    DelCustomerAsyncTask().execute(items[position].id)
 //                    visited = true
 
-                    val ft = (context as StoreWaitingList).supportFragmentManager.beginTransaction()
-                    newInstance().show(ft, "")
+                    if (fragment == null || (!(fragment?.isAdded)!!)) {
+                        val ft =
+                            (context as StoreWaitingList).supportFragmentManager.beginTransaction()
+                        newInstance().show(ft, "")
+                    }
                     MyApi.WaitingListService.requestDeleteWaiting(
                         userId = storeInfo!!.id,
-                        deleteWaiting = DeleteWaitingResponseData(items[position].phone, true)
+                        deleteWaiting = DeleteWaitingResponseData("0"+items[position].phone, true)
                     )
                         .enqueue(object : Callback<MyApi.onlyMessageResponseData> {
                             override fun onFailure(
@@ -337,8 +330,11 @@ class SwipeRecyclerViewAdapter(
                 ) { sDialog ->
 //                    visited = false
 
-                    val ft = (context as StoreWaitingList).supportFragmentManager.beginTransaction()
-                    newInstance().show(ft, "")
+                    if (fragment == null || (!(fragment?.isAdded)!!)) {
+                        val ft =
+                            (context as StoreWaitingList).supportFragmentManager.beginTransaction()
+                        newInstance().show(ft, "")
+                    }
                     MyApi.WaitingListService.requestDeleteWaiting(
                         userId = storeInfo!!.id,
                         deleteWaiting = DeleteWaitingResponseData(items[position].phone, false)

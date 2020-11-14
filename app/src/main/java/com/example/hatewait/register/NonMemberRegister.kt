@@ -1,5 +1,6 @@
 package com.example.hatewait.register
 
+import LottieDialogFragment.Companion.fragment
 import LottieDialogFragment.Companion.newInstance
 import android.os.Bundle
 import android.text.Editable
@@ -8,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.hatewait.R
 import com.example.hatewait.login.LoginInfo.storeInfo
 import com.example.hatewait.model.NonMemberRegisterRequestData
@@ -151,8 +153,10 @@ class NonMemberRegister : androidx.fragment.app.Fragment() {
             var nonMemberRegisterData =
                 NonMemberRegisterRequestData(userPhone, userName, userPeopleNum, false)
 
-            newInstance().show(requireActivity().supportFragmentManager, "")
-            MyApi.RegisterService.requestNonMemberRegister(storeInfo!!.id, nonMemberRegisterData)
+            if (fragment == null || (!(fragment?.isAdded)!!)) {
+                newInstance().show(requireActivity().supportFragmentManager, "")
+            }
+                MyApi.RegisterService.requestNonMemberRegister(storeInfo.id, nonMemberRegisterData)
                 .enqueue(object : Callback<NonMemberRegisterResponseData> {
                     override fun onFailure(
                         call: Call<NonMemberRegisterResponseData>,
@@ -167,17 +171,28 @@ class NonMemberRegister : androidx.fragment.app.Fragment() {
                         response: Response<NonMemberRegisterResponseData>
                     ) {
                         newInstance().dismiss()
-                        Log.d("retrofit2 비회원 대기 등록 ::",response.code().toString() + response.body().toString())
+                        Log.d(
+                            "retrofit2 비회원 대기 등록 ::",
+                            response.code().toString() + response.body().toString()
+                        )
 
-                        if (response.code() == 201) {
-                            var data: NonMemberRegisterResponseData? =
-                                response?.body() // 서버로부터 온 응답
+                        when (response.code()) {
+                            201 -> {
+                                var data: NonMemberRegisterResponseData? =
+                                    response?.body() // 서버로부터 온 응답
 
-                            startActivity<RegisterCheck>(
-                                "CUSTOMER_NAME" to userName,
-                                "CUSTOMER_TURN" to data!!.count
-                            )
-
+                                startActivity<RegisterCheck>(
+                                    "CUSTOMER_NAME" to userName,
+                                    "CUSTOMER_TURN" to data!!.count
+                                )
+                            }
+                            409 -> {
+                                Toast.makeText(
+                                    activity,
+                                    "이미 다른 가게에 등록된 아이디입니다.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
                         }
                     }
                 }

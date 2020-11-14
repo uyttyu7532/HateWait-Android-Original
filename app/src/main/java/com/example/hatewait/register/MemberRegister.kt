@@ -1,5 +1,6 @@
 package com.example.hatewait.register
 
+import LottieDialogFragment.Companion.fragment
 import LottieDialogFragment.Companion.newInstance
 import android.content.Context
 import android.os.Bundle
@@ -109,9 +110,10 @@ class MemberRegister : Fragment() {
 //            MemberRegisterAsyncTask(this@MemberRegister).execute(userId, numOfGroup)
 
 //            var memberRegisterData = MemberRegisterRequestData(userId, Integer(numOfGroup), true)
-
-            newInstance().show(requireActivity().supportFragmentManager, "")
-            MyApi.RegisterService.requestCheckMemberId(CheckMemberIdRequestData(userId))
+            if (fragment == null || (!(fragment?.isAdded)!!)) {
+                newInstance().show(requireActivity().supportFragmentManager, "")
+            }
+                MyApi.RegisterService.requestCheckMemberId(CheckMemberIdRequestData(userId))
                 .enqueue(object : Callback<CheckMemberIdResponseData> {
                     override fun onFailure(
                         call: Call<CheckMemberIdResponseData>,

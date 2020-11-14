@@ -1,5 +1,6 @@
 package com.example.hatewait.signup
 
+import LottieDialogFragment.Companion.fragment
 import LottieDialogFragment.Companion.newInstance
 import android.content.Context
 import android.content.Intent
@@ -82,7 +83,9 @@ class StoreSignUp4 : AppCompatActivity() {
                 storePassword
             )
 
-            newInstance().show(supportFragmentManager, "")
+            if (fragment == null || (!(fragment?.isAdded)!!)) {
+                newInstance().show(supportFragmentManager, "")
+            }
             MyApi.SignUpService.requestStoreSignUp(storeSignUpData)
                 .enqueue(object : Callback<StoreSignUpResponseData> {
                     override fun onFailure(call: Call<StoreSignUpResponseData>, t: Throwable) {

@@ -1,5 +1,6 @@
 package com.example.hatewait.storeinfo
 
+import LottieDialogFragment.Companion.fragment
 import LottieDialogFragment.Companion.newInstance
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -61,7 +62,9 @@ class StoreInfoUpdate2 : AppCompatActivity(), StoreNameChangeDialog.DialogListen
 
             addressDialog.callBack = {
 
-                newInstance().show(supportFragmentManager, "")
+                if (fragment == null || (!(fragment?.isAdded)!!)) {
+                    newInstance().show(supportFragmentManager, "")
+                }
                 MyApi.UpdateService.requestStoreAddressUpdate(
                     id = storeInfo!!.id,
                     address = it
@@ -114,7 +117,9 @@ class StoreInfoUpdate2 : AppCompatActivity(), StoreNameChangeDialog.DialogListen
     override fun onResume() {
         super.onResume()
 
-        newInstance().show(supportFragmentManager, "")
+        if (fragment == null || (!(fragment?.isAdded)!!)) {
+            newInstance().show(supportFragmentManager, "")
+        }
         MyApi.UpdateService.requestStoreInfo(storeInfo!!.id)
             .enqueue(object : Callback<storeInfoData> {
                 override fun onFailure(call: Call<storeInfoData>, t: Throwable) {
@@ -172,7 +177,9 @@ class StoreInfoUpdate2 : AppCompatActivity(), StoreNameChangeDialog.DialogListen
         if (requestCode == REQUEST_CODE_BUSINESS_TIME) {
             if (resultCode == 200) {
 
-                newInstance().show(supportFragmentManager, "")
+                if (fragment == null || (!(fragment?.isAdded)!!)) {
+                    newInstance().show(supportFragmentManager, "")
+                }
                 MyApi.UpdateService.requestStoreBusinessHourUpdate(
                     id = storeInfo!!.id,
                     business_hour = data?.getStringExtra("UPDATED_BUSINESS_TIME").toString()

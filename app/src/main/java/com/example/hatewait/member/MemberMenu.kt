@@ -1,5 +1,6 @@
 package com.example.hatewait.member
 
+import LottieDialogFragment.Companion.fragment
 import LottieDialogFragment.Companion.newInstance
 import android.content.Context
 import android.content.Intent
@@ -136,7 +137,9 @@ class MemberMenu : AppCompatActivity() {
     }
 
     private fun getMyWaiting() {
-        newInstance().show(supportFragmentManager, "")
+        if (fragment == null || (!(fragment?.isAdded)!!)) {
+            newInstance().show(supportFragmentManager, "")
+        }
         MyApi.WaitingListService.requestMyWaiting(memberInfo!!.id)
             .enqueue(object : Callback<MyWaitingResponseData> {
                 override fun onFailure(call: Call<MyWaitingResponseData>, t: Throwable) {

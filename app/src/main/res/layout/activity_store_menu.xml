@@ -15,7 +15,7 @@
 <!--            android:layout_gravity="center"-->
 <!--            app:lottie_autoPlay="true"-->
 <!--            app:lottie_loop="true"-->
-<!--            app:lottie_rawRes="@raw/loading" />-->
+<!--            app:lottie_rawRes="@raw/circle2" />-->
 
     <!--    <androidx.cardview.widget.CardView-->
     <!--            android:id="@+id/nextClientCard"-->

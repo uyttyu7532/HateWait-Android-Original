@@ -1,5 +1,6 @@
 package com.example.hatewait.storeinfo
 
+import LottieDialogFragment.Companion.fragment
 import LottieDialogFragment.Companion.newInstance
 import android.app.AlertDialog
 import android.app.Dialog
@@ -55,8 +56,10 @@ class StoreNameChangeDialog : AppCompatDialogFragment() {
                 val updatedStoreName = store_name_edit_text.text.toString()
                 dialogListener.applyStoreName(updatedStoreName)
 
-                newInstance().show(requireActivity().supportFragmentManager, "")
-                MyApi.UpdateService.requestStoreNameUpdate(
+                if (fragment == null || (!(fragment?.isAdded)!!)) {
+                    newInstance().show(requireActivity().supportFragmentManager, "")
+                }
+                    MyApi.UpdateService.requestStoreNameUpdate(
                     id = storeInfo!!.id,
                     name = updatedStoreName
                 )

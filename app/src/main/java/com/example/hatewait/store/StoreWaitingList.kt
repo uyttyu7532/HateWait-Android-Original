@@ -1,7 +1,7 @@
 package com.example.hatewait.store
 
+import LottieDialogFragment.Companion.fragment
 import LottieDialogFragment.Companion.newInstance
-import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -240,9 +240,11 @@ class StoreWaitingList : AppCompatActivity() {
                         var nonMemberRegisterData =
                             NonMemberRegisterRequestData(userPhone, userName, userPeopleNum, false)
 
-                        newInstance().show(supportFragmentManager, "")
+                        if (fragment == null || (!(fragment?.isAdded)!!)) {
+                            newInstance().show(supportFragmentManager, "")
+                        }
                         MyApi.RegisterService.requestNonMemberRegister(
-                            storeInfo!!.id,
+                            storeInfo.id,
                             nonMemberRegisterData
                         )
                             .enqueue(object : Callback<NonMemberRegisterResponseData> {
@@ -269,7 +271,9 @@ class StoreWaitingList : AppCompatActivity() {
                                             var data: NonMemberRegisterResponseData? =
                                                 response?.body() // 서버로부터 온 응답
                                             getWaitingList()
-
+                                        }
+                                        409 -> {
+                                            Toast.makeText(waitingListContext, "이미 다른 가게에 등록된 아이디입니다.", Toast.LENGTH_SHORT).show()
                                         }
                                     }
                                 }
@@ -291,11 +295,13 @@ class StoreWaitingList : AppCompatActivity() {
     }
 
 
-    public fun getWaitingList() {
+    fun getWaitingList() {
 
         Log.i("대기 리스트 :: ", "getWaitingList()")
 
-        newInstance().show(supportFragmentManager, "")
+        if (fragment == null || (!(fragment?.isAdded)!!)) {
+            newInstance().show(supportFragmentManager, "")
+        }
         MyApi.WaitingListService.requestWaitingList(storeInfo!!.id)
             .enqueue(object : Callback<WaitingListResponseData> {
                 override fun onFailure(call: Call<WaitingListResponseData>, t: Throwable) {
@@ -333,6 +339,7 @@ class StoreWaitingList : AppCompatActivity() {
     }
 
 }
+
 // RecyclerView와 Adapter 연결
 fun setRecyclerView(waitingList: List<WaitingInfo>) {
 

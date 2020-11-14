@@ -1,5 +1,6 @@
 package com.example.hatewait.storeinfo
 
+import LottieDialogFragment.Companion.fragment
 import LottieDialogFragment.Companion.newInstance
 import android.app.AlertDialog
 import android.app.Dialog
@@ -62,8 +63,10 @@ class StoreIntroduceChangeDialog : AppCompatDialogFragment() {
                 val updatedStoreIntroduce = store_introduce_editText.text.toString()
                 dialogListener.applyStoreIntroduce(updatedStoreIntroduce)
 
-                newInstance().show(requireActivity().supportFragmentManager, "")
-                MyApi.UpdateService.requestStoreInfoUpdate(
+                if (fragment == null || (!(fragment?.isAdded)!!)) {
+                    newInstance().show(requireActivity().supportFragmentManager, "")
+                }
+                    MyApi.UpdateService.requestStoreInfoUpdate(
                     id = storeInfo!!.id,
                     info = updatedStoreIntroduce
                 )

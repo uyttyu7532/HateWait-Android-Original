@@ -1,5 +1,6 @@
 package com.example.hatewait.storeinfo
 
+import LottieDialogFragment.Companion.fragment
 import LottieDialogFragment.Companion.newInstance
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
@@ -47,7 +48,9 @@ class ChangePasswordActivity2 : AppCompatActivity() {
         button_continue.setOnClickListener {
 
             if (isStore) { // 가게
-                newInstance().show(supportFragmentManager, "")
+                if (fragment == null || (!(fragment?.isAdded)!!)) {
+                    newInstance().show(supportFragmentManager, "")
+                }
                 MyApi.UpdateService.requestStorePassWordUpdate(
                     userId,
                     password_input_edit_text.text.toString()
@@ -86,7 +89,9 @@ class ChangePasswordActivity2 : AppCompatActivity() {
                     }
                     )
             } else { // 손님
-                newInstance().show(supportFragmentManager, "")
+                if (fragment == null || (!(fragment?.isAdded)!!)) {
+                    newInstance().show(supportFragmentManager, "")
+                }
                 MyApi.UpdateService.requestMemberPassWordUpdate(
                     userId,
                     password_input_edit_text.text.toString()

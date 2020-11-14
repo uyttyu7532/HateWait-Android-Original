@@ -1,5 +1,6 @@
 package com.example.hatewait.storeinfo
 
+import LottieDialogFragment.Companion.fragment
 import LottieDialogFragment.Companion.newInstance
 import android.os.Bundle
 import android.text.Editable
@@ -43,9 +44,11 @@ class SettingStampCoupon : AppCompatActivity() {
         wheelList.add("일")
         wheelView.data = wheelList
 
-        newInstance().show(supportFragmentManager, "")
+        if (fragment == null || (!(fragment?.isAdded)!!)) {
+            newInstance().show(supportFragmentManager, "")
+        }
         MyApi.CouponService.requestStoreCouponInfo(
-            storeInfo!!.id
+            storeInfo.id
         )
             .enqueue(object : Callback<CouponResponseData?> {
                 override fun onFailure(
@@ -204,7 +207,9 @@ class SettingStampCoupon : AppCompatActivity() {
             // 스위치 off 일때
             if (!setting_stamp_switch.isChecked) {
 
-                newInstance().show(supportFragmentManager, "")
+                if (fragment == null || (!(fragment?.isAdded)!!)) {
+                    newInstance().show(supportFragmentManager, "")
+                }
                 MyApi.UpdateService.requestStoreCouponUnableUpdate(
                     CouponUnableRequestData(storeInfo!!.id)
                 )
@@ -239,8 +244,9 @@ class SettingStampCoupon : AppCompatActivity() {
                     "년 (365일)" -> 365
                     else -> 1
                 }
-
-                newInstance().show(supportFragmentManager, "")
+                if (fragment == null || (!(fragment?.isAdded)!!)) {
+                    newInstance().show(supportFragmentManager, "")
+                }
                 MyApi.UpdateService.requestStoreCouponEnableUpdate(
                     CouponEnableRequestData(
                         id = storeInfo!!.id, coupon_information = CouponInfoData(

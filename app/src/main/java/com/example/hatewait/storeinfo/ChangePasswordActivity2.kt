@@ -1,5 +1,6 @@
 package com.example.hatewait.storeinfo
 
+import LottieDialogFragment.Companion.newInstance
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -46,6 +47,7 @@ class ChangePasswordActivity2 : AppCompatActivity() {
         button_continue.setOnClickListener {
 
             if (isStore) { // 가게
+                newInstance().show(supportFragmentManager, "")
                 MyApi.UpdateService.requestStorePassWordUpdate(
                     userId,
                     password_input_edit_text.text.toString()
@@ -62,6 +64,7 @@ class ChangePasswordActivity2 : AppCompatActivity() {
                             call: Call<MyApi.onlyMessageResponseData>,
                             response: Response<MyApi.onlyMessageResponseData>
                         ) {
+                            newInstance().dismiss()
                             var data: MyApi.onlyMessageResponseData? = response?.body()
                             Log.d(
                                 "retrofit2 가게비밀번호 변경 ::",
@@ -83,6 +86,7 @@ class ChangePasswordActivity2 : AppCompatActivity() {
                     }
                     )
             } else { // 손님
+                newInstance().show(supportFragmentManager, "")
                 MyApi.UpdateService.requestMemberPassWordUpdate(
                     userId,
                     password_input_edit_text.text.toString()
@@ -99,6 +103,7 @@ class ChangePasswordActivity2 : AppCompatActivity() {
                             call: Call<MyApi.onlyMessageResponseData>,
                             response: Response<MyApi.onlyMessageResponseData>
                         ) {
+                            newInstance().dismiss()
                             var data: MyApi.onlyMessageResponseData? = response?.body()
                             Log.d(
                                 "retrofit2 손님비밀번호변경 ::",

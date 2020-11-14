@@ -1,5 +1,6 @@
 package com.example.hatewait.storeinfo
 
+import LottieDialogFragment.Companion.newInstance
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
@@ -41,6 +42,8 @@ class StoreCapacityNumberChangeDialog : DialogFragment() {
                 .setPositiveButton("변경") { _, _ ->
                     val updatedStoreCapacity = number_picker_capacity.value
                     dialogListener.applyCapacityNumber(updatedStoreCapacity.toString())
+
+                    newInstance().show(requireActivity().supportFragmentManager, "")
                     MyApi.UpdateService.requestStoreCapacityUpdate(
                         id = storeInfo!!.id,
                         maximum_capacity = updatedStoreCapacity
@@ -57,7 +60,7 @@ class StoreCapacityNumberChangeDialog : DialogFragment() {
                                 call: Call<MyApi.onlyMessageResponseData>,
                                 response: Response<MyApi.onlyMessageResponseData>
                             ) {
-
+                                newInstance().dismiss()
                                 var data: MyApi.onlyMessageResponseData? = response?.body()
                                 Log.d(
                                     "retrofit2 수용인원수정 ::",

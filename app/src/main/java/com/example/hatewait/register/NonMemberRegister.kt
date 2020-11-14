@@ -1,5 +1,6 @@
 package com.example.hatewait.register
 
+import LottieDialogFragment.Companion.newInstance
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -150,7 +151,7 @@ class NonMemberRegister : androidx.fragment.app.Fragment() {
             var nonMemberRegisterData =
                 NonMemberRegisterRequestData(userPhone, userName, userPeopleNum, false)
 
-
+            newInstance().show(requireActivity().supportFragmentManager, "")
             MyApi.RegisterService.requestNonMemberRegister(storeInfo!!.id, nonMemberRegisterData)
                 .enqueue(object : Callback<NonMemberRegisterResponseData> {
                     override fun onFailure(
@@ -165,6 +166,7 @@ class NonMemberRegister : androidx.fragment.app.Fragment() {
                         call: Call<NonMemberRegisterResponseData>,
                         response: Response<NonMemberRegisterResponseData>
                     ) {
+                        newInstance().dismiss()
                         Log.d("retrofit2 비회원 대기 등록 ::",response.code().toString() + response.body().toString())
 
                         if (response.code() == 200) {

@@ -1,6 +1,8 @@
 package com.example.hatewait.member
 
 
+import LottieDialogFragment
+import LottieDialogFragment.Companion.newInstance
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -66,8 +68,8 @@ class MemberMenu : AppCompatActivity() {
         setContentView(R.layout.activity_customer_menu)
 
         mContext = this
-
         recentRefreshTime = findViewById(R.id.recentRefreshTime)
+
 
         init()
         customer_name_text_view.text = memberInfo?.name
@@ -143,6 +145,7 @@ class MemberMenu : AppCompatActivity() {
     }
 
     private fun getMyWaiting() {
+        newInstance().show(supportFragmentManager, "")
         MyApi.WaitingListService.requestMyWaiting(memberInfo!!.id)
             .enqueue(object : Callback<MyWaitingResponseData> {
                 override fun onFailure(call: Call<MyWaitingResponseData>, t: Throwable) {
@@ -154,6 +157,7 @@ class MemberMenu : AppCompatActivity() {
                     call: Call<MyWaitingResponseData>,
                     response: Response<MyWaitingResponseData>
                 ) {
+                    newInstance().dismiss()
                     Log.d(
                         "retrofit2 대기현황 조회 ::",
                         response.code().toString() + response.body().toString()

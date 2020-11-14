@@ -1,5 +1,6 @@
 package com.example.hatewait.signup
 
+import LottieDialogFragment.Companion.newInstance
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -75,6 +76,7 @@ class CustomerSignUpWithNaver : AppCompatActivity() {
 
             Toast.makeText(this,customerSignUpData.toString(), Toast.LENGTH_SHORT).show()
 
+            newInstance().show(supportFragmentManager, "")
             MyApi.SignUpService.requestCustomerSignUp(customerSignUpData)
                 .enqueue(object : Callback<MemberSignUpResponseData> {
                     override fun onFailure(call: Call<MemberSignUpResponseData>, t: Throwable) {
@@ -86,6 +88,7 @@ class CustomerSignUpWithNaver : AppCompatActivity() {
                         call: Call<MemberSignUpResponseData>,
                         response: Response<MemberSignUpResponseData>
                     ) {
+                        newInstance().dismiss()
                         Log.d(
                             "retrofit2 손님회원가입 ::",
                             response.code().toString() + response.body().toString()

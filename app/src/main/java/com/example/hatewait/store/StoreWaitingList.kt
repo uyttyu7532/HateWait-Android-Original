@@ -1,5 +1,7 @@
 package com.example.hatewait.store
 
+import LottieDialogFragment.Companion.newInstance
+import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -45,7 +47,6 @@ lateinit var totalWaitingNumTextView: TextView
 
 class StoreWaitingList : AppCompatActivity() {
 
-    lateinit var mContext: Context
 
     private val nameRegex = Regex("^[가-힣]{2,4}|[a-zA-Z]{2,10}\\s[a-zA-Z]{2,10}$")
     fun verifyName(name: String): Boolean = nameRegex.matches(name)
@@ -58,7 +59,7 @@ class StoreWaitingList : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_store_waiting_list)
 
-        waitingListContext = this.applicationContext
+        waitingListContext = this
 
         setSupportActionBar(waiting_list_toolbar)
         supportActionBar?.apply {
@@ -239,6 +240,7 @@ class StoreWaitingList : AppCompatActivity() {
                         var nonMemberRegisterData =
                             NonMemberRegisterRequestData(userPhone, userName, userPeopleNum, false)
 
+                        newInstance().show(supportFragmentManager, "")
                         MyApi.RegisterService.requestNonMemberRegister(
                             storeInfo!!.id,
                             nonMemberRegisterData
@@ -257,6 +259,7 @@ class StoreWaitingList : AppCompatActivity() {
                                     call: Call<NonMemberRegisterResponseData>,
                                     response: Response<NonMemberRegisterResponseData>
                                 ) {
+                                    newInstance().dismiss()
                                     Log.d(
                                         "retrofit2 비회원 대기 등록 ::",
                                         response.code().toString() + response.body().toString()
@@ -270,7 +273,6 @@ class StoreWaitingList : AppCompatActivity() {
                                         }
                                     }
                                 }
-
 
 
                             }
@@ -289,46 +291,48 @@ class StoreWaitingList : AppCompatActivity() {
     }
 
 
-}
+    public fun getWaitingList() {
 
-fun getWaitingList() {
+        Log.i("대기 리스트 :: ", "getWaitingList()")
 
-    Log.i("대기 리스트 :: ", "getWaitingList()")
+        newInstance().show(supportFragmentManager, "")
+        MyApi.WaitingListService.requestWaitingList(storeInfo!!.id)
+            .enqueue(object : Callback<WaitingListResponseData> {
+                override fun onFailure(call: Call<WaitingListResponseData>, t: Throwable) {
 
-    MyApi.WaitingListService.requestWaitingList(storeInfo!!.id)
-        .enqueue(object : Callback<WaitingListResponseData> {
-            override fun onFailure(call: Call<WaitingListResponseData>, t: Throwable) {
+                    Log.d("retrofit2 대기 리스트 :: ", "서버 연결 실패 $t")
+                }
 
-                Log.d("retrofit2 대기 리스트 :: ", "서버 연결 실패 $t")
-            }
-
-            override fun onResponse(
-                call: Call<WaitingListResponseData>,
-                response: Response<WaitingListResponseData>
-            ) {
-                Log.d(
-                    "retrofit2 대기 리스트 ::",
-                    response.code().toString() + response.body().toString()
-                )
-                when (response.code()) {
-                    200 -> {
-                        val data = response.body() // 서버로부터 온 응답
-                        data?.let {
-                            var responseMessage = it.message
-                            if (it.waiting_customers != null) {
-                                setRecyclerView(it.waiting_customers!!)
-                            } else {
-                                Toast.makeText(mContext, "현재 대기 인원이 없어요", Toast.LENGTH_SHORT).show()
+                override fun onResponse(
+                    call: Call<WaitingListResponseData>,
+                    response: Response<WaitingListResponseData>
+                ) {
+                    newInstance().dismiss()
+                    Log.d(
+                        "retrofit2 대기 리스트 ::",
+                        response.code().toString() + response.body().toString()
+                    )
+                    when (response.code()) {
+                        200 -> {
+                            val data = response.body() // 서버로부터 온 응답
+                            data?.let {
+                                var responseMessage = it.message
+                                if (it.waiting_customers != null) {
+                                    setRecyclerView(it.waiting_customers!!)
+                                } else {
+                                    Toast.makeText(mContext, "현재 대기 인원이 없어요", Toast.LENGTH_SHORT)
+                                        .show()
+                                }
                             }
                         }
                     }
+
                 }
-
             }
-        }
-        )
-}
+            )
+    }
 
+}
 // RecyclerView와 Adapter 연결
 fun setRecyclerView(waitingList: List<WaitingInfo>) {
 

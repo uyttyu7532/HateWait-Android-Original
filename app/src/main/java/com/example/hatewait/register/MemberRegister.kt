@@ -1,5 +1,6 @@
 package com.example.hatewait.register
 
+import LottieDialogFragment.Companion.newInstance
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable
@@ -109,6 +110,7 @@ class MemberRegister : Fragment() {
 
 //            var memberRegisterData = MemberRegisterRequestData(userId, Integer(numOfGroup), true)
 
+            newInstance().show(requireActivity().supportFragmentManager, "")
             MyApi.RegisterService.requestCheckMemberId(CheckMemberIdRequestData(userId))
                 .enqueue(object : Callback<CheckMemberIdResponseData> {
                     override fun onFailure(
@@ -123,6 +125,7 @@ class MemberRegister : Fragment() {
                         call: Call<CheckMemberIdResponseData>,
                         response: Response<CheckMemberIdResponseData>
                     ) {
+                        newInstance().dismiss()
                         Log.d("retrofit2 회원 id 확인 ::",response.code().toString() + response.body().toString())
 
                         if (response.code() == 200) {

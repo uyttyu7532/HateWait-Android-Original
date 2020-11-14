@@ -1,5 +1,6 @@
 package com.example.hatewait.signup
 
+import LottieDialogFragment.Companion.newInstance
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -65,6 +66,7 @@ class CustomerSignUp3 : AppCompatActivity() {
 
             var customerSignUpData = MemberSignUpRequestData(userId, userName, userPhone, userEmail, userPassword)
 
+            newInstance().show(supportFragmentManager, "")
             MyApi.SignUpService.requestCustomerSignUp(customerSignUpData)
                 .enqueue(object : Callback<MemberSignUpResponseData> {
                     override fun onFailure(call: Call<MemberSignUpResponseData>, t: Throwable) {
@@ -76,6 +78,7 @@ class CustomerSignUp3 : AppCompatActivity() {
                         call: Call<MemberSignUpResponseData>,
                         response: Response<MemberSignUpResponseData>
                     ) {
+                        newInstance().dismiss()
                         Log.d(
                             "retrofit2 손님회원가입 ::",
                             response.code().toString() + response.body().toString()

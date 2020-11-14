@@ -1,5 +1,6 @@
 package com.example.hatewait.storeinfo
 
+import LottieDialogFragment.Companion.newInstance
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -42,6 +43,7 @@ class SettingStampCoupon : AppCompatActivity() {
         wheelList.add("일")
         wheelView.data = wheelList
 
+        newInstance().show(supportFragmentManager, "")
         MyApi.CouponService.requestStoreCouponInfo(
             storeInfo!!.id
         )
@@ -57,6 +59,7 @@ class SettingStampCoupon : AppCompatActivity() {
                     call: Call<CouponResponseData?>,
                     response: Response<CouponResponseData?>
                 ) {
+                    newInstance().dismiss()
                     var data: CouponResponseData? = response?.body()
                     Log.d(
                         "retrofit2 쿠폰설정정보조회 ::",
@@ -201,6 +204,7 @@ class SettingStampCoupon : AppCompatActivity() {
             // 스위치 off 일때
             if (!setting_stamp_switch.isChecked) {
 
+                newInstance().show(supportFragmentManager, "")
                 MyApi.UpdateService.requestStoreCouponUnableUpdate(
                     CouponUnableRequestData(storeInfo!!.id)
                 )
@@ -216,6 +220,7 @@ class SettingStampCoupon : AppCompatActivity() {
                             call: Call<MyApi.onlyMessageResponseData>,
                             response: Response<MyApi.onlyMessageResponseData>
                         ) {
+                            newInstance().dismiss()
                             var data: MyApi.onlyMessageResponseData? = response?.body()
                             Log.d(
                                 "retrofit2 쿠폰설정해제 ::",
@@ -235,7 +240,7 @@ class SettingStampCoupon : AppCompatActivity() {
                     else -> 1
                 }
 
-
+                newInstance().show(supportFragmentManager, "")
                 MyApi.UpdateService.requestStoreCouponEnableUpdate(
                     CouponEnableRequestData(
                         id = storeInfo!!.id, coupon_information = CouponInfoData(
@@ -259,6 +264,7 @@ class SettingStampCoupon : AppCompatActivity() {
                             call: Call<MyApi.onlyMessageResponseData>,
                             response: Response<MyApi.onlyMessageResponseData>
                         ) {
+                            newInstance().dismiss()
                             var data: MyApi.onlyMessageResponseData? = response?.body()
                             Log.d(
                                 "retrofit2 쿠폰설정 ::",

@@ -1,5 +1,6 @@
 package com.example.hatewait.member
 
+import LottieDialogFragment.Companion.newInstance
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -63,7 +64,7 @@ class StoreList : AppCompatActivity() {
         storeListRecyclerView!!.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-
+        newInstance().show(supportFragmentManager, "")
         MyApi.CouponService.requestStoreList(
             memberInfo!!.id
         )
@@ -79,6 +80,9 @@ class StoreList : AppCompatActivity() {
                     call: Call<StoreListResponseData>,
                     response: Response<StoreListResponseData>
                 ) {
+
+                    newInstance().dismiss()
+
                     var data: StoreListResponseData? = response?.body() // 서버로부터 온 응답
                     Log.d(
                         "retrofit2 가게 리스트 ::",

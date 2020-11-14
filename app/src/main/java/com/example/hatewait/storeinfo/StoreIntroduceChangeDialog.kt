@@ -1,5 +1,6 @@
 package com.example.hatewait.storeinfo
 
+import LottieDialogFragment.Companion.newInstance
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
@@ -60,6 +61,8 @@ class StoreIntroduceChangeDialog : AppCompatDialogFragment() {
             .setPositiveButton("변경", DialogInterface.OnClickListener { _, _ ->
                 val updatedStoreIntroduce = store_introduce_editText.text.toString()
                 dialogListener.applyStoreIntroduce(updatedStoreIntroduce)
+
+                newInstance().show(requireActivity().supportFragmentManager, "")
                 MyApi.UpdateService.requestStoreInfoUpdate(
                     id = storeInfo!!.id,
                     info = updatedStoreIntroduce
@@ -76,7 +79,7 @@ class StoreIntroduceChangeDialog : AppCompatDialogFragment() {
                             call: Call<MyApi.onlyMessageResponseData>,
                             response: Response<MyApi.onlyMessageResponseData>
                         ) {
-
+                            newInstance().dismiss()
                             var data: MyApi.onlyMessageResponseData? = response?.body()
                             Log.d(
                                 "retrofit2 가게 소개 수정 ::",

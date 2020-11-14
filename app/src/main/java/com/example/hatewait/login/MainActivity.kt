@@ -1,5 +1,6 @@
 package com.example.hatewait.login
 
+import LottieDialogFragment.Companion.newInstance
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
@@ -75,6 +76,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         mContext = this
+
+
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         buttonInitialize()
         naverLoginInit()
@@ -127,6 +130,7 @@ class MainActivity : AppCompatActivity() {
                     password_input_editText.text.toString()
                 )
 
+                newInstance().show(supportFragmentManager, "")
                 MyApi.LoginService.requestMemberLogin(customerLoginData)
                     .enqueue(object : Callback<MemberLoginResponseData> {
                         override fun onFailure(call: Call<MemberLoginResponseData>, t: Throwable) {
@@ -140,12 +144,14 @@ class MainActivity : AppCompatActivity() {
                             call: Call<MemberLoginResponseData>,
                             response: Response<MemberLoginResponseData>
                         ) {
+                            newInstance().dismiss()
                             Log.d(
                                 "retrofit2 손님로그인 ::",
                                 response.code().toString() + response.body().toString()
                             )
                             when (response.code()) {
                                 200 -> {
+
                                     var data: MemberLoginResponseData? = response?.body()
                                     memberInfo = data
 
@@ -187,6 +193,7 @@ class MainActivity : AppCompatActivity() {
                     password_input_editText.text.toString()
                 )
 
+                newInstance().show(supportFragmentManager, "")
                 MyApi.LoginService.requestStoreLogin(storeLoginData)
                     .enqueue(object : Callback<StoreLoginResponseData> {
                         override fun onFailure(call: Call<StoreLoginResponseData>, t: Throwable) {
@@ -200,6 +207,7 @@ class MainActivity : AppCompatActivity() {
                             call: Call<StoreLoginResponseData>,
                             response: Response<StoreLoginResponseData>
                         ) {
+                            newInstance().dismiss()
                             Log.d(
                                 "retrofit2 가게로그인 ::",
                                 response.code().toString() + response.body().toString()
@@ -208,7 +216,6 @@ class MainActivity : AppCompatActivity() {
                                 200 -> {
                                     var data: StoreLoginResponseData? = response?.body()
                                     storeInfo = data
-
                                     startActivity<StoreMenu>()
                                 }
                                 409 -> {

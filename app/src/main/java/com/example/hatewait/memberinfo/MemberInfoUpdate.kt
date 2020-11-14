@@ -1,5 +1,6 @@
 package com.example.hatewait.memberinfo
 
+import LottieDialogFragment.Companion.newInstance
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -36,7 +37,7 @@ class MemberInfoUpdate : AppCompatActivity(),MemberPhoneNumberChangeDialog.Dialo
     override fun onResume() {
         super.onResume()
 
-        // 아직 테스트 못함
+        newInstance().show(supportFragmentManager, "")
         MyApi.UpdateService.requestMemberInfo(memberInfo!!.id)
             .enqueue(object : Callback<MemberInfoData> {
                 override fun onFailure(call: Call<MemberInfoData>, t: Throwable) {
@@ -47,6 +48,7 @@ class MemberInfoUpdate : AppCompatActivity(),MemberPhoneNumberChangeDialog.Dialo
                     call: Call<MemberInfoData>,
                     response: Response<MemberInfoData>
                 ) {
+                    newInstance().dismiss()
                     var data: MemberInfoData? = response?.body()
                     Log.d(
                         "retrofit2 손님정보조회 ::",

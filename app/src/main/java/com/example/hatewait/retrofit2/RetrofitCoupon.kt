@@ -1,6 +1,5 @@
 package com.example.hatewait.retrofit2
 
-import com.example.hatewait.model.CouponInfoData
 import com.example.hatewait.model.CouponListResponseData
 import com.example.hatewait.model.CouponResponseData
 import com.example.hatewait.model.StoreListResponseData

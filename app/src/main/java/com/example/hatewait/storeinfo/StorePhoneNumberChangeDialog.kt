@@ -1,5 +1,6 @@
 package com.example.hatewait.storeinfo
 
+import LottieDialogFragment.Companion.newInstance
 import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
@@ -51,6 +52,8 @@ class StorePhoneNumberChangeDialog : DialogFragment() {
                 .setPositiveButton("변경", DialogInterface.OnClickListener { _, _ ->
                     val updatedStorePhone = store_phone_editText.text.toString().toInt()
                     dialogListener.applyPhoneNumber(store_phone_editText.text.toString())
+
+                    newInstance().show(requireActivity().supportFragmentManager, "")
                     MyApi.UpdateService.requestStorePhoneUpdate(
                         id = storeInfo!!.id,
                         phone = updatedStorePhone
@@ -67,7 +70,7 @@ class StorePhoneNumberChangeDialog : DialogFragment() {
                                 call: Call<MyApi.onlyMessageResponseData>,
                                 response: Response<MyApi.onlyMessageResponseData>
                             ) {
-
+                                newInstance().dismiss()
                                 var data: MyApi.onlyMessageResponseData? = response?.body()
                                 Log.d(
                                     "retrofit2 가게 번호 수정 ::",

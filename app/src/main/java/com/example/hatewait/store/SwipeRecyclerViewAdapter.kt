@@ -1,10 +1,7 @@
 package com.example.hatewait.store
 
+import LottieDialogFragment.Companion.newInstance
 import android.content.Context
-import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
-import android.content.SharedPreferences
-import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +18,7 @@ import com.daimajia.swipe.adapters.RecyclerSwipeAdapter
 import com.example.hatewait.R
 import com.example.hatewait.fcm.FcmPush
 import com.example.hatewait.login.storeInfo
+import com.example.hatewait.member.StoreList
 import com.example.hatewait.model.CallWaitingResponseData
 import com.example.hatewait.model.ClientData
 import com.example.hatewait.model.DeleteWaitingResponseData
@@ -88,6 +86,10 @@ class SwipeRecyclerViewAdapter(
 //                if (items[position].called_time.equals("0000-00-00 00:00:00") || items[position].called_time == null) {
 
                     Log.d("retrofit2 대기손님호출 :: ", "${items[position].phone}")
+
+
+                val ft = (context as StoreWaitingList).supportFragmentManager.beginTransaction()
+                newInstance().show(ft, "")
                     MyApi.WaitingListService.requestWaitingCall(
                         storeInfo!!.id,
                         items[position].phone
@@ -101,6 +103,7 @@ class SwipeRecyclerViewAdapter(
                                 call: Call<CallWaitingResponseData>,
                                 response: Response<CallWaitingResponseData>
                             ) {
+                                newInstance().dismiss()
                                 var data: CallWaitingResponseData? = response?.body()
                                 Log.d("retrofit2 대기손님호출 ::", response.code().toString() + response.body().toString())
                                 when (response.code()) {
@@ -119,7 +122,7 @@ class SwipeRecyclerViewAdapter(
 
 
 
-                                        getWaitingList()
+//                                        getWaitingList()
                                     }
                                 }
                             }
@@ -275,6 +278,8 @@ class SwipeRecyclerViewAdapter(
 //                    DelCustomerAsyncTask().execute(items[position].id)
 //                    visited = true
 
+                    val ft = (context as StoreWaitingList).supportFragmentManager.beginTransaction()
+                    newInstance().show(ft, "")
                     MyApi.WaitingListService.requestDeleteWaiting(
                         userId = storeInfo!!.id,
                         deleteWaiting = DeleteWaitingResponseData(items[position].phone, true)
@@ -291,6 +296,7 @@ class SwipeRecyclerViewAdapter(
                                 call: Call<MyApi.onlyMessageResponseData>,
                                 response: Response<MyApi.onlyMessageResponseData>
                             ) {
+                                newInstance().dismiss()
                                 var data: MyApi.onlyMessageResponseData? = response?.body()
                                 Log.d(
                                     "retrofit2 대기 삭제 ::",
@@ -305,7 +311,7 @@ class SwipeRecyclerViewAdapter(
                                         notifyItemRangeChanged(position, items.size)
                                         mItemManger.closeAllItems()
 
-                                        getWaitingList()
+//                                        getWaitingList()
                                     }
                                 }
                             }
@@ -322,6 +328,9 @@ class SwipeRecyclerViewAdapter(
                     "방문안함"
                 ) { sDialog ->
 //                    visited = false
+
+                    val ft = (context as StoreWaitingList).supportFragmentManager.beginTransaction()
+                    newInstance().show(ft, "")
                     MyApi.WaitingListService.requestDeleteWaiting(
                         userId = storeInfo!!.id,
                         deleteWaiting = DeleteWaitingResponseData(items[position].phone, false)
@@ -338,6 +347,7 @@ class SwipeRecyclerViewAdapter(
                                 call: Call<MyApi.onlyMessageResponseData>,
                                 response: Response<MyApi.onlyMessageResponseData>
                             ) {
+                                newInstance().dismiss()
                                 var data: MyApi.onlyMessageResponseData? = response?.body()
                                 Log.d(
                                     "retrofit2 대기 삭제 ::",
@@ -352,7 +362,7 @@ class SwipeRecyclerViewAdapter(
                                         notifyItemRangeChanged(position, items.size)
                                         mItemManger.closeAllItems()
 
-                                        getWaitingList()
+//                                        getWaitingList()
                                     }
                                 }
                             }

@@ -1,5 +1,6 @@
 package com.example.hatewait.login
 
+import LottieDialogFragment.Companion.newInstance
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
@@ -64,6 +65,8 @@ class LoginRegisterViewPagerActivity : AppCompatActivity(),
         var memberRegisterData =
             MemberRegisterRequestData(customer_id, customer_people_num, true)
         Log.d("retrofit2 회원 대기 등록 :: ", memberRegisterData.toString())
+
+        newInstance().show(supportFragmentManager, "")
         MyApi.RegisterService.requestMemberRegister(storeInfo!!.id, memberRegisterData)
             .enqueue(object : Callback<MemberRegisterResponseData> {
                 override fun onFailure(
@@ -77,6 +80,7 @@ class LoginRegisterViewPagerActivity : AppCompatActivity(),
                     call: Call<MemberRegisterResponseData>,
                     response: Response<MemberRegisterResponseData>
                 ) {
+                    newInstance().dismiss()
                     var data: MemberRegisterResponseData? = response?.body() // 서버로부터 온 응답
                     Log.d(
                         "retrofit2 회원 대기 등록 ::",

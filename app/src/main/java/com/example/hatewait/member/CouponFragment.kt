@@ -1,5 +1,6 @@
 package com.example.hatewait.member
 
+import LottieDialogFragment.Companion.newInstance
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -80,6 +81,7 @@ class CouponFragment : Fragment(),
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        newInstance().show(requireActivity().supportFragmentManager, "")
         MyApi.CouponService.requestCouponList(
             memberInfo!!.id,
             storeId!!
@@ -96,6 +98,7 @@ class CouponFragment : Fragment(),
                     call: Call<CouponListResponseData>,
                     response: Response<CouponListResponseData>
                 ) {
+                    newInstance().dismiss()
                     var data: CouponListResponseData? = response?.body() // 서버로부터 온 응답
                     Log.d(
                         "retrofit2 쿠폰 리스트 ::",

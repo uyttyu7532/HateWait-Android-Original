@@ -5,22 +5,37 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.example.hatewait.R
-import kotlinx.android.synthetic.main.activity_select_sign_up.*
+import kotlinx.android.synthetic.main.activity_select_store_member.*
 import org.jetbrains.anko.startActivity
 
 class SelectSignUp : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_select_sign_up)
+        setContentView(R.layout.activity_select_store_member)
 
-        var isFromNaver = intent.getBooleanExtra("isFromNaver",false)
-        if(isFromNaver){
+        var isSignUp = intent.getBooleanExtra("isSignUp", true)
+        when (isSignUp) {
+            true -> signUp() // 회원가입
+            else -> findPassword() // 비밀번호 찾기
+        }
+
+
+    }
+
+
+    fun signUp() {
+        var isFromNaver = intent.getBooleanExtra("isFromNaver", false)
+        if (isFromNaver) { // 네이버 아이디로 회원가입
             var naverUserId = intent.getStringExtra("naverUserId")
             var naverUserEmail = intent.getStringExtra("naverUserEmail")
             var naverUserName = intent.getStringExtra("naverUserName")
-            Toast.makeText(this, "$isFromNaver $naverUserId $naverUserEmail $naverUserName", Toast.LENGTH_SHORT ).show()
+            Toast.makeText(
+                this,
+                "$isFromNaver $naverUserId $naverUserEmail $naverUserName",
+                Toast.LENGTH_SHORT
+            ).show()
 
-            store_sign_up_button.setOnClickListener{
+            store_sign_up_button.setOnClickListener {
                 val intent = Intent(this, StoreSignUp3::class.java)
                 intent.putExtra("isFromNaver", true)
                 intent.putExtra("naverUserId", naverUserId)
@@ -29,7 +44,7 @@ class SelectSignUp : AppCompatActivity() {
                 this.startActivity(intent)
             }
 
-            customer_sign_up_button.setOnClickListener{
+            customer_sign_up_button.setOnClickListener {
                 val intent = Intent(this, CustomerSignUpWithNaver::class.java)
                 intent.putExtra("isFromNaver", true)
                 intent.putExtra("naverUserId", naverUserId)
@@ -38,19 +53,31 @@ class SelectSignUp : AppCompatActivity() {
                 this.startActivity(intent)
             }
 
-        }
-        else{
-            Toast.makeText(this, "$isFromNaver", Toast.LENGTH_SHORT ).show()
-            store_sign_up_button.setOnClickListener{
+        } else { // 일반 회원가입
+            Toast.makeText(this, "$isFromNaver", Toast.LENGTH_SHORT).show()
+            store_sign_up_button.setOnClickListener {
                 startActivity<StoreSignUp1>()
             }
 
-            customer_sign_up_button.setOnClickListener{
+            customer_sign_up_button.setOnClickListener {
                 startActivity<CustomerSignUp1>()
             }
         }
+    }
 
+    fun findPassword() {
+        // 가게 회원 비밀번호 찾기
+        store_sign_up_button.setOnClickListener {
+            val intent = Intent(this, FindPassWordActivity1::class.java)
+            intent.putExtra("isStore", true)
+            this.startActivity(intent)
+        }
 
-
+        // 손님 회원 비밀번호 찾기
+        customer_sign_up_button.setOnClickListener {
+            val intent = Intent(this, FindPassWordActivity1::class.java)
+            intent.putExtra("isStore", false)
+            this.startActivity(intent)
+        }
     }
 }

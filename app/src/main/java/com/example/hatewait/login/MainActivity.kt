@@ -15,9 +15,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hatewait.R
-import com.example.hatewait.member.ManageStampCouponActivity
 import com.example.hatewait.member.MemberMenu
-import com.example.hatewait.member.StoreListContext
 import com.example.hatewait.model.MemberLoginRequestData
 import com.example.hatewait.model.MemberLoginResponseData
 import com.example.hatewait.model.StoreLoginRequestData
@@ -83,11 +81,6 @@ class MainActivity : AppCompatActivity() {
         naverLoginInit()
         addTextChangeListener()
 
-    }
-
-
-    override fun onResume() {
-        super.onResume()
     }
 
     override fun onStart() {
@@ -240,11 +233,14 @@ class MainActivity : AppCompatActivity() {
         account_register_textButton.setOnClickListener {
             val intent = Intent(this, SelectSignUp::class.java)
             intent.putExtra("isFromNaver", false)
+            intent.putExtra("isSignUp", true)
             this.startActivity(intent)
         }
 
         find_password_button.setOnClickListener {
-            startActivity<FindPassWordActivity1>()
+            val intent = Intent(this, SelectSignUp::class.java)
+            intent.putExtra("isSignUp", false)
+            this.startActivity(intent)
         }
     }
 
@@ -369,7 +365,7 @@ class MainActivity : AppCompatActivity() {
 
             override fun doInBackground(vararg params: Void?): String? {
                 if (OAuthLoginState.NEED_REFRESH_TOKEN == loginModule.getState(mContext)) {  // 네이버
-                    Log.d("네아로" , loginModule.getState(mContext).toString())
+                    Log.d("네아로", loginModule.getState(mContext).toString())
                     loginModule.refreshAccessToken(mContext);
                 }
 //                naver user profile 을 JSON 객체 형태로 얻어옴.
@@ -379,7 +375,7 @@ class MainActivity : AppCompatActivity() {
                 val at: String = loginModule.getAccessToken(this@MainActivity)
 //      API 호출   실패시 :  null 반환.
 //                성공시: 네이버 유저정보 JSON Format String return
-                Log.d("네아로" , "$at ${loginModule.getExpiresAt(this@MainActivity)}")
+                Log.d("네아로", "$at ${loginModule.getExpiresAt(this@MainActivity)}")
 
                 return loginModule.requestApi(this@MainActivity, at, url)
             }
@@ -402,12 +398,13 @@ class MainActivity : AppCompatActivity() {
 //                    }
 //                    DB에 at 을 업데이트하고 로그인
 //                } else {
-                    val intent = Intent(mContext, SelectSignUp::class.java)
-                    intent.putExtra("isFromNaver", true)
-                    intent.putExtra("naverUserId", naverUserId)
-                    intent.putExtra("naverUserEmail", naverUserEmail)
-                    intent.putExtra("naverUserName", naverUserName)
-                    mContext.startActivity(intent)
+                val intent = Intent(mContext, SelectSignUp::class.java)
+                intent.putExtra("isFromNaver", true)
+                intent.putExtra("isSignUp", true)
+                intent.putExtra("naverUserId", naverUserId)
+                intent.putExtra("naverUserEmail", naverUserEmail)
+                intent.putExtra("naverUserName", naverUserName)
+                mContext.startActivity(intent)
 //                }
 
 

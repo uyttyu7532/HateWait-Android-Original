@@ -33,6 +33,8 @@ class FindPassWordActivity1 : AppCompatActivity() {
                 + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")
     )
 
+    var isStore = intent.getBooleanExtra("isStore", true)
+
     fun verifyEmail(input_id: String): Boolean = emailRegex.matches(input_id)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +44,13 @@ class FindPassWordActivity1 : AppCompatActivity() {
 
         register_toolbar_title_textView.text = "비밀번호 변경"
 
+        setSupportActionBar(register_toolbar)
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setHomeAsUpIndicator(R.drawable.back_icon)
+            setHomeActionContentDescription("로그인 화면 이동")
+            setDisplayShowTitleEnabled(false)
+        }
 
         addTextChangeListener()
         check_email_button.setOnClickListener {
@@ -61,13 +70,7 @@ class FindPassWordActivity1 : AppCompatActivity() {
             showSettingPopup()
         }
 
-        setSupportActionBar(register_toolbar)
-        supportActionBar?.apply {
-            setDisplayHomeAsUpEnabled(true)
-            setHomeAsUpIndicator(R.drawable.back_icon)
-            setHomeActionContentDescription("로그인 화면 이동")
-            setDisplayShowTitleEnabled(false)
-        }
+
     }
 
 //    override fun onCreateOptionsMenu(menu: Menu?): Boolean {

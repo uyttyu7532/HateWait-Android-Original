@@ -222,7 +222,7 @@ class SettingStampCoupon : AppCompatActivity() {
                                 response.code().toString() + response.body().toString()
                             )
                             when (response.code()) {
-                                200 -> {
+                                204 -> {
                                     finish()
                                 }
                             }
@@ -265,7 +265,7 @@ class SettingStampCoupon : AppCompatActivity() {
                                 response.code().toString() + response.body().toString()
                             )
                             when (response.code()) {
-                                200 -> {
+                                204 -> {
                                     finish()
                                 }
                             }

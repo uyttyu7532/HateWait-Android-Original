@@ -78,7 +78,7 @@ class StoreNameChangeDialog : AppCompatDialogFragment() {
                             )
                             when (response.code()) {
 
-                                200 -> {
+                                204 -> {
                                 }
                             }
                         }

@@ -64,7 +64,7 @@ class StoreCapacityNumberChangeDialog : DialogFragment() {
                                     response.code().toString() + response.body().toString()
                                 )
                                 when (response.code()) {
-                                    200 -> {
+                                    204 -> {
                                     }
                                 }
                             }

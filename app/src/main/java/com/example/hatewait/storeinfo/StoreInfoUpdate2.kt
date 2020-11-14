@@ -85,7 +85,7 @@ class StoreInfoUpdate2 : AppCompatActivity(), StoreNameChangeDialog.DialogListen
                             response.code().toString() + response.body().toString()
                         )
                         when (response.code()) {
-                            200 -> {
+                            204 -> {
                                 setting_store_address_text_view.setText(it)
                             }
                         }
@@ -192,7 +192,7 @@ class StoreInfoUpdate2 : AppCompatActivity(), StoreNameChangeDialog.DialogListen
                             response.code().toString() + response.body().toString()
                         )
                         when (response.code()) {
-                            200 -> {
+                            204 -> {
                                 var data: MyApi.onlyMessageResponseData? =
                                     response?.body() // 서버로부터 온 응답
                             }

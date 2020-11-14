@@ -83,7 +83,7 @@ class StoreIntroduceChangeDialog : AppCompatDialogFragment() {
                                 response.code().toString() + response.body().toString()
                             )
                             when (response.code()) {
-                                200 -> {
+                                204 -> {
                                 }
                             }
                         }

@@ -68,7 +68,7 @@ class ChangePasswordActivity2 : AppCompatActivity() {
                                 response.code().toString() + response.body().toString()
                             )
                             when (response.code()) {
-                                200 -> {
+                                204 -> {
                                     Toast.makeText(
                                         mcontext,
                                         "비밀번호가 성공적으로 변경되었습니다.",
@@ -105,7 +105,7 @@ class ChangePasswordActivity2 : AppCompatActivity() {
                                 response.code().toString() + response.body().toString()
                             )
                             when (response.code()) {
-                                20 -> {
+                                204 -> {
                                     Toast.makeText(
                                         mcontext,
                                         "비밀번호가 성공적으로 변경되었습니다.",

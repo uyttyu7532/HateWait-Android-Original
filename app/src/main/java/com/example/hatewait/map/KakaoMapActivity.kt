@@ -1,5 +1,6 @@
 package com.example.hatewait.map
 
+import LottieDialogFragment.Companion.newInstance
 import android.Manifest
 import android.content.Context
 import android.content.DialogInterface
@@ -13,17 +14,19 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.FragmentManager
 import com.example.hatewait.R
+import com.example.hatewait.model.HaitWaitRestaurantRequestData
 import com.example.hatewait.model.Restaurant
+import com.example.hatewait.retrofit2.MyApi
 import kotlinx.android.synthetic.main.activity_kakao_map.*
-import kotlinx.android.synthetic.main.activity_visitor_list.*
 import net.daum.mf.map.api.CalloutBalloonAdapter
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPOIItem.CalloutBalloonButtonType
@@ -41,6 +44,8 @@ private lateinit var mcontext: Context
 
 class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
     MapView.MapViewEventListener {
+
+
     private var mapView: MapView? = null
     private var mapViewContainer: ViewGroup? = null
     private var REQUIRED_PERMISSIONS =
@@ -51,6 +56,8 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
     private var left: String? = null
     private var top: String? = null
     private var right: String? = null
+    val tempRestaurant = ArrayList<MapPOIItem>()
+    val tempMemberRestaurant = ArrayList<MapPOIItem>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,12 +68,16 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
             setHomeAsUpIndicator(R.drawable.back_icon)
-            setHomeActionContentDescription("로그인 화면 이동")
             setDisplayShowTitleEnabled(false)
         }
 
-        mcontext = this.applicationContext
+        refresh_wait_map.setOnClickListener {
+            showHateWaitStore()
+        }
 
+
+
+        mcontext = this.applicationContext
         mapView = MapView(this)
         mapViewContainer =
             findViewById<View>(R.id.kakaoMapView) as ViewGroup
@@ -74,8 +85,37 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
         mapView!!.setMapViewEventListener(this)
 //        mapView!!.currentLocationTrackingMode = MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeadingWithoutMapMoving
         mapView!!.setCalloutBalloonAdapter(CustomCalloutBalloonAdapter())
-        mapView!!.setPOIItemEventListener(poiItemEventListener);
+        mapView!!.setPOIItemEventListener(poiItemEventListener)
 
+
+        // 회원 마커 테스트 예제
+//        val marker = MapPOIItem()
+//        var address = "서울시 강남구 테헤란로 137길 (5) (37.489891,127.028809)"
+//
+//        // 마지막 띄어쓰기 이후 좌표값 표시
+//        val point: String = address.substringAfterLast(' ')
+//        val point2: String = point.replace("(", "").replace(")", "")
+//
+//        val mapPoint = MapPoint.mapPointWithGeoCoord(
+//            point2.split(",")[0].toDouble(),
+//            point2.split(",")[1].toDouble()
+//        )
+//
+//        marker.itemName = "돈블랑"
+//        marker.tag = 1
+//        marker.userObject =
+//            "돈블랑"+","+"0212345678" + "," + address.substringBeforeLast(' ') + "," + "restaurant.business_time" + ","+ "연중무휴" + "," + "12"
+//        marker.mapPoint = mapPoint
+//        marker.markerType = MapPOIItem.MarkerType.CustomImage
+//        marker.selectedMarkerType = MapPOIItem.MarkerType.CustomImage
+//        marker.customSelectedImageResourceId = R.drawable.markerpin_hatewait0
+//        marker.customImageResourceId = R.drawable.markerpin_hatewait
+//        marker.isCustomImageAutoscale = false
+//        marker.setCustomImageAnchor(
+//            0.5f,
+//            1.0f
+//        ); // 마커 이미지중 기준이 되는 위치(앵커포인트) 지정 - 마커 이미지 좌측 상단 기준 x(0.0f ~ 1.0f), y(0.0f ~ 1.0f) 값.
+//        mapView!!.addPOIItem(marker)
 
 
         if (!checkLocationServicesStatus()) {
@@ -125,15 +165,15 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
     ) {
 
         mapPointGeo = currentLocation.mapPointGeoCoord
-        Log.i(
-            LOG_TAG,
-            String.format(
-                "MapView onCurrentLocationUpdate (%f,%f) accuracy (%f)",
-                mapPointGeo!!.latitude,
-                mapPointGeo!!.longitude,
-                accuracyInMeters
-            )
-        )
+//        Log.i(
+//            LOG_TAG,
+//            String.format(
+//                "MapView onCurrentLocationUpdate (%f,%f) accuracy (%f)",
+//                mapPointGeo!!.latitude,
+//                mapPointGeo!!.longitude,
+//                accuracyInMeters
+//            )
+//        )
     }
 
     override fun onCurrentLocationDeviceHeadingUpdate(
@@ -295,6 +335,7 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
 
 
     override fun onMapViewInitialized(mapView: MapView) {
+        showNonMemberStore(mapView)
     }
 
     override fun onMapViewCenterPointMoved(
@@ -307,6 +348,7 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
         mapView: MapView,
         i: Int
     ) {
+        showNonMemberStore(mapView)
     }
 
     override fun onMapViewSingleTapped(
@@ -337,57 +379,7 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
         mapView: MapView,
         mapPoint: MapPoint
     ) {
-
-        left = mapView.mapPointBounds.bottomLeft.mapPointGeoCoord.latitude.toString()
-        bottom = mapView.mapPointBounds.bottomLeft.mapPointGeoCoord.longitude.toString()
-        right = mapView.mapPointBounds.topRight.mapPointGeoCoord.latitude.toString()
-        top = mapView.mapPointBounds.topRight.mapPointGeoCoord.longitude.toString()
-
-
-        SearchRetrofit.getService().requestSearchRestaurant(
-            rect = "${bottom},${left},${top},${right}"
-        ).enqueue(object :
-            Callback<Restaurant> {
-            override fun onFailure(call: Call<Restaurant>, t: Throwable) {
-            }
-
-            override fun onResponse(call: Call<Restaurant>, response: Response<Restaurant>) {
-                if (response.body() != null) {
-                    Toast.makeText(this@KakaoMapActivity, "성공", Toast.LENGTH_SHORT)
-                    val restaurants = response.body()!!.documents
-                    Log.i(LOG_TAG, restaurants.toString())
-                    val restaurantsIterator = restaurants.listIterator()
-
-                    mapView!!.removeAllPOIItems()
-
-                    while (restaurantsIterator.hasNext()) {
-                        val restaurant = restaurantsIterator.next()
-
-                        val marker = MapPOIItem()
-
-                        //맵 포인트 위도경도 설정
-                        val mapPoint = MapPoint.mapPointWithGeoCoord(restaurant.y, restaurant.x)
-                        marker.itemName = restaurant.place_name
-                        marker.userObject =
-                            restaurant.category_name + "," + restaurant.phone + "," + restaurant.place_url
-                        marker.mapPoint = mapPoint
-                        marker.markerType =
-                            MapPOIItem.MarkerType.CustomImage // 기본으로 제공하는 BluePin 마커 모양.
-                        marker.selectedMarkerType = MapPOIItem.MarkerType.CustomImage
-                        marker.customImageResourceId =
-                            R.drawable.markerpin
-                        marker.isCustomImageAutoscale = false
-                        marker.setCustomImageAnchor(
-                            0.5f,
-                            1.0f
-                        ); // 마커 이미지중 기준이 되는 위치(앵커포인트) 지정 - 마커 이미지 좌측 상단 기준 x(0.0f ~ 1.0f), y(0.0f ~ 1.0f) 값.
-                        mapView!!.addPOIItem(marker)
-
-                    }
-                }
-            }
-
-        })
+        showNonMemberStore(mapView)
     }
 
     override fun onMapViewMoveFinished(
@@ -411,23 +403,27 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
 //                dialog.show()
 
 
-                val args = Bundle()
-                args.putString("mapPOIItem", mapPOIItem.itemName+","+mapPOIItem.userObject.toString())
+                // bottom sheet
+                if (mapPOIItem.tag == 1) {
+                    val args = Bundle()
+                    args.putString(
+                        "mapPOIItem",
+                        mapPOIItem.userObject.toString()
+                    )
+
+                    val bottomSheet = MapBottomSheet()
+                    bottomSheet.arguments = args
+                    bottomSheet.show(supportFragmentManager, bottomSheet.tag)
+                }
 
 
-                val bottomSheet = MapBottomSheet()
-                bottomSheet.arguments = args
-                bottomSheet.show(supportFragmentManager, bottomSheet.tag)
-
-//                val bottomSheet = MapBottomSheet()
-//                bottomSheet.show(supportFragmentManager, bottomSheet.tag)
             }
 
             override fun onCalloutBalloonOfPOIItemTouched(
                 mapView: MapView,
                 mapPOIItem: MapPOIItem
             ) {
-                // TODO info window 클릭했을 때
+//                info window 클릭했을 때
 
 //            Log.i("LOG_TAG", "onCalloutBalloonOfPOIItemTouched")
 //            Log.i("LOG_TAG", mapPOIItem.userObject.toString().split(",")[1])
@@ -495,13 +491,25 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
 
 
         override fun getCalloutBalloon(poiItem: MapPOIItem): View {
-            (mCalloutBalloon.findViewById(R.id.balloon_category) as TextView).text =
-                poiItem.userObject.toString().split(",")[0]
-            (mCalloutBalloon.findViewById(R.id.balloon_title) as TextView).text = poiItem.itemName
-//            (mCalloutBalloon.findViewById(R.id.balloon_phonenum) as TextView).text =
-//                poiItem.userObject.toString().split(",")[1]
-//            (mCalloutBalloon.findViewById(R.id.balloon_url) as TextView).text =
-//                poiItem.userObject.toString().split(",")[2]
+
+            when (poiItem.tag) {
+                0 -> { // 비회원
+
+                    (mCalloutBalloon.findViewById(R.id.balloon_category) as TextView).visibility =
+                        VISIBLE
+                    (mCalloutBalloon.findViewById(R.id.balloon_category) as TextView).text =
+                        poiItem.userObject.toString().split(",")[0]
+                    (mCalloutBalloon.findViewById(R.id.balloon_title) as TextView).text =
+                        poiItem.itemName
+                }
+
+                1 -> {
+                    (mCalloutBalloon.findViewById(R.id.balloon_category) as TextView).visibility =
+                        GONE
+                    (mCalloutBalloon.findViewById(R.id.balloon_title) as TextView).text =
+                        poiItem.itemName
+                }
+            }
 
 
             return mCalloutBalloon
@@ -514,6 +522,142 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
 
     }
 
+    fun showHateWaitStore() {
+        newInstance().show(supportFragmentManager, "") // 로딩 lottie 보여주기
+
+        MyApi.MapService.requestHateWaitRestaurant()
+            .enqueue(object : Callback<HaitWaitRestaurantRequestData> {
+                override fun onFailure(call: Call<HaitWaitRestaurantRequestData>, t: Throwable) {
+                    Log.d("retrofit2 회원지도 :: ", "연결실패 $t")
+                }
+
+                override fun onResponse(
+                    call: Call<HaitWaitRestaurantRequestData>,
+                    response: Response<HaitWaitRestaurantRequestData>
+                ) {
+                    newInstance().onStop()
+                    var data: HaitWaitRestaurantRequestData? = response?.body()
+                    Log.d(
+                        "retrofit2 회원지도 ::",
+                        response.code().toString() + response.body().toString()
+                    )
+                    when (response.code()) {
+                        200 -> {
+                            val restaurants = data!!.stores
+                            val restaurantsIterator = restaurants.listIterator()
+
+                            val tempMemberRestaurantIterator = tempMemberRestaurant.listIterator()
+                            while (tempMemberRestaurantIterator.hasNext()) {
+                                mapView!!.removePOIItem(tempMemberRestaurantIterator.next())
+                            }
+                            tempMemberRestaurant.clear()
+
+                            while (restaurantsIterator.hasNext()) {
+                                val restaurant = restaurantsIterator.next()
+                                val marker = MapPOIItem()
+                                tempMemberRestaurant.add(marker)
+
+
+                                val point: String = restaurant.address.substringAfterLast(' ')
+                                val point2: String = point.replace("(", "").replace(")", "")
+                                val mapPoint = MapPoint.mapPointWithGeoCoord(
+                                    point2.split(",")[0].toDouble(),
+                                    point2.split(",")[1].toDouble()
+                                )
+
+                                marker.itemName = restaurant.store_name
+                                marker.tag = 1
+                                marker.userObject =
+                                    restaurant.store_name + "," + restaurant.phone_num + "," + restaurant.address.substringBeforeLast(
+                                        ' '
+                                    ) + "," + restaurant.business_time + restaurant.description + "," + restaurant.waiting_num
+                                marker.mapPoint = mapPoint
+                                marker.markerType = MapPOIItem.MarkerType.CustomImage
+                                marker.selectedMarkerType = MapPOIItem.MarkerType.CustomImage
+                                marker.customSelectedImageResourceId = R.drawable.markerpin_hatewait
+                                marker.customImageResourceId = R.drawable.markerpin_hatewait
+                                marker.isCustomImageAutoscale = false
+                                marker.setCustomImageAnchor(
+                                    0.5f,
+                                    1.0f
+                                ); // 마커 이미지중 기준이 되는 위치(앵커포인트) 지정 - 마커 이미지 좌측 상단 기준 x(0.0f ~ 1.0f), y(0.0f ~ 1.0f) 값.
+                                mapView!!.addPOIItem(marker)
+                            }
+                        }
+                    }
+                }
+            }
+            )
+
+
+    }
+
+    private fun showNonMemberStore(mapView: MapView) {
+        left = mapView.mapPointBounds.bottomLeft.mapPointGeoCoord.latitude.toString()
+        bottom = mapView.mapPointBounds.bottomLeft.mapPointGeoCoord.longitude.toString()
+        right = mapView.mapPointBounds.topRight.mapPointGeoCoord.latitude.toString()
+        top = mapView.mapPointBounds.topRight.mapPointGeoCoord.longitude.toString()
+
+
+        SearchRetrofit.getService().requestSearchRestaurant(
+            rect = "${bottom},${left},${top},${right}"
+        ).enqueue(object :
+            Callback<Restaurant> {
+            override fun onFailure(call: Call<Restaurant>, t: Throwable) {
+                Log.d(
+                    "retrofit2 비회원지도 ::",
+                    "연결실패 $t"
+                )
+            }
+
+            override fun onResponse(call: Call<Restaurant>, response: Response<Restaurant>) {
+                Log.d(
+                    "retrofit2 비회원지도 ::",
+                    response.code().toString() + response.body().toString()
+                )
+                if (response.body() != null) {
+                    val restaurants = response.body()!!.documents
+                    val restaurantsIterator = restaurants.listIterator()
+
+
+                    val tempRestaurantIterator = tempRestaurant.listIterator()
+                    while (tempRestaurantIterator.hasNext()) {
+                        mapView!!.removePOIItem(tempRestaurantIterator.next())
+                    }
+                    tempRestaurant.clear()
+
+
+                    while (restaurantsIterator.hasNext()) {
+                        val restaurant = restaurantsIterator.next()
+
+                        val marker = MapPOIItem()
+                        tempRestaurant.add(marker)
+
+                        //맵 포인트 위도경도 설정
+                        val mapPoint = MapPoint.mapPointWithGeoCoord(restaurant.y, restaurant.x)
+                        marker.itemName = restaurant.place_name
+                        marker.tag = 0
+                        marker.userObject =
+                            restaurant.category_name + "," + restaurant.phone + "," + restaurant.place_url
+                        marker.mapPoint = mapPoint
+                        marker.markerType =
+                            MapPOIItem.MarkerType.CustomImage // 기본으로 제공하는 BluePin 마커 모양.
+                        marker.selectedMarkerType = MapPOIItem.MarkerType.CustomImage
+                        marker.customSelectedImageResourceId = R.drawable.markerpin
+                        marker.customImageResourceId = R.drawable.markerpin0
+                        marker.isCustomImageAutoscale = false
+                        marker.setCustomImageAnchor(
+                            0.5f,
+                            1.0f
+                        ); // 마커 이미지중 기준이 되는 위치(앵커포인트) 지정 - 마커 이미지 좌측 상단 기준 x(0.0f ~ 1.0f), y(0.0f ~ 1.0f) 값.
+                        mapView!!.addPOIItem(marker)
+
+                    }
+                }
+            }
+
+        })
+    }
 
     companion object {
         private const val LOG_TAG = "KakaoMapActivity"
@@ -521,3 +665,4 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
         private const val PERMISSIONS_REQUEST_CODE = 100
     }
 }
+

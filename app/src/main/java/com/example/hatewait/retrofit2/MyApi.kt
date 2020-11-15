@@ -1,5 +1,6 @@
 package com.example.hatewait.retrofit2
 
+import com.example.hatewait.map.RetrofitMap
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -39,6 +40,10 @@ object MyApi {
 
     val UpdateService: RetrofitInfoUpdate by lazy {
         retrofit().create(RetrofitInfoUpdate::class.java)
+    }
+
+    val MapService: RetrofitMap by lazy {
+        retrofit().create(RetrofitMap::class.java)
     }
 
 }

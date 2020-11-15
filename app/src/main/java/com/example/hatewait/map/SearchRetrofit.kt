@@ -4,8 +4,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object  SearchRetrofit {
-    fun getService() : RetrofitService = retrofit.create(
-        RetrofitService::class.java)
+    fun getService() : RetrofitMap = retrofit.create(
+        RetrofitMap::class.java)
     private val retrofit =
         Retrofit.Builder()
             .baseUrl("https://dapi.kakao.com") // 도메인 주소

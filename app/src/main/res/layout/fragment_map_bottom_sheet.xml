@@ -1,93 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_dialog_radius"
         android:paddingHorizontal="32dp"
         android:paddingTop="24dp"
-        android:paddingBottom="40dp">
+        android:paddingBottom="24dp">
 
     <LinearLayout
-            app:layout_constraintTop_toTopOf="parent"
-            android:orientation="vertical"
+            android:id="@+id/store_info_layout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/bottom_sheet_store_waiting_linear_layout"
+            android:orientation="vertical"
             app:behavior_hideable="false"
             app:behavior_peekHeight="70dp"
-            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+            app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-                android:id="@+id/bottom_sheet_phone_name"
+                android:id="@+id/bottom_sheet_store_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
+
                 android:text="미미면가"
                 android:textColor="@android:color/black"
-                android:textSize="24sp" />
+                android:textSize="25sp" />
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="8dp" />
 
         <TextView
-                android:id="@+id/bottom_sheet_phone_num"
+                android:id="@+id/bottom_sheet_store_phone_num"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:text="- 028392039"
+                android:text="028392039"
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
 
-        <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:text="- 영업시간: 07:00-04:00 월요일 휴무"
-                android:textColor="@android:color/black"
-                android:textSize="16sp" />
-
-        <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:text="- 500명 수용가능 "
-                android:textColor="@android:color/black"
-                android:textSize="16sp" />
-
-        <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:text="- 재료소진 시 영업종료"
-                android:textColor="@android:color/black"
-                android:textSize="16sp" />
-
-        <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:text="- 대기인원 0명"
-                android:textColor="@android:color/black"
-                android:textSize="16sp" />
-
-        <!--    <Button-->
-        <!--            android:id="@+id/button_bottom_sheet"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:background="#1c9d9e"-->
-        <!--            android:textColor="@android:color/white"-->
-        <!--            android:textStyle="bold"-->
-        <!--            android:text="좋아요!" />-->
-
-        <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_bottom_sheet"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:backgroundTint="@color/colorPrimary"
-                android:text="닫기"
-                android:textColor="#ffffff"
-                android:textSize="18sp"
-                app:cornerRadius="10dp"
-                app:rippleColor="#2B8A19" />
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+            android:id="@+id/bottom_sheet_store_waiting_linear_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:orientation="vertical">
+
+        <TextView
+                android:id="@+id/bottom_sheet_store_waiting_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="0팀"
+                android:textColor="@android:color/black"
+                android:textSize="30sp" />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="대기중"
+                android:textColor="@android:color/black"
+                android:textSize="25sp" />
+
+    </LinearLayout>
+
+
+    <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/bottom_sheet_store_waiting_linear_layout"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:background="#EFEFEF" />
+
+    <LinearLayout
+            android:id="@+id/store_info_layout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/line"
+            android:orientation="vertical">
+
+        <TextView
+                android:id="@+id/bottom_sheet_store_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="서울 서초구 강남대로61길 27"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp" />
+
+
+        <TextView
+                android:id="@+id/bottom_sheet_store_business_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="영업시간: 07:00-04:00 월요일, 화요일, 수요일, 목요일, 금요일, 토요일, 일요일 휴무"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp" />
+
+        <TextView
+                android:id="@+id/bottom_sheet_store_capacity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="수용 인원 : 50"
+                android:textColor="@android:color/black"
+                android:textSize="15sp" />
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp" />
+
+        <TextView
+                android:id="@+id/bottom_sheet_store_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="재료소진 시 영업종료"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="8dp" />
+
+
+    </LinearLayout>
+
+
+    <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_bottom_sheet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/store_info_layout2"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:text="닫기"
+            android:textColor="#ffffff"
+            android:textSize="18sp"
+            app:cornerRadius="10dp"
+            app:rippleColor="#2B8A19" />
+</RelativeLayout>

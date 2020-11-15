@@ -34,10 +34,24 @@ class MapBottomSheet : BottomSheetDialogFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        view?.findViewById<TextView>(R.id.bottom_sheet_phone_name)!!.text =
+        //가게이름,전화번호,주소,영업시간,가게소개,대기인원
+
+        view?.findViewById<TextView>(R.id.bottom_sheet_store_name)!!.text =
             data.toString().split(",")[0]
-        view?.findViewById<TextView>(R.id.bottom_sheet_phone_num)!!.text =
+        view?.findViewById<TextView>(R.id.bottom_sheet_store_phone_num)!!.text =
+            data.toString().split(",")[1]
+        view?.findViewById<TextView>(R.id.bottom_sheet_store_address)!!.text =
             data.toString().split(",")[2]
+        view?.findViewById<TextView>(R.id.bottom_sheet_store_business_time)!!.text =
+            data.toString().split(",")[3]
+        view?.findViewById<TextView>(R.id.bottom_sheet_store_description)!!.text =
+            data.toString().split(",")[4]
+        view?.findViewById<TextView>(R.id.bottom_sheet_store_waiting_num)!!.text =
+            data.toString().split(",")[5]+"명"
+
+
+
+
 
 //        data.toString().split(",")[0]
 //        data.toString().split(",")[2]

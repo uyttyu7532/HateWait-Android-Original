@@ -273,9 +273,6 @@ class SwipeRecyclerViewAdapter(
                         Toast.LENGTH_SHORT
                     ).show()
 
-//                    DelCustomerAsyncTask().execute(items[position].id)
-//                    visited = true
-
                     if (fragment == null || (!(fragment?.isAdded)!!)) {
                         val ft =
                             (context as StoreWaitingList).supportFragmentManager.beginTransaction()

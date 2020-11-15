@@ -16,7 +16,6 @@ import com.example.hatewait.model.StoreListInfo
 import com.example.hatewait.model.StoreListResponseData
 import com.example.hatewait.retrofit2.MyApi
 import kotlinx.android.synthetic.main.activity_store_list.*
-import kotlinx.android.synthetic.main.fragment_visitor_list.searchView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -108,8 +107,8 @@ class StoreList : AppCompatActivity() {
 
 
         try {
-            if (searchView.query != null) {
-                storeListAdapter.filter.filter(searchView.query.toString())
+            if (store_list_search_view.query != null) {
+                storeListAdapter.filter.filter(store_list_search_view.query.toString())
             }
         } catch (_: Exception) {
 

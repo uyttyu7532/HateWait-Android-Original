@@ -19,7 +19,6 @@ import com.example.hatewait.model.CouponUnableRequestData
 import com.example.hatewait.retrofit2.MyApi
 import com.zyyoona7.wheel.WheelView
 import kotlinx.android.synthetic.main.activity_setting_stamp_coupon.*
-import kotlinx.android.synthetic.main.activity_store_signup4.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

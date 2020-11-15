@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hatewait.R
 import com.example.hatewait.login.LoginInfo.storeInfo
-import com.example.hatewait.register.StartWaitActivity
+import com.example.hatewait.login.LoginRegisterViewPagerActivity
 import com.example.hatewait.storeinfo.StoreInfoUpdate2
 import kotlinx.android.synthetic.main.activity_store_menu.*
 import org.jetbrains.anko.startActivity
@@ -64,11 +64,7 @@ class StoreMenu : AppCompatActivity() {
         return true
     }
 
-    override fun onResume() {
-        super.onResume()
-//        StoreMenuAsyncTask().execute()
 
-    }
 
     private fun initView() {
 //        setting_button.setOnClickListener{
@@ -76,7 +72,9 @@ class StoreMenu : AppCompatActivity() {
 //        }
 
         tabletBtn.setOnClickListener {
-            startActivity<StartWaitActivity>()
+            startActivity<LoginRegisterViewPagerActivity>()
+            // TODO 웹소켓 대기열 디자인 등.. 생각!
+//            startActivity<StartWaitActivity>()
         }
 
         listBtn.setOnClickListener {
@@ -90,7 +88,7 @@ class StoreMenu : AppCompatActivity() {
         customer_list_button2.setOnClickListener{
 //            startActivity<CustomerListActivity>()
 //            startActivity<StoreInfoUpdate2>()
-            startActivity<VisitorListActivity>()
+            startActivity<CouponMemberListActivity>()
         }
     }
 

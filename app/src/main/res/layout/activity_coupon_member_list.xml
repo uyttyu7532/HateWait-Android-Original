@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".store.CouponMemberListActivity">
+
+    <androidx.appcompat.widget.Toolbar
+            android:id="@+id/coupon_member_list_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:elevation="4dp"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:popupTheme="@style/Theme.AppCompat.Light">
+
+        <TextView
+                android:id="@+id/register_toolbar_title_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="쿠폰 사용하기"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/visitor_list_toolbar">
+
+        <SearchView
+                android:id="@+id/coupon_member_search_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/coupon_member_list_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/coupon_member_search_view" />
+
+        <xyz.danoz.recyclerviewfastscroller.vertical.VerticalRecyclerViewFastScroller
+                android:id="@+id/visitor_list_fast_scroller"
+                android:layout_width="15dp"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/coupon_member_search_view"
+                android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+
+</RelativeLayout>

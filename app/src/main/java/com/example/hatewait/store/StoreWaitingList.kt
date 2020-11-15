@@ -38,13 +38,6 @@ lateinit var waitingListContext: Context
 lateinit var totalWaitingNumTextView: TextView
 
 
-//var waitingList : List<WaitingInfo>? = null
-
-//lateinit var autoCallSwitchView: Switch
-//var called = HashMap<String, Boolean>()
-//lateinit var pref: SharedPreferences
-
-
 class StoreWaitingList : AppCompatActivity() {
 
 
@@ -76,7 +69,7 @@ class StoreWaitingList : AppCompatActivity() {
             R.id.total_waiting_num_text_view
         ) as TextView
         waiting_list_coupon_button.setOnClickListener {
-            startActivity<VisitorListActivity>()
+            startActivity<CouponMemberListActivity>()
         }
 //        autoCallBtn = findViewById<View>(
 //            R.id.auto_call_btn
@@ -121,15 +114,12 @@ class StoreWaitingList : AppCompatActivity() {
 
     fun init() {
 
-//        setRecyclerView()
         makeAddDialog()
-//        readFile()
 
         waiting_list_refresh_button.setOnClickListener {
             waiting_list_refresh_button.visibility = INVISIBLE
             waiting_list_progress_bar.visibility = VISIBLE
 
-//            StoreWaitingListAsyncTask().execute()
             getWaitingList()
 
             waiting_list_refresh_button.visibility = VISIBLE
@@ -152,36 +142,9 @@ class StoreWaitingList : AppCompatActivity() {
             waiting_swipe_refresh.isRefreshing = false
         }
 
-//        autoCallBtn.setOnClickListener {
-//            AutoCallAsyncTask().execute()
-//        }
-
 
     }
 
-
-//    private fun readFile() {
-//
-//        val scan = Scanner(resources.openRawResource(R.raw.client))
-//        while (scan.hasNextLine()) {
-//            val client = scan.nextLine()
-//            var id_tmp = client.split(",")[0]
-//            var phone_tmp = client.split(",")[1]
-//            var name_tmp = client.split(",")[2]
-//            var people_num_tmp = client.split(",")[3]
-//            var is_member_tmp = client.split(",")[4]
-//            var data_tmp =
-//                ClientData(
-//                    id_tmp,
-//                    phone_tmp,
-//                    name_tmp,
-//                    people_num_tmp,
-//                    is_member_tmp
-//                )
-//            waitingList?.add(data_tmp)
-//        }
-//        totalWaitingNumTextView.text = "현재 ${waitingList.size}팀 대기중"
-//    }
 
 
     private fun makeAddDialog() {

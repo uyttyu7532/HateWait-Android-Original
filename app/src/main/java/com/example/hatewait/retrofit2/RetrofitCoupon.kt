@@ -1,6 +1,7 @@
 package com.example.hatewait.retrofit2
 
 import com.example.hatewait.model.CouponListResponseData
+import com.example.hatewait.model.CouponMemberListResponseData
 import com.example.hatewait.model.CouponResponseData
 import com.example.hatewait.model.StoreListResponseData
 import com.google.gson.annotations.SerializedName
@@ -25,8 +26,7 @@ interface RetrofitCoupon {
     fun requestCouponList(
         @Path("memberId") memberId: String,
         @Query("id") storeId: String
-    ):
-            Call<CouponListResponseData>
+    ): Call<CouponListResponseData>
 
 
     // 가게에서 쿠폰 설정용
@@ -37,10 +37,10 @@ interface RetrofitCoupon {
 
 
     // 가게에서 쿠폰있는 손님 조회용
-    @GET()
+    @GET("/stores/{id}/members")
     fun requestCouponMemberList(
-
-    ): Call<Any>
+        @Path("id") id: String
+    ): Call<CouponMemberListResponseData>
 }
 
 

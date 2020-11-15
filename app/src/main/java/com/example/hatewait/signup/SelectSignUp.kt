@@ -29,11 +29,11 @@ class SelectSignUp : AppCompatActivity() {
             var naverUserId = intent.getStringExtra("naverUserId")
             var naverUserEmail = intent.getStringExtra("naverUserEmail")
             var naverUserName = intent.getStringExtra("naverUserName")
-            Toast.makeText(
-                this,
-                "$isFromNaver $naverUserId $naverUserEmail $naverUserName",
-                Toast.LENGTH_SHORT
-            ).show()
+//            Toast.makeText(
+//                this,
+//                "$isFromNaver $naverUserId $naverUserEmail $naverUserName",
+//                Toast.LENGTH_SHORT
+//            ).show()
 
             store_sign_up_button.setOnClickListener {
                 val intent = Intent(this, StoreSignUp3::class.java)
@@ -54,7 +54,7 @@ class SelectSignUp : AppCompatActivity() {
             }
 
         } else { // 일반 회원가입
-            Toast.makeText(this, "$isFromNaver", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, "$isFromNaver", Toast.LENGTH_SHORT).show()
             store_sign_up_button.setOnClickListener {
                 startActivity<StoreSignUp1>()
             }

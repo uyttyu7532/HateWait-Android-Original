@@ -34,6 +34,13 @@ interface RetrofitCoupon {
     fun requestStoreCouponInfo(
         @Path("id") id: String
     ): Call<CouponResponseData?>
+
+
+    // 가게에서 쿠폰있는 손님 조회용
+    @GET()
+    fun requestCouponMemberList(
+
+    ): Call<Any>
 }
 
 

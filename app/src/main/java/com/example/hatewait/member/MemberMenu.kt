@@ -19,8 +19,6 @@ import com.example.hatewait.login.LoginInfo.memberInfo
 import com.example.hatewait.memberinfo.MemberInfoUpdate
 import com.example.hatewait.model.MyWaitingResponseData
 import com.example.hatewait.retrofit2.MyApi
-import com.example.hatewait.socket.CUSTOMERID
-import com.example.hatewait.socket.CancelAsyncTask
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.activity_customer_menu.*
 import org.jetbrains.anko.startActivity
@@ -34,7 +32,7 @@ import java.util.*
 class MemberMenu : AppCompatActivity() {
 
     lateinit var mContext: Context
-    lateinit var recentRefreshTime:TextView
+    lateinit var recentRefreshTime: TextView
 
     var customView: View? = null
     private val yesButton: ImageButton by lazy {
@@ -51,7 +49,7 @@ class MemberMenu : AppCompatActivity() {
 //            getSharedPreferences(resources.getString(R.string.customer_mode), Context.MODE_PRIVATE)
 //        CUSTOMERID = customerReference.getString("CUSTOMER_ID", "")
 
-        FirebaseMessaging.getInstance().subscribeToTopic("0"+memberInfo.phone)
+        FirebaseMessaging.getInstance().subscribeToTopic("0" + memberInfo.phone)
 
     }
 
@@ -91,9 +89,7 @@ class MemberMenu : AppCompatActivity() {
                 .setContentText("\n")
                 .setConfirmText("예")
                 .setConfirmClickListener { sDialog ->
-                    Log.i("로그", CUSTOMERID.toString())
-                    CancelAsyncTask().execute(CUSTOMERID)
-//                    CustomerMenuAsyncTask().execute(CUSTOMERID)
+                    // TODO 대기취소
                     sDialog.dismissWithAnimation()
                 }
                 .setCancelButton(
@@ -120,7 +116,7 @@ class MemberMenu : AppCompatActivity() {
                 questionDialog.dismissWithAnimation()
             }
             noButton.setOnClickListener {
-                CancelAsyncTask().execute(CUSTOMERID)
+// TODO 대기취소
                 questionDialog.dismissWithAnimation()
             }
         }
@@ -161,18 +157,10 @@ class MemberMenu : AppCompatActivity() {
                             refreshTime(recentRefreshTime)
                             val data = response.body() // 서버로부터 온 응답
                             if (data?.message.equals("대기중인 가게가 없습니다!")) {
-                                Log.d(
-                                    "retrofit2 대기현황 조회 ::",
-                                    "요기1번"
-                                )
                                 no_waiting_text_view.visibility = VISIBLE
                                 customer_waiting_linear_layout.visibility = GONE
                                 waiting_store_text_view.visibility = GONE
                             } else {
-                                Log.d(
-                                    "retrofit2 대기현황 조회 ::",
-                                    "요기2번"
-                                )
                                 no_waiting_text_view.visibility = GONE
                                 customer_waiting_linear_layout.visibility = VISIBLE
                                 waiting_store_text_view.text = data!!.store_name

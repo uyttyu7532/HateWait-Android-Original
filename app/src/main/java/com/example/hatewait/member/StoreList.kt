@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hatewait.R
@@ -42,14 +41,14 @@ class StoreList : AppCompatActivity() {
         setRecyclerView()
 
 
-        store_list_search_view.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+        store_list_search_view.setOnQueryTextListener(object :
             android.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-//                storeListAdapter.filter.filter(newText)
+                storeListAdapter.filter.filter(newText)
                 return false
             }
         })

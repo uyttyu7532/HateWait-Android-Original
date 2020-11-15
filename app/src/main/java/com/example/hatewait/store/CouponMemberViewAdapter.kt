@@ -1,4 +1,3 @@
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,7 +31,8 @@ class CouponMemberViewAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val v = LayoutInflater.from(parent.context).inflate(R.layout.store_list_row, parent, false)
+        val v = LayoutInflater.from(parent.context)
+            .inflate(R.layout.coupon_member_list_row, parent, false)
 
         return MyViewHolder(v)
 
@@ -59,8 +59,8 @@ class CouponMemberViewAdapter(
         var visitorNameView = itemView.findViewById(R.id.visitor_name_view) as TextView
         var memberPhoneTextView = itemView.findViewById(R.id.member_phone_text_view) as TextView
         var couponCount = itemView.findViewById(R.id.coupon_count) as TextView
-        var useCouponBottomWrapperLeft = itemView.findViewById(R.id.use_coupon_bottom_wrapper_left) as FrameLayout
-
+        var useCouponBottomWrapperLeft =
+            itemView.findViewById(R.id.use_coupon_bottom_wrapper_left) as FrameLayout
 
     }
 
@@ -73,11 +73,14 @@ class CouponMemberViewAdapter(
                 } else {
                     val resultList = ArrayList<CouponMember>()
                     for (row in couponMemberListArray!!) {
-                        if (row.member_name.toLowerCase(Locale.ROOT)
+                        if(row.member_name.toLowerCase(Locale.ROOT)
                                 .contains(charSearch.toLowerCase(Locale.ROOT))
-                        )
+                        ){
+                            resultList.add(row)
+                        }
                         else if(row.member_phone.toLowerCase(Locale.ROOT)
-                                .contains(charSearch.toLowerCase(Locale.ROOT))){
+                                .contains(charSearch.toLowerCase(Locale.ROOT))
+                        ) {
                             resultList.add(row)
                         }
                     }

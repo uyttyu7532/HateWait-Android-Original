@@ -17,7 +17,7 @@
             app:popupTheme="@style/Theme.AppCompat.Light">
 
         <TextView
-                android:id="@+id/register_toolbar_title_textView"
+                android:id="@+id/coupon_member_toolbar_title_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -29,7 +29,7 @@
     <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/visitor_list_toolbar">
+            android:layout_below="@+id/coupon_member_list_toolbar">
 
         <SearchView
                 android:id="@+id/coupon_member_search_view"
@@ -44,12 +44,12 @@
                 android:layout_height="match_parent"
                 android:layout_below="@+id/coupon_member_search_view" />
 
-        <xyz.danoz.recyclerviewfastscroller.vertical.VerticalRecyclerViewFastScroller
-                android:id="@+id/visitor_list_fast_scroller"
-                android:layout_width="15dp"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/coupon_member_search_view"
-                android:layout_alignParentEnd="true" />
+<!--        <xyz.danoz.recyclerviewfastscroller.vertical.VerticalRecyclerViewFastScroller-->
+<!--                android:id="@+id/coupon_member_list_fast_scroller"-->
+<!--                android:layout_width="15dp"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_below="@+id/coupon_member_search_view"-->
+<!--                android:layout_alignParentEnd="true" />-->
     </RelativeLayout>
 
 </RelativeLayout>

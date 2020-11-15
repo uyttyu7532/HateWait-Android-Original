@@ -49,9 +49,10 @@ class StoreListAdapter(
     // 뷰홀더에 해당하는 것이 전달됨.(내용만 교체할때 호출됨)
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.storeNameTextView.text = itemsFilterList[position].store_name
-        holder.storeStampCouponTextView.text = "스탬프 ${itemsFilterList[position].stamp_count}/${itemsFilterList[position].maximum_stamp}  쿠폰 ${itemsFilterList[position].coupon_count}"
+        holder.storeStampCouponTextView.text =
+            "스탬프 ${itemsFilterList[position].stamp_count}/${itemsFilterList[position].maximum_stamp}  쿠폰 ${itemsFilterList[position].coupon_count}"
 
-        holder.storeListCardView.setOnClickListener{
+        holder.storeListCardView.setOnClickListener {
             val intent = Intent(StoreListContext, ManageStampCouponActivity::class.java)
             intent.putExtra("memberId", memberInfo!!.id)
             intent.putExtra("storeId", itemsFilterList[position].store_id)
@@ -69,7 +70,8 @@ class StoreListAdapter(
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var storeNameTextView = itemView.findViewById(R.id.store_name_text_view) as TextView
-        var storeStampCouponTextView = itemView.findViewById(R.id.store_stamp_coupon_text_view) as TextView
+        var storeStampCouponTextView =
+            itemView.findViewById(R.id.store_stamp_coupon_text_view) as TextView
         var storeListCardView = itemView.findViewById(R.id.store_list_card_view) as CardView
         var storeBenefitTextView = itemView.findViewById(R.id.store_benefit_text_view) as TextView
 

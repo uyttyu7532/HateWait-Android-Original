@@ -3,6 +3,7 @@ package com.example.hatewait.member
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.RequiresApi
@@ -36,6 +37,7 @@ class CouponAdapter(private val data: List<CouponListInfo>) :
 //        holder.couponIssueDateTextView.text = "발급날짜: ${SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(data[position].issue_date))}"
 //        holder.couponExpTextView.text = "유효기간: ${SimpleDateFormat("YYYY-MM-dd HH:mm:ss").format(SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").parse(data[position].expiration_date))}"
 
+        holder.couponNumber.text = (position+1).toString()
         holder.couponBenefitTextView.text = data[position].benefit_description
         holder.couponRemarkTextView.text = data[position].remark
         holder.couponIssueDateTextView.text = "발급날짜: ${
@@ -44,12 +46,17 @@ class CouponAdapter(private val data: List<CouponListInfo>) :
                 Locale.KOREA
             ).format(data[position].issue_date)
         }"
-        holder.couponExpTextView.text = "유효기간: ${
-            SimpleDateFormat(
-                "yyyy.MM.dd HH:mm:ss",
-                Locale.KOREA
-            ).format(data[position].expiration_date)
-        }"
+
+        if (data[position].expiration_date != null) {
+            holder.couponExpTextView.text = "유효기간: ${
+                SimpleDateFormat(
+                    "yyyy.MM.dd HH:mm:ss",
+                    Locale.KOREA
+                ).format(data[position].expiration_date)
+            }"
+        } else {
+            holder.couponExpTextView.text = "유효 기간이 없습니다."
+        }
 
     }
 
@@ -64,5 +71,6 @@ class CouponAdapter(private val data: List<CouponListInfo>) :
         val couponIssueDateTextView: TextView =
             itemView.findViewById(R.id.coupon_issue_date_text_view)
         val couponExpTextView: TextView = itemView.findViewById(R.id.coupon_exp_text_view)
+        val couponNumber: TextView = itemView.findViewById(R.id.coupon_number)
     }
 }

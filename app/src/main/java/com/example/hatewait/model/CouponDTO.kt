@@ -16,7 +16,7 @@ data class StoreListInfo(
 data class CouponListResponseData(var message: String?, var coupons: List<CouponListInfo>?)
 data class CouponListInfo(
     var issue_date: Date,
-    var expiration_date: Date,
+    var expiration_date: Date?,
     var used_date: Date,
     var benefit_description: String,
     var remark: String

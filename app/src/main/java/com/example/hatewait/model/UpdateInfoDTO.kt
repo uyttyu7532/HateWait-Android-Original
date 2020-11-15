@@ -31,7 +31,7 @@ data class MemberInfoResponseData(
 
 data class CouponUnableRequestData(
     var id: String,
-    var coupon_enable: Boolean = false
+    var coupon_enable: Boolean? = false
 )
 
 data class CouponEnableRequestData(

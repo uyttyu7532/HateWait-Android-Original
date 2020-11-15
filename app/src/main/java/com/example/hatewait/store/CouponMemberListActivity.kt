@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hatewait.R
@@ -18,6 +19,7 @@ import kotlinx.android.synthetic.main.activity_coupon_member_list.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 
 
 class CouponMemberListActivity : AppCompatActivity() {
@@ -41,23 +43,25 @@ class CouponMemberListActivity : AppCompatActivity() {
         }
 
 
+
         couponMemberListRecyclerView = findViewById(
             R.id.coupon_member_list_recycler_view
         )
 
+        couponMemberListRecyclerView!!.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
         setRecyclerView()
 
 
         coupon_member_search_view.setOnQueryTextListener(object :
-            androidx.appcompat.widget.SearchView.OnQueryTextListener,
-            android.widget.SearchView.OnQueryTextListener {
+            SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-//                CouponMemberViewAdapter.filter(newText)
+                couponMemberListAdapter.filter.filter(newText)
                 return false
             }
         })
@@ -78,9 +82,6 @@ class CouponMemberListActivity : AppCompatActivity() {
 
     // RecyclerView와 Adapter 연결
     private fun setRecyclerView() {
-
-        couponMemberListRecyclerView!!.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
         if (fragment == null || (!(fragment?.isAdded)!!)) {
             newInstance().show(supportFragmentManager, "")

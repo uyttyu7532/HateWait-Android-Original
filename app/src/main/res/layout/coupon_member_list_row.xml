@@ -18,11 +18,11 @@
 
 
             <RelativeLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_margin="15dp"
-                    android:layout_toRightOf="@+id/bottom_wrapper_left"
+                    android:layout_toRightOf="@+id/use_coupon_bottom_wrapper_left"
                     android:padding="5dp">
 
                 <LinearLayout

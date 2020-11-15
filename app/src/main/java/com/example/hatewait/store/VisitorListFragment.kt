@@ -187,11 +187,11 @@ class VisitorListFragment : Fragment() {
                 position: Int
             ) {
 
-                if (holder.visitorListDetailView.visibility == View.GONE) {
-                    holder.visitorListDetailView.visibility = View.VISIBLE
-                } else {
-                    holder.visitorListDetailView.visibility = View.GONE
-                }
+//                if (holder.visitorListDetailView.visibility == View.GONE) {
+//                    holder.visitorListDetailView.visibility = View.VISIBLE
+//                } else {
+//                    holder.visitorListDetailView.visibility = View.GONE
+//                }
             }
         }
         visitorRecyclerView.adapter = adapter

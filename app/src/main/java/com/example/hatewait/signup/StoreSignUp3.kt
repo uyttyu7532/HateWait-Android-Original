@@ -210,7 +210,7 @@ class StoreSignUp3 : AppCompatActivity() {
                 return ""
 //                        lat_lon_text_view.text = "해당되는 주소 정보는 없습니다";
             } else {
-                return "("+list[0].latitude.toString() + "," + list[0].longitude.toString() +")"
+                return " ("+list[0].latitude.toString() + "," + list[0].longitude.toString() +")"
 //                        lat_lon_text_view.text = list[0].latitude.toString() + " " + list[0].longitude.toString();
                 //          list.get(0).getCountryName();  // 국가명
                 //          list.get(0).getLatitude();        // 위도

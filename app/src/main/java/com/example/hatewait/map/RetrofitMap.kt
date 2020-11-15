@@ -26,9 +26,8 @@ interface RetrofitMap {
 
 
 
-    @GET("")
+    @GET("/stores/all")
     fun requestHateWaitRestaurant(
-
     ): Call<HaitWaitRestaurantRequestData>
 
 

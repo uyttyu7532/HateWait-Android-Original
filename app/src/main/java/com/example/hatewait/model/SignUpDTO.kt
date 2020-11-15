@@ -15,8 +15,8 @@ data class StoreSignUpRequestData(
     var name: String,
     var phone: String,
     var email: String,
-    var info: String,
-    var business_hour: String,
+    var info: String?,
+    var business_hour: String?,
     var maximum_capacity: Int,
     var address : String,
     var pw: String

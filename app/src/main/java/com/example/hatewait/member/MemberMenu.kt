@@ -160,14 +160,23 @@ class MemberMenu : AppCompatActivity() {
                         200 -> {
                             refreshTime(recentRefreshTime)
                             val data = response.body() // 서버로부터 온 응답
-                            if (data?.message.isNullOrEmpty()) {
+                            if (data?.message.equals("대기중인 가게가 없습니다!")) {
+                                Log.d(
+                                    "retrofit2 대기현황 조회 ::",
+                                    "요기1번"
+                                )
+                                no_waiting_text_view.visibility = VISIBLE
+                                customer_waiting_linear_layout.visibility = GONE
+                                waiting_store_text_view.visibility = GONE
+                            } else {
+                                Log.d(
+                                    "retrofit2 대기현황 조회 ::",
+                                    "요기2번"
+                                )
                                 no_waiting_text_view.visibility = GONE
-                                my_waiting_info_linear_layout.visibility = VISIBLE
+                                customer_waiting_linear_layout.visibility = VISIBLE
                                 waiting_store_text_view.text = data!!.store_name
                                 customer_waiting_num_text_view.text = data!!.turn_number.toString()
-                            } else {
-                                no_waiting_text_view.visibility = VISIBLE
-                                my_waiting_info_linear_layout.visibility = GONE
                             }
                         }
                     }

@@ -40,10 +40,11 @@ data class HaitWaitRestaurantRequestData(
 
 // 회원
 data class HaitWaitRestaurant(
-    val store_name: String,
-    val phone_num: String,
+    val name: String,
+    val phone: String,
+    val info: String?,
+    val business_hour: String?,
+    val maximum_capacity: Int,
     val address: String,
-    val business_time: String,
-    val description: String,
-    val waiting_num:Int
+    val team_count: Int
 )

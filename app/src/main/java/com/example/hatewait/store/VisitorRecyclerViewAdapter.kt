@@ -65,7 +65,7 @@ class VisitorRecyclerViewAdapter(
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val visitorNameView: TextView = itemView.findViewById(R.id.visitor_name_view)
-        val visitorListDetailView: CardView = itemView.findViewById(R.id.visitor_list_detail_view)
+//        val visitorListDetailView: CardView = itemView.findViewById(R.id.visitor_list_detail_view)
 
 
 

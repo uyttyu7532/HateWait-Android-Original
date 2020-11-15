@@ -1,5 +1,6 @@
 package com.example.hatewait.map
 
+import LottieDialogFragment.Companion.fragment
 import LottieDialogFragment.Companion.newInstance
 import android.Manifest
 import android.content.Context
@@ -74,6 +75,8 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
         refresh_wait_map.setOnClickListener {
             showHateWaitStore()
         }
+
+        showHateWaitStore()
 
 
 
@@ -522,9 +525,10 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
 
     }
 
-    fun showHateWaitStore() {
-        newInstance().show(supportFragmentManager, "") // 로딩 lottie 보여주기
-
+    private fun showHateWaitStore() {
+        if (fragment == null || (!(fragment?.isAdded)!!)) {
+            newInstance().show(supportFragmentManager, "")
+        }
         MyApi.MapService.requestHateWaitRestaurant()
             .enqueue(object : Callback<HaitWaitRestaurantRequestData> {
                 override fun onFailure(call: Call<HaitWaitRestaurantRequestData>, t: Throwable) {
@@ -535,7 +539,7 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
                     call: Call<HaitWaitRestaurantRequestData>,
                     response: Response<HaitWaitRestaurantRequestData>
                 ) {
-                    newInstance().onStop()
+                    newInstance().dismiss()
                     var data: HaitWaitRestaurantRequestData? = response?.body()
                     Log.d(
                         "retrofit2 회원지도 ::",
@@ -565,12 +569,12 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
                                     point2.split(",")[1].toDouble()
                                 )
 
-                                marker.itemName = restaurant.store_name
+                                marker.itemName = restaurant.name
                                 marker.tag = 1
                                 marker.userObject =
-                                    restaurant.store_name + "," + restaurant.phone_num + "," + restaurant.address.substringBeforeLast(
+                                    restaurant.name + "&&" + restaurant.phone + "&&" + restaurant.address.substringBeforeLast(
                                         ' '
-                                    ) + "," + restaurant.business_time + restaurant.description + "," + restaurant.waiting_num
+                                    ) + "&&" + restaurant.business_hour + "&&" + restaurant.info + "&&" + restaurant.team_count + "&&" + restaurant.maximum_capacity
                                 marker.mapPoint = mapPoint
                                 marker.markerType = MapPOIItem.MarkerType.CustomImage
                                 marker.selectedMarkerType = MapPOIItem.MarkerType.CustomImage

@@ -86,51 +86,118 @@
             android:layout_below="@+id/line"
             android:orientation="vertical">
 
-        <TextView
-                android:id="@+id/bottom_sheet_store_address"
-                android:layout_width="match_parent"
+
+        <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="서울 서초구 강남대로61길 27"
-                android:textColor="@android:color/black"
-                android:textSize="16sp" />
+                android:orientation="horizontal">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="주소"
+                    android:layout_marginEnd="8dp"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:textColor="#000000"/>
+            <TextView
+                    android:id="@+id/bottom_sheet_store_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="서울 서초구 강남대로61길 27"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
+        </LinearLayout>
+
+
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp" />
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="영업시간"
+                    android:layout_marginEnd="8dp"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:textColor="#000000"/>
+            <TextView
+                    android:id="@+id/bottom_sheet_store_business_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="07:00-04:00 월요일, 화요일, 수요일, 목요일, 금요일, 토요일, 일요일 휴무"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
+        </LinearLayout>
+
+
 
         <View
                 android:layout_width="match_parent"
                 android:layout_height="5dp" />
 
 
-        <TextView
-                android:id="@+id/bottom_sheet_store_business_time"
-                android:layout_width="match_parent"
+
+
+
+
+
+        <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="영업시간: 07:00-04:00 월요일, 화요일, 수요일, 목요일, 금요일, 토요일, 일요일 휴무"
-                android:textColor="@android:color/black"
-                android:textSize="16sp" />
+                android:orientation="horizontal">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="수용 인원"
+                    android:layout_marginEnd="8dp"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:textColor="#000000"/>
+            <TextView
+                    android:id="@+id/bottom_sheet_store_capacity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:text="50"
+                    android:textColor="@android:color/black"
+                    android:textSize="15sp" />
+        </LinearLayout>
+
+
 
         <View
                 android:layout_width="match_parent"
                 android:layout_height="5dp" />
 
-        <TextView
-                android:id="@+id/bottom_sheet_store_capacity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:text="수용 인원 : 50"
-                android:textColor="@android:color/black"
-                android:textSize="15sp" />
 
-        <View
-                android:layout_width="match_parent"
-                android:layout_height="5dp" />
-
-        <TextView
-                android:id="@+id/bottom_sheet_store_description"
-                android:layout_width="match_parent"
+        <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="재료소진 시 영업종료"
-                android:textColor="@android:color/black"
-                android:textSize="16sp" />
+                android:orientation="horizontal">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="비고"
+                    android:layout_marginEnd="8dp"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:textColor="#000000"/>
+            <TextView
+                    android:id="@+id/bottom_sheet_store_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="재료소진 시 영업종료"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
+        </LinearLayout>
+
+
 
         <View
                 android:layout_width="match_parent"

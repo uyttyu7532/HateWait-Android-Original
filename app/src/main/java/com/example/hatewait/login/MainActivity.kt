@@ -48,8 +48,8 @@ lateinit var mContext: Context
 
 class MainActivity : AppCompatActivity() {
 
-    var mLastBackPress: Long = 0
-    val mBackPressThreshold: Long = 3500
+    private var mLastBackPress: Long = 0
+    private val mBackPressThreshold: Long = 3500
 
     // 영문,한글,숫자 1자 이상 입력 가능
     private val idRegex = Regex("^(?=.*[a-zA-Zㄱ-ㅎ가-힣0-9])[a-zA-Zㄱ-ㅎ가-힣0-9]{1,}$")
@@ -192,7 +192,7 @@ class MainActivity : AppCompatActivity() {
                     editor.putString("STORE_ID", id_input_editText.text.toString())
                     editor.putString("STORE_PASSWORD", password_input_editText.text.toString())
                     editor.putBoolean("AUTO_LOGIN", true)
-                    editor.commit()
+                    editor.apply()
                 } else {
 //                    editor.remove("STORE_ID")
 //                    editor.remove("STORE_PASSWORD")

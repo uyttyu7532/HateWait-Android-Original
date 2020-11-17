@@ -36,7 +36,7 @@ class MemberRegister : Fragment() {
 //    LoginRegisterViewPagerAdapter <->MemberRegister Communication?
 //    Bundle? Interface Listener?
 
-    lateinit var customerInfoListener: CustomerInfoListener
+    private lateinit var customerInfoListener: CustomerInfoListener
 
     interface CustomerInfoListener {
         fun registerCustomer(memberRegister: MemberRegister)

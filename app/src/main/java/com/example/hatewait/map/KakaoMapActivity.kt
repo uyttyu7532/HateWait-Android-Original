@@ -562,7 +562,7 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
                                 tempMemberRestaurant.add(marker)
 
 
-                                val point: String = restaurant.address.substringAfterLast(' ')
+                                val point: String = restaurant.address.substringAfterLast('(')
                                 val point2: String = point.replace("(", "").replace(")", "")
                                 val mapPoint = MapPoint.mapPointWithGeoCoord(
                                     point2.split(",")[0].toDouble(),

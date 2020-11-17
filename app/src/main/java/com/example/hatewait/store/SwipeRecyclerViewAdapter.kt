@@ -200,7 +200,7 @@ class SwipeRecyclerViewAdapter(
 
         viewHolder.waitingNameTextView.text = item.name
         viewHolder.waitingNumTextView.text = "(" + item.people_number + "명)"
-        viewHolder.waitingPhoneTextView.text = "0" + item.phone
+        viewHolder.waitingPhoneTextView.text = item.phone
 
 
         if (item.called_time == null) { // 호출x
@@ -267,12 +267,6 @@ class SwipeRecyclerViewAdapter(
                 .setConfirmClickListener { sDialog ->
 
 
-                    Toast.makeText(
-                        view.context,
-                        "${items[position].name} 손님 삭제 완료",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
                     if (fragment == null || (!(fragment?.isAdded)!!)) {
                         val ft =
                             (context as StoreWaitingList).supportFragmentManager.beginTransaction()
@@ -280,7 +274,7 @@ class SwipeRecyclerViewAdapter(
                     }
                     MyApi.WaitingListService.requestDeleteWaiting(
                         userId = storeInfo!!.id,
-                        deleteWaiting = DeleteWaitingResponseData("0"+items[position].phone, true)
+                        deleteWaiting = DeleteWaitingResponseData(items[position].phone, true)
                     )
                         .enqueue(object : Callback<MyApi.onlyMessageResponseData> {
                             override fun onFailure(
@@ -304,12 +298,18 @@ class SwipeRecyclerViewAdapter(
                                     409 -> {
                                     }
                                     200 -> {
+                                        Toast.makeText(
+                                            view.context,
+                                            "${items[position].name} 손님 삭제 완료",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+
                                         mItemManger.removeShownLayouts(viewHolder.waitingListSwipeLayout)
                                         notifyItemRemoved(position)
                                         notifyItemRangeChanged(position, items.size)
                                         mItemManger.closeAllItems()
 
-//                                        getWaitingList()
+                                        getWaitingList()
                                     }
                                 }
                             }
@@ -325,7 +325,6 @@ class SwipeRecyclerViewAdapter(
                 .setCancelButton(
                     "방문안함"
                 ) { sDialog ->
-//                    visited = false
 
                     if (fragment == null || (!(fragment?.isAdded)!!)) {
                         val ft =
@@ -358,12 +357,18 @@ class SwipeRecyclerViewAdapter(
                                     409 -> {
                                     }
                                     200 -> {
+                                        Toast.makeText(
+                                            view.context,
+                                            "${items[position].name} 손님 삭제 완료",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+
                                         mItemManger.removeShownLayouts(viewHolder.waitingListSwipeLayout)
                                         notifyItemRemoved(position)
                                         notifyItemRangeChanged(position, items.size)
                                         mItemManger.closeAllItems()
 
-//                                        getWaitingList()
+                                        getWaitingList()
                                     }
                                 }
                             }

@@ -49,7 +49,7 @@ class MapBottomSheet : BottomSheetDialogFragment() {
         view?.findViewById<TextView>(R.id.bottom_sheet_store_waiting_num)!!.text =
             data.toString().split("&&")[5]+"팀"
         view?.findViewById<TextView>(R.id.bottom_sheet_store_capacity)!!.text =
-            "수용 인원: "+data.toString().split("&&")[6]
+            data.toString().split("&&")[6]
 
 
 

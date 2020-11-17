@@ -90,7 +90,6 @@ class CustomerSignUp3 : AppCompatActivity() {
                             201 -> {
                                 var data: MemberSignUpResponseData? = response?.body() // 서버로부터 온 응답
 
-                                startActivity<MemberMenu>()
                                 _customerSignUp1.finish()
                                 _customerSignUp2.finish()
                                 finish()
@@ -100,7 +99,7 @@ class CustomerSignUp3 : AppCompatActivity() {
                     }
                 }
                 )
-            Toast.makeText(this, "$userId $userPassword $userName $userPhone", Toast.LENGTH_LONG).show()
+//            Toast.makeText(this, "$userId $userPassword $userName $userPhone", Toast.LENGTH_LONG).show()
         }
         setSupportActionBar(register_toolbar)
         supportActionBar?.apply {

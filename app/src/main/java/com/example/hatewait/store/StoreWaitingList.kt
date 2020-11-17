@@ -195,13 +195,13 @@ class StoreWaitingList : AppCompatActivity() {
 //                            phoneNum = addWaitingPhonenum.text.toString()
 //                        )
 
-                        var userPhone = addWaitingPhonenum.text.toString().toInt()
+                        var userPhone = addWaitingPhonenum.text.toString()
                         var userName = addWaitingName.text.toString()
                         var userPeopleNum = addWaitingPerson.text.toString().toInt()
 
 
                         var nonMemberRegisterData =
-                            NonMemberRegisterRequestData(userPhone, userName, userPeopleNum, false)
+                            NonMemberRegisterRequestData(userPhone, userName, userPeopleNum.toString(), false)
 
                         if (fragment == null || (!(fragment?.isAdded)!!)) {
                             newInstance().show(supportFragmentManager, "")
@@ -256,51 +256,49 @@ class StoreWaitingList : AppCompatActivity() {
             }
         }
     }
+}
 
+fun getWaitingList() {
 
-    fun getWaitingList() {
+    Log.i("대기 리스트 :: ", "getWaitingList()")
 
-        Log.i("대기 리스트 :: ", "getWaitingList()")
+//    if (fragment == null || (!(fragment?.isAdded)!!)) {
+//        newInstance().show(waitingListContext, "")
+//    }
+    MyApi.WaitingListService.requestWaitingList(storeInfo!!.id)
+        .enqueue(object : Callback<WaitingListResponseData> {
+            override fun onFailure(call: Call<WaitingListResponseData>, t: Throwable) {
 
-        if (fragment == null || (!(fragment?.isAdded)!!)) {
-            newInstance().show(supportFragmentManager, "")
-        }
-        MyApi.WaitingListService.requestWaitingList(storeInfo!!.id)
-            .enqueue(object : Callback<WaitingListResponseData> {
-                override fun onFailure(call: Call<WaitingListResponseData>, t: Throwable) {
+                Log.d("retrofit2 대기 리스트 :: ", "서버 연결 실패 $t")
+            }
 
-                    Log.d("retrofit2 대기 리스트 :: ", "서버 연결 실패 $t")
-                }
-
-                override fun onResponse(
-                    call: Call<WaitingListResponseData>,
-                    response: Response<WaitingListResponseData>
-                ) {
-                    newInstance().dismiss()
-                    Log.d(
-                        "retrofit2 대기 리스트 ::",
-                        response.code().toString() + response.body().toString()
-                    )
-                    when (response.code()) {
-                        200 -> {
-                            val data = response.body() // 서버로부터 온 응답
-                            data?.let {
-                                var responseMessage = it.message
-                                if (it.waiting_customers != null) {
-                                    setRecyclerView(it.waiting_customers!!)
-                                } else {
-                                    Toast.makeText(mContext, "현재 대기 인원이 없어요", Toast.LENGTH_SHORT)
-                                        .show()
-                                }
+            override fun onResponse(
+                call: Call<WaitingListResponseData>,
+                response: Response<WaitingListResponseData>
+            ) {
+//                newInstance().dismiss()
+                Log.d(
+                    "retrofit2 대기 리스트 ::",
+                    response.code().toString() + response.body().toString()
+                )
+                when (response.code()) {
+                    200 -> {
+                        val data = response.body() // 서버로부터 온 응답
+                        data?.let {
+                            var responseMessage = it.message
+                            if (it.waiting_customers != null) {
+                                setRecyclerView(it.waiting_customers!!)
+                            } else {
+                                Toast.makeText(mContext, "현재 대기 인원이 없어요", Toast.LENGTH_SHORT)
+                                    .show()
                             }
                         }
                     }
-
                 }
-            }
-            )
-    }
 
+            }
+        }
+        )
 }
 
 // RecyclerView와 Adapter 연결

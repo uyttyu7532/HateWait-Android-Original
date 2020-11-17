@@ -58,7 +58,7 @@ class MemberInfoUpdate : AppCompatActivity(),MemberPhoneNumberChangeDialog.Dialo
                         200 -> {
                             setting_member_name_text_view.text = data!!.memberInformation.name
                             setting_member_email_text_view.text = data!!.memberInformation.email
-                            setting_member_phone_text_view.text = "0"+data!!.memberInformation.phone
+                            setting_member_phone_text_view.text = data!!.memberInformation.phone
                         }
                     }
                 }

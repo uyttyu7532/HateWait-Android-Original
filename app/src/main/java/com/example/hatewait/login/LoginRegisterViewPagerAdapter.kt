@@ -65,8 +65,8 @@ class LoginRegisterViewPagerActivity : AppCompatActivity(),
     ) {
 
         var memberRegisterData =
-            MemberRegisterRequestData(customer_id, customer_people_num, true)
-        Log.d("retrofit2 회원 대기 등록 :: ", memberRegisterData.toString())
+            MemberRegisterRequestData(customer_id, customer_people_num.toString(), true)
+//        Log.d("retrofit2 회원 대기 등록 :: ", memberRegisterData.toString())
 
         if (fragment == null || (!(fragment?.isAdded)!!)) {
             newInstance().show(supportFragmentManager, "")

@@ -145,13 +145,13 @@ class NonMemberRegister : androidx.fragment.app.Fragment() {
 //                    , people_number_editText.text.toString()
 //                )
 
-            var userPhone = Integer(user_phone_number_editText.text.toString()).toInt()
+            var userPhone = user_phone_number_editText.text.toString()
             var userName = user_name_input_editText.text.toString()
             var userPeopleNum = Integer(people_number_editText.text.toString()).toInt()
 
 
             var nonMemberRegisterData =
-                NonMemberRegisterRequestData(userPhone, userName, userPeopleNum, false)
+                NonMemberRegisterRequestData(userPhone, userName, userPeopleNum.toString(), false)
 
             if (fragment == null || (!(fragment?.isAdded)!!)) {
                 newInstance().show(requireActivity().supportFragmentManager, "")

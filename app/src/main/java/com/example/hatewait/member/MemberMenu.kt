@@ -164,7 +164,7 @@ class MemberMenu : AppCompatActivity() {
                                 no_waiting_text_view.visibility = GONE
                                 customer_waiting_linear_layout.visibility = VISIBLE
                                 waiting_store_text_view.text = data!!.store_name
-                                customer_waiting_num_text_view.text = data!!.turn_number.toString()
+                                customer_waiting_num_text_view.text = data!!.turn_number.toString()+"번 순서입니다"
                             }
                         }
                     }

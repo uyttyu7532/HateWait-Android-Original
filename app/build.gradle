@@ -128,6 +128,8 @@ android {
 
         implementation 'com.github.nkzawa:socket.io-client:0.6.0'
 
+        implementation 'com.libizo:customedittext:1.0.6'
+
     }
 }
 

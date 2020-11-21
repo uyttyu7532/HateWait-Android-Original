@@ -64,15 +64,9 @@ class LoginRegisterViewPagerActivity : AppCompatActivity(),
         customer_people_num: Int
     ) {
 
-<<<<<<< HEAD
-        var memberRegisterData =
-            MemberRegisterRequestData(customer_id, customer_people_num.toString(), true)
+        var memberRegisterData = MemberRegisterRequestData(customer_id, customer_people_num.toString(), true)
 //        Log.d("retrofit2 회원 대기 등록 :: ", memberRegisterData.toString())
-=======
-        val memberRegisterData =
-            MemberRegisterRequestData(customer_id, customer_people_num, true)
         Log.d("retrofit2 회원 대기 등록 :: ", memberRegisterData.toString())
->>>>>>> 6f3e8c9f0b9335305a35953bd28b50fd70043100
 
         if (fragment == null || (!(fragment?.isAdded)!!)) {
             newInstance().show(supportFragmentManager, "")
@@ -106,7 +100,8 @@ class LoginRegisterViewPagerActivity : AppCompatActivity(),
                             dialog.dismiss()
                         }
                         409 -> {
-                            Toast.makeText(mContext, "이미 다른 가게에 등록된 아이디입니다.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(mContext, "이미 다른 가게에 등록된 아이디입니다.", Toast.LENGTH_SHORT)
+                                .show()
                         }
                     }
                 }

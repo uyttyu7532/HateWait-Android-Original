@@ -49,7 +49,7 @@ class MemberMenu : AppCompatActivity() {
 //            getSharedPreferences(resources.getString(R.string.customer_mode), Context.MODE_PRIVATE)
 //        CUSTOMERID = customerReference.getString("CUSTOMER_ID", "")
 
-        FirebaseMessaging.getInstance().subscribeToTopic("0" + memberInfo.phone)
+        FirebaseMessaging.getInstance().subscribeToTopic(memberInfo.phone)
 
     }
 

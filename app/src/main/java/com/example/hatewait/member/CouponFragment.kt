@@ -41,10 +41,8 @@ class CouponFragment : Fragment(),
         savedInstanceState: Bundle?
     ): View? {
 
-//        var bundle: Bundle = this.requireArguments()
-//        storeId = bundle.getString("storeId")
-
-        storeId = requireArguments().getString("storeId")
+        var bundle: Bundle = requireArguments()
+        storeId = bundle.getString("store_id")
 
         rootView = inflater.inflate(R.layout.fragment_coupon, container, false)
         itemPicker = rootView!!.findViewById(R.id.coupon_item_picker) as DiscreteScrollView

@@ -1,7 +1,6 @@
 package com.example.hatewait.member
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,17 +28,11 @@ class StampFragment : Fragment(){
         savedInstanceState: Bundle?
     ): View? {
 
-//        var bundle:Bundle = this.requireArguments()
-//        storeName = arguments?.getString("store_name")
-//        stampBenefit = arguments?.getString("stamp_benefit")
-//        stampCount = arguments?.getInt("stamp_count")
-//        maximumStamp = arguments?.getInt("maximum_stamp")
-
-
-        storeName = requireArguments().getString("store_name")
-        stampBenefit = requireArguments().getString("stamp_benefit")
-        stampCount = requireArguments().getInt("stamp_count")
-        maximumStamp = requireArguments().getInt("maximum_stamp")
+        var bundle:Bundle = this.requireArguments()
+        storeName = bundle.getString("store_name")
+        stampBenefit = bundle.getString("stamp_benefit")
+        stampCount = bundle.getInt("stamp_count")
+        maximumStamp = bundle.getInt("maximum_stamp")
 
 
 

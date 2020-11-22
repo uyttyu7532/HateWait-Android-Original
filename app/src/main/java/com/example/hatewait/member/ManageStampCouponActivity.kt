@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.example.hatewait.R
+import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_manage_stamp_coupon.*
 
 
@@ -45,51 +46,47 @@ class ManageStampCouponActivity : FragmentActivity() {
     private fun init() {
 
 
-
-        val bundle = Bundle()
-        bundle.putString("memberId", memberId)
-        bundle.putString("storeId", storeId)
-        bundle.putString("store_name", storeName)
-        bundle.putString("stamp_benefit", stampBenefit)
-        bundle.putInt("stamp_count", stampCount!!)
-        bundle.putInt("maximum_stamp", maximumStamp!!)
-
-        val stampFragment = StampFragment()
-        val couponFragment = CouponFragment()
-
-
-        stampFragment.arguments = bundle
-        couponFragment.arguments = bundle
-
-        val fm: FragmentManager = supportFragmentManager
-        val fragmentTransaction: FragmentTransaction = fm.beginTransaction()
-        fragmentTransaction.add(R.id.coupon_fragment, couponFragment)
-        fragmentTransaction.add(R.id.stamp_fragment, stampFragment)
-        fragmentTransaction.commit()
-
-
-
-
-
-
-//        manage_stamp_coupon_view_pager.adapter = StampCouponFragAdapter(
-//            this,
-//            storeId,
-//            storeName,
-//            stampBenefit,
-//            stampCount!!,
-//            maximumStamp!!
-//        )
-////        manage_stamp_coupon_view_pager.adapter = StampCouponFragAdapter(this)
 //
+//        var bundle = Bundle()
+//        bundle.putString("member_id", memberId)
+//        bundle.putString("store_id", storeId)
+//        bundle.putString("store_name", storeName)
+//        bundle.putString("stamp_benefit", stampBenefit)
+//        bundle.putInt("stamp_count", stampCount!!)
+//        bundle.putInt("maximum_stamp", maximumStamp!!)
 //
-//        TabLayoutMediator(
-//            manage_stamp_coupon_tab_layout,
-//            manage_stamp_coupon_view_pager
-//        ) { tab, position ->
-//            tab.text = stampCouponArray[position]
-//            // tab.icon
-//        }.attach()
+////        var stampFragment = StampFragment()
+////        stampFragment.arguments = bundle
+//
+//        var couponFragment = CouponFragment()
+//        couponFragment.arguments = bundle
+//
+//        val fm: FragmentManager = supportFragmentManager
+//        val fragmentTransaction: FragmentTransaction = fm.beginTransaction()
+//        fragmentTransaction.add(R.id.coupon_fragment, couponFragment)
+//        fragmentTransaction.add(R.id.stamp_fragment, couponFragment)
+//        fragmentTransaction.commit()
+
+
+        manage_stamp_coupon_view_pager.adapter = StampCouponFragAdapter(
+            this,
+            storeId,
+            storeName,
+            stampBenefit,
+            stampCount!!,
+            maximumStamp!!
+        )
+
+//        manage_stamp_coupon_view_pager.adapter = StampCouponFragAdapter(this)
+
+
+        TabLayoutMediator(
+            manage_stamp_coupon_tab_layout,
+            manage_stamp_coupon_view_pager
+        ) { tab, position ->
+            tab.text = stampCouponArray[position]
+            // tab.icon
+        }.attach()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

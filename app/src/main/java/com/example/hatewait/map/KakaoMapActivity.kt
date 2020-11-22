@@ -675,7 +675,7 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
     }
 
 
-    fun getHashKey(context: Context): String? {
+    private fun getHashKey(context: Context): String? {
         try {
             if (Build.VERSION.SDK_INT >= 28) {
                 val packageInfo =

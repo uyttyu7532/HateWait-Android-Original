@@ -1,18 +1,26 @@
 package com.example.hatewait.signup
 
+import LottieDialogFragment.Companion.newInstance
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hatewait.R
+import com.example.hatewait.model.StoreSignUpResponseData
+import com.example.hatewait.retrofit2.MyApi
 import kotlinx.android.synthetic.main.activity_signup1.*
 import kotlinx.android.synthetic.main.activity_signup1.register_toolbar
 import kotlinx.android.synthetic.main.activity_signup2.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 // 1단계 이메일 , 인증번호 (네아로면 생략)
@@ -45,13 +53,54 @@ class StoreSignUp2 : AppCompatActivity() {
 
 
         button_continue.setOnClickListener {
-            checkMailCode = false
-            val intent = Intent(this, StoreSignUp3::class.java)
-            intent.putExtra("STORE_EMAIL", getIntent().getStringExtra("STORE_EMAIL"))
-            intent.putExtra("STORE_ID", id_input_edit_text.text.toString())
-            intent.putExtra("STORE_PASSWORD", password_input_editText.text.toString())
-            intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
-            startActivity(intent)
+
+            MyApi.SignUpService.requestCheckStoreId(id_input_edit_text.text.toString())
+                .enqueue(object : Callback<MyApi.onlyMessageResponseData> {
+                    override fun onFailure(
+                        call: Call<MyApi.onlyMessageResponseData>,
+                        t: Throwable
+                    ) {
+
+                        Log.d("retrofit2 가게 아이디확인 :: ", "연결실패 $t")
+                    }
+
+                    override fun onResponse(
+                        call: Call<MyApi.onlyMessageResponseData>,
+                        response: Response<MyApi.onlyMessageResponseData>
+                    ) {
+                        newInstance().dismiss()
+                        Log.d(
+                            "retrofit2 가게 아이디확인 ::",
+                            response.code().toString() + response.body().toString()
+                        )
+
+                        when (response.code()) {
+                            200 -> {
+                                checkMailCode = false
+                                val intent = Intent(mcontext, StoreSignUp3::class.java)
+                                intent.putExtra(
+                                    "STORE_EMAIL",
+                                    getIntent().getStringExtra("STORE_EMAIL")
+                                )
+                                intent.putExtra("STORE_ID", id_input_edit_text.text.toString())
+                                intent.putExtra(
+                                    "STORE_PASSWORD",
+                                    password_input_editText.text.toString()
+                                )
+                                intent.flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT
+                                startActivity(intent)
+                            }
+                            409 -> {
+                                Toast.makeText(mcontext, "이미 가입된 아이디입니다.", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+                        }
+
+                    }
+                }
+                )
+
+
         }
 
         setSupportActionBar(register_toolbar)

@@ -3,7 +3,6 @@ package com.example.hatewait.signup
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import com.example.hatewait.R
 import kotlinx.android.synthetic.main.activity_select_store_member.*
 import org.jetbrains.anko.startActivity
@@ -45,7 +44,7 @@ class SelectSignUp : AppCompatActivity() {
             }
 
             customer_sign_up_button.setOnClickListener {
-                val intent = Intent(this, CustomerSignUpWithNaver::class.java)
+                val intent = Intent(this, MemberSignUpWithNaver::class.java)
                 intent.putExtra("isFromNaver", true)
                 intent.putExtra("naverUserId", naverUserId)
                 intent.putExtra("naverUserEmail", naverUserEmail)

@@ -2,29 +2,30 @@ package com.example.hatewait.signup
 
 import LottieDialogFragment.Companion.fragment
 import LottieDialogFragment.Companion.newInstance
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.MenuItem
-import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import com.example.hatewait.R
 import com.example.hatewait.member.MemberMenu
 import com.example.hatewait.model.MemberSignUpRequestData
 import com.example.hatewait.model.MemberSignUpResponseData
 import com.example.hatewait.retrofit2.MyApi
-import com.google.android.material.textfield.TextInputEditText
-import kotlinx.android.synthetic.main.activity_customer_sign_up_with_naver.*
+import kotlinx.android.synthetic.main.activity_customer_register3.*
+import kotlinx.android.synthetic.main.activity_customer_register3.button_finish
 import org.jetbrains.anko.startActivity
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import retrofit2.*
 
 
-class CustomerSignUpWithNaver : AppCompatActivity() {
+// 1단계 이메일 , 인증번호 (네아로면 생략)
+// 2단계 아아디, 비번, 비번확인
+// 3단계 이름(네아로 생략), 전화번호
+// 가입완료 환영 메시지 액티비티 or 로그인바로됨
 
+class MemberSignUp3 : AppCompatActivity() {
     //    한글 2~4자 (공백 허용 X) or 영문 First name 2~10, Last name 2~10
     private val nameRegex = Regex("^[가-힣]{2,4}|[a-zA-Z]{2,10}\\s[a-zA-Z]{2,10}$")
 
@@ -35,27 +36,13 @@ class CustomerSignUpWithNaver : AppCompatActivity() {
     fun verifyPhoneNumber(input_phone_number: String): Boolean =
         input_phone_number.matches(phoneRegex)
 
-    lateinit var userEmailInputEditText : TextInputEditText
-    lateinit var userNameInputEditText : TextInputEditText
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_customer_sign_up_with_naver)
-
-        userEmailInputEditText = findViewById(R.id.user_email_input_edit_text)
-        userNameInputEditText= findViewById(R.id.user_name_input_edit_text)
-
-        var naverUserId = intent.getStringExtra("naverUserId")
-        var naverUserEmail = intent.getStringExtra("naverUserEmail")
-        var naverUserName = intent.getStringExtra("naverUserName")
-
-        userEmailInputEditText.setText(naverUserEmail)
-        userNameInputEditText.setText(naverUserName)
-
+        setContentView(R.layout.activity_customer_register3)
         if (savedInstanceState != null) {
             with(savedInstanceState) {
                 Log.i("State", "onCreate Restore Instance")
-                userNameInputEditText.setText(savedInstanceState.getString("USER_NAME"))
+                user_name_input_edit_text.setText(savedInstanceState.getString("USER_NAME"))
                 user_phone_number_edit_text.setText(savedInstanceState.getString("USER_PHONE"))
             }
 
@@ -63,24 +50,26 @@ class CustomerSignUpWithNaver : AppCompatActivity() {
         addTextChangeListener()
 
         button_finish.setOnClickListener {
-            val userEmail = naverUserEmail
-            val userId = naverUserId
-            val userPassword = ""
-            val userName = naverUserName
+            val userEmail = intent.getStringExtra("USER_EMAIL")
+            val userId = intent.getStringExtra("USER_ID")
+            val userPassword = intent.getStringExtra("USER_PASSWORD")
+            val userName = user_name_input_edit_text.text.toString()
             val userPhone = user_phone_number_edit_text.text.toString()
 
 
+//            CustomerRegisterAsyncTask(this@CustomerSignUp3).execute(
+//                userId,
+//                userPassword,
+//                userName,
+//                userPhone
+//            )
 
-
-            var customerSignUpData =
-                MemberSignUpRequestData(userId, userName, userPhone, userEmail, userPassword)
-
-            Toast.makeText(this,customerSignUpData.toString(), Toast.LENGTH_SHORT).show()
+            var customerSignUpData = MemberSignUpRequestData(userId, userName, userPhone, userEmail, userPassword)
 
             if (fragment == null || (!(fragment?.isAdded)!!)) {
                 newInstance().show(supportFragmentManager, "")
             }
-            MyApi.SignUpService.requestCustomerSignUp(customerSignUpData)
+                MyApi.SignUpService.requestCustomerSignUp(customerSignUpData)
                 .enqueue(object : Callback<MemberSignUpResponseData> {
                     override fun onFailure(call: Call<MemberSignUpResponseData>, t: Throwable) {
 
@@ -98,10 +87,9 @@ class CustomerSignUpWithNaver : AppCompatActivity() {
                         )
 
                         when (response.code()) {
-                            200 -> {
+                            201 -> {
                                 var data: MemberSignUpResponseData? = response?.body() // 서버로부터 온 응답
 
-                                startActivity<MemberMenu>()
                                 _customerSignUp1.finish()
                                 _customerSignUp2.finish()
                                 finish()
@@ -111,8 +99,7 @@ class CustomerSignUpWithNaver : AppCompatActivity() {
                     }
                 }
                 )
-            Toast.makeText(this, "$userId $userPassword $userName $userPhone", Toast.LENGTH_LONG)
-                .show()
+//            Toast.makeText(this, "$userId $userPassword $userName $userPhone", Toast.LENGTH_LONG).show()
         }
         setSupportActionBar(register_toolbar)
         supportActionBar?.apply {
@@ -154,6 +141,31 @@ class CustomerSignUpWithNaver : AppCompatActivity() {
     }
 
     private fun addTextChangeListener() {
+        user_name_input_edit_text.addTextChangedListener(object : TextWatcher {
+            //            text에 변화가 있을 때마다
+            override fun afterTextChanged(s: Editable?) {
+                if (!verifyName(s.toString())) {
+                    user_name_input_layout.error = "2~4자 한글 또는 영문이름을 입력해주세요"
+                    button_finish.isEnabled = false
+                } else {
+                    user_name_input_layout.error = null
+                    user_name_input_layout.hint = null
+                }
+
+                //    둘다 에러가 없을 때 등록 버튼 활성화
+                button_finish.isEnabled =
+                    (user_name_input_layout.error == null
+                            && user_phone_number_layout.error == null
+                            && !user_phone_number_edit_text.text.isNullOrBlank())
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+        })
+
         user_phone_number_edit_text.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 if (!verifyPhoneNumber(s.toString())) {
@@ -164,7 +176,9 @@ class CustomerSignUpWithNaver : AppCompatActivity() {
                     user_phone_number_layout.hint = null
                 }
                 button_finish.isEnabled =
-                    user_phone_number_layout.error == null
+                    (user_name_input_layout.error == null
+                            && user_phone_number_layout.error == null
+                            && !user_name_input_edit_text.text.isNullOrBlank())
             }
 
             override fun beforeTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -175,6 +189,16 @@ class CustomerSignUpWithNaver : AppCompatActivity() {
         })
     }
 
+    private fun inputLayoutInitialize() {
+        user_name_input_edit_text.text?.clear()
+        user_name_input_edit_text.clearFocus()
+        user_name_input_layout.error = null
+        user_name_input_layout.hint = "이름을 입력해주세요"
+        user_phone_number_edit_text.text?.clear()
+        user_phone_number_edit_text.clearFocus()
+        user_phone_number_layout.error = null
+        user_phone_number_layout.hint = "전화번호를 입력해주세요"
+    }
 
     //outState – Bundle in which to place your saved state.
 //    명시적으로 activity를 닫거나(ex. 뒤로가기) finish()호출시 다음 메소드는 호출되지않음.

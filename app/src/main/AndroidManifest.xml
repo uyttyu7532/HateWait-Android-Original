@@ -18,7 +18,7 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true">
-        <activity android:name=".signup.CustomerSignUpWithNaver"/>
+        <activity android:name=".signup.MemberSignUpWithNaver"/>
         <activity android:name=".signup.SelectSignUp" />
         <activity android:name=".register.StartWaitActivity" />
         <activity android:name=".storeinfo.ChangePasswordActivity1" />
@@ -42,7 +42,7 @@
         <activity android:name=".signup.StoreSignUp4" />
         <activity android:name=".signup.CustomerSignUp1" />
         <activity android:name=".signup.CustomerSignUp2" />
-        <activity android:name=".signup.CustomerSignUp3" />
+        <activity android:name=".signup.MemberSignUp3" />
 
         <meta-data
                 android:name="com.google.firebase.messaging.default_notification_icon"

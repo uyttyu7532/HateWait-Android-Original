@@ -23,3 +23,4 @@ data class StoreSignUpRequestData(
 )
 
 data class StoreSignUpResponseData(var message: String, var name: String)
+

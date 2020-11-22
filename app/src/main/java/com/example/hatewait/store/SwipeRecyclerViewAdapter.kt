@@ -91,7 +91,7 @@ class SwipeRecyclerViewAdapter(
                     val ft = (context as StoreWaitingList).supportFragmentManager.beginTransaction()
                     newInstance().show(ft, "")
                 }
-                MyApi.WaitingListService.requestWaitingCall(
+                MyApi.WaitingService.requestWaitingCall(
                     storeInfo.id,
                     items[position].phone
                 )
@@ -272,7 +272,7 @@ class SwipeRecyclerViewAdapter(
                             (context as StoreWaitingList).supportFragmentManager.beginTransaction()
                         newInstance().show(ft, "")
                     }
-                    MyApi.WaitingListService.requestDeleteWaiting(
+                    MyApi.WaitingService.requestDeleteWaiting(
                         userId = storeInfo!!.id,
                         deleteWaiting = DeleteWaitingResponseData(items[position].phone, true)
                     )
@@ -331,7 +331,7 @@ class SwipeRecyclerViewAdapter(
                             (context as StoreWaitingList).supportFragmentManager.beginTransaction()
                         newInstance().show(ft, "")
                     }
-                    MyApi.WaitingListService.requestDeleteWaiting(
+                    MyApi.WaitingService.requestDeleteWaiting(
                         userId = storeInfo!!.id,
                         deleteWaiting = DeleteWaitingResponseData(items[position].phone, false)
                     )

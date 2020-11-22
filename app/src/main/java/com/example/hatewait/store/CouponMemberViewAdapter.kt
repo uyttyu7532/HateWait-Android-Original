@@ -50,7 +50,9 @@ class CouponMemberViewAdapter(
         holder.memberPhoneTextView.text = itemsFilterList[position].member_phone
         holder.couponCount.text = itemsFilterList[position].coupon_count.toString()
 
-        holder.useCouponBottomWrapperLeft
+        holder.useCouponBottomWrapperLeft.setOnClickListener{
+
+        }
     }
 
 
@@ -61,6 +63,7 @@ class CouponMemberViewAdapter(
         var couponCount = itemView.findViewById(R.id.coupon_count) as TextView
         var useCouponBottomWrapperLeft =
             itemView.findViewById(R.id.use_coupon_bottom_wrapper_left) as FrameLayout
+
 
     }
 

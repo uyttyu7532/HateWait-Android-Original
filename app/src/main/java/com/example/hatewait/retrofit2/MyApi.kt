@@ -30,8 +30,8 @@ object MyApi {
         retrofit().create(RetrofitLogin::class.java)
     }
 
-    val WaitingListService: RetrofitWaitingList by lazy {
-        retrofit().create(RetrofitWaitingList::class.java)
+    val WaitingService: RetrofitWaiting by lazy {
+        retrofit().create(RetrofitWaiting::class.java)
     }
 
     val CouponService: RetrofitCoupon by lazy {

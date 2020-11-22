@@ -7,6 +7,7 @@ import com.example.hatewait.model.StoreListResponseData
 import com.google.gson.annotations.SerializedName
 import retrofit2.Call
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -41,6 +42,13 @@ interface RetrofitCoupon {
     fun requestCouponMemberList(
         @Path("id") id: String
     ): Call<CouponMemberListResponseData>
+
+
+    // TODO 쿠폰 사용 버튼 클릭시
+    @POST("{id}")
+    fun requestUseCoupon(
+        @Path("id") storeId: String
+    ):Call<MyApi.onlyMessageResponseData>
 }
 
 

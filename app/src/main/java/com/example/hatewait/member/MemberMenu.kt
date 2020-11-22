@@ -2,6 +2,7 @@ package com.example.hatewait.member
 
 import LottieDialogFragment.Companion.fragment
 import LottieDialogFragment.Companion.newInstance
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -11,6 +12,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.example.hatewait.map.KakaoMapActivity
@@ -89,8 +91,7 @@ class MemberMenu : AppCompatActivity() {
                 .setContentText("\n")
                 .setConfirmText("예")
                 .setConfirmClickListener { sDialog ->
-                    // TODO 대기취소
-                    sDialog.dismissWithAnimation()
+                    cancelMyWaiting(sDialog)
                 }
                 .setCancelButton(
                     "아니오"
@@ -116,8 +117,7 @@ class MemberMenu : AppCompatActivity() {
                 questionDialog.dismissWithAnimation()
             }
             noButton.setOnClickListener {
-// TODO 대기취소
-                questionDialog.dismissWithAnimation()
+                cancelMyWaiting(questionDialog)
             }
         }
 //        customerMarquee.text = resources.getString(R.string.customer_marquee)
@@ -136,7 +136,7 @@ class MemberMenu : AppCompatActivity() {
         if (fragment == null || (!(fragment?.isAdded)!!)) {
             newInstance().show(supportFragmentManager, "")
         }
-        MyApi.WaitingListService.requestMyWaiting(memberInfo!!.id)
+        MyApi.WaitingService.requestMyWaiting(memberInfo!!.id)
             .enqueue(object : Callback<MyWaitingResponseData> {
                 override fun onFailure(call: Call<MyWaitingResponseData>, t: Throwable) {
 
@@ -164,7 +164,8 @@ class MemberMenu : AppCompatActivity() {
                                 no_waiting_text_view.visibility = GONE
                                 customer_waiting_linear_layout.visibility = VISIBLE
                                 waiting_store_text_view.text = data!!.store_name
-                                customer_waiting_num_text_view.text = data!!.turn_number.toString()+"번째 순서입니다"
+                                customer_waiting_num_text_view.text =
+                                    data!!.turn_number.toString() + "번째 순서입니다"
                             }
                         }
                     }
@@ -174,6 +175,38 @@ class MemberMenu : AppCompatActivity() {
             )
     }
 
+    // TODO RetrofitWaiting 코드 수정 후 테스트 해봐야함
+    private fun cancelMyWaiting(dialog: Dialog){
+        MyApi.WaitingService.requestCancelWaiting(memberInfo!!.id)
+            .enqueue(object : Callback<MyApi.onlyMessageResponseData> {
+                override fun onFailure(
+                    call: Call<MyApi.onlyMessageResponseData>,
+                    t: Throwable
+                ) {
+
+                    Log.d("retrofit2 대기취소 :: ", "서버 연결 실패 $t")
+                }
+
+                override fun onResponse(
+                    call: Call<MyApi.onlyMessageResponseData>,
+                    response: Response<MyApi.onlyMessageResponseData>
+                ) {
+                    newInstance().dismiss()
+                    Log.d(
+                        "retrofit2 대기취소 ::",
+                        response.code().toString() + response.body().toString()
+                    )
+                    when (response.code()) {
+                        200 -> {
+                            Toast.makeText(mContext, "대기가 취소되었습니다", Toast.LENGTH_SHORT)
+                            dialog.dismiss()
+                        }
+                    }
+
+                }
+            }
+            )
+    }
 
 }
 

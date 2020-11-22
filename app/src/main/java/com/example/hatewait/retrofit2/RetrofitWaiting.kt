@@ -7,7 +7,7 @@ import com.example.hatewait.model.WaitingListResponseData
 import retrofit2.Call
 import retrofit2.http.*
 
-interface RetrofitWaitingList {
+interface RetrofitWaiting {
     @GET("/stores/{store-id}/waiting-customers")
     fun requestWaitingList(
         @Path("store-id") userId: String
@@ -35,6 +35,14 @@ interface RetrofitWaitingList {
         @Path("memberId") memberId: String
     ):
             Call<MyWaitingResponseData>
+
+
+    // TODO 본인 대기 취소
+    @POST("")
+    fun requestCancelWaiting(
+        @Path("memberId") memberId: String
+    ):
+            Call<MyApi.onlyMessageResponseData>
 
 }
 

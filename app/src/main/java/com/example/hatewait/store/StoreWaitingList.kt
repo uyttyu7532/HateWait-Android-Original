@@ -2,7 +2,6 @@ package com.example.hatewait.store
 
 import LottieDialogFragment.Companion.fragment
 import LottieDialogFragment.Companion.newInstance
-import android.R.attr.path
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -29,8 +28,6 @@ import com.example.hatewait.retrofit2.MyApi
 import com.saladevs.rxsse.RxSSE
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_store_waiting_list.*
-import okhttp3.OkHttpClient
-import okhttp3.Request
 import org.jetbrains.anko.startActivity
 import retrofit2.Call
 import retrofit2.Callback
@@ -292,7 +289,7 @@ fun getWaitingList() {
 //    if (fragment == null || (!(fragment?.isAdded)!!)) {
 //        newInstance().show(waitingListContext, "")
 //    }
-    MyApi.WaitingListService.requestWaitingList(storeInfo!!.id)
+    MyApi.WaitingService.requestWaitingList(storeInfo!!.id)
         .enqueue(object : Callback<WaitingListResponseData> {
             override fun onFailure(call: Call<WaitingListResponseData>, t: Throwable) {
 

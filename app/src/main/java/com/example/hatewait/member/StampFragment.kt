@@ -29,11 +29,17 @@ class StampFragment : Fragment(){
         savedInstanceState: Bundle?
     ): View? {
 
-        var bundle:Bundle = this.requireArguments()
-        storeName = bundle.getString("store_name")
-        stampBenefit = bundle.getString("stamp_benefit")
-        stampCount = bundle.getInt("stamp_count")
-        maximumStamp = bundle.getInt("maximum_stamp")
+//        var bundle:Bundle = this.requireArguments()
+//        storeName = arguments?.getString("store_name")
+//        stampBenefit = arguments?.getString("stamp_benefit")
+//        stampCount = arguments?.getInt("stamp_count")
+//        maximumStamp = arguments?.getInt("maximum_stamp")
+
+
+        storeName = requireArguments().getString("store_name")
+        stampBenefit = requireArguments().getString("stamp_benefit")
+        stampCount = requireArguments().getInt("stamp_count")
+        maximumStamp = requireArguments().getInt("maximum_stamp")
 
 
 
@@ -42,6 +48,8 @@ class StampFragment : Fragment(){
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+
 
         stamp_pie_view.setStepCountText("${stampCount}/${maximumStamp}")
         stamp_pie_view.setPercentage(stampCount!!*360/maximumStamp!!)

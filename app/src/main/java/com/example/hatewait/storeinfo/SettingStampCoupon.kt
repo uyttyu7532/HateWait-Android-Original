@@ -72,16 +72,19 @@ class SettingStampCoupon : AppCompatActivity() {
                             number_picker_stamp.value = data!!.couponInformation.maximum_stamp
                             benefit_description_text_view.setText(data!!.couponInformation.benefit_description)
                             when {
-                                data!!.couponInformation.validity_period_days%365==0 -> {
-                                    number_picker_date.value = data!!.couponInformation.validity_period_days/365
+                                data!!.couponInformation.validity_period_days % 365 == 0 -> {
+                                    number_picker_date.value =
+                                        data!!.couponInformation.validity_period_days / 365
                                     year_mon_day_wheel_view.setSelectedItemPosition(0)
                                 }
-                                data!!.couponInformation.validity_period_days%30==0 -> {
-                                    number_picker_date.value = data!!.couponInformation.validity_period_days/30
+                                data!!.couponInformation.validity_period_days % 30 == 0 -> {
+                                    number_picker_date.value =
+                                        data!!.couponInformation.validity_period_days / 30
                                     year_mon_day_wheel_view.setSelectedItemPosition(1)
                                 }
                                 else -> {
-                                    number_picker_date.value = data!!.couponInformation.validity_period_days
+                                    number_picker_date.value =
+                                        data!!.couponInformation.validity_period_days
                                     year_mon_day_wheel_view.setSelectedItemPosition(2)
                                 }
                             }
@@ -95,99 +98,26 @@ class SettingStampCoupon : AppCompatActivity() {
 
         when (isUsingStampCoupon) {
             "ON" -> {
-                btn_spotify.isEnabled = false
+                btn_spotify.isEnabled = true
                 setting_stamp_switch.isChecked = true
                 setting_coupon_scroll_view.visibility = VISIBLE
+                stampSettingTextWatcher()
             }
             "OFF" -> {
-                btn_spotify.isChecked = false
+                btn_spotify.isChecked = true
                 setting_coupon_scroll_view.visibility = INVISIBLE
             }
         }
+
+
+
+
 
         setting_stamp_switch.setOnCheckedChangeListener { _: CompoundButton, checked: Boolean ->
             when (checked) {
                 true -> {
                     setting_coupon_scroll_view.visibility = VISIBLE
-                    btn_spotify.isEnabled =
-                        benefit_description_layout.error == null
-                                && remark_layout.error == null
-                                && !benefit_description_text_view.text.isNullOrEmpty()
-                                && !remark_text_view.text.isNullOrEmpty()
-
-                    if (setting_stamp_switch.isChecked) {
-                        benefit_description_text_view.addTextChangedListener(object : TextWatcher {
-                            override fun afterTextChanged(benefit_description: Editable?) {
-                                btn_spotify.isEnabled =
-                                    !benefit_description_text_view.text!!.isNotBlank()
-                                            && !remark_text_view.text!!.isNotBlank()
-                            }
-
-                            override fun beforeTextChanged(
-                                s: CharSequence?,
-                                start: Int,
-                                count: Int,
-                                after: Int
-                            ) {
-                            }
-
-                            override fun onTextChanged(
-                                s: CharSequence?,
-                                start: Int,
-                                before: Int,
-                                count: Int
-                            ) {
-                                if (s.isNullOrEmpty()) {
-                                    benefit_description_layout.error = "쿠폰 혜택을 입력해주세요."
-                                    btn_spotify.isEnabled = false
-                                } else {
-                                    benefit_description_layout.isErrorEnabled=false
-                                    benefit_description_layout.isHintEnabled=false
-                                    benefit_description_text_view.clearFocus()
-                                    benefit_description_text_view.hint = null
-                                    benefit_description_text_view.error = null
-                                    benefit_description_layout.error = null
-                                    benefit_description_layout.hint = null
-                                }
-                            }
-                        })
-
-                        remark_text_view.addTextChangedListener(object : TextWatcher {
-                            override fun afterTextChanged(remark: Editable?) {
-
-                            }
-
-                            override fun beforeTextChanged(
-                                s: CharSequence?,
-                                start: Int,
-                                count: Int,
-                                after: Int
-                            ) {
-                            }
-
-                            override fun onTextChanged(
-                                s: CharSequence?,
-                                start: Int,
-                                before: Int,
-                                count: Int
-                            ) {
-                                if (s.isNullOrEmpty()) {
-                                    remark_layout.error = "쿠폰 유의사항을 입력해주세요."
-                                    btn_spotify.isEnabled = false
-                                } else {
-                                    remark_layout.isErrorEnabled=false
-                                    remark_layout.isHintEnabled=false
-                                    remark_layout.error = null
-                                    remark_layout.hint = ""
-                                    remark_text_view.error = null
-                                }
-                                btn_spotify.isEnabled =
-                                    !benefit_description_text_view.text!!.isNotBlank()
-                                            && !remark_text_view.text!!.isNotBlank()
-
-                            }
-                        })
-                    }
+                    stampSettingTextWatcher()
                 }
                 else -> {
                     btn_spotify.isEnabled = true
@@ -297,6 +227,90 @@ class SettingStampCoupon : AppCompatActivity() {
             }
         }
         return true
+    }
+
+    private fun stampSettingTextWatcher() {
+        btn_spotify.isEnabled =
+            benefit_description_layout.error == null
+                    && remark_layout.error == null
+                    && !benefit_description_text_view.text.isNullOrEmpty()
+                    && !remark_text_view.text.isNullOrEmpty()
+
+        if (setting_stamp_switch.isChecked) {
+            benefit_description_text_view.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(benefit_description: Editable?) {
+                    if (benefit_description.isNullOrBlank()) {
+                        benefit_description_layout.error = "쿠폰 혜택을 입력해주세요."
+                        btn_spotify.isEnabled = false
+                    } else {
+                        benefit_description_layout.isErrorEnabled = false
+                        benefit_description_layout.isHintEnabled = false
+                        benefit_description_text_view.hint = null
+                        benefit_description_text_view.error = null
+                        benefit_description_layout.error = null
+                        benefit_description_layout.hint = null
+                    }
+                    btn_spotify.isEnabled =
+                        !benefit_description_text_view.text!!.isNullOrBlank()
+                                && !remark_text_view.text!!.isNullOrBlank()
+                }
+
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
+                override fun onTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    before: Int,
+                    count: Int
+                ) {
+
+                }
+            })
+
+            remark_text_view.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(remark: Editable?) {
+                    Log.i("textwatcher", "after")
+                    if (remark.isNullOrBlank()) {
+                        remark_layout.error = "쿠폰 유의사항을 입력해주세요."
+                        btn_spotify.isEnabled = false
+                    } else {
+                        remark_layout.isErrorEnabled = false
+                        remark_layout.isHintEnabled = false
+                        remark_layout.error = null
+                        remark_layout.hint = ""
+                        remark_text_view.error = null
+                    }
+                    btn_spotify.isEnabled =
+                        !benefit_description_text_view.text!!.isNullOrBlank()
+                                && !remark_text_view.text!!.isNullOrBlank()
+
+                }
+
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                    Log.i("textwatcher", "before")
+                }
+
+                override fun onTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    before: Int,
+                    count: Int
+                ) {
+                    Log.i("textwatcher", "on")
+                }
+            })
+        }
     }
 
 

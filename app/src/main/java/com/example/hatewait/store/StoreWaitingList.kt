@@ -2,6 +2,7 @@ package com.example.hatewait.store
 
 import LottieDialogFragment.Companion.fragment
 import LottieDialogFragment.Companion.newInstance
+import android.R.attr.path
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -25,7 +26,11 @@ import com.example.hatewait.model.NonMemberRegisterResponseData
 import com.example.hatewait.model.WaitingInfo
 import com.example.hatewait.model.WaitingListResponseData
 import com.example.hatewait.retrofit2.MyApi
+import com.saladevs.rxsse.RxSSE
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_store_waiting_list.*
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import org.jetbrains.anko.startActivity
 import retrofit2.Call
 import retrofit2.Callback
@@ -146,7 +151,6 @@ class StoreWaitingList : AppCompatActivity() {
     }
 
 
-
     private fun makeAddDialog() {
         val fab: View = findViewById(R.id.add_fab)
         fab.setOnClickListener {
@@ -201,7 +205,12 @@ class StoreWaitingList : AppCompatActivity() {
 
 
                         var nonMemberRegisterData =
-                            NonMemberRegisterRequestData(userPhone, userName, userPeopleNum.toString(), false)
+                            NonMemberRegisterRequestData(
+                                userPhone,
+                                userName,
+                                userPeopleNum.toString(),
+                                false
+                            )
 
                         if (fragment == null || (!(fragment?.isAdded)!!)) {
                             newInstance().show(supportFragmentManager, "")
@@ -236,7 +245,11 @@ class StoreWaitingList : AppCompatActivity() {
                                             getWaitingList()
                                         }
                                         409 -> {
-                                            Toast.makeText(waitingListContext, "이미 다른 가게에 등록된 아이디입니다.", Toast.LENGTH_SHORT).show()
+                                            Toast.makeText(
+                                                waitingListContext,
+                                                "이미 다른 가게에 등록된 아이디입니다.",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
                                         }
                                     }
                                 }
@@ -255,8 +268,22 @@ class StoreWaitingList : AppCompatActivity() {
                 }
             }
         }
+
+
+        // SSE (Server-Sent Events)
+        fun connectSSE() {
+            val rxsse = RxSSE()
+            rxsse
+                .connectTo("https://localhost/events")
+                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { println("Received: $it") }
+        }
     }
+
+
 }
+
 
 fun getWaitingList() {
 

@@ -34,16 +34,17 @@ class CouponFragment : Fragment(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        var bundle: Bundle = this.requireArguments()
-        storeId = bundle.getString("store_id")
-
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+//        var bundle: Bundle = this.requireArguments()
+//        storeId = bundle.getString("storeId")
+
+        storeId = requireArguments().getString("storeId")
 
         rootView = inflater.inflate(R.layout.fragment_coupon, container, false)
         itemPicker = rootView!!.findViewById(R.id.coupon_item_picker) as DiscreteScrollView
@@ -55,6 +56,7 @@ class CouponFragment : Fragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
 
 //        shop = Shop.get()
 //        data = shop!!.data

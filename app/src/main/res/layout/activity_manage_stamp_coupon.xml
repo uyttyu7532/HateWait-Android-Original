@@ -28,32 +28,46 @@
     </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
-            android:layout_below="@+id/stamp_coupon_toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@+id/stamp_coupon_toolbar"
             android:orientation="vertical"
             android:weightSum="10">
 
-        <androidx.cardview.widget.CardView
+        <fragment
+                android:id="@+id/stamp_fragment"
+                android:name="com.example.hatewait.member.StampFragment"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginBottom="5dp"
-                android:layout_weight="0.75"
-                app:cardCornerRadius="0dp"
-                app:cardElevation="5dp">
+                android:layout_weight="5" />
 
-            <com.google.android.material.tabs.TabLayout
-                    android:id="@+id/manage_stamp_coupon_tab_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/white" />
-        </androidx.cardview.widget.CardView>
-
-        <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/manage_stamp_coupon_view_pager"
+        <fragment
+                android:id="@+id/coupon_fragment"
+                android:name="com.example.hatewait.member.CouponFragment"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="9.25" />
+                android:layout_weight="5" />
+
+        <!--        <androidx.cardview.widget.CardView-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="0dp"-->
+        <!--                android:layout_marginBottom="5dp"-->
+        <!--                android:layout_weight="0.75"-->
+        <!--                app:cardCornerRadius="0dp"-->
+        <!--                app:cardElevation="5dp">-->
+
+        <!--            <com.google.android.material.tabs.TabLayout-->
+        <!--                    android:id="@+id/manage_stamp_coupon_tab_layout"-->
+        <!--                    android:layout_width="match_parent"-->
+        <!--                    android:layout_height="match_parent"-->
+        <!--                    android:background="@color/white" />-->
+        <!--        </androidx.cardview.widget.CardView>-->
+
+        <!--        <androidx.viewpager2.widget.ViewPager2-->
+        <!--                android:id="@+id/manage_stamp_coupon_view_pager"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="0dp"-->
+        <!--                android:layout_weight="9.25" />-->
     </LinearLayout>
 
 </RelativeLayout>

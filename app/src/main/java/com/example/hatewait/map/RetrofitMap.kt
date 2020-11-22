@@ -1,7 +1,5 @@
 package com.example.hatewait.map
 
-
-import com.example.hatewait.model.HaitWaitRestaurant
 import com.example.hatewait.model.HaitWaitRestaurantRequestData
 import com.example.hatewait.model.Restaurant
 import retrofit2.Call

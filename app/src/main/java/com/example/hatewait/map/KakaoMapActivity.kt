@@ -9,8 +9,10 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationManager
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Base64
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -27,6 +29,7 @@ import com.example.hatewait.R
 import com.example.hatewait.model.HaitWaitRestaurantRequestData
 import com.example.hatewait.model.Restaurant
 import com.example.hatewait.retrofit2.MyApi
+import com.kakao.util.maps.helper.Utility
 import kotlinx.android.synthetic.main.activity_kakao_map.*
 import net.daum.mf.map.api.CalloutBalloonAdapter
 import net.daum.mf.map.api.MapPOIItem
@@ -39,6 +42,8 @@ import org.jetbrains.anko.locationManager
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
 
 
 private lateinit var mcontext: Context
@@ -78,7 +83,7 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
 
         showHateWaitStore()
 
-
+        Log.i("myhashkey" , getHashKey(this))
 
         mcontext = this.applicationContext
         mapView = MapView(this)
@@ -668,5 +673,42 @@ class KakaoMapActivity : AppCompatActivity(), CurrentLocationEventListener,
         private const val GPS_ENABLE_REQUEST_CODE = 2001
         private const val PERMISSIONS_REQUEST_CODE = 100
     }
+
+
+    fun getHashKey(context: Context): String? {
+        try {
+            if (Build.VERSION.SDK_INT >= 28) {
+                val packageInfo =
+                    Utility.getPackageInfo(context, PackageManager.GET_SIGNING_CERTIFICATES)
+                val signatures = packageInfo.signingInfo.apkContentsSigners
+                val md = MessageDigest.getInstance("SHA")
+                for (signature in signatures) {
+                    md.update(signature.toByteArray())
+                    return String(Base64.encode(md.digest(), Base64.NO_WRAP))
+                }
+            } else {
+                val packageInfo =
+                    Utility.getPackageInfo(context, PackageManager.GET_SIGNATURES) ?: return null
+
+                for (signature in packageInfo!!.signatures) {
+                    try {
+                        val md = MessageDigest.getInstance("SHA")
+                        md.update(signature.toByteArray())
+                        return Base64.encodeToString(md.digest(), Base64.NO_WRAP)
+                    } catch (e: NoSuchAlgorithmException) {
+                        // ERROR LOG
+                    }
+                }
+            }
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+        } catch (e: NoSuchAlgorithmException) {
+            e.printStackTrace()
+        }
+
+        return null
+    }
+
+
 }
 

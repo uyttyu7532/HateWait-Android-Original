@@ -1,5 +1,3 @@
 # HateWait
 
-[Server]
-
-[Client]
+Kotlin
